@@ -1,0 +1,36 @@
+\subsection{Extra Cheatsheets: Calculus}%
+\label{sub:extrasec-calculus}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{First Fundamental Theorem of Calculus:}
+        
+        Let $f$ be a continuous real-valued function defined on $[a, b]$, and let $F$ be defined by:
+        \begin{equation*}
+            F : [a, b] \to \mathbb{R}
+                \qquad F(x) = \int_a^x{f(t) \,\diff{t}} .
+        \end{equation*}
+
+        $F$ is continuous on $[a, b]$, differentiable on $(a, b)$, and has a derivative $F'$ given by:
+        \begin{equation*}
+            F'(x) = f(x)
+                \qquad \forall x \in (a, b) .
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Second Fundamental Theorem of Calculus:}
+
+        Let $F$ be a real-valued function on $[a, b]$, and $F$ be an antiderivative of $f$ on $[a, b]$. Then:
+        \begin{equation*}
+            \int_a^b{f(t) \,\diff{t}} = F(b) - F(a)
+        \end{equation*}
+
+        \Todo{Look into this more. I'm not 100\% certain on details such as whether the second fundamental theorem requires $f$ to be continuous, and whether or not $f$ being Riemann integrable is significant here.}
+
+    }
+
+    \MulticolsBreak
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}

@@ -1,0 +1,108 @@
+\documentclass{article}
+
+%\usepackage[margin=2.5cm, bottom=3.0cm]{geometry}
+\usepackage[margin=1.5cm, bottom=2.0cm]{geometry}
+
+\usepackage{../_latex_includes/sharedpkg}
+
+\def\TITLE{Math and Applications Cheatsheet}
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+%\newcommand{\CheatsheetEntryFrame}[1]{#1}
+\newcommand{\CheatsheetEntryFrame}[1]{%
+    %\scalebox{0.8}{#1}
+    %\unskip
+    \begin{mdframed}[
+            innerbottommargin=2\mdflength{innertopmargin},
+            skipabove=0pt,
+            %skipbelow=10mm,
+            %leftmargin=0.5mm,
+            %rightmargin=0.5mm,
+        ]
+        \raggedright
+        \vspace*{0.75ex}%
+        #1%
+    \end{mdframed}%
+}
+\newcommand{\CheatsheetEntryTitle}[1]{ % Put this inside CheatsheetEntryBox
+    \textbu{#1} %\\[1.5ex]
+    %\vspace*{1.5ex}%
+}
+\newcommand{\CheatsheetSmallEquationTitle}[1]{%
+    \begin{center}%
+        \vspace*{\abovedisplayskip}%
+        \scriptsize%
+        %\framebox[1.1\width]{\textbf{#1}} % Framed version
+        \textbf{#1}%
+        \vspace*{0.75ex}%
+        \vspace*{-\parskip}%
+    \end{center}%
+}
+\newcommand{\CheatsheetSmallText}[1]{%
+    \begin{center}%
+        \scriptsize%
+        {#1}%
+        \vspace*{0.75ex}%
+        \vspace*{-\parskip}%
+    \end{center}%
+}
+
+\begin{document}
+
+\thispagestyle{plain}
+\MakeCustomTitle
+\bigskip
+
+\medskip
+While this cheatsheet is made and structured specifically for my convenience, I hope that you too will find it useful!
+
+I try to keep the main cheatsheets to only what I consider essentials. Anything that I consider should be trivial/memorized knowledge but may still be useful for reference will be moved into the \textit{Extra Cheatsheets} section of this document to avoid bloating the main cheatsheets.
+\medskip
+
+{
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+}
+
+\newpage
+\section{Mathematics General}
+\label{sec:mathgeneral}
+
+    \input{./sections/mathematics-general}
+
+\newpage
+\section{Probability and Statistics}
+\label{sec:probability-and-statistics}
+
+    \input{./sections/probability-and-statistics}
+
+\newpage
+\section{Physics}
+\label{sec:physics}
+
+    \input{./sections/physics}
+
+\newpage
+\section{Electrical Engineering}
+\label{sec:ee}
+
+    \input{./sections/electrical-engineering}
+
+\newpage
+\section{SI Units and Conversions}
+\label{sec:units}
+
+    \input{./sections/units}
+
+\newpage
+\InvisiblePart{Extra Cheatsheets}
+
+\section{Extra Cheatsheets: Mathematics General}%
+\label{sec:extrasec-mathgeneral}
+
+    \input{./sections/extrasec-mathematics-general}
+
+
+\end{document}

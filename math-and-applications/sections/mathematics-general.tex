@@ -1,0 +1,728 @@
+\subsection{Algebra}%
+\label{sub:algebra}
+
+\begin{multicols}{3}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Exponentiation Identities}
+        \begin{align*}
+            a^x a^y &= a^{x+y} \\
+            a^x b^x &= \parens*{ab}^x \\
+            \parens*{a^x}^y &= a^{xy} \\
+            a^0 &= 1
+            %
+            \\[\abovedisplayskip]
+            %
+            a^{-x} &= \frac{1}{a^x} \\
+            a^{x-y} &= \frac{a^x}{a^y} \\
+            \parens*{\frac{a}{b}}^x &= \frac{a^x}{b^x}
+            %
+            \\[\abovedisplayskip]
+            %
+            a^{\frac{1}{2}} &= \sqrt{a} \\
+            a^{\frac{1}{x}} &= \sqrt[x]{a} \\
+            a^{\frac{x}{y}} &= \parens*{\sqrt[y]{a}}^x
+        \end{align*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Log Identities}
+
+        \CheatsheetSmallEquationTitle{(Definition)}
+        \begin{equation*}
+            x = a^y \quad\iff\quad \log_a{x} = y
+        \end{equation*}
+
+        \CheatsheetSmallEquationTitle{(Inverses)}
+        \begin{equation*}
+            \log_a{a^x} = a^{\log_a{x}} = x
+        \end{equation*}
+
+        \CheatsheetSmallEquationTitle{(Change of Base Law)}
+        \begin{equation*}
+            \log_a{x} = \frac{\log_u{x}}{\log_u{a}}
+        \end{equation*}
+
+        \vspace*{-\abovedisplayskip}
+        \begin{align*}
+            \log_a{xy} &= \log_a{x} + \log_a{y} \\
+            \log_a{\parens*{\frac{x}{y}}} &= \log_a{x} - \log_a{y} \\
+            \log_a{x^n} &= n \log_a{x}
+            %
+            \\[\abovedisplayskip]
+            %
+            \log_a{1} &= 0 \\
+            \log_a{a} &= 1
+            %
+            \\[\abovedisplayskip]
+            %
+            \log_a{\parens*{\frac{1}{x}}} &= - \log_a{x}
+            %
+            \\[\abovedisplayskip]
+            %
+            \log_a{\parens*{\frac{1}{a}}} &= -1 \\
+            \log_a{\sqrt{a}} &= \frac{1}{2} \\
+            \log_a{\sqrt[b]{a}} &= \frac{1}{b}
+        \end{align*}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Quadratic Factorization}
+        \begin{gather*}
+            a x^2 + bx + c = \frac{1}{a} \parens*{ax + v} \parens*{ax + u} \\
+            b = u+v, ac = uv
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Quadratic Formula}
+        \begin{gather*}
+            x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \\
+            \intertext{Discriminant:}
+            \Delta = b^2 - 4ac
+        \end{gather*}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Quadratic/Cubic Identities}
+        \begin{align*}
+            a^2 - b^2 &= (a + b) (a - b) \\
+            a^3 - b^3 &= (a - b) (a^2 + ab + b^2) \\
+            a^3 + b^3 &= (a + b) (a^2 - ab + b^2)
+        \end{align*}
+
+    }
+
+    \Todo{Figure out why this is breaking into a new page.}
+
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Trigonometry and Hyperbolic Functions}%
+\label{sub:trigonometry-and-hyperbolic}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        %\begin{figure}[H]\centering
+        %\begin{tikzpicture}[thick]
+        %        \coordinate (O) at (0,0);
+        %        \coordinate (A) at (4,0);
+        %        \coordinate (B) at (0,2);
+        %        \draw (O) -- (A) -- (B) -- cycle;
+        %\end{tikzpicture}
+        %%\caption{caption}
+        %%\label{fig:labelname}
+        %\end{figure}
+
+        \CheatsheetEntryTitle{Pythagorean Theorem}
+        \begin{equation*}
+            a^2 = b^2 + c^2
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Pythagorean Identities}
+        \begin{gather*}
+            \sin^2{\theta} + \cos^2{\theta} = 1 \\
+            \tan^2{\theta} + 1 = \sec^2{\theta}
+                \quad \parens*{\cos{\theta} \ne 0} \\
+            \cot^2{\theta} + 1 = \csc^2{\theta}
+                \quad \parens*{\sin{\theta} \ne 0}
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Complementary Angles}
+        \begin{equation*}
+            \sin^{-1}{x} + \cos^{-1}{x} = \frac{\pi}{2}
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Compound Angles}
+        %\begin{align*}
+        %    \sin{\parens*{\alpha + \beta}} &= \sin{\alpha} \cos{\beta } + \cos{\alpha} \sin{\beta } \\
+        %    \sin{\parens*{\alpha - \beta}} &= \sin{\alpha} \cos{\beta } - \cos{\alpha} \sin{\beta }
+        %    %
+        %    \\[\abovedisplayskip]
+        %    %
+        %    \cos{\parens*{\alpha + \beta}} &= \cos{\alpha} \cos{\beta } - \sin{\alpha} \sin{\beta } \\
+        %    \cos{\parens*{\alpha - \beta}} &= \cos{\alpha} \cos{\beta } + \sin{\alpha} \sin{\beta }
+        %    %
+        %    \\[\abovedisplayskip]
+        %    %
+        %    \tan{\parens*{\alpha + \beta}} &= \frac{\tan{\alpha} + \tan{\beta}}{1 - \tan{\alpha} \tan{\beta}} \\
+        %    \tan{\parens*{\alpha - \beta}} &= \frac{\tan{\alpha} - \tan{\beta}}{1 + \tan{\alpha} \tan{\beta}}
+        %\end{align*}
+        \begin{align*}
+            \sin{\parens*{\alpha \pm \beta}} &= \sin{\alpha} \cos{\beta } \pm \cos{\alpha} \sin{\beta } \\
+            \cos{\parens*{\alpha \pm \beta}} &= \cos{\alpha} \cos{\beta } \mp \sin{\alpha} \sin{\beta } \\
+            \tan{\parens*{\alpha \pm \beta}} &= \frac{\tan{\alpha} \pm \tan{\beta}}{1 \mp \tan{\alpha} \tan{\beta}}
+        \end{align*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{In Terms of Exponentials}
+
+        Derived from Euler's formula.
+        \begin{align*}
+            \sin{x} = \frac{e^{ix} - e^{-ix}}{2i} \\
+            \cos{x} = \frac{e^{ix} + e^{-ix}}{2}
+        \end{align*}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Double-Angle Formulae}
+
+        Derived from compound angle formulae.
+        \begin{align*}
+            \sin{2 \theta} &= 2 \sin{\theta} \cos{\theta} \\
+            \cos{2 \theta} &= \cos^2{\theta} - \sin^2{\theta}  \overbracket[1pt][1.75mm]{= 2 \cos^2{\theta} - 1} \\
+                &\phantom{{}= \cos^2{\theta} - \sin^2{\theta}} \underbracket[1pt][1.75mm]{= 1 - 2 \sin^2{\theta}}_{
+                    %\substack{
+                    %    \text{simplified using} \\
+                        \sin^2{\theta} + \cos^2{\theta} = 1
+                    %}
+                }\\
+            \tan{2 \theta} &= \frac{2 \tan{\theta}}{1 - \tan^2{\theta}}
+        \end{align*}
+
+        \CheatsheetEntryTitle{Half-Angle Formulae}
+
+        Derived from the $\cos{2 \theta}$ compound angle formula.
+        \begin{align*}
+            \sin^2{\theta} &= \frac{1}{2} - \frac{1}{2} \cos{2 \theta} \\
+            \cos^2{\theta} &= \frac{1}{2} + \frac{1}{2} \cos{2 \theta}
+        \end{align*}
+
+        \CheatsheetEntryTitle{Products to Sums}
+
+        Derived by adding compound angle formulae.
+        \begin{alignat*}{8}
+             &2 \sin&&{A} && \cos&&{B} &&= \sin&&{\parens*{A+B}} &&+ \sin&&{\parens*{A-B}} \\
+             &2 \cos&&{A} && \sin&&{B} &&= \sin&&{\parens*{A+B}} &&- \sin&&{\parens*{A-B}} \\
+             &2 \cos&&{A} && \cos&&{B} &&= \cos&&{\parens*{A+B}} &&+ \cos&&{\parens*{A-B}} \\
+            -&2 \sin&&{A} && \sin&&{B} &&= \cos&&{\parens*{A+B}} &&- \cos&&{\parens*{A-B}}
+        \end{alignat*}
+
+        \CheatsheetEntryTitle{Sums to Products}
+
+        Derived by reversing Products to Sums.
+        \begin{alignat*}{3}
+            \sin{S} + \sin{T} &= \phantom{+} 2 \sin&&{\parens*{\frac{S+T}{2}}} \cos&&{\parens*{\frac{S-T}{2}}} \\
+            \sin{S} - \sin{T} &= \phantom{+} 2 \cos&&{\parens*{\frac{S+T}{2}}} \sin&&{\parens*{\frac{S-T}{2}}} \\
+            \cos{S} + \cos{T} &= \phantom{+} 2 \cos&&{\parens*{\frac{S+T}{2}}} \cos&&{\parens*{\frac{S-T}{2}}} \\
+            \cos{S} - \cos{T} &=          -  2 \sin&&{\parens*{\frac{S+T}{2}}} \sin&&{\parens*{\frac{S-T}{2}}}
+        \end{alignat*}
+
+    }
+
+    \pagebreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Hyperbolic Function Exponential Definitions}
+        \begin{align*}
+            \sinh{x}
+                &= \frac{e^x - e^{-x}}{2}
+                = \frac{e^{2x} - 1}{2 e^x}
+                = \frac{1 - e^{-2x}}{2 e^{-x}} \\
+                %\quad \forall x \in \mathbb{R} \\
+            \cosh{x}
+                &= \frac{e^x + e^{-x}}{2}
+                = \frac{e^{2x} + 1}{2 e^x}
+                = \frac{1 + e^{-2x}}{2 e^{-x}} \\
+                %\quad \forall x \in \mathbb{R} \\
+            \tanh{x}
+                &= \frac{\sinh{x}}{\cosh{x}}
+                = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+                = \frac{e^{2x} - 1}{e^{2x} + 1}
+        \end{align*}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Hyperbolic: Difference of Squares} % TODO: Better title?
+        \begin{gather*}
+            \cosh^2{x} - \sinh^2{x} = 1 \\
+            1 - \tanh^2{x} = \sech^2{x} \\
+            \coth^2{x} - 1 = \csch^2{x}
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Hyperbolic: Sum and Difference Formulae} % TODO: Better title?
+        \begin{align*}
+            \sinh{\parens*{\alpha \pm \beta}} &= \sinh{\alpha} \cosh{\beta } \pm \cosh{\alpha} \sinh{\beta } \\
+            \cosh{\parens*{\alpha \pm \beta}} &= \cosh{\alpha} \cosh{\beta } \pm \sinh{\alpha} \sinh{\beta } \\
+            \tanh{\parens*{\alpha \pm \beta}} &= \frac{\tanh{\alpha} \pm \tanh{\beta}}{1 \pm \tanh{\alpha} \tanh{\beta}}
+        \end{align*}
+
+        \CheatsheetEntryTitle{Hyperbolic: Double-Angle Formulae} % TODO: Better title?
+        \begin{align*}
+            \sinh{2x} &= 2 \sinh{x} \cosh{x} \\
+            \cosh{2x} &= \cosh^2{x} + \sinh^2{x} \\
+            \tanh{2x} &= \frac{2 \tanh{x}}{1 + \tanh^2{x}}
+        \end{align*}
+
+    }
+
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Linear Algebra}%
+\label{sub:linear-algebra}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Dot Product} {\tiny (or Scalar Product)}
+
+        In $\mathbb{R}^n$:
+        \begin{equation*}
+            \mathbf{a} \cdot \mathbf{b} = a_1 b_1 + \cdots + a_n b_n = \sum_{k=0}^n{a_k b_k}
+        \end{equation*}
+
+        In $\mathbb{R}^2$ or $\mathbb{R}^3$:
+        \begin{equation*}
+            \mathbf{a} \cdot \mathbf{b} = \abs*{\mathbf{a}} \abs*{\mathbf{b}} \cos{\theta}
+            ,\quad \theta \in [0, \pi]
+        \end{equation*}
+
+        Useful geometric properties:
+        \begin{itemize}
+            \item $\mathbf{a} \cdot \mathbf{a} = \abs*{a}^2$, and hence $\abs*{\mathbf{a}} = \sqrt{\mathbf{a} \cdot \mathbf{a}}$.
+            \item Vectors $\mathbf{a}, \mathbf{b} \in \mathbb{R}^n$ are orthogonal if $\mathbf{a} \cdot \mathbf{b} = 0$.
+        \end{itemize}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Cross Product} {\tiny (or Vector Product)}
+
+        The \textit{cross product} is only defined in $\mathbb{R}^3$.
+        \begin{equation*}
+            \begin{pmatrix}
+                a_1 \\
+                a_2 \\
+                a_3
+            \end{pmatrix}
+            \times
+            \begin{pmatrix}
+                b_1 \\
+                b_2 \\
+                b_3
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                a_2 b_3 - a_3 b_2 \\
+                a_3 b_1 - a_1 b_3 \\
+                a_1 b_2 - a_2 b_1
+            \end{pmatrix}
+        \end{equation*}
+
+        Calculation using determinants:
+        \begin{gather*}
+                \begin{pmatrix}
+                    a_1 \\
+                    a_2 \\
+                    a_3
+                \end{pmatrix}
+                \times
+                \begin{pmatrix}
+                    b_1 \\
+                    b_2 \\
+                    b_3
+                \end{pmatrix}
+                =
+                \begin{vmatrix}
+                    \mathbf{e}_1 & \mathbf{e}_2 & \mathbf{e}_3 \\
+                    a_1          & a_2          & a_3          \\
+                    b_1          & b_2          & b_3
+                \end{vmatrix}
+            \\
+                =
+                \mathbf{e}_1
+                \begin{vmatrix}
+                    \memphR{a_2} & \memphB{a_3} \\
+                    \memphB{b_2} & \memphR{b_3}
+                \end{vmatrix}
+                -
+                \mathbf{e}_2
+                \begin{vmatrix}
+                    \memphR{a_1} & \memphB{a_3} \\
+                    \memphB{b_1} & \memphR{b_3}
+                \end{vmatrix}
+                +
+                \mathbf{e}_3
+                \begin{vmatrix}
+                    \memphR{a_1} & \memphB{a_2} \\
+                    \memphB{b_1} & \memphR{b_2}
+                \end{vmatrix}
+            \\
+                = \mathbf{e}_1 \parens*{\memphR{a_2 b_3} - \memphB{a_3 b_2}}
+                - \mathbf{e}_2 \parens*{\memphR{a_1 b_3} - \memphB{a_3 b_1}}
+                + \mathbf{e}_3 \parens*{\memphR{a_1 b_2} - \memphB{a_2 b_1}}
+        \end{gather*}
+
+        Useful geometric properties:
+        \begin{itemize}
+            \item Vector $\mathbf{a} \times \mathbf{b}$ is orthogonal to $\mathbf{a}$ and $\mathbf{b}$.
+            \item $\abs*{\mathbf{a} \times \mathbf{b}} = \abs*{\mathbf{a}} \abs*{\mathbf{b}} \sin{\theta} = \text{area of a parallelogram}$
+        \end{itemize}
+
+    }
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Calculus}%
+\label{sub:calculus}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Derivative: First Principles}
+        \begin{equation*}
+            \frac{\diff{y}}{\diff{x}}
+                %= \lim_{\delta x \to 0}{\frac{\delta y}{\delta x}}
+                = \lim_{h \to 0}{\frac{f(x+h) - f(x)}{h}}
+                = \lim_{u \to x}{\frac{f(u) - f(x)}{u-x}}
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Derivative: Product Rule}
+        \begin{gather*}
+            \frac{\diff{}}{\diff{x}} \parens*{\memphR{u} \memphG{v}}
+                = \memphR{u} \memphG{\frac{\diff{v}}{\diff{x}}}
+                    + \memphG{v} \memphR{\frac{\diff{u}}{\diff{x}}}
+                \\
+                \frac{\diff{}}{\diff{x}} \parens*{\memphR{u} \memphG{v} \memphB{w}}
+                = \memphG{v} \memphB{w} \memphR{\frac{\diff{u}}{\diff{x}}}
+                    + \memphR{u} \memphB{w} \memphG{\frac{\diff{v}}{\diff{x}}}
+                    + \memphR{u} \memphG{v} \memphB{\frac{\diff{w}}{\diff{x}}}
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Derivative: Quotient Rule}
+        \begin{equation*}
+            \frac{\diff{}}{\diff{x}}{\parens*{\frac{\memphR{a}}{\memphG{u}}}}
+                =
+                    \frac{
+                        \memphG{u} \memphR{\frac{\diff{a}}{\diff{x}}} - \memphR{a} \memphG{\frac{\diff{u}}{\diff{x}}}
+                    }{
+                        \memphG{u}^2
+                    }
+                =
+                    \underbracket{
+                        \frac{
+                            \memphG{u} \memphR{a'} - \memphR{a} \memphG{u'}
+                        }{
+                            \memphG{u}^2
+                        }
+                    }_{\substack{\text{easier form} \\ \text{to remember}}}
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Derivative: Chain Rule}
+        \begin{equation*}
+            \frac{\memphR{\diff{y}}}{\memphG{\diff{x}}}
+                = \frac{\memphR{\diff{y}}}{\memphB{\diff{u}}} \times \frac{\memphB{\diff{u}}}{\memphG{\diff{x}}}
+        \end{equation*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Integration: Reverse Chain Rule}
+        \begin{equation*}
+            \int{\memphR{f'(x)} \, \memphB{g(}\memphR{f(x)}\memphB{)} \,\diff{x}}
+                = \memphB{g'(}\memphR{f(x)}\memphB{)} + C
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Integration: Integration By Parts}
+        \begin{equation*}
+            \int{\memphR{f(x)} \, \memphB{G(x)} \,\diff{x}}
+            = \memphR{F(x)} \, \memphB{G(x)} - \int{\memphR{F(x)} \, \memphB{g(x)} \,\diff{x}}
+        \end{equation*}
+
+    }
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Common Integrals}%
+\label{sub:common-integrals}
+
+{\color{extranotecolor} \textit{Note: Constant of integration $+C$ and trivial domain restrictions (usually $a \ne 0$) omitted for brevity except in places of particular significance.} }
+
+% idk if this is why there's excessive whitespace, but it helps it look better!
+\vspace*{-\parskip} 
+\vspace*{-\abovedisplayskip}
+%\unskip % Why doesn't this work?
+
+%{\color{extranotecolor}
+%    \begin{equation*}
+%        \int{x^n \,\diff{x}} = \frac{1}{n+1} x^{n+1}
+%        \qquad \xRightarrow{\text{derivative form}} \qquad
+%        \frac{\diff{}}{\diff{x}} \parens*{x^n} = n x^{n-1}
+%    \end{equation*}
+%}
+%
+\begin{HackEquationLeftAlign}
+\begin{alignat*}{2}
+    &\int{\parens*{ax + b}^n \,\diff{x}} = \frac{\parens*{ax + b}^{n+1}}{a \parens*{n+1}}
+        ,\quad
+        &&{\color{extranotecolor}
+            %a \ne 0
+            n \neq -1
+            ;\ x \neq 0
+            ,\ \text{if } n < 0
+        }
+        %&&
+        %\qquad
+        %{\color{extranotecolor}
+        %    \frac{\diff{}}{\diff{x}} \parens*{x^n} = n x^{n-1}
+        %}
+        %&&
+        %\qquad
+        %{\color{extranotecolor}
+        %    \int{x^n \,\diff{x}} = \frac{1}{n+1} x^{n+1}
+        %}
+        \\
+    &\int{\frac{1}{ax + b} \,\diff{x}} = \frac{1}{a} \ln{\abs{ax + b}} + C
+        = \frac{1}{a} \ln{\abs{K(ax + b)}}
+        ,\quad
+        &&{\color{extranotecolor}
+            C = \frac{1}{a} \ln{K}
+            %;\ a \ne 0
+            ;\ ax + b \ne 0
+        }
+        %&&
+        %\qquad
+        %{\color{extranotecolor}
+        %    \frac{\diff{}}{\diff{x}} \parens*{\ln{x}} = \frac{1}{x}
+        %}
+        %&&
+        %\qquad
+        %{\color{extranotecolor}
+        %    \int{\frac{1}{x} \,\diff{x}} = \ln{\abs*{x}}
+        %}
+\end{alignat*}
+\end{HackEquationLeftAlign}%
+
+
+\vspace*{-\parskip} % idk if this is why there's excessive whitespace, but it helps it look better!
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{equation*}
+        \int{e^{ax} \,\diff{x}} = \frac{1}{a} e^{ax}
+    \end{equation*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}%
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{equation*}
+        \int{a^x \,\diff{x}}
+            %= \int{\parens*{e^{\ln{a}}}^x \,\diff{x}} % Derived from change of base law
+            = \frac{a^x}{\ln{a}}
+            ,\quad
+            {\color{extranotecolor}
+                a \neq 1
+            }
+    \end{equation*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}%
+
+
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{3}
+        &\int{\cos{ax} \,\diff{x}} &&= && \frac{1}{a} \sin{ax} \\
+        &\int{\sin{ax} \,\diff{x}} &&= -&& \frac{1}{a} \cos{ax} \\
+        &\int{\sec^2{ax} \,\diff{x}} &&= && \frac{1}{a} \tan{ax} \\
+        &\int{\tan{ax} \,\diff{x}} &&= && \frac{1}{a} \ln{\abs{\sec{ax}}}
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}%
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{2}
+        &\int{\cosh{ax} \,\diff{x}} &&= \frac{1}{a} \sinh{ax} \\
+        &\int{\sinh{ax} \,\diff{x}} &&= \frac{1}{a} \cosh{ax} \\
+        &\int{\sech^2{ax} \,\diff{x}} &&= \frac{1}{a} \tanh{ax} \\
+        &\int{\tanh{ax} \,\diff{x}} &&= \frac{1}{a} \ln{\parens*{\cosh{ax}}}
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}
+
+
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{3}
+        &\int{\csc{ax} \cot{ax} \,\diff{x}} &&= -&& \frac{1}{a} \csc{ax} \\
+        &\int{\sec{ax} \tan{ax} \,\diff{x}} &&= && \frac{1}{a} \sec{ax} \\
+        &\int{\csc^2{ax} \,\diff{x}} &&= -&& \frac{1}{a} \cot{ax}
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}%
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{3}
+        &\int{\csch{ax} \coth{ax} \,\diff{x}} &&= -&& \frac{1}{a} \csch{ax} \\
+        &\int{\sech{ax} \tanh{ax} \,\diff{x}} &&= -&& \frac{1}{a} \sech{ax} \\
+        &\int{\csch^2{ax} \,\diff{x}} &&= -&& \frac{1}{a} \coth{ax}
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}
+
+
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{3}
+        &\int{\sec{ax} \,\diff{x}} &&= && \frac{1}{a} \ln{\abs{\sec{ax} + \tan{ax}}} \\
+        &\int{\csc{ax} \,\diff{x}} &&= -&& \frac{1}{a} \ln{\abs*{\cot{\frac{ax}{2}}}} \\
+        & &&= -&& \frac{1}{a} \ln{\abs{\csc{ax} + \cot{ax}}} \\
+        &\int{\cot{ax} \,\diff{x}} &&= && \frac{1}{a} \ln{\abs{\sin{ax}}}
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}%
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{3}
+        &\int{\sech{ax} \,\diff{x}} &&= \frac{1}{a} \tan^{-1}{\parens*{\sinh{ax}}} \\
+        & &&= \frac{2}{a} \tan^{-1}{\parens*{\tanh{\frac{ax}{2}}}} \\
+        &\int{\csch{ax} \,\diff{x}} &&= \frac{1}{a} \ln{\abs*{\tanh{\frac{ax}{2}}}} \\
+        & &&= \frac{1}{a} \ln{\abs*{\csch{ax} - \coth{ax}}} \\
+        &\int{\coth{ax} \,\diff{x}} &&= \frac{1}{a} \ln{\abs*{\sinh{ax}}}
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}
+
+
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{3}
+        &\int{\frac{1}{x^2 + a^2} \,\diff{x}} &&= \frac{1}{a} \tan^{-1}{\frac{x}{a}}
+            && \\
+        \vphantom{
+            = \frac{1}{a} \coth^{-1}{\frac{x}{a}} + C_2
+        } \\
+        \vphantom{
+            = \frac{1}{2a} \ln{\abs*{\frac{a+x}{a-x}}} + C_3
+        } \\
+        &\int{\frac{1}{\sqrt{a^2 - x^2}} \,\diff{x}} &&= \hphantom{-} \sin^{-1}{\frac{x}{a}} + C_1
+            ,\quad
+            &&{\color{extranotecolor}
+                a > 0 ,\ -a < x < a
+            } \\
+        & &&= - \cos^{-1}{\frac{x}{a}} + C_2
+            ,\quad
+            &&{\color{extranotecolor}
+                a > 0 ,\ -a < x < a
+            }
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}%
+\begin{myminipage}[t]{0.5\linewidth}
+    \begin{HackEquationLeftAlign}
+    \begin{alignat*}{3}
+        &\int{\frac{1}{a^2 - x^2} \,\diff{x}} &&= \frac{1}{a} \tanh^{-1}{\frac{x}{a}} + C_1
+            ,\quad
+            &&{\color{extranotecolor}
+                a > \abs{x}
+            } \\
+        & &&= \frac{1}{a} \coth^{-1}{\frac{x}{a}} + C_2
+            ,\quad
+            &&{\color{extranotecolor}
+                \abs*{x} > a > 0
+            } \\
+        & &&= \frac{1}{2a} \ln{\abs*{\frac{a+x}{a-x}}} + C_3
+            ,\quad
+            &&{\color{extranotecolor}
+                x^2 \neq a^2
+            } \\
+        &\int{\frac{1}{\sqrt{x^2 + a^2}} \,\diff{x}} &&= \sinh^{-1}{\frac{x}{a}} + C_1
+            && \\
+        & &&= \ln{\parens*{x + \sqrt{x^2 + a^2}}} + C_2
+            && \\
+        &\int{\frac{1}{\sqrt{x^2 - a^2}} \,\diff{x}} &&= \cosh^{-1}{\frac{x}{a}} + C_1
+            ,\quad
+            &&{\color{extranotecolor}
+                x > a > 0
+            } \\
+        & &&= \ln{\parens*{x + \sqrt{x^2 - a^2}}} + C_2
+            ,\quad
+            &&{\color{extranotecolor}
+                x > a > 0
+            }
+    \end{alignat*}
+    \end{HackEquationLeftAlign}%
+\end{myminipage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Complex Analysis}%
+\label{sub:Complex Analysis}
+
+\begin{multicols}{3}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Imaginary Unit}
+        \begin{equation*}
+            i^2 = -1
+        \end{equation*}
+
+    }
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}
+

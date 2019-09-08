@@ -1,0 +1,546 @@
+% This file provides all shared infrastructure to be provided to this repository's latex documents.
+% This will also include common packages.
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{../_latex_includes/sharedpkg}[2017/06/10 Initial Version]
+
+%%%%%%%%%%%%
+% Packages %
+%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{xparse}
+
+\usepackage[backend=biber]{biblatex}
+\usepackage{epigraph}
+\usepackage{listings}
+\usepackage{lstautogobble}
+\usepackage{xcolor} % \usepackage{color}
+\usepackage{nameref}
+\usepackage{multicol}
+\usepackage[raggedright]{titlesec}
+\usepackage{graphicx}
+\usepackage{float}
+% \usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{setspace}
+\usepackage{titletoc} % Must be before tocloft due to weird conflict
+\usepackage[subfigure]{tocloft} % subfigure option for conflict resolution
+\usepackage{changepage}
+\usepackage[framemethod=pgf]{mdframed}
+\usepackage[ampersand]{easylist}
+\usepackage{enumitem}
+% \usepackage{rotating}
+\usepackage{ulem}
+% \usepackage{svg} % How to use this?
+\usepackage{soul} % Similar package to ulem
+
+\usepackage{lipsum}
+
+% Core Global Formatting
+\usepackage[hypertexnames=false]{hyperref}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage[font={small},labelfont={bf},justification=centering]{caption}
+
+% Core Mathematics
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+%\usepackage{nccmath} % Too buggy, breaks minipages, please don't use.
+\usepackage{xfrac}
+\usepackage{siunitx}
+\usepackage{cancel}
+\usepackage{bm} % Bold math symbols
+
+% Core Algorithmics
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
+
+% PGF/TikZ
+\usepackage{tikz}
+%\usepackage{tkz-euclide} % Not going to use, documentation is in French.
+%\usetkzobj{all} % Loads all tkz-euclide objects
+\usepackage{xstring} % CIRCUITIKZ DEPENDENCY
+\usepackage[american]{circuitikz}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Heading Constants %
+%%%%%%%%%%%%%%%%%%%%%
+
+%\providecommand\COURSECODE{ELECxxxx}
+%\providecommand\COURSETITLE{UNSW 1XsX \COURSECODE{} (???)}
+
+\providecommand\TITLE{please overwrite this constant thx}
+\providecommand\AUTHOR{\url{https://github.com/simshadows} \\ \texttt{contact@simshadows.com}}
+\providecommand\DATE{\today}
+
+\title{\TITLE{}}
+\author{\AUTHOR{}}
+\date{\DATE{}}
+
+
+%%%%%%%%%%%%%%%%%%
+% Custom Colours %
+%%%%%%%%%%%%%%%%%%
+
+\definecolor{verylightgray}{rgb}{0.88,0.88,0.88}
+\definecolor{lightgray}{rgb}{0.7,0.7,0.7}
+
+\definecolor{darkgreen}{rgb}{0,0.6,0}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Theme colours taken from Google Sheets.
+\definecolor{myblue}{RGB}{66,133,244}
+\definecolor{myteal}{RGB}{70,189,198}
+\definecolor{mygreen}{RGB}{52,168,83}
+\definecolor{myyellow}{RGB}{251,188,4}
+\definecolor{myorange}{RGB}{255,109,1}
+\definecolor{myred}{RGB}{234,67,53}
+
+\definecolor{extranotecolor}{rgb}{0.65,0.65,0.65}
+\colorlet{suppnotecolor}{orange}
+\colorlet{questionassumptionscolor}{red}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other Style (some may be overwritten again in the document preamble) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+% Adjusts the offset of the underline command \ul{} from the soul package to be a bit higher.
+% The argument "x" is an arbitrary character without descenders as often are in the letters "y", "g", and "j".
+% This macro sets the line to be very close, but avoiding the lowest letter. In this case, without descenders,
+% it will indeed be very close to the base of text.
+\setuldepth{x}
+
+\hypersetup{
+    colorlinks = true,
+    citecolor  = lightgray
+}
+
+\let\OldCite\cite
+\RenewDocumentCommand{\cite}{O{} m}{\ExtraNotes{\textsuperscript{\OldCite[#1]{#2}}}}
+
+\renewcommand\thepart{\arabic{part}}
+\renewcommand\partname{Part}
+% \newcommand\sectionbreak{\clearpage} % This behaves weirdly...
+
+% \setlength{\abovecaptionskip}{-0.5mm} % TODO: Find something more robust.
+% \setlength{\belowcaptionskip}{-3.0mm} % TODO: Find something more robust.
+
+\sisetup{
+    per-mode = reciprocal,
+}
+
+\renewcommand{\lstlistingname}{Snippet}
+
+\lstset{
+    frame             = tblr,
+    autogobble,
+    columns           = fullflexible,
+    keepspaces        = true,
+    aboveskip         = 3mm,
+    belowskip         = 3mm,
+    showstringspaces  = false,
+    columns           = flexible,
+    basicstyle        = {\small\ttfamily},
+    numberstyle       = \tiny\color{gray},
+    keywordstyle      = \color{blue},
+    commentstyle      = \color{darkgreen},
+    stringstyle       = \color{mauve},
+    % TODO: More fine-grained syntax highlighting?? This is extremely limited.
+    breaklines        = true,
+    breakatwhitespace = false,
+    tabsize           = 4
+}
+
+% This Javascript syntax highlighting definition is a modified version taken from secondary source:
+% https://tex.stackexchange.com/questions/89574/language-option-supported-in-listings
+% The original source, which doesn't appear to be available anymore, is:
+% http://lenaherrmann.net/2010/05/20/javascript-syntax-highlighting-in-the-latex-listings-package
+\lstdefinelanguage{JavaScript}{
+    keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+    ndkeywords={class, export, boolean, throw, implements, import, this},
+    ndkeywordstyle=\color{darkgray}\bfseries,
+    identifierstyle=\color{black},
+    sensitive=false,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]"
+}
+
+
+% Circuitikz Libraries
+\usetikzlibrary{calc}
+
+% Custom Circuitikz options
+\ctikzset{tripoles/mos style/arrows} % Adds arrows to MOSFETs
+
+% Circuitikz part proportions
+% Based on: https://github.com/circuitikz/circuitikz/blob/4feb150ba25cd7ad80c94a56f5d5d516200bfbf0/tex/circuitikz.sty#L258
+
+\ctikzset{monopoles/ground/width/.initial=.15}
+
+\ctikzset{bipoles/resistor/height/.initial=.23}
+\ctikzset{bipoles/resistor/width/.initial=.6}
+\ctikzset{bipoles/capacitor/height/.initial=.4}
+\ctikzset{bipoles/capacitor/width/.initial=.1}
+\ctikzset{bipoles/potentiometer/height/.initial=.6}
+\ctikzset{bipoles/potentiometer/height 2/.initial=.23}
+\ctikzset{bipoles/potentiometer/width/.initial=.6}
+\ctikzset{bipoles/photoresistor/height/.initial=.6}
+\ctikzset{bipoles/photoresistor/height 2/.initial=.23}
+\ctikzset{bipoles/photoresistor/width/.initial=.6}
+\ctikzset{bipoles/thermistor/main/.initial=.7}
+\ctikzset{bipoles/thermistor/height/.initial=.328}%.23/.7
+\ctikzset{bipoles/thermistor/width/.initial=.6}
+\ctikzset{bipoles/thermistorntc/width/.initial=.6}
+\ctikzset{bipoles/thermistorntc/main/.initial=.7}
+\ctikzset{bipoles/thermistorntc/height/.initial=.328}%.23/.7
+\ctikzset{bipoles/thermistorntc/height 2/.initial=.75}%.23/.7
+\ctikzset{bipoles/thermistorptc/width/.initial=.6}
+\ctikzset{bipoles/thermistorptc/main/.initial=.7}
+\ctikzset{bipoles/thermistorptc/height/.initial=.328}%.23/.7
+\ctikzset{bipoles/varistor/main/.initial=.7}
+\ctikzset{bipoles/varistor/height/.initial=.328}%.23/.7
+\ctikzset{bipoles/varistor/width/.initial=.6}
+\ctikzset{bipoles/vresistor/height/.initial=.45}
+\ctikzset{bipoles/vresistor/width/.initial=.6}
+\ctikzset{bipoles/generic/height/.initial=.23}
+\ctikzset{bipoles/generic/width/.initial=.6}
+\ctikzset{bipoles/generic potentiometer/height/.initial=.6}
+\ctikzset{bipoles/generic potentiometer/height 2/.initial=.23}
+\ctikzset{bipoles/generic potentiometer/width/.initial=.6}
+\ctikzset{bipoles/ageneric/height/.initial=.23}
+\ctikzset{bipoles/ageneric/width/.initial=.6}
+\ctikzset{bipoles/memristor/height/.initial=.23}
+\ctikzset{bipoles/memristor/wave height/.initial=.375}
+\ctikzset{bipoles/memristor/width/.initial=.60}
+\ctikzset{bipoles/tgeneric/height/.initial=.525}
+\ctikzset{bipoles/tgeneric/width/.initial=.6}
+\ctikzset{bipoles/tfullgeneric/height/.initial=.525}
+\ctikzset{bipoles/tfullgeneric/width/.initial=.60}
+\ctikzset{bipoles/fullgeneric/height/.initial=.23}
+\ctikzset{bipoles/fullgeneric/width/.initial=.6}
+\ctikzset{bipoles/diode/height/.initial=.3}
+\ctikzset{bipoles/diode/width/.initial=.25}
+\ctikzset{bipoles/bidirectionaldiode/height/.initial=.66}
+\ctikzset{bipoles/bidirectionaldiode/width/.initial=.6}
+\ctikzset{bipoles/bidirectionaldiode/diode width left/.initial=.3}
+\ctikzset{bipoles/bidirectionaldiode/diode width right/.initial=.3}
+
+\ctikzset{tripoles/thyristor/height/.initial=.66}
+\ctikzset{tripoles/thyristor/height 2/.initial=.3}
+\ctikzset{tripoles/thyristor/width/.initial=.6}
+\ctikzset{tripoles/thyristor/diode height/.initial=.3}
+\ctikzset{tripoles/thyristor/diode width left/.initial=.4}
+\ctikzset{tripoles/thyristor/diode width right/.initial=.3}
+
+\ctikzset{tripoles/triac/height/.initial=.66}
+\ctikzset{tripoles/triac/width/.initial=.6}
+\ctikzset{tripoles/triac/diode width left/.initial=.3}
+\ctikzset{tripoles/triac/diode width right/.initial=.3}
+
+% Custom Proportions
+
+\ctikzset{bipoles/crossing/size=.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Headers and Footers %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% These are the defaults, to be overridden within each document as required.
+
+\lhead{}
+\rhead{}
+% Example overrides:
+%       \lhead{\COURSECODE{} - \TITLE{}}
+%       \rhead{\AUTHOR{}}
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section Declaration Macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\InvisiblePart}[1]{%
+    \phantomsection
+    \addcontentsline{toc}{part}{#1}
+}
+
+\newcommand{\UnnumberedPart}[1]{%
+    \phantomsection
+    \addcontentsline{toc}{part}{#1}
+    \part*{#1}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Major Document Element Macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\MakeCustomTitle}{%
+    \begin{center}
+        %\begin{large}
+        %   \COURSETITLE{}
+        %\end{large}
+        %\\[2mm]
+        \begin{Huge}
+            \textbf{\TITLE{}}
+        \end{Huge}
+        \\[2mm]
+        \begin{large}
+            \AUTHOR{}\\[2mm]
+            Last Updated: \DATE
+        \end{large}
+    \end{center}
+}
+
+
+%%%%%%%%%%%%%%%
+% Math Macros %
+%%%%%%%%%%%%%%%
+
+% (HACK)
+% This implements a hack to left-align a single equation.
+% If a better solution is found, please replace all instances of this hack with the new solution.
+\newenvironment{HackEquationLeftAlign}{
+        \setbool{@fleqn}{true}
+    } {
+}
+%\newcommand\HackEquationLeftAlign{ \setbool{@fleqn}{true} } % Command variant, though this is clunky to use.
+
+\newcommand\Nth[2]{\ensuremath{{#1}^\textit{#2}}}
+\newcommand\diff[1]{\ensuremath{\mathrm{d}#1}}
+\newcommand{\parallelsum}{\mathbin{\|}}
+
+\DeclarePairedDelimiter\parens{(}{)}
+\DeclarePairedDelimiter\brackets{[}{]}
+\DeclarePairedDelimiter\braces{\{}{\}}
+
+\DeclarePairedDelimiter\abs{\lvert{}}{\rvert{}}
+\DeclarePairedDelimiter\inte{[}{]}
+
+\DeclarePairedDelimiter\ceil{\lceil{}}{\rceil{}}
+\DeclarePairedDelimiter\floor{\lfloor{}}{\rfloor{}}
+
+\newcommand\evalat[2]{{\left.#1\right\rvert{}}_{#2}}
+
+\newcommand\rhs{\textit{RHS}}
+\newcommand\lhs{\textit{LHS}}
+
+% \newcommand*\Let[2]{\State #1 $\gets$ #2}% THERE MUST BE A BETTER WAY!!!
+
+% Other math functions that aren't in-built
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+
+% Electrical Engineering Conventions
+\DeclareSIUnit\voltampere{VA} % Apparent Power
+\DeclareSIUnit\var{VAR} % Reactive Power
+
+% Fraction in display mode
+\newcommand\DisplayFrac[2]{\displaystyle \frac{\displaystyle {#1}}{\displaystyle {#2}}}
+
+% Coloured emphasis in math environments.
+% I made these macros because I use it a lot...
+% NOTE: These commands can't be nested into each other for some reason, probably due to a bug.
+\newcommand{\memph}[2][myred]{{\color{#1}\bm{#2}}}
+\newcommand{\memphR}[1]{\memph[myred]{#1}}
+\newcommand{\memphG}[1]{\memph[mygreen]{#1}}
+\newcommand{\memphB}[1]{\memph[myblue]{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other General Utility Macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\MonoBox}[1]{\framebox[1.05\width]{\texttt{#1}}}
+\newcommand{\myul}[1]{\ul{#1}} % A proxy for the preferred underline command.
+\newcommand{\textbu}[1]{\textbf{\ul{#1}}} % Bold + Underline
+\newcommand{\ttd}[1]{\texttt{\detokenize{#1}}} % Teletype, Detokenized
+
+\newcommand{\espace}{\hspace{5mm}}
+
+\newcommand{\SectionBreak}{\newpage}
+\newcommand{\MulticolsBreak}{\vfill\null\columnbreak} % For use in the multicols environment.
+\newcommand{\MulticolsPhantomPlaceholder}{\phantom{x}} % An arbitrary box to occupy a multicols column.
+
+\newcommand{\CommonFigureFormat}[1]{%
+    \centering
+    #1
+}
+
+\newcommand{\CommonFigureFormatBordered}[1]{%
+    \CommonFigureFormat
+    \fcolorbox{lightgray}{white}{#1}
+}
+
+\newcommand{\CustomListHole}[2]{%
+    \end{CustomList}
+    {#2}
+    \begin{CustomList}{#1}
+}
+
+% (HACK)
+% Deeper lists
+\newcommand{\DeeperCustomList}[2]{%
+    \CustomListHole{#1}{%
+        \begin{adjustwidth}{9\the\itemindent}{} % TODO: Use something robust.
+        \begin{minipage}{\linewidth}
+        \begin{CustomList}{itemize}
+        \ListProperties(Space*=1.25mm, Space=1.25mm) % TODO: Use something more robust.
+        #2
+        \end{CustomList}
+        \end{minipage}
+        \end{adjustwidth}
+    }
+}
+
+% Paragraph Indentation
+\newenvironment{pindent}{
+    \begin{adjustwidth}{1cm}{}
+    } {
+    \end{adjustwidth}
+}
+
+% Common easylist environments
+\newenvironment{CustomList}[1]{
+    \begin{easylist}[#1] \ListProperties(Space*=-1.25mm, Space=-1.25mm)
+    } {
+    \end{easylist}
+}
+
+\newenvironment{SimpleFrame}{
+    \begin{mdframed}[
+            innerbottommargin=2\mdflength{innertopmargin},
+            %roundcorner=4pt
+        ]
+        \raggedright
+    } {
+    \end{mdframed}
+}
+
+\newenvironment{SubsectionFrame}{
+    \begin{mdframed}[
+            innerbottommargin=2\mdflength{innertopmargin},
+            roundcorner=4pt
+        ]
+        \raggedright
+    } {
+    \end{mdframed}
+}
+
+\newenvironment{QuestionFrame}{
+    \begin{mdframed}[
+            innerbottommargin=\mdflength{innertopmargin},
+            roundcorner=4pt
+        ]
+        \raggedright
+    } {
+    \end{mdframed}
+}
+
+\newcommand{\SupplementaryNotes}[1]{{\color{suppnotecolor}#1}}
+\newcommand{\ExtraNotes}[1]{{\color{extranotecolor}#1}}
+\let\Exn\ExtraNotes % Alias
+\newcommand{\QuestionAssumptions}[1]{{\color{questionassumptionscolor}#1}}
+
+\newcommand{\FilenameRef}[1]{\textit{\color{blue}\texttt{\detokenize{#1}}}}
+\newcommand{\Todo}[1]{\textbf{\textit{\color{red}TODO: #1}}}
+\newcommand{\MissingFig}[1]{\textbf{\textit{\color{purple}TODO, MISSING FIGURE: #1}}}
+
+\newcommand{\LargeEpigraph}[2]{%
+    \begin{center}
+    \begin{minipage}{0.85\linewidth}
+    \begin{flushright}
+        \textit{``#1"}\\[2mm]
+        \textsc{---#2}
+    \end{flushright}
+    \end{minipage}
+    \end{center}
+}
+
+\newcommand{\PageEpigraph}[1]{%
+    \newpage
+    \thispagestyle{empty}
+    \begin{center}
+        \vspace*{\stretch{1}}
+        \textit{#1}
+        \vspace{\stretch{3}}
+    \end{center}
+    \newpage
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Command/Environment Reimplementations %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% These commands/environments are for fixing issues with the original ones.
+%
+% All reimplementations will use the my- prefix rather than totally replacing the
+% command, to signify a difference in behaviour.
+
+
+% (HACK)
+% This minipage wrapper to implement a hack to restore the document's parskip in the minipage.
+% Minipage will normally always set parskip to zero, and restore it after the minipage.
+\newlength{\anonparskip} % Temporary variable
+\newenvironment{myminipage}[2][]{%
+        \setlength{\anonparskip}{\parskip}%
+        \begin{minipage}[#1]{#2}%
+        \setlength{\parskip}{\anonparskip}%
+    }{%
+        \end{minipage}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Report Compilation Macros %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\BeginReport}[1]{%
+    \stopcontents[inner]
+    
+    \SectionBreak
+    
+    \setcounter{section}{0}
+    \UnnumberedPart{#1}
+    \vspace{1mm}
+    \startcontents[inner]
+}
+
+\newcommand{\ReportTableOfContents}{%
+{
+    \hypersetup{linkcolor=black}
+    \begin{spacing}{0}
+    \setcounter{tocdepth}{2}
+    \printcontents[inner]{}{}{\section*{Contents}}
+    \end{spacing}
+    \SectionBreak
+}
+}
+
+
+%%%%%%%%%%%%%%%%%%%
+% AtBeginDocument %
+%%%%%%%%%%%%%%%%%%%
+
+\AtBeginDocument{%
+    \raggedright
+}
+
+
+\endinput

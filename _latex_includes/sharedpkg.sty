@@ -44,6 +44,10 @@
 \usepackage{fancyhdr}
 \usepackage[font={small},labelfont={bf},justification=centering]{caption}
 
+% Language
+%\usepackage[english,greek]{babel}
+%\usepackage{teubner} % Classical greek. Mainly just used for capital Digamma.
+
 % Core Mathematics
 \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -77,7 +81,7 @@
 %\providecommand\COURSETITLE{UNSW 1XsX \COURSECODE{} (???)}
 
 \providecommand\TITLE{please overwrite this constant thx}
-\providecommand\AUTHOR{\url{https://github.com/simshadows} \\ \texttt{contact@simshadows.com}}
+\providecommand\AUTHOR{\url{http://simshadows.com/} \\ \texttt{contact@simshadows.com}}
 \providecommand\DATE{\today}
 
 \title{\TITLE{}}
@@ -120,6 +124,8 @@
 % This macro sets the line to be very close, but avoiding the lowest letter. In this case, without descenders,
 % it will indeed be very close to the base of text.
 \setuldepth{x}
+
+\def\arraystretch{1.3} % Makes spaces between rows wider.
 
 \hypersetup{
     colorlinks = true,
@@ -353,6 +359,39 @@
 % Fraction in display mode
 \newcommand\DisplayFrac[2]{\displaystyle \frac{\displaystyle {#1}}{\displaystyle {#2}}}
 
+% My implementations of math mode Greek letters where no command is available due to similarity with Latin letters.
+% These commands are used where needed to intentionally keep typographically consistent.
+\DeclareMathSymbol{\myAlpha  }{\mathalpha}{operators}{"41}
+\DeclareMathSymbol{\myBeta   }{\mathalpha}{operators}{"42}
+\DeclareMathSymbol{\myEpsilon}{\mathalpha}{operators}{"45}
+\DeclareMathSymbol{\myZeta   }{\mathalpha}{operators}{"5A}
+\DeclareMathSymbol{\myEta    }{\mathalpha}{operators}{"48}
+\DeclareMathSymbol{\myIota   }{\mathalpha}{operators}{"49}
+\DeclareMathSymbol{\myKappa  }{\mathalpha}{operators}{"4B}
+\DeclareMathSymbol{\myMu     }{\mathalpha}{operators}{"4D}
+\DeclareMathSymbol{\myNu     }{\mathalpha}{operators}{"4E}
+\DeclareMathSymbol{\myOmicron}{\mathalpha}{operators}{"4F}
+\DeclareMathSymbol{\myRho    }{\mathalpha}{operators}{"50}
+\DeclareMathSymbol{\myTau    }{\mathalpha}{operators}{"54}
+\DeclareMathSymbol{\myChi    }{\mathalpha}{operators}{"58}
+\DeclareMathSymbol{\myomicron}{\mathord  }{letters}{"6F}
+\DeclareMathSymbol{\myDigamma}{\mathalpha}{operators}{"46} % TODO: Find a better version.
+%% My original commands
+%\newcommand{\myAlpha  }{\mathrm{A}}
+%\newcommand{\myBeta   }{\mathrm{B}}
+%\newcommand{\myEpsilon}{\mathrm{E}}
+%\newcommand{\myZeta   }{\mathrm{Z}}
+%\newcommand{\myEta    }{\mathrm{H}}
+%\newcommand{\myIota   }{\mathrm{I}}
+%\newcommand{\myKappa  }{\mathrm{K}}
+%\newcommand{\myMu     }{\mathrm{M}}
+%\newcommand{\myNu     }{\mathrm{N}}
+%\newcommand{\myOmicron}{\mathrm{O}}
+%\newcommand{\myomicron}{\mathnormal{o}} % I have no idea what this should be, but the other lower-case letters are italicized...
+%\newcommand{\myRho    }{\mathrm{P}}
+%\newcommand{\myTau    }{\mathrm{T}}
+%\newcommand{\myChi    }{\mathrm{X}}
+
 % Coloured emphasis in math environments.
 % I made these macros because I use it a lot...
 % NOTE: These commands can't be nested into each other for some reason, probably due to a bug.
@@ -365,6 +404,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Other General Utility Macros %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength{\anonlength} % General-purpose anonymous length variable that I use through my documents.
 
 \newcommand{\MonoBox}[1]{\framebox[1.05\width]{\texttt{#1}}}
 \newcommand{\myul}[1]{\ul{#1}} % A proxy for the preferred underline command.

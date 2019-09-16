@@ -1,29 +1,1502 @@
-\subsection{DC Analysis Fundamentals}%
-\label{sub:fundamentals}
+\subsection{DC Analysis}%
+\label{sub:dc-analysis}
 
 \begin{multicols}{2}
     
     \CheatsheetEntryFrame{
 
-        \CheatsheetEntryTitle{Current and Voltage}
-        \begin{equation*}
-            i \triangleq \frac{\diff{q}}{\diff{t}}
-            \qquad
-            v \triangleq \frac{\diff{w}}{\diff{q}}
-        \end{equation*}
+        \CheatsheetEntryTitle{Current and Voltage} \\[0mm]
+        \begin{multicols}{2}
+            \begin{equation*}
+                i \triangleq \frac{\diff{q}}{\diff{t}}
+            \end{equation*}
+
+            \begin{equation*}
+                v \triangleq \frac{\diff{w}}{\diff{q}}
+            \end{equation*}
+        \end{multicols}
+
+        By \textit{conventional current}, current is the flow of $+$ve charge.
+
+        \CheatsheetEntryExtraSeparation
 
         \CheatsheetEntryTitle{Power}
         \begin{equation*}
             p \triangleq \frac{\diff{w}}{\diff{t}} = \frac{\diff{w}}{\diff{q}} \frac{\diff{q}}{\diff{t}}
             \qquad \Rightarrow \qquad
             p = vi
+        \end{equation*} \\[0pt]
+
+        \begin{figure}[H]\centering
+        \begin{circuitikz}
+            \draw
+                (0,0) to[short] ++(0.8,0)
+                to[short, i=$i$] ++(0.2,0)
+                to[generic, name=X, v=$v$] ++(2,0)
+                to[short] ++(1,0)
+            ;
+            \node[single arrow,
+                draw,
+                minimum height=2.5em,
+                minimum width=4em,
+                single arrow tip angle=125,
+                single arrow head extend=0.15em,
+                outer sep=1ex,
+                rotate=-90,
+                anchor=east]
+                (Arrow) at (X.north) {};
+            \node at (Arrow.center) {$p$};
+            \draw
+                (Arrow.north) node[right=2ex, align=left] {
+                    By \textit{passive sign convention}, \\
+                    power flowing \textit{in} is $+$ve.
+                }
+                %(Arrow.north |- X.center)
+                %++(0,-1) node[right=2ex, align=left] {
+                %    So for power to be positive, \\
+                %    current flows into the positive terminal.
+                %}
+            ;
+        \end{circuitikz}
+        %\caption{caption}
+        %\label{fig:labelname}
+        \end{figure}
+
+        %Passive sign convention will be assumed. %for all electrical engineering material of this cheatsheet.
+
+        %\CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Energy Absorbed}
+        \begin{equation*}
+            w = \int_{t_0}^{t}{p(\tau) \,\diff{\tau}}
         \end{equation*}
 
-        By \textit{passive sign convention}:
-        \begin{itemize}
-            \item power flowing \textit{into} a component is positive, and
-            \item power flowing \textit{out} of a component is negative.
-        \end{itemize}
+    }
+
+    \CheatsheetEntryFrame{
+
+        %% Old Version
+        %\CheatsheetEntryTitle{Ideal Independent Sources}
+        %
+        %\begin{center}
+        %\begin{circuitikz}
+        %    \path 
+        %        (0,0) node (D) {}
+        %        ++(0,1.2) node (C) {}
+        %        ++(0,2.2) node (B) {}
+        %        ++(0,1.2) node (A) {}
+        %        (A) ++(0,0.65) node (L1) {}
+        %        (C) ++(0,0.65) node (L2) {}
+        %        (A) ++(2,0) ++(1.7,0) node (Arrow1) {} ++(1.7,0) node (ArrowEdge1) {}
+        %        (B -| Arrow1) node (Arrow2) {}
+        %        (B -| ArrowEdge1) node (ArrowEdge2) {}
+        %        (ArrowEdge1) ++(1.1,0) ++(0,0.4) node (DisL1) {}
+        %        (ArrowEdge1) ++(0,-0) node (DisD1) {}
+        %        (ArrowEdge2) ++(1.1,0) ++(0,0.4) node (DisL2) {}
+        %        (ArrowEdge2) ++(0,-0) node (DisD2) {}
+        %    ;
+        %    \draw
+        %        (A) to[V, invert, o-o] ++(2,0)
+        %        (B) to[I, o-o] ++(2,0)
+        %        (C) to[cV, invert, o-o] ++(2,0)
+        %        (D) to[cI, o-o] ++(2,0)
+        %        (L1) ++(1,0) node[above] {Independent Sources}
+        %        (L2) ++(1,0) node[above] {Dependent Sources}
+        %        (Arrow1) node {$\xRightarrow[(\text{set }V=0)]{\text{source disable}}$}
+        %        (Arrow2) node {$\xRightarrow[(\text{set }I=0)]{\text{source disable}}$}
+        %        (DisL1) node {Short Circuit}
+        %        (DisL2) node {Open Circuit}
+        %        (DisD1) to[short, o-*] ++(0.8,0) to[short] ++(0.6,0) to[short, *-o] ++(0.8,0)
+        %        (DisD2) to[short, o-o] ++(0.8,0) to[open] ++(0.6,0) to[short, o-o] ++(0.8,0)
+        %    ;
+        %\end{circuitikz}%
+        %\end{center}
+
+        \CheatsheetEntryTitle{Ideal Independent Sources}
+
+        \begin{center}
+        \begin{circuitikz}
+            \path 
+                (0,0) node (B) {}
+                ++(0,1.6) node (A) {}
+                (A) ++(2,0) ++(1.7,0) node (Arrow1) {} ++(1.7,0) node (ArrowEdge1) {}
+                (B -| Arrow1) node (Arrow2) {}
+                (B -| ArrowEdge1) node (ArrowEdge2) {}
+                (ArrowEdge1) ++(1.1,0) ++(0,0.4) node (DisL1) {}
+                (ArrowEdge1) ++(0,-0) node (DisD1) {}
+                (ArrowEdge2) ++(1.1,0) ++(0,0.4) node (DisL2) {}
+                (ArrowEdge2) ++(0,-0) node (DisD2) {}
+            ;
+            \draw
+                (A) to[V, l=$V$, invert, o-o] ++(2,0)
+                (B) to[I, l=$I$, o-o] ++(2,0)
+                (Arrow1) node {$\xRightarrow[(\text{set }V=0)]{\text{source disable}}$}
+                (Arrow2) node {$\xRightarrow[(\text{set }I=0)]{\text{source disable}}$}
+                (DisL1) node {Short Circuit}
+                (DisL2) node {Open Circuit}
+                (DisD1) to[short, o-*] ++(0.8,0) to[short] ++(0.6,0) to[short, *-o] ++(0.8,0)
+                (DisD2) to[short, o-o] ++(0.8,0) to[open] ++(0.6,0) to[short, o-o] ++(0.8,0)
+                %(A) ++(2,0) ++(-0.35,0.2) node[above] {$V$}
+                %(B) ++(2,0) ++(-0.35,0.2) node[above] {$I$}
+            ;
+        \end{circuitikz}%
+        \end{center}
+
+        \CheatsheetEntryTitle{Ideal Dependent Sources}
+
+        \vspace*{1ex}
+        \begin{center}
+        \begin{circuitikz}
+            \path 
+                (0,0) node (C) {}
+                %++(0,1.6) node (C) {}
+                % Everything below is used to align with the Ideal Independent Sources section
+                (C) ++(2,0) ++(1.7,0) node (Arrow1) {} ++(1.7,0) node (ArrowEdge1) {}
+                (ArrowEdge1) ++(0,-0) node (DisD1) {}
+                    (DisD1) -- ++(0.8,0) -- ++(0.6,0) -- ++(0.8,0)
+            ;
+            \draw
+                (C) to[cV, invert, o-o] ++(2,0)
+                ++(0.8,0) to[cI, o-o] ++(2,0)
+            ;
+        \end{circuitikz}%
+        \end{center}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Maximum Power Transfer}
+
+        \begin{minipage}[c]{0.6\columnwidth}
+            \begin{center}
+            \begin{circuitikz}
+                \path
+                    (0,0) coordinate (InsideBL)
+                    ++(1.8,0  ) coordinate (InsideBR)
+                    ++(0  ,1.5) coordinate (InsideTR)
+                ;
+                \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                    (InsideTR) ++( 0  , 0.8) coordinate (BoxTR)
+                    (InsideBL) ++(-1.2,-0.8) coordinate (BoxBL)
+                    (BoxBL) rectangle (BoxTR)
+                ;
+                \draw
+                    (InsideBL)
+                    to[V, l=$v_{th}$, invert] (InsideBL |- InsideTR)
+                    to[R, l=$R_{th}$] (InsideTR)
+                    to[short, -o] ++( 0.4,0)
+                    to[short]     ++( 0.4,0)
+                    to[R, l=$R_L$] ++(0,-1.5)
+                    to[short]     ++(-0.4,0)
+                    to[short, o-] ++(-0.4,0)
+                    to[short]     (InsideBL)
+                ;
+            \end{circuitikz}
+            \end{center}
+        \end{minipage}%
+        \begin{minipage}[c]{0.4\columnwidth}
+            \centering
+            Maximum power is transferred to $R_L$ if:
+            \begin{equation*}
+                R_L = R_{th}
+            \end{equation*}
+            \phantom{Maximum power is transferred to $R_L$ if:} % For alignment
+        \end{minipage}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \renewcommand{\MyReusableFormatting}[2]{%
+            \begin{minipage}[c]{0.78\columnwidth}
+                #1
+            \end{minipage}%
+            {\color{CheatsheetSepColor} \vrule{}}%
+            %\hspace{0.06\columnwidth}% TODO: Do something better than this ghetto center-alignment.
+            \begin{minipage}[c]{0.2\columnwidth}
+                #2
+            \end{minipage}
+        }
+
+        \CheatsheetEntryTitle{Ohm's Law}
+
+        \MyReusableFormatting{%
+            In terms of resistance $R$:
+            \begin{equation*}
+                v = iR
+            \end{equation*}
+
+            In terms of conductance $G$:
+            \begin{equation*}
+                G \triangleq \frac{1}{R}
+                \qquad \Rightarrow \qquad
+                i = vG
+            \end{equation*}
+        }{%
+            \begin{circuitikz}
+                \path (-1,0) -- (0,0); % Ghetto alignment
+                \draw
+                    (0,0) to[short] ++(0,-0.2)
+                    to[short, i=$i$] ++(0,-0.1)
+                    to[R, l=$R$, v=$v$] ++(0,-1.6)
+                    to[short] ++(0,-0.3)
+                ;
+            \end{circuitikz}%
+        }
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Ideal Capacitors}
+
+        \MyReusableFormatting{%
+            \begin{equation*}
+                i = C \frac{\diff{v}}{\diff{t}}
+                \qquad \phantom{\Rightarrow} \qquad
+                q = Cv
+            \end{equation*}
+
+            %\CheatsheetSmallEquationTitle{Stored charge:}
+            %\begin{equation*}
+            %    q = Cv
+            %\end{equation*}
+
+            \vspace*{2ex}
+            {\footnotesize%
+            \begin{tabular}{lcl}
+                Steady-state DC       & $\to$ & Open Circuit \\
+                On jump-discontinuity & $\to$ & Short Circuit
+            \end{tabular}
+            }
+        }{%
+            \begin{circuitikz}
+                \path (-1,0) -- (0,0); % Ghetto alignment
+                \draw
+                    (0,0) to[short] ++(0,-0.2)
+                    to[short, i=$i$] ++(0,-0.1)
+                    to[C, l=$C$, v=$v$] ++(0,-1.6)
+                    to[short] ++(0,-0.3)
+                ;
+            \end{circuitikz}%
+        }
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Ideal Inductors}
+
+        \MyReusableFormatting{%
+            \begin{equation*}
+                v = L \frac{\diff{i}}{\diff{t}}
+            \end{equation*}
+
+            \vspace*{2ex}
+            {\footnotesize%
+            \begin{tabular}{lcl}
+                Steady-state DC       & $\to$ & Short Circuit \\
+                On jump-discontinuity & $\to$ & Open Circuit
+            \end{tabular}
+            }
+        }{%
+            \begin{circuitikz}
+                \path (-1,0) -- (0,0); % Ghetto alignment
+                \draw
+                    (0,0) to[short] ++(0,-0.2)
+                    to[short, i=$i$] ++(0,-0.1)
+                    to[L, l=$L$, v=$v$] ++(0,-1.6)
+                    to[short] ++(0,-0.3)
+                ;
+            \end{circuitikz}%
+        }
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Series and Parallel Equivalent}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \textbf{Series}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \textbf{Parallel}
+        \end{minipage}%
+
+        \vspace*{1.5ex}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \scalebox{0.8}{
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    to[generic, o-] ++(2,0)
+                    to[generic, -o] ++(2,0)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \scalebox{0.8}{
+            \begin{circuitikz}
+                \draw
+                    (0.5,0) to[short, o-]
+                    (1,0) -- (1, 0.4) to[generic] (3, 0.4) -- (3,0)
+                    to[short, -o] (3.5,0)
+                    (1,0) -- (1,-0.4) to[generic] (3,-0.4) -- (3,0)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}
+
+        \vspace*{1.5ex}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                R_S = \sum{R_i}
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \frac{1}{R_P} = \sum{\frac{1}{R_i}}
+            \end{equation*}
+        \end{minipage}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \frac{1}{C_S} = \sum{\frac{1}{C_i}}
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                C_P = \sum{C_i}
+            \end{equation*}
+        \end{minipage}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                L_S = \sum{L_i}
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \frac{1}{L_P} = \sum{\frac{1}{L_i}}
+            \end{equation*}
+        \end{minipage}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Voltage and Current Division}
+
+        %\vspace*{1ex}
+        %\begin{minipage}[c]{0.5\columnwidth}
+        %    \centering
+        %    \textbf{Voltage Division}
+        %\end{minipage}%
+        %\begin{minipage}[c]{0.5\columnwidth}
+        %    \centering
+        %    \textbf{Current Division}
+        %\end{minipage}
+
+        \begin{minipage}[c]{0.6\columnwidth}
+            \centering
+            \scalebox{1}{
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    to[short, o-] ++(1,0)
+                    -- ++(0,-0.2)
+                    to[R, l_=$R_1$, v^=${\displaystyle v_1 = \frac{R_1}{R_1+R_2}v}$] ++(0,-1.5)
+                    -- ++(0,-0.3)
+                    to[R, l_=$R_2$, v^=${\displaystyle v_2 = \frac{R_2}{R_1+R_2}v}$] ++(0,-1.5)
+                    -- ++(0,-0.2)
+                    to[short, -o] ++(-1,0)
+                    (0,0)
+                    to[open, v=$v$] (0,-3.7)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}%
+        \begin{minipage}[c]{0.4\columnwidth}
+            \centering
+            \scalebox{1}{
+            \begin{circuitikz}
+                \draw
+                    (0,1.65)
+                    to[short, i=$i$, o-] ++(1,0)
+                    to[short] ++(0,-0.15)
+                    to[R, l_=$R_1$, i>_=$i_1$] ++(0,-1.5)
+                    %to[short] ++(0,-0.25)
+                    to[short, -o] ++(-1,0)
+                    (1,1.65)
+                    to[short] ++(1,0)
+                    to[short] ++(0,-0.15)
+                    to[R, l_=$R_2$, i>_=$i_2$] ++(0,-1.5)
+                    %to[short] ++(0,-0.25)
+                    to[short] ++(-1,0)
+                    (1,0) ++(0,-0.1)
+                    node[below] {${\displaystyle i_1 = \frac{R_2}{R_1+R_2}i}$} ++(0,-1)
+                    node[below] {${\displaystyle i_2 = \frac{R_1}{R_1+R_2}i}$}
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}
+
+    }
+
+\end{multicols}
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Kirchoff's Current Law}
+
+        The sum of signed currents into a node or closed boundary is zero.
+
+        \begin{minipage}[c]{0.55\columnwidth}%
+            \centering
+            \begin{circuitikz}
+                \path % Defining offsets makes the join point look a lot less awkward
+                    (0,0) node (Node) {}
+                    ++(-0.00,0) node (Offset2) {}
+                    ++(-0.04,0) node (Offset1) {}
+                    ++(-0.04,0) node (Offset0) {}
+                    (Node)
+                    ++(0.00,0) node (Offset3) {}
+                    ++(0.04,0) node (Offset4) {}
+                    ++(0.04,0) node (Offset5) {}
+                ;
+                \draw 
+                    (Offset0) to[short] (Offset5)
+                    ( 180:2) to[short, i>=\phantom{x}, color=myred ] (Offset0)
+                    ( 160:2) to[short, i>=\phantom{x}, color=myred ] (Offset1)
+                    ( 140:2) to[short, i>=\phantom{x}, color=myred ] (Offset2)
+                    (  40:2) to[short, i<=\phantom{x}, color=myblue] (Offset3)
+                    (  20:2) to[short, i<=\phantom{x}, color=myblue] (Offset4)
+                    (   0:2) to[short, i<=\phantom{x}, color=myblue] (Offset5)
+                    %( -20:2) to[short, i<=\phantom{x}] (Node)
+                    ( -40:2) to[short, i<=\phantom{x}, color=myblue] (Offset3)
+                    (-140:2) to[short, i>=\phantom{x}, color=myred ] (Offset2)
+                    %(-160:2) to[short, i>=\phantom{x}] (Node)
+                    ( 136:1) ++(0,0.2) node[above] {\color{myred}  $i_{i[1..n]}$}
+                    (  44:1) ++(0,0.2) node[above] {\color{myblue} $i_{o[1..m]}$}
+                    ( -14:1) node {\color{myblue} $\cdot$}
+                    ( -20:1) node {\color{myblue} $\cdot$}
+                    ( -26:1) node {\color{myblue} $\cdot$}
+                    (-154:1) node {\color{myred}  $\cdot$}
+                    (-160:1) node {\color{myred}  $\cdot$}
+                    (-166:1) node {\color{myred}  $\cdot$}
+                ;
+            \end{circuitikz}%
+        \end{minipage}%
+        %\vrule{}%
+        \begin{minipage}[c]{0.45\columnwidth}%
+            \centering
+            \phantom{x} % Phantom to fix broken alignment
+            \begin{equation*}
+                \memphR{\sum{i_i}} - \memphB{\sum{i_o}} = 0
+            \end{equation*}
+
+            \ExtraNotes{\footnotesize \textit{Assumes charge within the node or closed boundary is \myul{always} constant.}}
+        \end{minipage}
+
+        \CheatsheetEntryExtraSeparation
+
+        %\CheatsheetEntryTitle{Nodal Analysis}
+        %
+        %% TODO: Write this section on Nodal Analysis!
+        %
+        %\CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Supernode (for Nodal Analysis)}
+
+        A \textit{supernode} is formed from two non-reference nodes connected by a voltage source (dependent or independent).
+
+        \begin{center}
+        \begin{circuitikz}
+            \path
+                (0,0) coordinate (BL)
+                ++(2,0) coordinate (BR)
+                ++(0,1.4) coordinate (TR)
+                ++(-2,0) coordinate (TL)
+                (1,0.7) coordinate (Middle)
+
+                (TR) ++(1.25,0.40) coordinate (Line0)
+                ++(0,-1.00) coordinate (Line1)
+                ++(0,-0.65) coordinate (Line2)
+                ++(0,-0.65) coordinate (Line3)
+            ;
+            \draw[{myorange!30!white}, fill={myyellow!10!white}, line width=1.8pt]
+                (Middle) ellipse (1.33 and 1.35)
+            ;
+            \draw 
+                (BL) -- (TL)
+                (BR) -- (TR)
+                (BL) to[V, color=myblue] (BR)
+                (TL) to[generic] (TR)
+                %(TL) -- ++(0.4,0)
+                %    ++(0,0.2) node (Generic1TL) {}
+                %(TR) -- ++(-0.4,0)
+                %    ++(0,-0.2) node (Generic1BR) {}
+                %(Generic1TL) rectangle (Generic1BR)
+
+                (BL) ++(1,0) ++(0,0.65) node {\color{myblue} $v_s$}
+
+                (TL) -- ++(-0.3, 0  ) coordinate (TLL)
+                (TL) -- ++( 0  , 0.3) coordinate (TLT)
+                (TR) -- ++( 0  , 0.3) coordinate (TRT)
+                (TR) -- ++( 0.3, 0  ) coordinate (TRR)
+                (BR) -- ++( 0.3, 0  ) coordinate (BRR)
+                (BR) -- ++( 0  ,-0.3) coordinate (BRB)
+                (BL) -- ++( 0  ,-0.3) coordinate (BLB)
+                (BL) -- ++(-0.3, 0  ) coordinate (BLL)
+            ;
+            %\draw[mygreen, line width=1.5pt] % Alternative thicker coloured generic
+            %    (Generic1TL) rectangle (Generic1BR)
+            %;
+            \draw[gray, line cap=round, dash pattern=on 0.5mm off 0.5mm]
+            %\draw[lightgray]
+            %\draw[dotted]
+            %\draw[line cap=round, dash pattern=on 0.1mm off 0.5mm]
+                (TLL) ++(-0.5mm, 0    ) -- ++(-0.3, 0  )
+                (TLT) ++( 0    , 0.5mm) -- ++( 0  , 0.3)
+                (TRT) ++( 0    , 0.5mm) -- ++( 0  , 0.3)
+                (TRR) ++( 0.5mm, 0    ) -- ++( 0.3, 0  )
+                (BRR) ++( 0.5mm, 0    ) -- ++( 0.3, 0  )
+                (BRB) ++( 0    ,-0.5mm) -- ++( 0  ,-0.3)
+                (BLB) ++( 0    ,-0.5mm) -- ++( 0  ,-0.3)
+                (BLL) ++(-0.5mm, 0    ) -- ++(-0.3, 0  )
+            ;
+            \draw[myblue, fill=myblue]
+                (BL) node[circ, color=myblue] {}
+                (BL) ++(-0.30,-0.05) node[below] {$v_1$}
+            ;
+            \draw[myblue, fill=myblue]
+                (BR) node[circ, color=myblue] {}
+                (BR) ++(0.30,-0.05) node[below] {$v_2$}
+            ;
+            \draw[extranotecolor] % Text
+                (Line0) node[right, align=left] {Components in parallel\\are frequently ignored.}
+            ;
+            \draw % Text
+                (Line1) node[right] {\textbf{Forms two equations:}}
+                (Line2) ++(0.7,0) node[left] {1)}
+                    ++(-0.1,0) node[right] {KCL on supernode}
+                (Line3) ++(0.7,0) node[left] {2)}
+                    ++(-0.1,0) node[right] {$v_s = v_1 - v_2$}
+            ;
+            \path % Get coordinates for bezier curve arrows
+                (Line0)
+                %++(-0.1,0.23) coordinate (ArrowStart0)
+                ++(-0.1,0) coordinate (ArrowStart0)
+                ++(-0.8,0) coordinate (ArrowControl0)
+                (TR) ++(-0.52,0.18) ++(0.05,0.05) coordinate (ArrowEnd0)
+
+                (Line2)
+                ++(0.1,0) coordinate (ArrowStart1)
+                ++(-0.5,0) coordinate (ArrowControl1)
+                (BR) ++(0.35,0.30) coordinate (ArrowEnd1)
+
+                (Line3)
+                ++(0.1,-0.12) coordinate (ArrowStart2)
+                ++(-1.15,-0.35) coordinate (ArrowControl2)
+                (BL) ++(1,0) ++(0.35,-0.35) coordinate (ArrowEnd2)
+            ;
+            \draw[mygreen, ->, line width=1.7pt, line cap=round] % Draw bezier curve arrow
+                (ArrowStart0) .. controls (ArrowControl0) .. (ArrowEnd0)
+            ;
+            \draw[myred, ->, line width=1.7pt, line cap=round] % Draw bezier curve arrow
+                (ArrowStart1) .. controls (ArrowControl1) .. (ArrowEnd1)
+            ;
+            \draw[myblue, ->, line width=1.7pt, line cap=round] % Draw bezier curve arrow
+                (ArrowStart2) .. controls (ArrowControl2) .. (ArrowEnd2)
+            ;
+        \end{circuitikz}%
+        \end{center}
+
+        % TODO: Can you generalize to >2 non-reference nodes?
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Kirchoff's Voltage Law}
+
+        The sum of signed voltages around any closed path is zero.
+
+        \begin{minipage}[c]{0.65\columnwidth}
+            \centering
+            \begin{circuitikz}
+                \draw 
+                    (0,0) node (Origin) {}
+                    -- ++(0,0.2) to[generic, v^=$v_1$] ++(0,1.8) -- ++(0,0.2)
+                    -- ++(0.2,0) to[generic, v^=$v_2$] ++(1.8,0) -- ++(0.2,0)
+                    -- ++(0.2,0) ++(0.5,0) node {$\cdots$} ++(0.5,0) -- ++(0.2,0)
+                    %-- ++(0.2,0) to[generic, v^=$v_{n-1}$] ++(1.8,0) -- ++(0.2,0) % Use this line for the (n-1)th component
+                    -- ++(0.2,0) % Use this line if no (n-1)th component
+                    -- ++(0,-0.2) to[generic, v^=$v_n$] ++(0,-1.8) -- ++(0,-0.2)
+                    coordinate (BR)
+                    to[short] (Origin)
+                ;
+                %\path
+                %    (BR)
+                %    ++(2.3,1) coordinate (Equation)
+                %    ++(2.1,0) % Extra tail for alignment
+                %;
+                %\draw
+                %    (Equation) node {$\displaystyle \sum{v_k} = 0$}
+                %;
+            \end{circuitikz}%
+        \end{minipage}%
+        %\vrule{}
+        \begin{minipage}[c]{0.35\columnwidth}%
+            \centering
+            \phantom{x} % Phantom to fix broken alignment
+            \begin{equation*}
+                \sum{v_k} = 0
+            \end{equation*}
+            \phantom{x} % Phantom to fix broken alignment
+
+            % Write about assumptions made?
+            %\ExtraNotes{\footnotesize \textit{Assumes that...}}
+        \end{minipage}
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Supermesh (for Mesh Analysis)}
+
+        A \textit{supermesh} is formed from two adjacent meshes with a common current source (dependent or independent).
+
+        %\begin{center}
+        \begin{circuitikz}
+            \path
+                (0,0) coordinate (BL)
+                ++( 2.2,0  ) coordinate (BR)
+                ++( 0  ,2.2) coordinate (MR)
+                ++(-1.1,0  ) coordinate (MM)
+                ++(-1.1,0  ) coordinate (ML)
+                ++( 0  ,2.2) coordinate (TL)
+                ++( 2.2,0  ) coordinate (TR)
+
+                (TR) ++(0.94,-0.60) coordinate (Line0)
+                ++(0,-1.30) coordinate (Line1)
+                ++(0,-0.65) coordinate (Line2)
+                ++(0,-0.65) coordinate (Line3)
+
+                (MM) ++(0,1.3) coordinate (MeshCurrent1)
+                (BL) ++(0.9,0.7) coordinate (MeshCurrent2)
+
+                (TL) ++(-0.38, 0.38) coordinate (RectangleTL)
+                (BR) ++( 0.38,-0.38) coordinate (RectangleBR)
+            ;
+            \draw[{myorange!30!white}, fill={myyellow!10!white}, line width=1.8pt, rounded corners=2.5mm]
+                (RectangleTL) rectangle (RectangleBR)
+            ;
+            \draw
+                (BL)
+                to[generic] (ML)
+                to[generic] (TL)
+                to[generic] (TR)
+                to[generic] (MR)
+                to[generic] (BR)
+                to[generic] (BL)
+            ;
+            \draw 
+                (MM) to[I, l_={\color{myblue} $i_s$}, color=myblue, /tikz/circuitikz/bipoles/length=1.2cm] (ML)
+                (MM) to[generic] ++(0.9,0) -- (MR)
+
+                (TL) -- ++(-0.58, 0   ) coordinate (TLL)
+                (TL) -- ++( 0   , 0.58) coordinate (TLT)
+                (TR) -- ++( 0   , 0.58) coordinate (TRT)
+                (TR) -- ++( 0.58, 0   ) coordinate (TRR)
+                (MR) -- ++( 0.58, 0   ) coordinate (MRR)
+                (BR) -- ++( 0.58, 0   ) coordinate (BRR)
+                (BR) -- ++( 0   ,-0.58) coordinate (BRB)
+                (BL) -- ++( 0   ,-0.58) coordinate (BLB)
+                (BL) -- ++(-0.58, 0   ) coordinate (BLL)
+                (ML) -- ++(-0.58, 0   ) coordinate (MLL)
+            ;
+            \draw[gray, line cap=round, dash pattern=on 0.5mm off 0.5mm]
+            %\draw[lightgray]
+            %\draw[dotted]
+            %\draw[line cap=round, dash pattern=on 0.1mm off 0.5mm]
+                (TLL) ++(-0.5mm, 0    ) -- ++(-0.18, 0   )
+                (TLT) ++( 0    , 0.5mm) -- ++( 0   , 0.18)
+                (TRT) ++( 0    , 0.5mm) -- ++( 0   , 0.18)
+                (TRR) ++( 0.5mm, 0    ) -- ++( 0.18, 0   )
+                (MRR) ++( 0.5mm, 0    ) -- ++( 0.18, 0   )
+                (BRR) ++( 0.5mm, 0    ) -- ++( 0.18, 0   )
+                (BRB) ++( 0    ,-0.5mm) -- ++( 0   ,-0.18)
+                (BLB) ++( 0    ,-0.5mm) -- ++( 0   ,-0.18)
+                (BLL) ++(-0.5mm, 0    ) -- ++(-0.18, 0   )
+                (MLL) ++(-0.5mm, 0    ) -- ++(-0.18, 0   )
+            ;
+            \draw[extranotecolor] % Text
+                (Line0) node[right, align=left] {Components in series\\with current source\\are frequently ignored.}
+            ;
+            \draw % Text
+                (Line1) node[right] {\textbf{Forms two equations:}}
+                (Line2) ++(0.7,0) node[left] {1)}
+                    ++(-0.1,0) node[right] {KVL around supermesh}
+                (Line3) ++(0.7,0) node[left] {2)}
+                    ++(-0.1,0) node[right] {$i_s = i_1 + i_2$}
+            ;
+            \path % Get coordinates for bezier curve arrows
+                (Line0)
+                ++(-0.1,0) coordinate (ArrowStart0)
+                ++(-0.6,0) coordinate (ArrowControl0)
+                (MR) ++(-0.5,0.3) coordinate (ArrowEnd0)
+
+                (Line2)
+                ++(0.1,0) coordinate (ArrowStart1)
+                %++(-0.5,0) coordinate (ArrowControl1)
+                (ArrowStart1 -| RectangleBR) ++(0.1,0) coordinate (ArrowEnd1)
+
+                (Line3)
+                ++(0.1,-0) coordinate (ArrowStart2)
+                ++(-1.15,0) coordinate (ArrowControl2)
+                (MM) ++(-0.55,0) ++(0.35,-0.35) coordinate (ArrowEnd2)
+            ;
+            \draw[mygreen, ->, line width=1.7pt, line cap=round] % Draw bezier curve arrow
+                (ArrowStart0) .. controls (ArrowControl0) .. (ArrowEnd0)
+            ;
+            \draw[myred, ->, line width=1.7pt, line cap=round] % Draw arrow
+                (ArrowStart1) -- (ArrowEnd1)
+            ;
+            \draw[myblue, ->, line width=1.7pt, line cap=round] % Draw bezier curve arrow
+                (ArrowStart2) .. controls (ArrowControl2) .. (ArrowEnd2)
+            ;
+            \draw[myblue]
+                (MeshCurrent1) pic {simshadows/MeshCW} node {$i_1$}
+                (MeshCurrent2) pic {simshadows/MeshCC} node {$i_2$}
+            ;
+        \end{circuitikz}%
+        %\end{center}
+
+        % TODO: Can you generalize to >2 meshes?
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Source Transformation}
+
+        \renewcommand{\MyReusableFormatting}[2]{%
+            \begin{center}
+            \scalebox{0.94}{%
+            \begin{circuitikz}
+                \path
+                    (0,0)      coordinate (LeftBR)
+                    ++(3.3,0)  coordinate (RightBL)
+                    ++(0,0.75) coordinate (MidHorizontal)
+                ;
+                \draw
+                    (LeftBR)
+                    to[short, o-] ++(-2.0,0)
+                    to[#1, l=$v_s$, invert, /tikz/circuitikz/bipoles/length=1.25cm] ++(0,1.5)
+                    to[R, l=$R$, -o] ++(2.0,0)
+                    ++(0.1,0) node[right] {$a$}
+                    (LeftBR) ++(0.1,0) node[right] (LeftEdgeRef) {$b$}
+                ;
+                \draw
+                    (RightBL)
+                    to[short, -o] ++(2.0,0)
+                    ++(0.1,0) node[right] {$b$}
+
+                    (RightBL) to[#2, name=CS, l=$i_s$, /tikz/circuitikz/bipoles/length=1.25cm] ++(0,1.5)
+                    to[short, -o] ++(2.0,0)
+                    ++(0.1,0) node[right] {$a$}
+
+                    (RightBL) ++(1.2,0)
+                    to[R, l=$R$] ++(0,1.5)
+                ;
+                \path % Calculates middle point.
+                    (CS.north) ++(-0.5,0) coordinate (RightEdgeRef) % Ghetto calculation of right edge ref coordinate
+                    ($(LeftEdgeRef.east)!0.5!(RightEdgeRef)$) coordinate (MidVertical)
+                    (MidVertical |- MidHorizontal) coordinate (Mid)
+                ;
+                %\draw % Ghetto version
+                %    (Mid) ++(0,0.15) node {\large $\xLeftrightarrow{\text{equivalent}}$}
+                %;
+                \draw[latex-latex, thick, line width=2.0pt]
+                    (Mid) ++(-0.6,0)
+                    --    ++( 1.2,0)
+                ;
+                \draw
+                    %(Mid) ++(0,0.05) node[above] {equivalent}
+                    %(Mid) ++(0,-0.08) node[below] {iff}
+                    %      ++(0,-0.40) node[below] {$v_s = i_s R$}
+                    (Mid) ++(0,0.09) node[above] {$v_s = i_s R$}
+                    (Mid) ++(0,-0.09) node[below, align=center] {$R \notin \braces*{0, \infty}$}
+                ;
+            \end{circuitikz}
+            }
+            \end{center}
+        }
+
+        \MyReusableFormatting{V}{I}
+
+        Dependent sources work exactly the same.
+
+        %\MyReusableFormatting{cV}{cI}
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Th\'evenin's Theorem}
+
+        \begin{center}
+        \scalebox{0.94}{%
+        \begin{circuitikz}
+            \path
+                (0,0)      coordinate (LeftBR)
+                ++(2.9,0)  coordinate (RightBL)
+                ++(0,0.75) coordinate (MidHorizontal)
+            ;
+            \draw
+                (LeftBR)
+                to[short, o-] ++(-0.4,0)
+                ++(0,1.5) coordinate (BoxTRref)
+                to[short, -o] ++(0.4,0)
+                ++(0.1,0) node[right] {$a$}
+                (LeftBR) ++(0.1,0)
+                node[right] (LeftEdgeRef) {$b$}
+            ;
+            \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                (BoxTRref)        ++( 0  , 0.3) coordinate (BoxTR)
+                (LeftBR) ++(-2,0) ++(-1.1,-0.3) coordinate (BoxBL)
+                (BoxBL) rectangle (BoxTR)
+            ;
+            \draw
+                ($(BoxTR)!0.5!(BoxBL)$) coordinate (BoxMid)
+                (BoxMid) node[align=center] {arbitrary\\linear network\\of sources\\and resistances}
+            ;
+            \draw
+                (RightBL)
+                to[short, -o] ++(2.0,0)
+                ++(0.1,0) node[right] {$b$}
+
+                (RightBL) to[V, name=S, l=$v_{th}$, invert, /tikz/circuitikz/bipoles/length=1.25cm] ++(0,1.5)
+                to[R, l=$R_{th}$, -o] ++(2.0,0)
+                ++(0.1,0) node[right] {$a$}
+            ;
+            \path % Calculates middle point.
+                (S.north) ++(-0.5,0) coordinate (RightEdgeRef) % Ghetto calculation of right edge ref coordinate
+                ($(LeftEdgeRef.east)!0.5!(RightEdgeRef)$) coordinate (MidVertical)
+                (MidVertical |- MidHorizontal) coordinate (Mid)
+            ;
+            \draw[-latex, thick, line width=2.5pt]
+                (Mid) ++(-0.5,0)
+                --    ++( 1.0,0)
+            ;
+            %\draw
+            %    (Mid) ++(0,0.09) node[above] {equivalent}
+            %;
+        \end{circuitikz}
+        }
+        \end{center}
+        \vspace*{-2ex} % So much unnecessary whitespace.
+        \begin{align*}
+            v_{th} &= \text{open-circuit voltage at $a$-$b$} \\
+            R_{th} &= \text{input resistance (looking into $a$-$b$)}
+        \end{align*}
+
+        Finding Th\'evenin resistance $R_{th}$:
+        \begin{psmallindent}
+            % TODO: Why does \textbu{\textsc{}} not give proper smallcaps here?
+            {\footnotesize \textbu{\textsc{Method 1 (no dependent sources in network):}}}
+            \begin{enumerate}
+                \item DISABLE all independent sources.
+                \item Find equivalent resistance looking into $a$-$b$.
+            \end{enumerate}
+
+            {\footnotesize \textbu{\textsc{Method 2:}}}
+            \begin{enumerate}
+                \item KEEP all independent sources.
+                \item $\displaystyle R_{th} = \frac{\text{open-circuit voltage at $a$-$b$}}{\text{short-circuit current from $a$ to $b$}} = \frac{v_{th}}{i_N}$
+            \end{enumerate}
+
+            {\footnotesize \textbu{\textsc{Method 3:}}}
+            \begin{enumerate}
+                \item DISABLE all independent sources.
+                \item Attach an independent source stimulus (usually $1 \si{\volt}$ or $1 \si{\ampere}$) to $a$-$b$.
+                    \scalebox{0.85}{%
+                    \begin{circuitikz}
+                        \path
+                            (0,0) coordinate (LeftBoxBRref)
+                            ++(3.8,0) coordinate (RightBoxBRref)
+
+                            (LeftBoxBRref)  ++(-0.7,0  ) ++(-0.3,-0.3) coordinate (LeftBoxBL)
+                            (LeftBoxBRref)  ++( 0  ,1.5) ++( 0  , 0.3) coordinate (LeftBoxTR)
+                            (RightBoxBRref) ++(-0.7,0  ) ++(-0.3,-0.3) coordinate (RightBoxBL)
+                            (RightBoxBRref) ++( 0  ,1.5) ++( 0  , 0.3) coordinate (RightBoxTR)
+                        ;
+                        \draw
+                            (LeftBoxBRref)
+                            to[short, -o] ++( 0.4,0) coordinate (LeftTermB)
+                            to[short]     ++( 0.4,0)
+                            to[V, l_={\large $V_\text{test}$}, invert, /tikz/circuitikz/bipoles/length=1.20cm] ++(0,1.2)
+                            to[short, i_={\large $I_\text{response}$}]                                         ++(0,0.1)
+                            to[short]                                                                          ++(0,0.2)
+                            to[short]     ++(-0.4,0) coordinate (LeftTermA)
+                            to[short, o-] ++(-0.4,0)
+
+                            (LeftTermA) ++(0, 0.1) node[above] {\large $a$}
+                            (LeftTermB) ++(0,-0.1) node[below] {\large $b$}
+                        ;
+                        \draw
+                            (RightBoxBRref)
+                            to[short, -o] ++( 0.4,0) coordinate (RightTermB)
+                            to[short]     ++( 0.4,0) coordinate (RightBR)
+                            to[I, l_={\large $I_\text{test}$}, /tikz/circuitikz/bipoles/length=1.20cm] ++(0,1.2)
+                            to[short]                                                                  ++(0,0.1)
+                            to[short]                                                                  ++(0,0.2)
+                            to[short]     ++(-0.4,0) coordinate (RightTermA)
+                            to[short, o-] ++(-0.4,0)
+
+                            (RightTermA) ++(0, 0.1) node[above] {\large $a$}
+                            (RightTermB) ++(0,-0.1) node[below] {\large $b$}
+                        ;
+                        \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                            (LeftBoxBL) rectangle (LeftBoxTR)
+                        ;
+                        \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                            (RightBoxBL) rectangle (RightBoxTR)
+                        ;
+                        % Everything below will be for the voltage indicator
+                        \draw[->, line width=1.3pt]
+                            (RightBR)
+                            ++(1.7,0)    coordinate (VArrowBot)
+                            -- ++(0,1.5) coordinate (VArrowTop)
+                        ;
+                        \draw[dashed]
+                            (VArrowTop) ++(-1.2,0) -- ++(1.7,0)
+                            (VArrowBot) ++(-1.2,0) -- ++(1.7,0)
+                        ;
+                        \draw
+                            %($(VArrowTop)!0.5!(VArrowBot)$) ++(0.1,0) node[right] {$V_\text{response}$}
+                            (VArrowTop) ++(0,0.1) node[above] {\large $V_\text{response}$}
+                        ;
+                    \end{circuitikz}
+                    }
+                \item $\displaystyle R_{th} = \frac{V_{\text{test}}}{I_{\text{response}}} = \frac{V_{\text{response}}}{I_{\text{test}}}$
+            \end{enumerate}
+
+        \end{psmallindent}
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Norton's Theorem}
+
+        \begin{center}
+        \scalebox{0.94}{%
+        \begin{circuitikz}
+            \path
+                (0,0)      coordinate (LeftBR)
+                ++(2.9,0)  coordinate (RightBL)
+                ++(0,0.75) coordinate (MidHorizontal)
+                -- (0,2.1) % Ghetto way to align similarly to the diagram of Thevenin's Theorem.
+            ;
+            \draw
+                (LeftBR)
+                to[short, o-] ++(-0.4,0)
+                ++(0,1.5) coordinate (BoxTRref)
+                to[short, -o] ++(0.4,0)
+                ++(0.1,0) node[right] {$a$}
+                (LeftBR) ++(0.1,0)
+                node[right] (LeftEdgeRef) {$b$}
+            ;
+            \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                (BoxTRref)        ++( 0  , 0.3) coordinate (BoxTR)
+                (LeftBR) ++(-2,0) ++(-1.1,-0.3) coordinate (BoxBL)
+                (BoxBL) rectangle (BoxTR)
+            ;
+            \draw
+                ($(BoxTR)!0.5!(BoxBL)$) coordinate (BoxMid)
+                (BoxMid) node[align=center] {arbitrary\\linear network\\of sources\\and resistances}
+            ;
+            \draw
+                (RightBL)
+                to[short, -o] ++(2.0,0)
+                ++(0.1,0) node[right] {$b$}
+
+                (RightBL) to[I, name=S, l=$i_N$, /tikz/circuitikz/bipoles/length=1.25cm] ++(0,1.5)
+                to[short, -o] ++(2.0,0)
+                ++(0.1,0) node[right] {$a$}
+
+                (RightBL) ++(1.4,0)
+                to[R, l=$R_N$] ++(0,1.5)
+            ;
+            \path % Calculates middle point.
+                (S.north) ++(-0.5,0) coordinate (RightEdgeRef) % Ghetto calculation of right edge ref coordinate
+                ($(LeftEdgeRef.east)!0.5!(RightEdgeRef)$) coordinate (MidVertical)
+                (MidVertical |- MidHorizontal) coordinate (Mid)
+            ;
+            \draw[-latex, thick, line width=2.5pt]
+                (Mid) ++(-0.5,0)
+                --    ++( 1.0,0)
+            ;
+            %\draw
+            %    (Mid) ++(0,0.09) node[above] {equivalent}
+            %;
+        \end{circuitikz}
+        }
+        \end{center}
+        \vspace*{-2ex} % So much unnecessary whitespace.
+        \begin{align*}
+            i_N &= \text{short-circuit current from $a$ to $b$} \\
+            R_N &= R_{th}
+        \end{align*}
+
+    }
+
+\end{multicols}
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Superposition Principle (in DC Analysis)}
+
+        In a linear circuit, the total effect of several independent sources acting simultaneously is equal to the sum of each independent source acting alone \textit{(i.e. only one independent source active, with all other independent sources disabled)}.
+
+        \textsc{do not disable dependent sources!}
+
+        \textsc{also, this only works for linear responses, so superposition does not work with power.}
+
+    }
+
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Sinusoidal Steady-State Analysis}%
+\label{sub:sinusoidal-steady-state-analysis}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Phasor Domain Conversion}
+		\begin{equation*}
+			\underset{\textbf{Time Domain}}{
+                v(t) = V_m \cos{(\omega t + \phi)}
+			}
+			\quad \Longleftrightarrow \quad
+			\underset{\textbf{Phasor Domain}}{
+				\mathbf{V} = V_m \angle \phi
+			}
+		\end{equation*}
+
+        Resistors:
+        \begin{equation*}
+            \mathbf{Z} = R
+        \end{equation*}
+
+        Capacitors:
+        \begin{equation*}
+            \mathbf{Z} = \frac{1}{j \omega C}
+        \end{equation*}
+
+        Inductors:
+        \begin{equation*}
+            \mathbf{Z} = j \omega L
+        \end{equation*}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \renewcommand{\MyReusableFormatting}[2]{%
+            \begin{minipage}[c]{0.78\columnwidth}
+                #1
+            \end{minipage}%
+            {\color{CheatsheetSepColor} \vrule{}}%
+            %\hspace{0.06\columnwidth}% TODO: Do something better than this ghetto center-alignment.
+            \begin{minipage}[c]{0.2\columnwidth}
+                #2
+            \end{minipage}
+        }
+
+        \CheatsheetEntryTitle{Ohm's Law}
+
+        \MyReusableFormatting{%
+            In terms of impedance $\mathbf{Z}$:
+            \begin{equation*}
+                \mathbf{V} = \mathbf{I} \mathbf{Z}
+            \end{equation*}
+
+            In terms of conductance $\mathbf{Y}$:
+            \begin{equation*}
+                \mathbf{Y} \triangleq \frac{1}{\mathbf{Z}}
+                \qquad \Rightarrow \qquad
+                \mathbf{I} = \mathbf{V} \mathbf{Y}
+            \end{equation*}
+        }{%
+            \begin{circuitikz}
+                \path (-1,0) -- (0,0); % Ghetto alignment
+                \draw
+                    (0,0) to[short] ++(0,-0.2)
+                    to[short, i=$\mathbf{I}$] ++(0,-0.1)
+                    to[generic, l=$\mathbf{Z}$, v=$\mathbf{V}$] ++(0,-1.6)
+                    to[short] ++(0,-0.3)
+                ;
+            \end{circuitikz}%
+        }
+
+        \CheatsheetEntryTitle{Resistance ($R$) and Reactance ($X$)}
+        \begin{equation*}
+            \mathbf{Z} = R + jX
+            ,\qquad R, X \in \mathbb{R}
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Conductance ($G$) and Susceptance ($B$)}
+        \begin{equation*}
+            \mathbf{Y} = G + jB
+            ,\qquad G, B \in \mathbb{R}
+        \end{equation*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        % TODO: This is basically a reuse of the DC Analysis section's version. See if we can just make a macro for it?
+        \CheatsheetEntryTitle{Series and Parallel Equivalent}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \textbf{Series}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \textbf{Parallel}
+        \end{minipage}%
+
+        \vspace*{1.5ex}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \scalebox{0.8}{
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    to[generic, o-] ++(2,0)
+                    to[generic, -o] ++(2,0)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \scalebox{0.8}{
+            \begin{circuitikz}
+                \draw
+                    (0.5,0) to[short, o-]
+                    (1,0) -- (1, 0.4) to[generic] (3, 0.4) -- (3,0)
+                    to[short, -o] (3.5,0)
+                    (1,0) -- (1,-0.4) to[generic] (3,-0.4) -- (3,0)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}
+
+        \vspace*{1.5ex}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \mathbf{Z}_S = \sum{\mathbf{Z}_i}
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \frac{1}{\mathbf{Z}_P} = \sum{\frac{1}{\mathbf{Z}_i}}
+            \end{equation*}
+        \end{minipage}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \frac{1}{\mathbf{Y}_S} = \sum{\frac{1}{\mathbf{Y}_i}}
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \mathbf{Y}_P = \sum{\mathbf{Y}_i}
+            \end{equation*}
+        \end{minipage}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        % TODO: This is basically a reuse of the DC Analysis section's version. See if we can just make a macro for it?
+        \CheatsheetEntryTitle{Voltage and Current Division}
+
+        \begin{minipage}[c]{0.6\columnwidth}
+            \centering
+            \scalebox{1}{
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    to[short, o-] ++(1,0)
+                    -- ++(0,-0.2)
+                    to[generic, l_=$\mathbf{Z}_1$, v^=${\displaystyle \mathbf{V}_1 = \frac{\mathbf{Z}_1}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{V}}$] ++(0,-1.5)
+                    -- ++(0,-0.3)
+                    to[generic, l_=$\mathbf{Z}_2$, v^=${\displaystyle \mathbf{V}_2 = \frac{\mathbf{Z}_2}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{V}}$] ++(0,-1.5)
+                    -- ++(0,-0.2)
+                    to[short, -o] ++(-1,0)
+                    (0,0)
+                    to[open, v=$\mathbf{V}$] (0,-3.7)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}%
+        \begin{minipage}[c]{0.4\columnwidth}
+            \centering
+            \scalebox{1}{
+            \begin{circuitikz}
+                \draw
+                    (0,1.65)
+                    to[short, i=$\mathbf{I}$, o-] ++(1,0)
+                    to[short] ++(0,-0.15)
+                    to[generic, l_=$\mathbf{Z}_1$, i>_=$\mathbf{I}_1$] ++(0,-1.5)
+                    %to[short] ++(0,-0.25)
+                    to[short, -o] ++(-1,0)
+                    (1,1.65)
+                    to[short] ++(1,0)
+                    to[short] ++(0,-0.15)
+                    to[generic, l_=$\mathbf{Z}_2$, i>_=$\mathbf{I}_2$] ++(0,-1.5)
+                    %to[short] ++(0,-0.25)
+                    to[short] ++(-1,0)
+                    (1,0) ++(0,-0.1)
+                    node[below] {${\displaystyle \mathbf{I}_1 = \frac{\mathbf{Z}_2}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{I}}$} ++(0,-1)
+                    node[below] {${\displaystyle \mathbf{I}_2 = \frac{\mathbf{Z}_1}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{I}}$}
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}
+
+    }
+
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Digital Circuits and Logic}%
+\label{sub:digital-circuits-and-logic}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \renewcommand{\MyReusableFormatting}[5]{ % This will be used for content
+            %\vspace*{1ex}
+            \begin{minipage}[c]{0.20\columnwidth}
+                \centering
+                #1
+            \end{minipage}%
+            \begin{minipage}[c]{0.18\columnwidth}
+                \centering
+                #2
+            \end{minipage}%
+            %\hspace{0.04\columnwidth}%
+            \begin{minipage}[c]{0.32\columnwidth}
+                \centering
+                \scalebox{0.8}{%
+                \begin{tabular}{#3}
+                    \HLineA
+                    #4
+                    \HLineA
+                \end{tabular}
+                }%
+            \end{minipage}%
+            \begin{minipage}[c]{0.30\columnwidth}
+            \begin{center}
+                \begin{circuitikz}
+                    \draw
+                        #5
+                    ;
+                \end{circuitikz}
+            \end{center}
+            \end{minipage}%
+            \vspace*{1ex}
+        }
+        \renewcommand{\MyReusableFormattingB}{ % This will be used for separators
+            {\color{lightgray} \hrule{}}
+        }
+        \renewcommand{\MyReusableFormattingC}{ % This will be used for special separators
+            \MyReusableFormattingB%
+            \vspace*{2.5pt}%
+            \MyReusableFormattingB
+        }
+
+        \renewcommand{\X}{{\cellcolor{myred}\color{white}$\bm{0}$}} % Used for logical low
+        \renewcommand{\Y}{{\cellcolor{mygreen}\color{white}$\bm{1}$}} % Used for logical high
+
+        \renewcommand{\W}[1]{{\cellcolor{black}\color{white}$\bm{#1}$}} % Used for headings
+
+        \renewcommand{\VRuleA}{\vrule width 3pt}
+        \renewcommand{\HLineA}{\noalign{\hrule height 3pt}}
+
+        \CheatsheetEntryTitle{Logic Gates}
+
+        \MyReusableFormatting{NOT {\footnotesize(Inverter)}}{$\overline{A}$}{!{\VRuleA}c!{\VRuleA}c!{\VRuleA}}{
+            \W{A} & \W{O} \\ \HLineA
+            \X & \Y \\
+            \Y & \X \\
+        }{
+            (0,0) node[american not port, name=G, /tikz/circuitikz/bipoles/length=1.0cm, /tikz/circuitikz/bipoles/not port/circle width=0.35] {}
+            (G.in)  -- ++(-0.4,0)
+            (G.out) -- ++( 0.4,0)
+        }
+        \MyReusableFormattingC
+
+        \MyReusableFormatting{AND}{$A \cdot B$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
+            \W{A} & \W{B} & \W{O} \\ \HLineA
+            \X & \X & \X \\
+            \X & \Y & \X \\
+            \Y & \X & \X \\
+            \Y & \Y & \Y \\
+        }{
+            (0,0) node[american and port, name=G] {}
+            (G.in 1) -- ++(-0.4,0)
+            (G.in 2) -- ++(-0.4,0)
+            (G.out)  -- ++( 0.4,0)
+        }
+        \MyReusableFormattingB
+
+        \MyReusableFormatting{OR}{$A + B$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
+            \W{A} & \W{B} & \W{O} \\ \HLineA
+            \X & \X & \X \\
+            \X & \Y & \Y \\
+            \Y & \X & \Y \\
+            \Y & \Y & \Y \\
+        }{
+            (0,0) node[american or port, name=G] {}
+            (G.in 1) -- ++(-0.4,0)
+            (G.in 2) -- ++(-0.4,0)
+            (G.out)  -- ++( 0.4,0)
+        }
+        \MyReusableFormattingB
+
+        \MyReusableFormatting{XOR}{$A \oplus B$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
+            \W{A} & \W{B} & \W{O} \\ \HLineA
+            \X & \X & \X \\
+            \X & \Y & \Y \\
+            \Y & \X & \Y \\
+            \Y & \Y & \X \\
+        }{
+                (0,0) node[american xor port, name=G] {}
+                (G.in 1) -- ++(-0.4,0)
+                (G.in 2) -- ++(-0.4,0)
+                (G.out)  -- ++( 0.4,0)
+        }
+
+        \MyReusableFormattingC
+
+        \MyReusableFormatting{NAND}{$\overline{A \cdot B}$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
+            \W{A} & \W{B} & \W{O} \\ \HLineA
+            \X & \X & \Y \\
+            \X & \Y & \Y \\
+            \Y & \X & \Y \\
+            \Y & \Y & \X \\
+        }{
+            (0,0) node[american nand port, name=G] {}
+            (G.in 1) -- ++(-0.4,0)
+            (G.in 2) -- ++(-0.4,0)
+            (G.out)  -- ++( 0.4,0)
+        }
+        \MyReusableFormattingB
+
+        \MyReusableFormatting{NOR}{$\overline{A + B}$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
+            \W{A} & \W{B} & \W{O} \\ \HLineA
+            \X & \X & \Y \\
+            \X & \Y & \X \\
+            \Y & \X & \X \\
+            \Y & \Y & \X \\
+        }{
+            (0,0) node[american nor port, name=G] {}
+            (G.in 1) -- ++(-0.4,0)
+            (G.in 2) -- ++(-0.4,0)
+            (G.out)  -- ++( 0.4,0)
+        }
+        \MyReusableFormattingB
+
+        \MyReusableFormatting{XNOR}{$\overline{A \oplus B}$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
+            \W{A} & \W{B} & \W{O} \\ \HLineA
+            \X & \X & \Y \\
+            \X & \Y & \X \\
+            \Y & \X & \X \\
+            \Y & \Y & \Y \\
+        }{
+            (0,0) node[american xnor port, name=G] {}
+            (G.in 1) -- ++(-0.4,0)
+            (G.in 2) -- ++(-0.4,0)
+            (G.out)  -- ++( 0.4,0)
+        }
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Binary Numbers}
+
+        \Todo{This!}
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Hexadecimal and Octal Numbers}
+
+        \Todo{This!}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        %\CheatsheetEntryTitle{Commutative Laws}
+        %\begin{gather*}
+        %    A \cdot B = B \cdot A \\
+        %    A + B = B + A
+        %\end{gather*}
+
+        %\CheatsheetEntryTitle{Associative Laws}
+        %\begin{gather*}
+        %    (A \cdot B) \cdot C = A \cdot (B \cdot C) = A \cdot B \cdot C \\
+        %    (A + B) + C = A + (B + C) = A + B + C
+        %\end{gather*}
+
+        \CheatsheetEntryTitle{Distributive Laws}
+        \begin{gather*}
+            A \cdot (B + C) = (A \cdot B) + (A \cdot C) \\
+            A + (B \cdot C) = (A + B) \cdot (A + C)
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Absorption Laws}
+        \begin{gather*}
+            A + (A \cdot B) = A \\
+            A \cdot (A + B) = A \\
+            (A \cdot B) + (A \cdot \overline{B}) = A \\
+            (A + B) \cdot (A + \overline{B}) = A
+        \end{gather*}
+
+        \CheatsheetEntryTitle{De Morgan's Theorem}
+        \begin{gather*}
+            \overline{A + B} = \overline{A} \cdot \overline{B} \\
+            \overline{A \cdot B} = \overline{A} + \overline{B}
+        \end{gather*}
 
     }
 

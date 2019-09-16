@@ -16,7 +16,7 @@
 \usepackage{epigraph}
 \usepackage{listings}
 \usepackage{lstautogobble}
-\usepackage{xcolor} % \usepackage{color}
+\usepackage[table]{xcolor} % table option loads colortbl for coloring tables
 \usepackage{nameref}
 \usepackage{multicol}
 \usepackage[raggedright]{titlesec}
@@ -106,6 +106,13 @@
 \definecolor{myyellow}{RGB}{251,188,4}
 \definecolor{myorange}{RGB}{255,109,1}
 \definecolor{myred}{RGB}{234,67,53}
+
+\colorlet{mylightblue}{myblue!50!white}
+\colorlet{mylightteal}{myteal!50!white}
+\colorlet{mylightgreen}{mygreen!50!white}
+\colorlet{mylightyellow}{myyellow!50!white}
+\colorlet{mylightorange}{myorange!50!white}
+\colorlet{mylightred}{myred!50!white}
 
 \definecolor{extranotecolor}{rgb}{0.65,0.65,0.65}
 \colorlet{suppnotecolor}{orange}
@@ -260,6 +267,22 @@
 
 \ctikzset{bipoles/crossing/size=.5}
 
+
+% Custom TikZ Graphics
+
+\tikzset{
+	simshadows/MeshCW/.pic={
+		\draw[thick, stealth-]
+			(0,0) ++(-70:0.35) arc (-70:190:0.35)
+		;
+	},
+	simshadows/MeshCC/.pic={
+		\draw[thick, -stealth]
+			(0,0) ++(-10:0.35) arc (-10:250:0.35)
+		;
+	}
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%
 % Headers and Footers %
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -399,13 +422,42 @@
 \newcommand{\memphR}[1]{\memph[myred]{#1}}
 \newcommand{\memphG}[1]{\memph[mygreen]{#1}}
 \newcommand{\memphB}[1]{\memph[myblue]{#1}}
+% Alternatives if boldfacing is a problem
+\newcommand{\xmemph}[2][myred]{{\color{#1}{#2}}}
+\newcommand{\xmemphR}[1]{\xmemph[myred]{#1}}
+\newcommand{\xmemphG}[1]{\xmemph[mygreen]{#1}}
+\newcommand{\xmemphB}[1]{\xmemph[myblue]{#1}}
 
+%%%%%%%%%%%%%%%%
+% Redefinables %
+%%%%%%%%%%%%%%%%
+
+% General-purpose anonymous length variable that I use throughout my documents.
+\newlength{\anonlength} 
+
+% General-purpose reusable command name that I use throughout my documents.
+\newcommand{\MyReusableFormattingError}{\PackageError{[this document]}{Reusable formatting command must be redefined. This can be done with renewcommand.}{see error message.}}
+\newcommand{\MyReusableFormatting}[0]{\MyReusableFormattingError{}}
+\newcommand{\MyReusableFormattingB}[0]{\MyReusableFormattingError{}}
+\newcommand{\MyReusableFormattingC}[0]{\MyReusableFormattingError{}}
+
+% General-purpose small-identifiers
+\newcommand{\W}[0]{\MyReusableFormattingError{}}
+\newcommand{\X}[0]{\MyReusableFormattingError{}}
+\newcommand{\Y}[0]{\MyReusableFormattingError{}}
+\newcommand{\Z}[0]{\MyReusableFormattingError{}}
+
+% Table Macros
+\newcommand{\HLineThickness}[1]{\noalign{\hrule height #1}} % Example \HLineX definition with variable thickness (e.g. 1.7pt)
+\newcommand{\VLineThickness}[1]{\vrule width #1} % Example \VLineX definition with variable thickness (e.g. 1.7pt)
+\newcommand{\HLineA}[0]{\MyReusableFormattingError{}}
+\newcommand{\HLineB}[0]{\MyReusableFormattingError{}}
+\newcommand{\VRuleA}[0]{\MyReusableFormattingError{}}
+\newcommand{\VRuleB}[0]{\MyReusableFormattingError{}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Other General Utility Macros %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newlength{\anonlength} % General-purpose anonymous length variable that I use through my documents.
 
 \newcommand{\MonoBox}[1]{\framebox[1.05\width]{\texttt{#1}}}
 \newcommand{\myul}[1]{\ul{#1}} % A proxy for the preferred underline command.
@@ -452,6 +504,11 @@
 % Paragraph Indentation
 \newenvironment{pindent}{
     \begin{adjustwidth}{1cm}{}
+    } {
+    \end{adjustwidth}
+}
+\newenvironment{psmallindent}{
+    \begin{adjustwidth}{0.5cm}{}
     } {
     \end{adjustwidth}
 }

@@ -5,10 +5,14 @@
 
 \usepackage{../_latex_includes/sharedpkg}
 
+\usetikzlibrary{arrows,shapes.arrows}
+
 \def\TITLE{Math and Applications Cheatsheet}
 
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
+
+\colorlet{CheatsheetSepColor}{verylightgray}
 
 %\newcommand{\CheatsheetEntryFrame}[1]{#1}
 \newcommand{\CheatsheetEntryFrame}[1]{%
@@ -29,6 +33,9 @@
 \newcommand{\CheatsheetEntryTitle}[1]{ % Put this inside CheatsheetEntryBox
     \textbu{#1} %\\[1.5ex]
     %\vspace*{1.5ex}%
+}
+\newcommand{\CheatsheetEntryExtraSeparation}{ % Temporary fix while I figure out how to automatically set this separation.
+    \vspace*{1ex}%
 }
 \newcommand{\CheatsheetSmallEquationTitle}[1]{%
     \begin{center}%

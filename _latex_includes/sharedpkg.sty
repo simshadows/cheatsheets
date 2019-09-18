@@ -48,6 +48,9 @@
 %\usepackage[english,greek]{babel}
 %\usepackage{teubner} % Classical greek. Mainly just used for capital Digamma.
 
+% Tables
+\usepackage{tabularx}
+
 % Core Mathematics
 \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -106,6 +109,7 @@
 \definecolor{myyellow}{RGB}{251,188,4}
 \definecolor{myorange}{RGB}{255,109,1}
 \definecolor{myred}{RGB}{234,67,53}
+\definecolor{mypurple}{HTML}{9900FF}
 
 \colorlet{mylightblue}{myblue!50!white}
 \colorlet{mylightteal}{myteal!50!white}
@@ -113,6 +117,7 @@
 \colorlet{mylightyellow}{myyellow!50!white}
 \colorlet{mylightorange}{myorange!50!white}
 \colorlet{mylightred}{myred!50!white}
+\colorlet{mylightpurple}{mypurple!50!white}
 
 \definecolor{extranotecolor}{rgb}{0.65,0.65,0.65}
 \colorlet{suppnotecolor}{orange}
@@ -192,8 +197,9 @@
 }
 
 
-% Circuitikz Libraries
+% TikZ Libraries
 \usetikzlibrary{calc}
+\usetikzlibrary{backgrounds}
 
 % Custom Circuitikz options
 \ctikzset{tripoles/mos style/arrows} % Adds arrows to MOSFETs
@@ -371,6 +377,12 @@
 
 % \newcommand*\Let[2]{\State #1 $\gets$ #2}% THERE MUST BE A BETTER WAY!!!
 
+% Custom versions of the Re() and Im() functions in complex analysis
+\DeclareMathOperator{\MyRe}{Re}
+\DeclareMathOperator{\MyIm}{Im}
+%\DeclareMathOperator{\MyRe}{\Re} % If these are ever used, they don't space well.
+%\DeclareMathOperator{\MyIm}{\Im} % Should figure out how to fix this...
+
 % Other math functions that aren't in-built
 \DeclareMathOperator{\sech}{sech}
 \DeclareMathOperator{\csch}{csch}
@@ -469,6 +481,10 @@
 \newcommand{\SectionBreak}{\newpage}
 \newcommand{\MulticolsBreak}{\vfill\null\columnbreak} % For use in the multicols environment.
 \newcommand{\MulticolsPhantomPlaceholder}{\phantom{x}} % An arbitrary box to occupy a multicols column.
+
+% Table Column Types
+\newcolumntype{C}{>{\centering\arraybackslash}X} % Centered version of tabularx's X column type
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X} % Right-aligned version of tabularx's X column type
 
 \newcommand{\CommonFigureFormat}[1]{%
     \centering

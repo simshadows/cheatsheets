@@ -14,8 +14,7 @@
 
 \colorlet{CheatsheetSepColor}{verylightgray}
 
-%\newcommand{\CheatsheetEntryFrame}[1]{#1}
-\newcommand{\CheatsheetEntryFrame}[1]{%
+\newcommand{\CheatsheetEntryFrame}[2][]{%
     %\scalebox{0.8}{#1}
     %\unskip
     \begin{mdframed}[
@@ -24,12 +23,15 @@
             %skipbelow=10mm,
             %leftmargin=0.5mm,
             %rightmargin=0.5mm,
+            #1
         ]
         \raggedright
         \vspace*{0.75ex}%
-        #1%
+        #2%
     \end{mdframed}%
 }
+%\newcommand{\CheatsheetEntryFrameExn}[2][]{\CheatsheetEntryFrame[fontcolor=extranotecolor,linecolor=extranotecolor,#1]{#2}}
+\newcommand{\CheatsheetEntryFrameExn}[2][]{\CheatsheetEntryFrame[#1]{#2}} % For now, we're not colouring them.
 \newcommand{\CheatsheetEntryTitle}[1]{ % Put this inside CheatsheetEntryBox
     \textbu{#1} %\\[1.5ex]
     %\vspace*{1.5ex}%

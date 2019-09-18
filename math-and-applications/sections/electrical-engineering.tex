@@ -224,12 +224,12 @@
         \CheatsheetEntryTitle{Ohm's Law}
 
         \MyReusableFormatting{%
-            In terms of resistance $R$:
+            For resistance $R$:
             \begin{equation*}
                 v = iR
             \end{equation*}
 
-            In terms of conductance $G$:
+            For conductance $G$:
             \begin{equation*}
                 G \triangleq \frac{1}{R}
                 \qquad \Rightarrow \qquad
@@ -253,9 +253,9 @@
 
         \MyReusableFormatting{%
             \begin{equation*}
-                i = C \frac{\diff{v}}{\diff{t}}
-                \qquad \phantom{\Rightarrow} \qquad
                 q = Cv
+                \qquad \xRightarrow{\textstyle \phantom{.} \frac{\diff{}}{\diff{t}} \phantom{.}} \qquad
+                i = C \frac{\diff{v}}{\diff{t}}
             \end{equation*}
 
             %\CheatsheetSmallEquationTitle{Stored charge:}
@@ -316,17 +316,7 @@
 
         \CheatsheetEntryTitle{Series and Parallel Equivalent}
 
-        \begin{minipage}[c]{0.5\columnwidth}
-            \centering
-            \textbf{Series}
-        \end{minipage}%
-        \begin{minipage}[c]{0.5\columnwidth}
-            \centering
-            \textbf{Parallel}
-        \end{minipage}%
-
-        \vspace*{1.5ex}
-
+        \vspace{1.5ex}
         \begin{minipage}[c]{0.5\columnwidth}
             \centering
             \scalebox{0.8}{
@@ -1086,36 +1076,245 @@
     \CheatsheetEntryFrame{
 
         \CheatsheetEntryTitle{Phasor Domain Conversion}
-		\begin{equation*}
-			\underset{\textbf{Time Domain}}{
-                v(t) = V_m \cos{(\omega t + \phi)}
-			}
-			\quad \Longleftrightarrow \quad
-			\underset{\textbf{Phasor Domain}}{
-				\mathbf{V} = V_m \angle \phi
-			}
-		\end{equation*}
 
-        Resistors:
-        \begin{equation*}
-            \mathbf{Z} = R
-        \end{equation*}
+        \renewcommand{\X}{\hphantom{x}} % Adding horizontal space to make the table distribute better and look nicer
+        \begin{tabularx}{\textwidth}{ccC}
+            {\scriptsize \textbf{Time Domain}}   &                             & {\scriptsize \textbf{Phasor Domain}} \\
+            \X $v(t) = V_m \cos{(\omega t + \phi)}$ \X & $\Longleftrightarrow$ & $\mathbf{V} = V_m \angle \phi$       \\
+            \X $i(t) = I_m \cos{(\omega t + \phi)}$ \X & $\Longleftrightarrow$ & $\mathbf{I} = I_m \angle \phi$       \\
+        \end{tabularx}
 
-        Capacitors:
-        \begin{equation*}
-            \mathbf{Z} = \frac{1}{j \omega C}
-        \end{equation*}
+        %\begin{tikzpicture}[scale=0.85, transform shape]
+        %    \draw[help lines, lightgray]
+        %        (0,-1) grid (4,1)
+        %    ;
+        %    \draw[-latex, line width=1.5pt]
+        %        (0,0) -- (4.4,0) coordinate (LabelX)
+        %    ;
+        %    \draw[myred, dotted, line width=1.2pt, domain=0:4, samples=100]
+        %        plot (\x, {cos(0.5*pi*\x r)}) node[right] {\color{mylightred} $\cos{(\omega t)}$}
+        %    ;
+        %    \draw[myred, line width=2pt, domain=0:4, samples=100]
+        %        plot (\x, {cos(0.5*pi*\x r + 70)}) node[right] {$\cos{(\omega t + \phi)}$}
+        %    ;
+        %    \draw[latex-latex, line width=1.5pt] % Draw vertical line over the curve cuz it looks nicer
+        %        (0,-1.4) -- (0,1.4) coordinate (LabelY)
+        %    ;
+        %    \draw
+        %        (LabelX) ++(0  ,-0.1) node[below] {$t$}
+        %        (LabelY) ++(0.1, 0  ) node[right] {$x$}
+        %    ;
+        %\end{tikzpicture}
 
-        Inductors:
-        \begin{equation*}
-            \mathbf{Z} = j \omega L
-        \end{equation*}
+        \vspace*{1ex}
+
+        \renewcommand{\W}{60} % Phasor angle.
+        % IMPORTANT: We will need to manually calculate WaveActualIntercept.
+        %            To make it easy, just input this into WolframAlpha:
+        %                2*(arccos(0) + (- YOUR_PHASOR_ANGLE_HERE * pi / 180))/pi + 2
+        \begin{center}
+        \begin{tikzpicture}[x=1.72cm, y=1.72cm, transform shape]
+            \begin{scope}[shift={(0,-1.8)}, rotate=-90]
+                \path
+                    (0,0) coordinate (WaveOrigin)
+                    (3,0) coordinate (WaveReferenceIntercept) % Manually calculated.
+                    (2.33333333,0) coordinate (WaveActualIntercept) % Manually calculated.
+                    % TODO: Maybe automatically calculate these intercepts next time?
+                ;
+                %\draw[help lines, lightgray]
+                %    (0,-1) grid (4,1)
+                %;
+                \draw[-latex, line width=1.5pt]
+                    (0,0) -- (4.4,0) coordinate (LabelX1)
+                ;
+                \draw[myred, dashed, line width=1.2pt, domain=0:4, samples=100, line cap=round]
+                    plot (\x, {cos(0.5*pi*\x r)}) node[right] {\color{myred} $\bm{V_m \cos{(\omega t)}}$}
+                ;
+                \draw[myred, line width=2pt, domain=0:4, samples=100, line cap=round]
+                    plot (\x, {cos(0.5*pi*\x r + \W)}) node[right] {$\bm{V_m \cos{(\omega t + \phi)}}$}
+                    coordinate (WaveEnd)
+                ;
+                \draw[latex-latex, line width=1.5pt] % Draw vertical line over the curve cuz it looks nicer
+                    (0,-1.4) -- (0,1.4) coordinate (LabelY1)
+                ;
+                \draw
+                    (LabelX1) ++(0  ,-0.1) node[below] {$\omega t$}
+                    (LabelY1) ++(0.1, 0  ) node[right] {$v(t)$}
+                ;
+                \draw[mypurple]
+                    (WaveOrigin) ++(0, 1) ++(0,0.17) node[left] {$\bm{V_m}$}
+                    (WaveOrigin) ++(0,-1) ++(0,0.17) node[left] {$\bm{-V_m}$}
+                ;
+            \end{scope}
+            \begin{scope}[shift={(0,0)}]
+                \draw[help lines, verylightgray, line width=1.5pt]
+                    (0,0) coordinate (PhasorOrigin) circle[radius=1]
+                    (1,0) coordinate (CircleRight)
+                    (-1,0) coordinate (CircleLeft)
+                ;
+                \draw[latex-latex, line width=1.5pt]
+                    (-1.4,0) -- (1.4,0) coordinate (LabelX2)
+                ;
+                \draw[latex-latex, line width=1.5pt]
+                    (0,-1.4) -- (0,1.4) coordinate (LabelY2)
+                ;
+                \draw[-latex, myred, line width=2pt, line cap=round]
+                    (PhasorOrigin) -- ++(\W:1) coordinate (PhasorEnd)
+                ;
+                \draw
+                    (LabelX2) ++(-0.1 ,-0.05) node[below] {$\MyRe$}
+                    (LabelY2) ++( 0.05,-0.1 ) node[right] {$\MyIm$}
+                ;
+                \draw[mypurple] (30:0.25) node {$\bm{\phi}$};
+                \draw[-latex, mypurple, line width=1.2pt, line cap=round] (0:0.40) arc (0:\W:0.40);
+                \draw[myred] (PhasorEnd) ++(\W:0.15) node {$\mathbf{V}$};
+                % Directions
+                \draw[angle 60 reversed-angle 60, mygreen,  line width=1.7pt, line cap=round] ( 15:1.8) arc ( 15: 40:1.8);
+                \draw[angle 60 reversed-angle 60, myblue,   line width=1.7pt, line cap=round] (-15:1.8) arc (-15:-40:1.8);
+                \draw[angle 60 reversed-angle 60, mypurple, line width=1.7pt, line cap=round] ( 60:1.8) arc ( 60:120:1.8);
+                \draw[mygreen]  ( 25:1.8) node[above right, align=left] {\textbf{leading}\\\textbf{direction}};
+                \draw[myblue]   (-25:1.8) node[below right, align=left] {\textbf{lagging}\\\textbf{direction}};
+                \draw[mypurple] ( 90:1.8) node[above] {\textbf{angular velocity} $\bm{\omega}$};
+                %\draw (0,0) circle[radius=2.5]; % Ghetto alignment
+            \end{scope}
+            \begin{scope}[on background layer]
+                %\draw[myblue, dashed, line width=1.5pt] % Old styling for the phasor connector
+                \draw[help lines, verylightgray, line width=1.5pt]
+                    (PhasorEnd) -- (PhasorEnd |- WaveOrigin)
+                ;
+                \draw[help lines, verylightgray, line width=1.5pt]
+                    (CircleRight)  -- (CircleRight  |- WaveEnd)
+                    (CircleLeft)   -- (CircleLeft   |- WaveEnd)
+                    (PhasorOrigin |- WaveEnd) ++(-1.4,0) -- ++(2.8,0)
+                    %(PhasorOrigin) -- (PhasorOrigin |- WaveOrigin) % Looks ugly
+                ;
+                \draw[help lines, {mypurple!30!white}, line width=1.5pt]
+                    (WaveActualIntercept)    ++(-1.4,0) -- ++(2.8,0) -- ++(0.5,0) ++(-0.2,-0.00) coordinate (WavePhaseDiffEnd)
+                ;
+                \draw[help lines, {mypurple!30!white}, dashed, line width=1.5pt]
+                    (WaveReferenceIntercept) ++(-1.4,0) -- ++(2.8,0) -- ++(0.5,0) ++(-0.2, 0.00) coordinate (WavePhaseDiffStart)
+                ;
+            \end{scope}
+            \begin{scope}[rotate=-90]
+                \draw[-angle 60, mypurple, line width=1.7pt]
+                    (WavePhaseDiffStart) -- (WavePhaseDiffEnd)
+                ;
+                \draw[mypurple]
+                    ($(WavePhaseDiffStart)!0.5!(WavePhaseDiffEnd)$) coordinate (WavePhaseDiffMid)
+                    (WavePhaseDiffMid) ++(0,0.05) node[above] {$\bm{\phi}$}
+                    %(WavePhaseDiffStart) ++(0.05,0) node[right, align=left] {\textbf{phase}} % Ugly
+                    %(WavePhaseDiffEnd) ++(-0.05,0) node[left, align=right] {\textbf{phase}} % Also ugly
+                    (WavePhaseDiffMid) ++(0,0.35) node[above, align=center] {\textbf{phase}}
+                ;
+                \draw[angle 60 reversed-angle 60, mygreen, line width=1.7pt, line cap=round]
+                    (WavePhaseDiffEnd)   ++(-0.6,0) -- ++(-1,0);
+                \draw[angle 60 reversed-angle 60, myblue,  line width=1.7pt, line cap=round]
+                    (WavePhaseDiffStart) ++( 0.6,0) -- ++( 1,0);
+                \draw[myblue]  (WavePhaseDiffStart) ++( 1.1,0.35) node[above, align=center] {\textbf{lagging}\\\textbf{direction}};
+                \draw[mygreen] (WavePhaseDiffEnd)   ++(-1.1,0.35) node[above, align=center] {\textbf{leading}\\\textbf{direction}};
+            \end{scope}
+        \end{tikzpicture}
+        \end{center}
 
     }
 
-    \MulticolsBreak
+    \CheatsheetEntryFrameExn{
+
+        \CheatsheetEntryTitle{Appendix: Useful Periodic Function Relations}
+        \begin{gather*}
+            \omega = 2 \pi f = \frac{2 \pi}{T}
+            \qquad
+            \begin{aligned}
+                \cos{\parens*{\omega t}} &= \sin{\parens*{\omega t + \ang{90}}} \\
+                \sin{\parens*{\omega t}} &= \cos{\parens*{\omega t - \ang{90}}}
+            \end{aligned}
+            \\
+            F_{\text{avg}} = \frac{1}{T} \int_0^T{f(t) \,\diff{t}}
+            \qquad
+            F_{\text{rms}} = \sqrt{\frac{1}{T} \int_0^T{\parens*{f(t)}^2 \,\diff{t}}}
+        \end{gather*}%
+
+    }
+
+    % Should naturally column-break here
 
     \CheatsheetEntryFrame{
+
+        \renewcommand{\MyReusableFormatting}[3]{
+            \begin{minipage}[c]{0.33\columnwidth}%
+                \centering
+                #1
+            \end{minipage}%
+            \begin{minipage}[c]{0.33\columnwidth}%
+                \centering
+                #2
+            \end{minipage}%
+            \begin{minipage}[c]{0.33\columnwidth}%
+                \centering
+                #3
+            \end{minipage}%
+        }
+
+        \CheatsheetEntryTitle{Resistor, Capacitor, and Inductor}
+
+        \vspace*{1.5ex}
+        \MyReusableFormatting{
+            $\displaystyle \mathbf{Z}_R = R$
+        }{
+            $\displaystyle \mathbf{Z}_C = \frac{1}{j \omega C}$
+        }{
+            $\displaystyle \mathbf{Z}_L = j \omega L$
+        }
+
+        \renewcommand{\MyReusableFormattingB}{\path (0,0.6) -- (0,-0.6);} % Ghetto alignment
+        \MyReusableFormatting{
+            \begin{circuitikz}
+                \MyReusableFormattingB
+                \draw (0,0) to[R, o-o] ++(2,0);
+            \end{circuitikz}
+        }{
+            \begin{circuitikz}
+                \MyReusableFormattingB
+                \draw (0,0) to[C, o-o] ++(2,0);
+            \end{circuitikz}
+        }{
+            \begin{circuitikz}
+                \MyReusableFormattingB
+                \draw (0,0) to[L, o-o] ++(2,0);
+            \end{circuitikz}
+        }%
+        \vspace{-2.0ex} % Too much whitespace for some reason. Need to cut it down.
+        \renewcommand{\MyReusableFormattingB}{\path (0,-1.2) -- (0,1.2) (-0.40,0) -- (1.40,0);} % Ghetto alignment
+        %\renewcommand{\MyReusableFormattingB}{\path (-0.40,0) -- (1.40,0);} % Ghetto alignment
+        \MyReusableFormatting{%
+            \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
+                \MyReusableFormattingB
+                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.30) coordinate (VEnd);
+                \draw[-stealth, white,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.05);
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(0:1.00) coordinate (IEnd);
+                \draw[myred]    (VEnd) ++( 0  ,-0.05) node[below] {$\mathbf{V}$};
+                \draw[mypurple] (IEnd) ++(-0.1,-0.05) node[below] {$\mathbf{I}$};
+            \end{tikzpicture}
+        }{%
+            \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
+                \MyReusableFormattingB
+                \draw[line width=1.2pt] (0.2,0) -- (0.2,-0.2) -- (0,-0.2);
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(  0:1) coordinate (IEnd);
+                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(-90:1) coordinate (VEnd);
+                \draw[myred]    (VEnd) ++(0.0, 0   ) node[right] {$\mathbf{V}$};
+                \draw[mypurple] (IEnd) ++(0  ,-0.05) node[below] {$\mathbf{I}$};
+            \end{tikzpicture}
+        }{%
+            \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
+                \MyReusableFormattingB
+                \draw[line width=1.2pt] (0.2,0) -- (0.2,0.2) -- (0,0.2);
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++( 0:1) coordinate (IEnd);
+                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(90:1) coordinate (VEnd);
+                \draw[myred]    (VEnd) ++(0.0, 0   ) node[right] {$\mathbf{V}$};
+                \draw[mypurple] (IEnd) ++(0  ,-0.05) node[below] {$\mathbf{I}$};
+            \end{tikzpicture}
+        }%
+        \vspace{-1.0ex} % Move closer to the next section
 
         \renewcommand{\MyReusableFormatting}[2]{%
             \begin{minipage}[c]{0.78\columnwidth}
@@ -1131,12 +1330,12 @@
         \CheatsheetEntryTitle{Ohm's Law}
 
         \MyReusableFormatting{%
-            In terms of impedance $\mathbf{Z}$:
+            For impedance $\mathbf{Z}$:
             \begin{equation*}
                 \mathbf{V} = \mathbf{I} \mathbf{Z}
             \end{equation*}
 
-            In terms of conductance $\mathbf{Y}$:
+            For admittance $\mathbf{Y}$:
             \begin{equation*}
                 \mathbf{Y} \triangleq \frac{1}{\mathbf{Z}}
                 \qquad \Rightarrow \qquad
@@ -1153,6 +1352,8 @@
                 ;
             \end{circuitikz}%
         }
+
+        \CheatsheetEntryExtraSeparation
 
         \CheatsheetEntryTitle{Resistance ($R$) and Reactance ($X$)}
         \begin{equation*}
@@ -1173,17 +1374,7 @@
         % TODO: This is basically a reuse of the DC Analysis section's version. See if we can just make a macro for it?
         \CheatsheetEntryTitle{Series and Parallel Equivalent}
 
-        \begin{minipage}[c]{0.5\columnwidth}
-            \centering
-            \textbf{Series}
-        \end{minipage}%
-        \begin{minipage}[c]{0.5\columnwidth}
-            \centering
-            \textbf{Parallel}
-        \end{minipage}%
-
-        \vspace*{1.5ex}
-
+        \vspace{1.5ex}
         \begin{minipage}[c]{0.5\columnwidth}
             \centering
             \scalebox{0.8}{
@@ -1287,6 +1478,59 @@
 
     }
 
+\end{multicols}
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{RMS Value}
+
+        The \textit{RMS} value of \myul{any periodic voltage/current} is the equivalent value in DC to deliver the same average power to a load.
+        \begin{equation*}
+            F_\text{rms} =\sqrt{\frac{1}{T} \int_0^T{\parens*{f(t)}^2 \,\diff{t}}} 
+        \end{equation*}
+
+        For sinusoidal waveforms:
+
+        \begin{minipage}{0.5\columnwidth}%
+            \begin{equation*}
+                V_\text{rms} = \frac{V_m}{\sqrt{2}} \approx 0.707 V_m
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}{0.5\columnwidth}%
+            \begin{equation*}
+                I_\text{rms} = \frac{I_m}{\sqrt{2}} \approx 0.707 I_m
+            \end{equation*}
+        \end{minipage}%
+
+        %% I'm not 100% sure on this one. Will need to learn more!
+        %% TODO: Look into this section!
+        %\vspace{\parskip}%
+        %For a waveform produced from a sum of waveforms:
+        %\begin{gather*}
+        %    f(t) = f_1(t) + f_2(t) + \dots + f_n(t) \\
+        %    F_\text{rms}^2 = F_{\text{rms}1}^2 + F_{\text{rms}2}^2 + \dots + F_{\text{rms}n}^2 
+        %\end{gather*}
+
+        \CheatsheetEntryExtraSeparation
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Average Power}
+
+        \Todo{Finish this section.}
+        \begin{equation*}
+            P = I_\text{rms}^2 R
+        \end{equation*}
+
+    }
+
+    \MulticolsBreak
+
+    \Todo{Topic on phasor diagram trigonometry? E.g. adding two voltage phasors with cosine rule?}
+    
 \end{multicols}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

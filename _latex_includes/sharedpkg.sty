@@ -12,6 +12,7 @@
 %\usepackage[T1]{fontenc}
 \usepackage{xparse}
 
+\usepackage{calc}
 \usepackage[backend=biber]{biblatex}
 \usepackage{epigraph}
 \usepackage{listings}
@@ -61,6 +62,7 @@
 \usepackage{siunitx}
 \usepackage{cancel}
 \usepackage{bm} % Bold math symbols
+\usepackage{steinmetz} % Steinmetz notation for phasors. Only provides one command: \phase{}
 
 % Core Algorithmics
 \usepackage{algorithm}
@@ -203,6 +205,7 @@
 
 % Custom Circuitikz options
 \ctikzset{tripoles/mos style/arrows} % Adds arrows to MOSFETs
+\ctikzset{label/align=straight} % Straightens diagonal labels
 
 % Circuitikz part proportions
 % Based on: https://github.com/circuitikz/circuitikz/blob/4feb150ba25cd7ad80c94a56f5d5d516200bfbf0/tex/circuitikz.sty#L258
@@ -370,6 +373,8 @@
 \DeclarePairedDelimiter\ceil{\lceil{}}{\rceil{}}
 \DeclarePairedDelimiter\floor{\lfloor{}}{\rfloor{}}
 
+\newcommand{\complexconjugate}[1]{\overline{#1}}
+
 \newcommand\evalat[2]{{\left.#1\right\rvert{}}_{#2}}
 
 \newcommand\rhs{\textit{RHS}}
@@ -383,9 +388,11 @@
 %\DeclareMathOperator{\MyRe}{\Re} % If these are ever used, they don't space well.
 %\DeclareMathOperator{\MyIm}{\Im} % Should figure out how to fix this...
 
+
 % Other math functions that aren't in-built
 \DeclareMathOperator{\sech}{sech}
 \DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\cis}{cis}
 
 % Electrical Engineering Conventions
 \DeclareSIUnit\voltampere{VA} % Apparent Power
@@ -534,6 +541,45 @@
     \begin{easylist}[#1] \ListProperties(Space*=-1.25mm, Space=-1.25mm)
     } {
     \end{easylist}
+}
+
+\newlength{\AnonSepLen}%
+\newlength{\AnonMinipageWidthA}%
+\newlength{\AnonMinipageWidthB}%
+\newcommand{\TwoColumnsTextSeparated}[4][0]{% \TwoColumnsTextSeparated[Skew factor between -1 and 1]{separator}{col1}{col2}
+    \setlength{\AnonSepLen}{\widthof{#2}}%
+    \setlength{\AnonMinipageWidthA}{0.5\columnwidth - 0.5\AnonSepLen}%
+    \setlength{\AnonMinipageWidthB}{\AnonMinipageWidthA - #1\AnonMinipageWidthA}%
+    \setlength{\AnonMinipageWidthA}{\AnonMinipageWidthA + #1\AnonMinipageWidthA}%
+    \begin{myminipage}[c]{\AnonMinipageWidthA}%
+        \centering%
+        #3
+    \end{myminipage}%
+    \begin{minipage}[c]{\AnonSepLen}%
+        \centering%
+        #2
+    \end{minipage}%
+    \begin{myminipage}[c]{\AnonMinipageWidthB}%
+        \centering%
+        #4
+    \end{myminipage}
+}
+\newcommand{\TwoColumnsMinipages}[3][0]{% \TwoColumnsTextSeparated[Skew factor between -1 and 1]{col1}{col2}
+    \setlength{\AnonMinipageWidthA}{0.5\columnwidth}%
+    \setlength{\AnonMinipageWidthB}{\AnonMinipageWidthA - #1\AnonMinipageWidthA}%
+    \setlength{\AnonMinipageWidthA}{\AnonMinipageWidthA + #1\AnonMinipageWidthA}%
+    %\fbox{ % fboxes used for debugging
+    \begin{myminipage}[c]{\AnonMinipageWidthA}%
+        \centering%
+        #2
+    \end{myminipage}%
+    %}%
+    %\fbox{
+    \begin{myminipage}[c]{\AnonMinipageWidthB}%
+        \centering%
+        #3
+    \end{myminipage}
+    %}
 }
 
 \newenvironment{SimpleFrame}{

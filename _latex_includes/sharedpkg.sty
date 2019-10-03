@@ -125,6 +125,30 @@
 \colorlet{suppnotecolor}{orange}
 \colorlet{questionassumptionscolor}{red}
 
+% Colour of magnetic coupling arrows in circuitikz
+\colorlet{magneticcouplingcolor}{lightgray}
+
+% Coloured emphasis in math environments.
+% I made these macros because I use it a lot...
+% NOTE: These commands can't be nested into each other for some reason, probably due to a bug.
+\newcommand{\memph}[2][myred]{{\color{#1}\bm{#2}}}
+\newcommand{\memphR}[1]{\memph[myred]{#1}}
+\newcommand{\memphG}[1]{\memph[mygreen]{#1}}
+\newcommand{\memphB}[1]{\memph[myblue]{#1}}
+\newcommand{\memphP}[1]{\memph[mypurple]{#1}}
+% Alternatives if boldfacing is a problem
+\newcommand{\xmemph}[2][myred]{{\color{#1}{#2}}}
+\newcommand{\xmemphR}[1]{\xmemph[myred]{#1}}
+\newcommand{\xmemphG}[1]{\xmemph[mygreen]{#1}}
+\newcommand{\xmemphB}[1]{\xmemph[myblue]{#1}}
+\newcommand{\xmemphP}[1]{\xmemph[mypurple]{#1}}
+
+% Similar for text environments
+\newcommand{\temph}[2][myred]{{\color{#1}\textbf{#2}}}
+\newcommand{\temphR}[1]{\temph[myred]{#1}}
+\newcommand{\temphG}[1]{\temph[mygreen]{#1}}
+\newcommand{\temphB}[1]{\temph[myblue]{#1}}
+\newcommand{\temphP}[1]{\temph[mypurple]{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Other Style (some may be overwritten again in the document preamble) %
@@ -276,20 +300,76 @@
 
 \ctikzset{bipoles/crossing/size=.5}
 
+% Reusable Style Macros
+
+% Used for magnetic coupling arrows in electrical circuit diagrams.
+\tikzset{simshadows/style/magneticcouplingarrow/.style={latex-latex, magneticcouplingcolor, line width=1.2pt}}
+
+% Generic soft gray style
+% Example:
+%     \draw[simshadows/style/softgray]
+%         (0,0) rectangle (1,1)
+%     ;
+\tikzset{
+    simshadows/style/softgray/.style={
+        lightgray,
+        line width=3.0pt,
+        fill=verylightgray,
+    }
+}
 
 % Custom TikZ Graphics
 
+% Mesh current indicators
+% Example:
+%     \draw
+%         (0,0) pic {simshadows/MeshCW} node {$i_1$}
+%     ;
 \tikzset{
-	simshadows/MeshCW/.pic={
-		\draw[thick, stealth-]
-			(0,0) ++(-70:0.35) arc (-70:190:0.35)
-		;
-	},
-	simshadows/MeshCC/.pic={
-		\draw[thick, -stealth]
-			(0,0) ++(-10:0.35) arc (-10:250:0.35)
-		;
-	}
+    simshadows/MeshCW/.pic={
+        \draw[thick, stealth-]
+            (0,0) ++(-70:0.35) arc (-70:190:0.35)
+        ;
+    },
+    simshadows/MeshCC/.pic={
+        \draw[thick, -stealth]
+            (0,0) ++(-10:0.35) arc (-10:250:0.35)
+        ;
+    },
+}
+
+% Generic arrows
+% Example:
+%     \node[simshadows/GenericBlockArrow] {};
+%     \node[simshadows/GenericArrow] {};
+\tikzset{
+    simshadows/GenericBlockArrow/.style={
+        single arrow,
+        draw,
+        minimum width=4ex,
+        minimum height=5ex,
+        single arrow head extend=1.0ex,
+    },
+    simshadows/GenericGrayBlockArrow/.style={
+        single arrow,
+        draw,
+        minimum width=4.5ex,
+        minimum height=5.5ex,
+        single arrow head extend=1.1ex,
+        simshadows/style/softgray,
+    }
+}
+
+\newcommand{\DrawnDownArrow}[1][]{%
+    \begin{tikzpicture}[scale=1, transform shape]
+        \node[simshadows/GenericBlockArrow, rotate=-90, #1] {};
+    \end{tikzpicture}%
+}
+
+\newcommand{\DrawnRightArrow}[1][]{%
+    \begin{tikzpicture}[scale=1, transform shape]
+        \node[simshadows/GenericBlockArrow, #1] {};
+    \end{tikzpicture}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -359,8 +439,8 @@
 }
 %\newcommand\HackEquationLeftAlign{ \setbool{@fleqn}{true} } % Command variant, though this is clunky to use.
 
-\newcommand\Nth[2]{\ensuremath{{#1}^\textit{#2}}}
-\newcommand\diff[1]{\ensuremath{\mathrm{d}#1}}
+\newcommand{\Nth}[2]{\ensuremath{{#1}^\textit{#2}}}
+\newcommand{\diff}[1]{\ensuremath{\mathrm{d}#1}}
 \newcommand{\parallelsum}{\mathbin{\|}}
 
 \DeclarePairedDelimiter\parens{(}{)}
@@ -369,6 +449,7 @@
 
 \DeclarePairedDelimiter\abs{\lvert{}}{\rvert{}}
 \DeclarePairedDelimiter\inte{[}{]}
+\newcommand{\eqsystem}[1]{\left\{\:{#1}\right.}
 
 \DeclarePairedDelimiter\ceil{\lceil{}}{\rceil{}}
 \DeclarePairedDelimiter\floor{\lfloor{}}{\rfloor{}}
@@ -397,6 +478,11 @@
 % Electrical Engineering Conventions
 \DeclareSIUnit\voltampere{VA} % Apparent Power
 \DeclareSIUnit\var{VAR} % Reactive Power
+
+% Adding small text over things at a more comfortable distance.
+% TODO: My implementation is actually a hack. I should find a better way of doing it...
+%       Though in the process, I may need to rework formatting where this command is being used.
+\newcommand{\MathOverLabel}[2]{\overset{\substack{#1\\\phantom{x}}}{#2}}
 
 % Fraction in display mode
 \newcommand\DisplayFrac[2]{\displaystyle \frac{\displaystyle {#1}}{\displaystyle {#2}}}
@@ -433,19 +519,6 @@
 %\newcommand{\myRho    }{\mathrm{P}}
 %\newcommand{\myTau    }{\mathrm{T}}
 %\newcommand{\myChi    }{\mathrm{X}}
-
-% Coloured emphasis in math environments.
-% I made these macros because I use it a lot...
-% NOTE: These commands can't be nested into each other for some reason, probably due to a bug.
-\newcommand{\memph}[2][myred]{{\color{#1}\bm{#2}}}
-\newcommand{\memphR}[1]{\memph[myred]{#1}}
-\newcommand{\memphG}[1]{\memph[mygreen]{#1}}
-\newcommand{\memphB}[1]{\memph[myblue]{#1}}
-% Alternatives if boldfacing is a problem
-\newcommand{\xmemph}[2][myred]{{\color{#1}{#2}}}
-\newcommand{\xmemphR}[1]{\xmemph[myred]{#1}}
-\newcommand{\xmemphG}[1]{\xmemph[mygreen]{#1}}
-\newcommand{\xmemphB}[1]{\xmemph[myblue]{#1}}
 
 %%%%%%%%%%%%%%%%
 % Redefinables %

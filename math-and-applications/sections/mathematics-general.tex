@@ -3,70 +3,228 @@
 
 \begin{multicols}{2}
 
+    %% These are the Exponentiation and Log Identities sections in the original separated form.
+    %
+    %\CheatsheetEntryFrame{
+    %
+    %    \CheatsheetEntryTitle{Exponentiation Identities}
+    %    \begin{align*}
+    %        a^x a^y &= a^{x+y} \\
+    %        a^x b^x &= \parens*{ab}^x \\
+    %        \parens*{a^x}^y &= a^{xy} \\
+    %        a^0 &= 1
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        a^{-x} &= \frac{1}{a^x} \\
+    %        a^{x-y} &= \frac{a^x}{a^y} \\
+    %        \parens*{\frac{a}{b}}^x &= \frac{a^x}{b^x}
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        a^{\frac{1}{2}} &= \sqrt{a} \\
+    %        a^{\frac{1}{x}} &= \sqrt[x]{a} \\
+    %        a^{\frac{x}{y}} &= \parens*{\sqrt[y]{a}}^x
+    %    \end{align*}
+    %
+    %}
+    %
+    %\CheatsheetEntryFrame{
+    %
+    %    \CheatsheetEntryTitle{Log Identities}
+    %
+    %    \CheatsheetSmallEquationTitle{(Definition)}
+    %    \begin{equation*}
+    %        x = a^y \quad\iff\quad \log_a{x} = y
+    %    \end{equation*}
+    %
+    %    \CheatsheetSmallEquationTitle{(Inverses)}
+    %    \begin{equation*}
+    %        \log_a{a^x} = a^{\log_a{x}} = x
+    %    \end{equation*}
+    %
+    %    \CheatsheetSmallEquationTitle{(Change of Base Law)}
+    %    \begin{equation*}
+    %        \log_a{x} = \frac{\log_u{x}}{\log_u{a}}
+    %    \end{equation*}
+    %
+    %    \vspace*{-\abovedisplayskip}
+    %    \begin{align*}
+    %        \log_a{xy} &= \log_a{x} + \log_a{y} \\
+    %        \log_a{\parens*{\frac{x}{y}}} &= \log_a{x} - \log_a{y} \\
+    %        \log_a{x^n} &= n \log_a{x}
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        \log_a{1} &= 0 \\
+    %        \log_a{a} &= 1
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        \log_a{\parens*{\frac{1}{x}}} &= - \log_a{x}
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        \log_a{\parens*{\frac{1}{a}}} &= -1 \\
+    %        \log_a{\sqrt{a}} &= \frac{1}{2} \\
+    %        \log_a{\sqrt[b]{a}} &= \frac{1}{b}
+    %    \end{align*}
+    %
+    %}
+
     \CheatsheetEntryFrame{
 
-        \CheatsheetEntryTitle{Exponentiation Identities}
-        \begin{align*}
-            a^x a^y &= a^{x+y} \\
-            a^x b^x &= \parens*{ab}^x \\
-            \parens*{a^x}^y &= a^{xy} \\
-            a^0 &= 1
-            %
-            \\[\abovedisplayskip]
-            %
-            a^{-x} &= \frac{1}{a^x} \\
-            a^{x-y} &= \frac{a^x}{a^y} \\
-            \parens*{\frac{a}{b}}^x &= \frac{a^x}{b^x}
-            %
-            \\[\abovedisplayskip]
-            %
-            a^{\frac{1}{2}} &= \sqrt{a} \\
-            a^{\frac{1}{x}} &= \sqrt[x]{a} \\
-            a^{\frac{x}{y}} &= \parens*{\sqrt[y]{a}}^x
-        \end{align*}
+        \CheatsheetEntryTitle{Exponentiation and Logarithm Identities}
 
-    }
+        % Hacks to ensure uniform height
+        \renewcommand{\W}{\displaystyle} % Simple
+        \renewcommand{\X}{\displaystyle \vphantom{\parens*{\sqrt[\frac{I}{I}]{I}}}} % No fractions
+        \renewcommand{\Y}{\displaystyle \vphantom{\frac{I}{I}}} % Simple fractions
+        \renewcommand{\Z}{\displaystyle \vphantom{\parens*{\parens*{\frac{I}{I}}^I}}} % Complicated fractions
 
-    \CheatsheetEntryFrame{
 
-        \CheatsheetEntryTitle{Log Identities}
+        \begin{center}
+        \begin{tabularx}{\textwidth}{Ccc}
 
-        \CheatsheetSmallEquationTitle{(Definition)}
-        \begin{equation*}
-            x = a^y \quad\iff\quad \log_a{x} = y
-        \end{equation*}
+            \hline
+            \multicolumn{3}{|l|}{{\scriptsize \textbf{Logarithm Definition}}}
+                \\
+            \multicolumn{1}{|c}{$\X x = a^y$}
+                & $\X \iff$
+                & \multicolumn{1}{c|}{$\X \log_a{x} = y$}
+                \\
+            \hline
 
-        \CheatsheetSmallEquationTitle{(Inverses)}
-        \begin{equation*}
-            \log_a{a^x} = a^{\log_a{x}} = x
-        \end{equation*}
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
 
-        \CheatsheetSmallEquationTitle{(Change of Base Law)}
-        \begin{equation*}
-            \log_a{x} = \frac{\log_u{x}}{\log_u{a}}
-        \end{equation*}
+            $a^{\log_a{x}} = x$
+                & $\X \iff$
+                & $\X \log_a{a^x} = x$
+                \\
 
-        \vspace*{-\abovedisplayskip}
-        \begin{align*}
-            \log_a{xy} &= \log_a{x} + \log_a{y} \\
-            \log_a{\parens*{\frac{x}{y}}} &= \log_a{x} - \log_a{y} \\
-            \log_a{x^n} &= n \log_a{x}
-            %
-            \\[\abovedisplayskip]
-            %
-            \log_a{1} &= 0 \\
-            \log_a{a} &= 1
-            %
-            \\[\abovedisplayskip]
-            %
-            \log_a{\parens*{\frac{1}{x}}} &= - \log_a{x}
-            %
-            \\[\abovedisplayskip]
-            %
-            \log_a{\parens*{\frac{1}{a}}} &= -1 \\
-            \log_a{\sqrt{a}} &= \frac{1}{2} \\
-            \log_a{\sqrt[b]{a}} &= \frac{1}{b}
-        \end{align*}
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            {} % BLANK
+                &
+                & $\W \overset{\text{\textbf{Change of Base Law}}}{\boxed{\Z \log_a{x} = \frac{\log_u{x}}{\log_u{a}}}}$
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \X a^0 &= 1 \\
+                            \X a^1 &= a \\
+                            \Y a^{-1} &= \frac{1}{a}
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \X \longrightarrow \\
+                            \X \longrightarrow \\
+                            \Y \longrightarrow
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{aligned}
+                            \X \log_a{1} &= 0 \\
+                            \X \log_a{a} &= 1 \\
+                            \Y \log_a{\frac{1}{a}} &= -1
+                        \end{aligned}
+                    $
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \X a^x a^y         &= a^{x+y} \\
+                            \X a^x b^x         &= \parens*{ab}^x \\
+                            \X \parens*{a^x}^y &= a^{xy} \\
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \X \longrightarrow \\
+                            \X \\
+                            \X \longrightarrow
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{aligned}
+                            \X \log_a{xy} &= \log_a{x} + \log_a{y} \\
+                            \X & \\
+                            \X \log_a{x^n} &= n \log_a{x}
+                        \end{aligned}
+                    $
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \Z \frac{1}{a^y}   &= a^{-y} \\
+                            \Z \frac{a^x}{a^y} &= a^{x-y} \\
+                            \Z \frac{a^x}{b^x} &= \parens*{\frac{a}{b}}^x
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \Z \\
+                            \Z \longrightarrow \\
+                            \Z
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{aligned}
+                            \Z \log_a{\frac{1}{y}} &= -\log_a{y} \\
+                            \Z \log_a{\frac{x}{y}} &= \log_a{x} - \log_a{y} \\
+                            \Z &
+                        \end{aligned}
+                    $
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \Y a^{\frac{1}{2}} &= \sqrt{a} \\
+                            \Y a^{\frac{1}{y}} &= \sqrt[y]{a} \\
+                            \Y a^{\frac{x}{y}} &= \parens*{\sqrt[y]{a}}^x
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \Y \longrightarrow \\
+                            \Y \longrightarrow \\
+                            \Y \longrightarrow
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{alignedat}{2}
+                            \Y & \log_a{\sqrt{a}}                &&= \frac{1}{2} \\
+                            \Y & \log_a{\sqrt[y]{a}}             &&= \frac{1}{y} \\
+                            \Y & \log_a{\parens*{\sqrt[y]{a}}^x} &&= \frac{x}{y}
+                        \end{alignedat}
+                    $
+                \\
+
+        \end{tabularx}
+        \end{center}
 
     }
 
@@ -85,6 +243,8 @@
 
     }
 
+    % \MulticolsBreak % I want a break here...
+
     \CheatsheetEntryFrame{
 
         \CheatsheetEntryTitle{Quadratic Factorization}
@@ -101,7 +261,12 @@
         \end{gather*}
 
         \CheatsheetEntryTitle{Completing The Square}
-        {\footnotesize \textit{Obtain the square of half the coefficient of $x$ as the constant, and factorize.}}
+
+        % TODO: This is confusing! Fix it!
+
+        %{\footnotesize \textit{Obtain the square of half the coefficient of $x$ as the constant, and factorize.}}
+        %{\footnotesize \textit{Halve the coefficient of $x$, then add and subtract its square.}} % This version was found on my old cheatsheet.
+        {\footnotesize \textit{Halve the coefficient of $x$, square it, set this value as the constant, and factorize.}}
 
         \CheatsheetSmallText{Result:}
         \begin{equation*}
@@ -199,6 +364,76 @@
         \end{align*}
 
     }
+
+    %% Current prototype for this section.
+    %\CheatsheetEntryFrame{
+
+    %    \CheatsheetEntryTitle{Exact Values}
+
+    %    %\renewcommand{\W}{\displaystyle \vphantom{\parens*{\parens*{\frac{I}{I}}^I}}} % Huge vertical space
+    %    \renewcommand{\W}{\displaystyle \vphantom{\parens*{\frac{\sqrt{I}}{\sqrt{I}}}}}
+    %    %\renewcommand{\W}{}
+    %    \begin{tabularx}{\textwidth}{|C|C|C|C|C|C|}
+    %        \hline
+    %        Deg.
+    %            & $\W \ang{0}$
+    %            & $\W \ang{30}$
+    %            & $\W \ang{45}$
+    %            & $\W \ang{60}$
+    %            & $\W \ang{90}$
+    %            \\ \hline
+    %        Rad.
+    %            & $\W 0$
+    %            & $\W \frac{\pi}{6}$
+    %            & $\W \frac{\pi}{4}$
+    %            & $\W \frac{\pi}{3}$
+    %            & $\W \frac{\pi}{2}$
+    %            \\ \hline \hline
+    %        $\W \sin{\theta}$
+    %            & $\W 0$
+    %            & $\W \frac{1}{2}$
+    %            & $\W \frac{1}{\sqrt{2}}$
+    %            & $\W \frac{\sqrt{3}}{2}$
+    %            & $\W 1$
+    %            \\ \hline
+    %        $\W \cos{\theta}$
+    %            & $\W 1$
+    %            & $\W \frac{\sqrt{3}}{2}$
+    %            & $\W \frac{1}{\sqrt{2}}$
+    %            & $\W \frac{1}{2}$
+    %            & $\W 0$
+    %            \\ \hline
+    %        $\W \tan{\theta}$
+    %            & $\W 0$
+    %            & $\W \frac{1}{\sqrt{3}}$
+    %            & $\W 1$
+    %            & $\W \sqrt{3}$
+    %            & \texttt{UNDEF.}
+    %            \\ \hline \hline
+    %        $\W \csc{\theta}$
+    %            & \texttt{UNDEF.}
+    %            & $\W 2$
+    %            & $\W \sqrt{2}$
+    %            & $\W \frac{2}{\sqrt{3}}$
+    %            & $\W 1$
+    %            \\ \hline
+    %        $\W \sec{\theta}$
+    %            & $\W 1$
+    %            & $\W \frac{2}{\sqrt{3}}$
+    %            & $\W \sqrt{2}$
+    %            & $\W 2$
+    %            & \texttt{UNDEF.}
+    %            \\ \hline
+    %        $\W \cot{\theta}$
+    %            & \texttt{UNDEF.}
+    %            & $\W \sqrt{3}$
+    %            & $\W 1$
+    %            & $\W \frac{1}{\sqrt{3}}$
+    %            & $\W 0$
+    %            \\ \hline
+    %    \end{tabularx}
+
+    %}
 
     \MulticolsBreak
 

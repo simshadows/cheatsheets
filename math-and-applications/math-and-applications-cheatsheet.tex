@@ -32,6 +32,12 @@
 }
 %\newcommand{\CheatsheetEntryFrameExn}[2][]{\CheatsheetEntryFrame[fontcolor=extranotecolor,linecolor=extranotecolor,#1]{#2}}
 \newcommand{\CheatsheetEntryFrameExn}[2][]{\CheatsheetEntryFrame[#1]{#2}} % For now, we're not colouring them.
+
+% Hacks to get virtual breaks
+\newcommand{\CheatsheetEntryFrameStart}[2][]{\CheatsheetEntryFrame[bottomline=false,#1]{#2\vspace{4ex}}}
+\newcommand{\CheatsheetEntryFrameMid}[2][]{\CheatsheetEntryFrame[topline=false,bottomline=false,#1]{\vspace{1ex}#2\vspace{4ex}}}
+\newcommand{\CheatsheetEntryFrameEnd}[2][]{\CheatsheetEntryFrame[topline=false,#1]{\vspace{1ex}#2}}
+
 \newcommand{\CheatsheetEntryTitle}[1]{ % Put this inside CheatsheetEntryBox
     \textbu{#1} %\\[1.5ex]
     %\vspace*{1.5ex}%
@@ -70,7 +76,7 @@
 \medskip
 While this cheatsheet is made and structured specifically for my convenience, I hope that you too will find it useful!
 
-I try to keep the main cheatsheets to only what I consider essentials. Anything that I consider should be trivial/memorized knowledge but may still be useful for reference will be moved into the \textit{Extra Cheatsheets} section of this document to avoid bloating the main cheatsheets.
+I try to keep the main cheatsheets to only what I consider essentials. Anything that I consider should be discussion or trivial/memorized knowledge but may still be useful for reference will be moved into the \textit{Extra Cheatsheets} section of this document to avoid bloating the main cheatsheets.
 \medskip
 
 {
@@ -79,7 +85,7 @@ I try to keep the main cheatsheets to only what I consider essentials. Anything 
 }
 
 \newpage
-\section{Mathematics General}
+\section{Mathematics}
 \label{sec:mathgeneral}
 
     { \input{./sections/mathematics-general} }
@@ -97,10 +103,16 @@ I try to keep the main cheatsheets to only what I consider essentials. Anything 
     { \input{./sections/physics} }
 
 \newpage
-\section{Electrical Engineering}
-\label{sec:ee}
+\section{Electrical Engineering: Circuit Analysis}
+\label{sec:ee-circuit-analysis}
 
-    { \input{./sections/electrical-engineering} }
+    { \input{./sections/electrical-engineering-circuit-analysis} }
+
+\newpage
+\section{Electrical Engineering: Digital Systems}
+\label{sec:ee-digital}
+
+    { \input{./sections/electrical-engineering-digital} }
 
 \newpage
 \section{Computer Science}
@@ -118,10 +130,16 @@ I try to keep the main cheatsheets to only what I consider essentials. Anything 
 \InvisiblePart{Extras}
 
 \newpage
-\section{Extra Cheatsheets: Mathematics General}%
-\label{sec:extrasec-mathgeneral}
+\section{Extras: Mathematics}%
+\label{sec:extrasec-math}
 
-    { \input{./sections/extrasec-mathematics-general} }
+    { \input{./sections/extrasec-mathematics} }
+
+\newpage
+\section{Extras: Electrical Engineering}%
+\label{sec:extrasec-ee}
+
+    { \input{./sections/extrasec-electrical-engineering} }
 
 
 \end{document}

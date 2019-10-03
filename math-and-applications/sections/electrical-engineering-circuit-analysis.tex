@@ -27,7 +27,7 @@
             p = vi
         \end{equation*} \\[0pt]
 
-        \begin{figure}[H]\centering
+        \begin{center}
         \begin{circuitikz}
             \draw
                 (0,0) to[short] ++(0.8,0)
@@ -58,9 +58,7 @@
                 %}
             ;
         \end{circuitikz}
-        %\caption{caption}
-        %\label{fig:labelname}
-        \end{figure}
+        \end{center}
 
         %Passive sign convention will be assumed. %for all electrical engineering material of this cheatsheet.
 
@@ -176,7 +174,7 @@
                     ++(1.8,0  ) coordinate (InsideBR)
                     ++(0  ,1.5) coordinate (InsideTR)
                 ;
-                \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                \draw[simshadows/style/softgray]
                     (InsideTR) ++( 0  , 0.8) coordinate (BoxTR)
                     (InsideBL) ++(-1.2,-0.8) coordinate (BoxBL)
                     (BoxBL) rectangle (BoxTR)
@@ -250,8 +248,8 @@
         \MyReusableFormatting{%
             \CheatsheetEntryTitle{Ideal Capacitors}
             \begin{equation*}
-                q = Cv
-                \qquad \xRightarrow{\textstyle \phantom{.} \frac{\diff{}}{\diff{t}} \phantom{.}} \qquad
+                \Exn{q = Cv}
+                \Exn{\qquad \xRightarrow{\textstyle \phantom{.} \frac{\diff{}}{\diff{t}} \phantom{.}} \qquad}
                 i = C \frac{\diff{v}}{\diff{t}}
             \end{equation*}
 
@@ -283,9 +281,16 @@
         \CheatsheetEntryExtraSeparation
 
         \MyReusableFormatting{%
-        \CheatsheetEntryTitle{Ideal Inductors}
+            \CheatsheetEntryTitle{Ideal Inductors}
             \begin{equation*}
-                v = L \frac{\diff{i}}{\diff{t}}
+                %% As much as I wanted to put this in, it clutters it up so much.
+                %\Exn{\MathOverLabel{\text{\ul{Faraday's Law}}}{
+                %    \varepsilon = -N \frac{\diff{\Phi_B}}{\diff{t}} %= -N \frac{\diff{\Phi_B}}{\diff{i}} \frac{\diff{i}}{\diff{t}}
+                %}}
+                %\Exn{\qquad \xRightarrow{\textstyle \phantom{.} \phantom{\frac{\diff{}}{\diff{t}}} \phantom{.}} \qquad}
+                %\MathOverLabel{\text{\Exn{\ul{Self-Induction}}}}{
+                    v = L \frac{\diff{i}}{\diff{t}}
+                %}
             \end{equation*}
 
             \vspace{-1ex}%
@@ -857,7 +862,7 @@
                 (LeftBR) ++(0.1,0)
                 node[right] (LeftEdgeRef) {$b$}
             ;
-            \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                \draw[simshadows/style/softgray]
                 (BoxTRref)        ++( 0  , 0.3) coordinate (BoxTR)
                 (LeftBR) ++(-2,0) ++(-1.1,-0.3) coordinate (BoxBL)
                 (BoxBL) rectangle (BoxTR)
@@ -952,10 +957,10 @@
                             (RightTermA) ++(0, 0.1) node[above] {\large $a$}
                             (RightTermB) ++(0,-0.1) node[below] {\large $b$}
                         ;
-                        \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                        \draw[simshadows/style/softgray]
                             (LeftBoxBL) rectangle (LeftBoxTR)
                         ;
-                        \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                        \draw[simshadows/style/softgray]
                             (RightBoxBL) rectangle (RightBoxTR)
                         ;
                         % Everything below will be for the voltage indicator
@@ -1001,7 +1006,7 @@
                 (LeftBR) ++(0.1,0)
                 node[right] (LeftEdgeRef) {$b$}
             ;
-            \draw[lightgray, fill=verylightgray, line width=3.0pt]
+            \draw[simshadows/style/softgray]
                 (BoxTRref)        ++( 0  , 0.3) coordinate (BoxTR)
                 (LeftBR) ++(-2,0) ++(-1.1,-0.3) coordinate (BoxBL)
                 (BoxBL) rectangle (BoxTR)
@@ -1679,10 +1684,6 @@
 \end{multicols}
 \newpage
 \begin{multicols}{2}
-    \Todo{Look into magnetically coupled devices.}
-\end{multicols}
-\newpage
-\begin{multicols}{2}
 
     \CheatsheetEntryFrame{
 
@@ -1990,7 +1991,7 @@
                     ++(1.8,0  ) coordinate (InsideBR)
                     ++(0  ,1.5) coordinate (InsideTR)
                 ;
-                \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                \draw[simshadows/style/softgray]
                     (InsideTR) ++( 0  , 0.8) coordinate (BoxTR)
                     (InsideBL) ++(-1.2,-0.8) coordinate (BoxBL)
                     (BoxBL) rectangle (BoxTR)
@@ -2068,7 +2069,7 @@
                     -- (0,0)
                 ;
                 \begin{scope}[on background layer]
-                    \draw[lightgray, fill=verylightgray, line width=3.0pt]
+                    \draw[simshadows/style/softgray]
                         (ZTop)    ++( 1.0,0) coordinate (BoxTR)
                         (ZBottom) ++(-1.0,0) coordinate (BoxBL)
                         (BoxBL) rectangle (BoxTR)
@@ -2194,219 +2195,6 @@
     }
 
     \Todo{Power Factor Correction?}
-
-\end{multicols}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newpage
-\subsection{Digital Circuits and Logic}%
-\label{sub:digital-circuits-and-logic}
-
-\begin{multicols}{2}
-
-    \CheatsheetEntryFrame{
-
-        \renewcommand{\MyReusableFormatting}[5]{ % This will be used for content
-            %\vspace*{1ex}
-            \begin{minipage}[c]{0.20\columnwidth}
-                \centering
-                #1
-            \end{minipage}%
-            \begin{minipage}[c]{0.18\columnwidth}
-                \centering
-                #2
-            \end{minipage}%
-            %\hspace{0.04\columnwidth}%
-            \begin{minipage}[c]{0.32\columnwidth}
-                \centering
-                \scalebox{0.8}{%
-                \begin{tabular}{#3}
-                    \HLineA
-                    #4
-                    \HLineA
-                \end{tabular}
-                }%
-            \end{minipage}%
-            \begin{minipage}[c]{0.30\columnwidth}
-            \begin{center}
-                \begin{circuitikz}
-                    \draw
-                        #5
-                    ;
-                \end{circuitikz}
-            \end{center}
-            \end{minipage}%
-            \vspace*{1ex}
-        }
-        \renewcommand{\MyReusableFormattingB}{ % This will be used for separators
-            {\color{lightgray} \hrule{}}
-        }
-        \renewcommand{\MyReusableFormattingC}{ % This will be used for special separators
-            \MyReusableFormattingB%
-            \vspace*{2.5pt}%
-            \MyReusableFormattingB
-        }
-
-        \renewcommand{\X}{{\cellcolor{myred}\color{white}$\bm{0}$}} % Used for logical low
-        \renewcommand{\Y}{{\cellcolor{mygreen}\color{white}$\bm{1}$}} % Used for logical high
-
-        \renewcommand{\W}[1]{{\cellcolor{black}\color{white}$\bm{#1}$}} % Used for headings
-
-        \renewcommand{\VRuleA}{\vrule width 3pt}
-        \renewcommand{\HLineA}{\noalign{\hrule height 3pt}}
-
-        \CheatsheetEntryTitle{Logic Gates}
-
-        \MyReusableFormatting{NOT {\footnotesize(Inverter)}}{$\overline{A}$}{!{\VRuleA}c!{\VRuleA}c!{\VRuleA}}{
-            \W{A} & \W{O} \\ \HLineA
-            \X & \Y \\
-            \Y & \X \\
-        }{
-            (0,0) node[american not port, name=G, /tikz/circuitikz/bipoles/length=1.0cm, /tikz/circuitikz/bipoles/not port/circle width=0.35] {}
-            (G.in)  -- ++(-0.4,0)
-            (G.out) -- ++( 0.4,0)
-        }
-        \MyReusableFormattingC
-
-        \MyReusableFormatting{AND}{$A \cdot B$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
-            \W{A} & \W{B} & \W{O} \\ \HLineA
-            \X & \X & \X \\
-            \X & \Y & \X \\
-            \Y & \X & \X \\
-            \Y & \Y & \Y \\
-        }{
-            (0,0) node[american and port, name=G] {}
-            (G.in 1) -- ++(-0.4,0)
-            (G.in 2) -- ++(-0.4,0)
-            (G.out)  -- ++( 0.4,0)
-        }
-        \MyReusableFormattingB
-
-        \MyReusableFormatting{OR}{$A + B$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
-            \W{A} & \W{B} & \W{O} \\ \HLineA
-            \X & \X & \X \\
-            \X & \Y & \Y \\
-            \Y & \X & \Y \\
-            \Y & \Y & \Y \\
-        }{
-            (0,0) node[american or port, name=G] {}
-            (G.in 1) -- ++(-0.4,0)
-            (G.in 2) -- ++(-0.4,0)
-            (G.out)  -- ++( 0.4,0)
-        }
-        \MyReusableFormattingB
-
-        \MyReusableFormatting{XOR}{$A \oplus B$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
-            \W{A} & \W{B} & \W{O} \\ \HLineA
-            \X & \X & \X \\
-            \X & \Y & \Y \\
-            \Y & \X & \Y \\
-            \Y & \Y & \X \\
-        }{
-                (0,0) node[american xor port, name=G] {}
-                (G.in 1) -- ++(-0.4,0)
-                (G.in 2) -- ++(-0.4,0)
-                (G.out)  -- ++( 0.4,0)
-        }
-
-        \MyReusableFormattingC
-
-        \MyReusableFormatting{NAND}{$\overline{A \cdot B}$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
-            \W{A} & \W{B} & \W{O} \\ \HLineA
-            \X & \X & \Y \\
-            \X & \Y & \Y \\
-            \Y & \X & \Y \\
-            \Y & \Y & \X \\
-        }{
-            (0,0) node[american nand port, name=G] {}
-            (G.in 1) -- ++(-0.4,0)
-            (G.in 2) -- ++(-0.4,0)
-            (G.out)  -- ++( 0.4,0)
-        }
-        \MyReusableFormattingB
-
-        \MyReusableFormatting{NOR}{$\overline{A + B}$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
-            \W{A} & \W{B} & \W{O} \\ \HLineA
-            \X & \X & \Y \\
-            \X & \Y & \X \\
-            \Y & \X & \X \\
-            \Y & \Y & \X \\
-        }{
-            (0,0) node[american nor port, name=G] {}
-            (G.in 1) -- ++(-0.4,0)
-            (G.in 2) -- ++(-0.4,0)
-            (G.out)  -- ++( 0.4,0)
-        }
-        \MyReusableFormattingB
-
-        \MyReusableFormatting{XNOR}{$\overline{A \oplus B}$}{!{\VRuleA}cc!{\VRuleA}c!{\VRuleA}}{
-            \W{A} & \W{B} & \W{O} \\ \HLineA
-            \X & \X & \Y \\
-            \X & \Y & \X \\
-            \Y & \X & \X \\
-            \Y & \Y & \Y \\
-        }{
-            (0,0) node[american xnor port, name=G] {}
-            (G.in 1) -- ++(-0.4,0)
-            (G.in 2) -- ++(-0.4,0)
-            (G.out)  -- ++( 0.4,0)
-        }
-
-    }
-
-    \MulticolsBreak
-
-    \CheatsheetEntryFrame{
-
-        \CheatsheetEntryTitle{Binary Numbers}
-
-        \Todo{This!}
-
-        \CheatsheetEntryExtraSeparation
-
-        \CheatsheetEntryTitle{Hexadecimal and Octal Numbers}
-
-        \Todo{This!}
-
-    }
-
-    \CheatsheetEntryFrame{
-
-        %\CheatsheetEntryTitle{Commutative Laws}
-        %\begin{gather*}
-        %    A \cdot B = B \cdot A \\
-        %    A + B = B + A
-        %\end{gather*}
-
-        %\CheatsheetEntryTitle{Associative Laws}
-        %\begin{gather*}
-        %    (A \cdot B) \cdot C = A \cdot (B \cdot C) = A \cdot B \cdot C \\
-        %    (A + B) + C = A + (B + C) = A + B + C
-        %\end{gather*}
-
-        \CheatsheetEntryTitle{Distributive Laws}
-        \begin{gather*}
-            A \cdot (B + C) = (A \cdot B) + (A \cdot C) \\
-            A + (B \cdot C) = (A + B) \cdot (A + C)
-        \end{gather*}
-
-        \CheatsheetEntryTitle{Absorption Laws}
-        \begin{gather*}
-            A + (A \cdot B) = A \\
-            A \cdot (A + B) = A \\
-            (A \cdot B) + (A \cdot \overline{B}) = A \\
-            (A + B) \cdot (A + \overline{B}) = A
-        \end{gather*}
-
-        \CheatsheetEntryTitle{De Morgan's Theorem}
-        \begin{gather*}
-            \overline{A + B} = \overline{A} \cdot \overline{B} \\
-            \overline{A \cdot B} = \overline{A} + \overline{B}
-        \end{gather*}
-
-    }
 
 \end{multicols}
 

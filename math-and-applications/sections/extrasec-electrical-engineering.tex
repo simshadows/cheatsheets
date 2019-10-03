@@ -1,0 +1,1056 @@
+\subsection{Further Discussion: Inductors and Inductive Coupling}%
+\label{sub:further-discussion-inductors}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Single Inductor}
+
+        Assuming a single inductor:
+        %% Old Version
+        %\begin{alignat*}{2}
+        %    v &=
+        %        N \frac{\diff{\Phi_B}}{\diff{t}} &
+        %        \qquad & \text{Faraday's Law}
+        %        \\
+        %    &=
+        %        N \frac{\diff{\Phi_B}}{\diff{i}} \frac{\diff{i}}{\diff{t}} &
+        %        \qquad & \text{flux $\Phi_B$ is produced by current $i$}
+        %        \\
+        %    &=
+        %        L \frac{\diff{i}}{\diff{t}} &
+        %        \qquad & \text{inductance is change in flux over change in current}
+        %\end{alignat*}
+        \vspace{-1ex}%
+        \begin{center}
+        \begin{circuitikz}
+            \draw
+                (0,0)
+                to[short, i=$i$, o-] (2,0)
+                to[cute inductor, v=$v$, name=L] (4,0)
+                to[short, -o] (6,0)
+            ;
+            \begin{scope}[on background layer]
+                \draw[myorange!25!white, line width=1.5pt]
+                    (L.center) ++(0, 0.40) ++(0, 0.02) circle[x radius=1.5, y radius=0.40] % Upper Big
+                    (L.center) ++(0,-0.40) ++(0,-0.02) circle[x radius=1.5, y radius=0.40] % Lower Big
+                    (L.center) ++(0, 0.25) ++(0, 0.06) circle[x radius=1.0, y radius=0.25] % Upper Small
+                    (L.center) ++(0,-0.25) ++(0,-0.06) circle[x radius=1.0, y radius=0.25] % Lower Small
+                ;
+                \draw
+                    (L.center) ++(1.2,0.95) node {$\phi$}
+                ;
+            \end{scope}
+        \end{circuitikz}
+        \end{center}
+        \begin{enumerate}[label=(\arabic*)]
+            \item By \textit{Faraday's law}, a change in magnetic flux $\phi$ through a coil of $N$ turns induces an EMF of $v$.
+            \item Current $i$ produces flux $\phi$, so we introduce $\diff{i}$.
+            \item We define inductance $L$ as the flux produced per current. {\scriptsize \textit{($L$ is determined by inductor architecture.)}}
+        \end{enumerate}
+        \begin{equation*}
+            \overbracket{v = N \frac{\diff{\phi}}{\diff{t}}}^{\text{(1)}}
+            = \overbracket{N \frac{\diff{\phi}}{\diff{i}} \frac{\diff{i}}{\diff{t}}}^{\text{(2)}}
+            = \overbracket{L \frac{\diff{i}}{\diff{t}}}^{\text{(3)}}
+        \end{equation*}
+
+        Hence, the current-voltage characteristic for self-induction:
+        \begin{equation*}
+            v = L \frac{\diff{i}}{\diff{t}}
+        \end{equation*}
+
+    }
+
+    \renewcommand{\W}{25} % Controls field line opacity
+
+    \CheatsheetEntryFrameStart{
+
+        \CheatsheetEntryTitle{Two Magnetically Coupled Inductors}
+
+        Consider two inductors $L_1$ and $L_2$ that are coupled:
+        \begin{center}
+        \begin{circuitikz}
+            \draw % Left Side
+                (0,0)
+                to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+                to[cute inductor, l_=$L_1$, name=L1] ++(0,-2)
+                to[short, -o] ++(-1,0)
+                to[open, v^<=$v_1$] (0,0)
+            ;
+            \draw % Right Side
+                (L1Top) ++(1,0) coordinate (L2Top)
+                to[short, i<=$i_2$, -o] ++(1,0)
+                to[open, v^>=$v_2$] ++(0,-2)
+                to[short, o-] ++(-1,0)
+                to[cute inductor, l_=$L_2$, name=L2] (L2Top)
+            ;
+            \path
+                (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+            ;
+            \draw[simshadows/style/magneticcouplingarrow]
+                (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+            ;
+            \draw
+                (MArcCenter) ++(90:0.5) node[above] {$M$}
+            ;
+            \draw
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        Inductor $L_1$ has $N_1$ turns in its coil. \\[0mm]
+        Inductor $L_2$ has $N_2$ turns in its coil.
+
+        Current $\memphR{i_1}$ through $\memphR{L_1}$ produces magnetic flux $\memphR{\phi_1}$: \\[0mm]
+        {\scriptsize \textit{($\memphB{\phi_2}$ is similar.)}}
+
+        \TwoColumnsMinipages{
+            \begin{circuitikz}
+                \draw % Left Side
+                    (0,0)
+                    to[short, i=$\memphR{i_1}$, o-] ++(1,0) coordinate (L1Top)
+                    to[cute inductor, l_=$\memphR{L_1}$, name=L1] ++(0,-2)
+                    to[short, -o] ++(-1,0)
+                ;
+                \draw % Right Side
+                    (L1Top) ++(1,0) coordinate (L2Top)
+
+                    (L2Top)
+                    to[short, -o] ++(1,0)
+                    
+                    (L2Top)
+                    to[cute inductor, mirror, l=$L_2$, name=L2] ++(0,-2)
+                    to[short, -o] ++(1,0)
+                ;
+                \draw
+                    (L1Top) ++(-0.20,-0.35) node[circ] {}
+                    (L2Top) ++( 0.20,-0.35) node[circ] {}
+                ;
+                \begin{scope}[on background layer]
+                    \draw[myorange!\W!white, line width=1.5pt]
+                        (L1.center) ++(-0.60,0) ++(-0.01,0) circle[x radius=0.60, y radius=2.0] % Left Large
+                        (L1.center) ++( 0.60,0) ++( 0.01,0) circle[x radius=0.60, y radius=2.0] % Right Large
+                        (L1.center) ++(-0.45,0) ++(-0.03,0) circle[x radius=0.45, y radius=1.5] % Left Medium
+                        (L1.center) ++( 0.45,0) ++( 0.03,0) circle[x radius=0.45, y radius=1.5] % Right Medium
+                        (L1.center) ++(-0.30,0) ++(-0.05,0) circle[x radius=0.30, y radius=1.0] % Left Small
+                        (L1.center) ++( 0.30,0) ++( 0.05,0) circle[x radius=0.30, y radius=1.0] % Right Small
+                    ;
+                    \draw[myred]
+                        (L1.center) ++(1.30,1.70) node {$\mathbf{\phi_1}$}
+                    ;
+                \end{scope}
+            \end{circuitikz}
+        }{
+            \begin{circuitikz}
+                \draw % Left Side
+                    (0,0)
+                    to[short, o-] ++(1,0) coordinate (L1Top)
+                    to[cute inductor, l_=$L_1$, name=L1] ++(0,-2)
+                    to[short, -o] ++(-1,0)
+                ;
+                \draw % Right Side
+                    (L1Top) ++(1,0) coordinate (L2Top)
+
+                    (L2Top)
+                    to[short, i<=$\memphB{i_2}$, -o] ++(1,0)
+                    
+                    (L2Top)
+                    to[cute inductor, mirror, l=$\memphB{L_2}$, name=L2] ++(0,-2)
+                    to[short, -o] ++(1,0)
+                ;
+                \draw
+                    (L1Top) ++(-0.20,-0.35) node[circ] {}
+                    (L2Top) ++( 0.20,-0.35) node[circ] {}
+                ;
+                \begin{scope}[on background layer]
+                    \draw[myteal!\W!white, line width=1.5pt]
+                        (L2.center) ++(-0.60,0) ++(-0.01,0) circle[x radius=0.60, y radius=2.0] % Left Large
+                        (L2.center) ++( 0.60,0) ++( 0.01,0) circle[x radius=0.60, y radius=2.0] % Right Large
+                        (L2.center) ++(-0.45,0) ++(-0.03,0) circle[x radius=0.45, y radius=1.5] % Left Medium
+                        (L2.center) ++( 0.45,0) ++( 0.03,0) circle[x radius=0.45, y radius=1.5] % Right Medium
+                        (L2.center) ++(-0.30,0) ++(-0.05,0) circle[x radius=0.30, y radius=1.0] % Left Small
+                        (L2.center) ++( 0.30,0) ++( 0.05,0) circle[x radius=0.30, y radius=1.0] % Right Small
+                    ;
+                    \draw[myblue]
+                        (L2.center) ++(-1.30,1.70) node {$\mathbf{\phi_2}$}
+                    ;
+                \end{scope}
+            \end{circuitikz}
+        }
+
+    }
+
+    \CheatsheetEntryFrameMid{
+
+        Some of the flux $\memphR{\phi_1}$ also links/passes through $\memphB{L_2}$. \\[0mm]
+        We will call this $\memphR{\phi_{12}}$. \\[0mm]
+        {\scriptsize \textit{(Read this as ``the flux due to 1 that links 2".)}} \\[0mm]
+        {\scriptsize \textit{($\memphB{\phi_{21}}$ is similarly "the flux due to 2 that links 1.)}}
+
+        \TwoColumnsMinipages{
+            \begin{circuitikz}
+                \draw % Left Side
+                    (0,0)
+                    to[short, i=$\memphR{i_1}$, o-] ++(1,0) coordinate (L1Top)
+                    to[cute inductor, l_=$\memphR{L_1}$, name=L1] ++(0,-2)
+                    to[short, -o] ++(-1,0)
+                ;
+                \draw % Right Side
+                    (L1Top) ++(1,0) coordinate (L2Top)
+
+                    (L2Top)
+                    to[short, -o] ++(1,0)
+                    
+                    (L2Top)
+                    to[cute inductor, mirror, l=$L_2$, name=L2] ++(0,-2)
+                    to[short, -o] ++(1,0)
+                ;
+                \draw
+                    (L1Top) ++(-0.20,-0.35) node[circ] {}
+                    (L2Top) ++( 0.20,-0.35) node[circ] {}
+                ;
+                \begin{scope}[on background layer]
+                    \draw[myorange!\W!white, line width=1.5pt]
+                        (L1.center) ++( 0.50,0) circle[x radius=0.51, y radius=2.0] % Right Large
+                        (L1.center) ++( 0.50,0) circle[x radius=0.44, y radius=1.5] % Right Medium
+                        (L1.center) ++( 0.50,0) circle[x radius=0.37, y radius=1.0] % Right Small
+                    ;
+                    \draw[myred]
+                        (L1.center) ++(1.20,1.65) node {$\mathbf{\phi_{12}}$}
+                    ;
+                \end{scope}
+            \end{circuitikz}
+        }{
+            \begin{circuitikz}
+                \draw % Left Side
+                    (0,0)
+                    to[short, o-] ++(1,0) coordinate (L1Top)
+                    to[cute inductor, l_=$L_1$, name=L1] ++(0,-2)
+                    to[short, -o] ++(-1,0)
+                ;
+                \draw % Right Side
+                    (L1Top) ++(1,0) coordinate (L2Top)
+
+                    (L2Top)
+                    to[short, i<=$\memphB{i_2}$, -o] ++(1,0)
+                    
+                    (L2Top)
+                    to[cute inductor, mirror, l=$\memphB{L_2}$, name=L2] ++(0,-2)
+                    to[short, -o] ++(1,0)
+                ;
+                \draw
+                    (L1Top) ++(-0.20,-0.35) node[circ] {}
+                    (L2Top) ++( 0.20,-0.35) node[circ] {}
+                ;
+                \begin{scope}[on background layer]
+                    \draw[myteal!\W!white, line width=1.5pt]
+                        (L2.center) ++(-0.50,0) circle[x radius=0.51, y radius=2.0] % Right Large
+                        (L2.center) ++(-0.50,0) circle[x radius=0.44, y radius=1.5] % Right Medium
+                        (L2.center) ++(-0.50,0) circle[x radius=0.37, y radius=1.0] % Right Small
+                    ;
+                    \draw[myblue]
+                    (L2.center) ++(-1.20,1.65) node {$\mathbf{\phi_{21}}$}
+                    ;
+                \end{scope}
+            \end{circuitikz}
+        }
+
+        The total flux through each inductor is the sum of:
+        \begin{itemize}
+            \item flux due to current through itself, and
+            \item flux due to current in the other inductor.
+        \end{itemize}
+
+        \begin{tabularx}{\textwidth}{CC}
+            $\memphR{\phi_{L1}} = \memphR{\phi_1} + \memphB{\phi_{21}}$ &
+            $\memphB{\phi_{L2}} = \memphB{\phi_2} + \memphR{\phi_{12}}$ \\
+        \end{tabularx}
+
+        By \textit{Faraday's law}, a change in magnetic flux induces an EMF in each coil ($\memphR{v_1}$ and $\memphB{v_2}$).
+
+        %\vspace{\parskip}%
+        \TwoColumnsMinipages[0.30]{
+            \raggedright
+            %EMF $\memphR{v_1}$ induced in coil $\memphR{L_1}$:
+            \begin{align*}
+                \memphR{v_1}
+                    &= \memphR{N_1} \frac{\memphR{\diff{\phi_{L1}}}}{\diff{t}} \\
+                    &= \memphR{N_1} \parens*{
+                            \frac{\memphR{\diff{\phi_{1}}}}{\diff{t}}
+                            + \frac{\memphB{\diff{\phi_{21}}}}{\diff{t}}
+                        }\\
+                    &= \memphR{N_1} \frac{\memphR{\diff{\phi_{1}}}}{\memphR{\diff{i_1}}} \frac{\memphR{\diff{i_1}}}{\diff{t}}
+                        + \memphR{N_1} \frac{\memphB{\diff{\phi_{21}}}}{\memphB{\diff{i_2}}} \frac{\memphB{\diff{i_2}}}{\diff{t}} \\
+                    &= \memphR{L_1} \frac{\memphR{\diff{i_1}}}{\diff{t}}
+                        + \memphP{M_{12}} \frac{\memphB{\diff{i_2}}}{\diff{t}}
+            \end{align*}
+        }{
+            \phantom{x} % Need to put something on this other minipage
+        }
+
+        \vspace{\parskip}%
+        \TwoColumnsMinipages[-0.30]{
+            \phantom{x} % Need to put something on this other minipage
+        }{
+            \raggedright
+            {\scriptsize \textit{\Exn{SIMILARLY...}}} %\\[0mm]
+            %EMF $\memphB{v_2}$ induced in coil $\memphB{L_2}$:
+            \begin{align*}
+                \memphB{v_2}
+                    &= \memphB{N_2} \frac{\diff{\memphB{\phi_{L2}}}}{\diff{t}} \\
+                    &= \memphB{N_2} \parens*{
+                            \frac{\diff{\memphB{\phi_{2}}}}{\diff{t}}
+                            + \frac{\diff{\memphR{\phi_{12}}}}{\diff{t}}
+                        }\\
+                    &= \memphB{N_2} \frac{\diff{\memphB{\phi_{2}}}}{\diff{\memphB{i_2}}} \frac{\diff{\memphB{i_2}}}{\diff{t}}
+                        + \memphB{N_2} \frac{\diff{\memphR{\phi_{12}}}}{\diff{\memphR{i_1}}} \frac{\diff{\memphR{i_1}}}{\diff{t}} \\
+                    &= \memphB{L_2} \frac{\diff{\memphB{i_2}}}{\diff{t}}
+                        + \memphP{M_{21}} \frac{\diff{\memphR{i_1}}}{\diff{t}}
+            \end{align*}
+        }
+
+        %$\memphR{L_1}$ and $\memphB{L_2}$ are each inductor's \textit{self-inductance}. \\[0mm]
+        $\memphP{M_{12}}$ is the \textit{mutual inductance} of \temphR{coil 1} WRT. \temphB{coil 2}. \\[0mm]
+        $\memphP{M_{21}}$ is the \textit{mutual inductance} of \temphB{coil 2} WRT. \temphR{coil 1}.
+
+        \textit{(Note that these equations are only true for this configuration, indicated by the \ul{dot convention} in the circuit diagram. This will be explained later.)}
+
+    }
+
+\end{multicols}
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrameEnd{
+
+        The final step will be to show that:
+        \begin{equation*}
+            \memphP{M_{12}} = \memphP{M_{21}} = M
+        \end{equation*}
+
+        \Todo{Finish this! I'm feeling a bit lazy right now.}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Coefficient of Coupling}
+
+        Mutual induction $M$ can be expressed in terms of the coefficient of coupling $k$:
+        \begin{equation*}
+            M = k \sqrt{L_1 L_2}, \qquad 0 \le k \le 1
+        \end{equation*}
+
+        \Todo{Again, I'm feeling a bit lazy to explain the equation.}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Single Inductor in the Frequency Domain}
+
+        \begin{center}
+        \begin{circuitikz}
+            \draw
+                (0,0) to[L, mirror, l_=$L$, i_<=$\mathbf{I}$, v^<=$\mathbf{V}$, o-o] ++(-3,0)
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        Assume current:
+        \begin{equation*}
+            i = I_m \cos{(\omega t + \theta)}
+            \quad \Longrightarrow \quad
+            \frac{\diff{i}}{\diff{t}} = - \omega I_m \sin{(\omega t + \theta)}
+        \end{equation*}
+
+        Due to self-induction, we get voltage:
+        \begin{align*}
+            v
+                &= L \frac{\diff{i}}{\diff{t}}
+                = - \omega L I_m \sin{(\omega t + \theta)} \\
+                &= \omega L I_m \cos{(\omega t + \theta + \ang{90})}
+        \end{align*}
+
+        Converting $v$ and $i$ to the frequency domain:
+        \begin{equation*}
+            \mathbf{I} = I_m \phase{\theta}
+            \qquad \mathbf{V} = \omega L I_m \phase{\theta + \ang{90}}
+        \end{equation*}
+
+        Thus, we can express the impedance:
+        \begin{align*}
+            \mathbf{Z}
+                &= \frac{\mathbf{V}}{\mathbf{I}}
+                = \frac{\omega L I_m \phase{\theta + \ang{90}}}{I_m \phase{\theta}}
+                = \frac{\omega L e^{j(\theta + \ang{90})}}{e^{j \theta}} \\
+                &= \omega L e^{j(\theta + \ang{90}) - j \theta}
+                = \omega L e^{j \ang{90}} \\
+                &= j \omega L
+        \end{align*}
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Coupled Inductors in the Frequency Domain}
+
+        Consider two inductors $L_1$ and $L_2$ that are coupled:
+        \begin{center}
+        \begin{circuitikz}
+            \draw % Left Side
+                (0,0)
+                to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+                to[L, l_=$L_1$, name=L1] ++(0,-2)
+                to[short, -o] ++(-1,0)
+                to[open, v^<=$v_1$] (0,0)
+            ;
+            \draw % Right Side
+                (L1Top) ++(1,0) coordinate (L2Top)
+                to[short, i<=$i_2$, -o] ++(1,0)
+                to[open, v^>=$v_2$] ++(0,-2)
+                to[short, o-] ++(-1,0)
+                to[L, l_=$L_2$, name=L2] (L2Top)
+            ;
+            \path
+                (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+            ;
+            \draw[simshadows/style/magneticcouplingarrow]
+                (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+            ;
+            \draw
+                (MArcCenter) ++(90:0.5) node[above] {$M$}
+            ;
+            \draw
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        Assume the currents:
+        \begin{align*}
+            i_1 &= I_{1m} \cos{(\omega t + \theta_1)}
+                %\quad \Longrightarrow \quad &&
+                %\frac{\diff{i_1}}{\diff{t}} = - \omega I_{1m} \sin{(\omega t + \theta_1)}
+                \\
+            i_2 &= I_{2m} \cos{(\omega t + \theta_2)}
+                %\quad \Longrightarrow \quad &&
+                %\frac{\diff{i_2}}{\diff{t}} = - \omega I_{2m} \sin{(\omega t + \theta_2)}
+        \end{align*}
+
+        From earlier, we found:
+        \begin{align*}
+            v_1 &= L_1 \frac{\diff{i_1}}{\diff{t}} + M \frac{\diff{i_2}}{\diff{t}} \\
+            v_2 &= L_2 \frac{\diff{i_2}}{\diff{t}} + M \frac{\diff{i_1}}{\diff{t}}
+        \end{align*}
+
+        Skipping working, the voltage-current relationships in the frequency domain are:
+        \begin{align*}
+            \mathbf{V}_1 &= j \omega L_1 \mathbf{I}_1 + j \omega M \mathbf{I}_2 \\
+            \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 + j \omega M \mathbf{I}_1
+        \end{align*}
+
+    }
+
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        %\renewcommand{\MyReusableFormatting}[2]{
+        %    \begin{minipage}[t]{0.41\columnwidth}
+        %        \centering
+        %        #1
+        %    \end{minipage}%
+        %    %\vrule
+        %    \begin{minipage}[t]{0.15\columnwidth}
+        %        \begin{center}
+        %        \begin{tikzpicture}[scale=1, transform shape]
+        %            \node[
+        %                single arrow,
+        %                draw,
+        %                minimum width=3.6ex,
+        %                minimum height=4.5ex,
+        %                single arrow head extend=0.9ex
+        %            ] {} ;
+        %            \draw[<-]
+        %                (0,0) -- (0,-1)
+        %            ;
+        %            \path
+        %                (0,0) -- (0,-1)
+        %                (0,0) -- (0,1) ++(0,0.5) node[above] {{$M$}}
+        %            ;
+        %        \end{tikzpicture}
+        %        \end{center}
+        %    \end{minipage}%
+        %    %\vrule
+        %    \begin{minipage}[t]{0.41\columnwidth}
+        %        \centering
+        %        #2
+        %    \end{minipage}
+        %}
+
+        \CheatsheetEntryTitle{Dot Convention: Only One Current Flowing}
+
+        The dot convention indicates the sign of the EMF induced in one coil by another. This can be modelled using dependent sources. \\[0mm]
+        {\scriptsize \textit{(Dot positions are determined by the physical architecture.)}}
+
+        To simplify things, let's first consider the case where \\[0mm]
+        {\color{myred} no current flows through $L_2$}, so {\color{myred} $L_1$ experiences no mutual EMF}.
+
+        \medskip
+
+        \textbf{Case 1:} Current flows \ul{into} the dot.
+
+        \phantom{\textbf{Case 1:}} The reference polarity of the induced EMF is \\[0mm]
+        \phantom{\textbf{Case 1:}} \ul{positive} at the dotted terminal.
+
+        \begin{center}
+        \begin{circuitikz}
+            \begin{scope}[shift={(0,0)}]
+                \draw % Left Side
+                    (0,0)
+                    to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+                    to[L, l_=$L_1$, name=L1] ++(0,-2)
+                    to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+                    %to[open, v^<=$v_1$] (0,0)
+                    to[open] (0,0) coordinate (LeftVTop)
+                ;
+                \draw % Right Side
+                    (L1Top) ++(1,0) coordinate (L2Top)
+                    to[short, -o, name=I2] ++(1,0) coordinate (RightVTop)
+                    %to[open, v^>=$v_2$] ++(0,-2)
+                    to[open] ++(0,-2) coordinate (RightVBottom)
+                    to[short, o-] ++(-1,0)
+                    to[L, l_=$L_2$, name=L2] (L2Top)
+                ;
+                \path
+                    (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                    (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                ;
+                \draw[simshadows/style/magneticcouplingarrow]
+                    (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+                ;
+                \draw
+                    (MArcCenter) ++(90:0.5) node[above] {$M$}
+                ;
+                \draw
+                    (L1Top) ++(-0.20,-0.35) node[circ] {}
+                    (L2Top) ++( 0.20,-0.35) node[circ] {}
+                ;
+                \draw[myred, thick]
+                    (I2) -- ++( 135:0.2)
+                    (I2) -- ++(  45:0.2)
+                    (I2) -- ++( -45:0.2)
+                    (I2) -- ++(-135:0.2)
+                    (RightVTop) ++(-0.13,0.12) node[above, align=center, font=\scriptsize] {NO\\CURRENT}
+                ;
+            \end{scope}
+            \begin{scope}[shift={(3.75,-1)}]
+                \node[simshadows/GenericGrayBlockArrow] {};
+            \end{scope}
+            \begin{scope}[shift={(4.5,0.6)}]
+                \draw % Left Side
+                    (0,0)
+                    to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+                    -- ++(0,-0.2)
+                    to[L, l_=$L_1$, name=L1] ++(0,-1.5)
+                    %to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
+                    to[short] ++(0,-0.4)
+                    to[short, name=DepV1] ++(0,-0.7) % to[short, *-*, name=DepV1] ++(0,-0.7)
+                    to[short] ++(0,-0.4)
+                    to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+                    %to[open, v^<=$v_1$] (0,0)
+                    to[open] (0,0) coordinate (LeftVTop)
+                ;
+                \draw % Right Side
+                    (L1Top) ++(1,0) coordinate (L2Top)
+                    to[short, -o, name=I2] ++(1,0) coordinate (RightVTop)
+                    %to[open, v^>=$v_2$] ++(0,-2)
+                    to[open] ++(0,-0.2)
+                    to[open] ++(0,-1.5)
+                    to[open] ++(0,-1.5) coordinate (RightVBottom)
+                    to[short, o-] ++(-1,0)
+                    to[cV, invert, l_=$\displaystyle M \frac{\diff{i_1}}{\diff{t}}$, /tikz/circuitikz/bipoles/length=1.2cm] ++(0,1.5)
+                    to[L, l_=$L_2$, name=L2] ++(0,1.5)
+                    -- (L2Top)
+                ;
+                \path
+                    (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                    (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                ;
+                \draw[myred, thick]
+                    (I2) -- ++( 135:0.2)
+                    (I2) -- ++(  45:0.2)
+                    (I2) -- ++( -45:0.2)
+                    (I2) -- ++(-135:0.2)
+                    (RightVTop) ++(-0.00,0.12) node[above, align=center, font=\scriptsize] {NO\\CURRENT}
+                    (DepV1) -- ++( 135:0.2)
+                    (DepV1) -- ++(  45:0.2)
+                    (DepV1) -- ++( -45:0.2)
+                    (DepV1) -- ++(-135:0.2)
+                    (DepV1) ++(-0.1,0) node[left, align=center, font=\scriptsize] {NO\\MUTUAL\\EMF}
+                ;
+            \end{scope}
+        \end{circuitikz}
+        \end{center}
+
+        \renewcommand{\MyReusableFormatting}[4]{%
+            \begin{center}
+            \begin{circuitikz}
+                \begin{scope}[shift={(0,0)}]
+                    \draw % Left Side
+                        (0,0)
+                        to[short, o-, #1] ++(1,0) coordinate (L1Top)
+                        to[L, l_=$L_1$, name=L1] ++(0,-2)
+                        to[short, -o, #2] ++(-1,0) coordinate (LeftVBottom)
+                        %to[open, v^<=$v_1$] (0,0)
+                        to[open] (0,0) coordinate (LeftVTop)
+                    ;
+                    \draw % Right Side
+                        (L1Top) ++(1,0) coordinate (L2Top)
+                        to[short, -o, name=I2] ++(1,0) coordinate (RightVTop)
+                        %to[open, v^>=$v_2$] ++(0,-2)
+                        to[open] ++(0,-2) coordinate (RightVBottom)
+                        to[short, o-] ++(-1,0)
+                        to[L, l_=$L_2$, name=L2] (L2Top)
+                    ;
+                    \path
+                        (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                        (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                    ;
+                    \draw[simshadows/style/magneticcouplingarrow]
+                        (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+                    ;
+                    \draw
+                        (MArcCenter) ++(90:0.5) node[above] {$M$}
+                    ;
+                    \draw
+                        #4
+                    ;
+                \end{scope}
+                \begin{scope}[shift={(3.75,-1)}]
+                    \node[simshadows/GenericGrayBlockArrow] {};
+                \end{scope}
+                \begin{scope}[shift={(4.5,0.6)}]
+                    \draw % Left Side
+                        (0,0)
+                        to[short, o-, #1] ++(1,0) coordinate (L1Top)
+                        -- ++(0,-0.2)
+                        to[L, l_=$L_1$, name=L1] ++(0,-1.5)
+                        %to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
+                        to[short] ++(0,-0.4)
+                        to[short, name=DepV1] ++(0,-0.7) % to[short, *-*, name=DepV1] ++(0,-0.7)
+                        to[short] ++(0,-0.4)
+                        to[short, -o, #2] ++(-1,0) coordinate (LeftVBottom)
+                        %to[open, v^<=$v_1$] (0,0)
+                        to[open] (0,0) coordinate (LeftVTop)
+                    ;
+                    \draw % Right Side
+                        (L1Top) ++(1,0) coordinate (L2Top)
+                        to[short, -o, name=I2] ++(1,0) coordinate (RightVTop)
+                        %to[open, v^>=$v_2$] ++(0,-2)
+                        to[open] ++(0,-0.2)
+                        to[open] ++(0,-1.5)
+                        to[open] ++(0,-1.5) coordinate (RightVBottom)
+                        to[short, o-] ++(-1,0)
+                        to[cV, l_=$\displaystyle M \frac{\diff{i_1}}{\diff{t}}$, /tikz/circuitikz/bipoles/length=1.2cm, #3] ++(0,1.5)
+                        to[L, l_=$L_2$, name=L2] ++(0,1.5)
+                        -- (L2Top)
+                    ;
+                    \path
+                        (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                        (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                    ;
+                \end{scope}
+            \end{circuitikz}%
+            \end{center}
+        }
+
+        \MyReusableFormatting{i=$i_1$}{}{}{
+            (L1Top)          ++(-0.20,-0.35) node[circ] {}
+            (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+        }
+
+        \smallskip
+
+        \textbf{Case 2:} Current flows \ul{out of} the dot.
+
+        \phantom{\textbf{Case 2:}} The reference polarity of the induced EMF is \\[0mm]
+        \phantom{\textbf{Case 2:}} \ul{negative} at the dotted terminal.
+
+        \MyReusableFormatting{i=$i_1$}{}{}{
+            (L1Top) ++(0,-2) ++(-0.20, 0.35) node[circ] {}
+            (L2Top)          ++( 0.20,-0.35) node[circ] {}
+        }
+
+        \MyReusableFormatting{i=$i_1$}{}{invert}{
+            (L1Top) ++(0,-2) ++(-0.20, 0.35) node[circ] {}
+            (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+        }
+
+        %% Old Version
+        %\TwoColumnsMinipages{
+        %    \begin{circuitikz}
+        %        \draw % Left Side
+        %            (0,0)
+        %            to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+        %            to[L, l_=$L_1$, name=L1] ++(0,-2)
+        %            to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+        %            %to[open, v^<=$v_1$] (0,0)
+        %            to[open] (0,0) coordinate (LeftVTop)
+        %        ;
+        %        \draw % Right Side
+        %            (L1Top) ++(1,0) coordinate (L2Top)
+        %            to[short, i<=$i_2$, -o] ++(1,0) coordinate (RightVTop)
+        %            %to[open, v^>=$v_2$] ++(0,-2)
+        %            to[open] ++(0,-2) coordinate (RightVBottom)
+        %            to[short, o-] ++(-1,0)
+        %            to[L, l_=$L_2$, name=L2] (L2Top)
+        %        ;
+        %        \path
+        %            (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+        %            (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+        %        ;
+        %        \draw[mymagneticcouplingarrow]
+        %            (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+        %        ;
+        %        \draw
+        %            (MArcCenter) ++(90:0.5) node[above] {$M$}
+        %        ;
+        %        \draw
+        %            (L1Top) ++(-0.20,-0.35) node[circ] {}
+        %            (L2Top) ++( 0.20,-0.35) node[circ] {}
+        %        ;
+        %    \end{circuitikz}
+        %}{
+        %    \begin{circuitikz}
+        %        \draw % Left Side
+        %            (0,0)
+        %            to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+        %            to[L, l_=$L_1$, name=L1] ++(0,-2)
+        %            to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+        %            %to[open, v^<=$v_1$] (0,0)
+        %            to[open] (0,0) coordinate (LeftVTop)
+        %        ;
+        %        \draw % Right Side
+        %            (L1Top) ++(1,0) coordinate (L2Top)
+        %            to[short, i<=$i_2$, -o] ++(1,0) coordinate (RightVTop)
+        %            %to[open, v^>=$v_2$] ++(0,-2)
+        %            to[open] ++(0,-2) coordinate (RightVBottom)
+        %            to[short, o-] ++(-1,0)
+        %            to[L, l_=$L_2$, name=L2] (L2Top)
+        %        ;
+        %        \path
+        %            (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+        %            (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+        %        ;
+        %        \draw[mymagneticcouplingarrow]
+        %            (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+        %        ;
+        %        \draw
+        %            (MArcCenter) ++(90:0.5) node[above] {$M$}
+        %        ;
+        %        \draw[mypurple]
+        %            (L1Top) ++(0,-2) ++(-0.20, 0.35) node[circ] {}
+        %            (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+        %        ;
+        %    \end{circuitikz}
+        %}
+
+        %\begin{center}
+        %    \DrawnDownArrow
+
+        %    \begin{circuitikz}
+        %        \draw % Left Side
+        %            (0,0)
+        %            to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+        %            -- ++(0,-0.2)
+        %            to[L, l_=$L_1$, name=L1] ++(0,-1.5)
+        %            to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
+        %            to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+        %            %to[open, v^<=$v_1$] (0,0)
+        %            to[open] (0,0) coordinate (LeftVTop)
+        %        ;
+        %        \draw % Right Side
+        %            (L1Top) ++(1.4,0) coordinate (L2Top)
+        %            to[short, i<=$i_2$, -o] ++(1,0) coordinate (RightVTop)
+        %            %to[open, v^>=$v_2$] ++(0,-2)
+        %            to[open] ++(0,-0.2)
+        %            to[open] ++(0,-1.5)
+        %            to[open] ++(0,-1.5) coordinate (RightVBottom)
+        %            to[short, o-] ++(-1,0)
+        %            to[cV, invert, l_=$\displaystyle M \frac{\diff{i_1}}{\diff{t}}$] ++(0,1.5)
+        %            to[L, l_=$L_2$, name=L2] ++(0,1.5)
+        %            -- (L2Top)
+        %        ;
+        %        \path
+        %            (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+        %            (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+        %        ;
+        %    \end{circuitikz}
+        %\end{center}
+
+    }
+
+    %\MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Dot Convention: Two Currents Flowing}
+
+        When both currents flow, we apply our single-current model on both currents.
+
+        \Exn{(Note: The reference polarity here is always with current entering the positive terminal. This is not always be the case.)}
+
+        \bigskip
+
+        \textbf{Case 1:} Currents flowing into \ul{same} side dot sides.
+
+        \phantom{\textbf{Case 1:}} Induced EMF \ul{adds} to self-induction.
+
+        \medskip
+
+        \renewcommand{\MyReusableFormatting}[3]{
+            \begin{circuitikz}
+                \begin{scope}[shift={(0,0)}]
+                    \draw % Left Side
+                        (0,0)
+                        to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+                        to[L, l_=$L_1$, name=L1] ++(0,-2)
+                        to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+                        %to[open, v^<=$v_1$] (0,0)
+                        to[open] (0,0) coordinate (LeftVTop)
+                    ;
+                    \draw % Right Side
+                        (L1Top) ++(1,0) coordinate (L2Top)
+                        to[short, i<=$i_2$, -o] ++(1,0) coordinate (RightVTop)
+                        %to[open, v^>=$v_2$] ++(0,-2)
+                        to[open] ++(0,-2) coordinate (RightVBottom)
+                        to[short, o-] ++(-1,0)
+                        to[L, l_=$L_2$, name=L2] (L2Top)
+                    ;
+                    \path
+                        (LeftVTop)  -- (LeftVBottom)  node[pos=0.2] {$+$} node[pos=0.5] {$v_1$} node[pos=0.8] {$-$}
+                        (RightVTop) -- (RightVBottom) node[pos=0.2] {$+$} node[pos=0.5] {$v_2$} node[pos=0.8] {$-$}
+                    ;
+                    \path
+                        (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                        (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                    ;
+                    \draw[simshadows/style/magneticcouplingarrow]
+                        (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+                    ;
+                    \draw
+                        (MArcCenter) ++(90:0.5) node[above] {$M$}
+                    ;
+                    \draw
+                        #3
+                    ;
+                \end{scope}
+                \begin{scope}[shift={(#2,-2.70)}]
+                    \node[simshadows/GenericGrayBlockArrow, #1] {};
+                    \path
+                        (0,0) -- (0,-0.65) % Ghetto alignment
+                    ;
+                \end{scope}
+            \end{circuitikz}
+        }
+
+        \renewcommand{\MyReusableFormattingB}[2]{
+            \begin{center}
+            \begin{circuitikz}
+                \begin{scope}[shift={(0,-3.5)}]
+                    \draw % Left Side
+                        (0,0)
+                        to[short, i=$i_1$, o-] ++(1,0) coordinate (L1Top)
+                        -- ++(0,-0.2)
+                        to[L, l_=$L_1$, name=L1] ++(0,-1.5)
+                        %to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
+                        to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$, /tikz/circuitikz/bipoles/length=1.2cm, #1] ++(0,-1.5)
+                        to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+                        %to[open, v^<=$v_1$] (0,0)
+                        to[open] (0,0) coordinate (LeftVTop)
+                    ;
+                    \draw % Right Side
+                        (L1Top) ++(1,0) coordinate (L2Top)
+                        to[short, i<=$i_2$, -o, name=I2] ++(1,0) coordinate (RightVTop)
+                        %to[open, v^>=$v_2$] ++(0,-2)
+                        to[open] ++(0,-0.2)
+                        to[open] ++(0,-1.5)
+                        to[open] ++(0,-1.5) coordinate (RightVBottom)
+                        to[short, o-] ++(-1,0)
+                        to[cV, l_=$\displaystyle M \frac{\diff{i_1}}{\diff{t}}$, /tikz/circuitikz/bipoles/length=1.2cm, #2] ++(0,1.5)
+                        to[L, l_=$L_2$, name=L2] ++(0,1.5)
+                        -- (L2Top)
+                    ;
+                    \path
+                        (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                        (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                    ;
+                \end{scope}
+            \end{circuitikz}
+            \end{center}
+        }
+
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{rotate=-90}{1.5}{
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+            }
+        }{
+            \MyReusableFormatting{rotate=-135}{0.2}{
+                (L1Top) ++(0,-2) ++(-0.20, 0.35) node[circ] {}
+                (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+            }
+        }%
+        \TwoColumnsMinipages{%
+            \MyReusableFormattingB{}{invert}
+        }{%
+            \begin{gather*}
+                \boxed{
+                \begin{aligned}
+                    v_1 &= L_1 \frac{\diff{i_1}}{\diff{t}} + M \frac{\diff{i_2}}{\diff{t}} \\
+                    v_2 &= L_2 \frac{\diff{i_2}}{\diff{t}} + M \frac{\diff{i_1}}{\diff{t}}
+                \end{aligned}
+                }
+                \\
+                \boxed{
+                \begin{aligned}
+                    \mathbf{V}_1 &= j \omega L_1 \mathbf{I}_1 + j \omega M \mathbf{I}_2 \\
+                    \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 + j \omega M \mathbf{I}_1
+                \end{aligned}
+                }
+            \end{gather*}
+        }
+
+        \bigskip
+
+        \textbf{Case 2:} Currents flowing into \ul{different} side dot sides.
+
+        \phantom{\textbf{Case 2:}} Induced EMF \ul{opposes} self-induction.
+
+        \medskip
+
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{rotate=-90}{1.5}{
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+            }
+        }{
+            \MyReusableFormatting{rotate=-135}{0.2}{
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+                (L1Top) ++(0,-2) ++(-0.20, 0.35) node[circ] {}
+            }
+        }%
+        \TwoColumnsMinipages{%
+            \MyReusableFormattingB{invert}{}
+        }{%
+            \begin{gather*}
+                \boxed{
+                \begin{aligned}
+                    v_1 &= L_1 \frac{\diff{i_1}}{\diff{t}} - M \frac{\diff{i_2}}{\diff{t}} \\
+                    v_2 &= L_2 \frac{\diff{i_2}}{\diff{t}} - M \frac{\diff{i_1}}{\diff{t}}
+                \end{aligned}
+                }
+                \\
+                \boxed{
+                \begin{aligned}
+                    \mathbf{V}_1 &= j \omega L_1 \mathbf{I}_1 - j \omega M \mathbf{I}_2 \\
+                    \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 - j \omega M \mathbf{I}_1
+                \end{aligned}
+                }
+            \end{gather*}
+        }
+
+    }
+    
+\end{multicols}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Series Connection}
+
+        To aid in reinforcing the ideas, we can also consider what happens when two coupled coils are in series.
+
+        \medskip
+
+        \textbf{Case 1:} Current flows into the \ul{the same} dot. \\[0mm]
+        \phantom{\textbf{Case 1:}} \Exn{\textit{(series-aiding connection)}}
+
+        \phantom{\textbf{Case 1:}} Mutual EMF \ul{adds}.
+        \begin{gather*}
+            v
+                = L_1 \frac{\diff{i}}{\diff{t}} + L_2 \frac{\diff{i}}{\diff{t}} + 2M \frac{\diff{i}}{\diff{t}}
+                = \parens*{L_1 + L_2 + 2M} \frac{\diff{i}}{\diff{t}} \\[\abovedisplayskip]
+            \MathOverLabel{\text{equivalent total inductance}}{L = L_1 + L_2 + 2M}
+        \end{gather*}
+
+
+        \renewcommand{\MyReusableFormatting}[1]{
+            \begin{center}
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    to[short, o-] ++(0.5,0)
+                    to[short, i=$i$] ++(0.5,0)
+                    to[L, l_=$L_1$, name=L1] ++(2.0,0) coordinate (Mid)
+                    to[L, l_=$L_2$, name=L2] ++(2.0,0)
+                    to[short, -o] ++(1.0,0)
+                ;
+                \draw[simshadows/style/magneticcouplingarrow]
+                    %(L2.above) ++(-1,0.1) ellipse[x radius=1, y radius=0.5, start angle=0, end angle=180]
+                    %(L2.above) ++(0,0.1) arc (0:180:1)
+                    (L2.above) ++(0,0.1) -- ++(0,0.2) arc (0:180:1 and 0.4) -- ++(0,-0.2)
+                ;
+                \draw
+                    (Mid |- L2.above) ++(0,0.75) node[above] {$M$}
+                ;
+                \draw
+                    #1
+                ;
+            \end{circuitikz}
+            \end{center}
+        }
+
+        \MyReusableFormatting{
+            (L1.west) ++( 0.00, 0.40) node[circ] {}
+            (L2.west) ++( 0.00, 0.40) node[circ] {}
+        }%
+        \MyReusableFormatting{
+            (L1.east) ++( 0.00, 0.40) node[circ] {}
+            (L2.east) ++( 0.00, 0.40) node[circ] {}
+        }
+
+        \textbf{Case 2:} Current flows into the \ul{different} dots. \\[0mm]
+        \phantom{\textbf{Case 2:}} \Exn{\textit{(series-opposing connection)}}
+
+        \phantom{\textbf{Case 2:}} Mutual EMF \ul{opposes}.
+        \begin{gather*}
+            v
+                = L_1 \frac{\diff{i}}{\diff{t}} + L_2 \frac{\diff{i}}{\diff{t}} - 2M \frac{\diff{i}}{\diff{t}}
+                = \parens*{L_1 + L_2 - 2M} \frac{\diff{i}}{\diff{t}} \\[\abovedisplayskip]
+            \MathOverLabel{\text{equivalent total inductance}}{L = L_1 + L_2 - 2M}
+        \end{gather*}
+
+        \MyReusableFormatting{
+            (L1.west) ++( 0.00, 0.40) node[circ] {}
+            (L2.east) ++( 0.00, 0.40) node[circ] {}
+        }%
+        \MyReusableFormatting{
+            (L1.east) ++( 0.00, 0.40) node[circ] {}
+            (L2.west) ++( 0.00, 0.40) node[circ] {}
+        }
+
+    }
+
+\end{multicols}
+

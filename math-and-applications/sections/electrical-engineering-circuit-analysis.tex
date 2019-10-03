@@ -766,8 +766,8 @@
                 (ArrowStart2) .. controls (ArrowControl2) .. (ArrowEnd2)
             ;
             \draw[myblue]
-                (MeshCurrent1) pic {simshadows/MeshCW} node {$i_1$}
-                (MeshCurrent2) pic {simshadows/MeshCC} node {$i_2$}
+                (MeshCurrent1) pic {simshadows/ee/meshcw} node {$i_1$}
+                (MeshCurrent2) pic {simshadows/ee/meshcc} node {$i_2$}
             ;
         \end{circuitikz}%
         %\end{center}
@@ -1681,6 +1681,436 @@
 
     \MulticolsPhantomPlaceholder
 
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Coupled Inductors}
+
+        For $M$ mutual inductance, consider two cases:
+
+        \bigskip
+
+        \textbf{Case 1:} Currents flowing into \ul{same} side dot sides.
+
+        \phantom{\textbf{Case 1:}} Induced EMF \ul{adds} to self-induction.
+
+        \medskip
+
+        \renewcommand{\MyReusableFormatting}[3]{
+            \begin{circuitikz}
+                \begin{scope}[shift={(0,0)}]
+                    \draw % Left Side
+                        (0,0)
+                        to[short, i=$\mathbf{I}_1$, o-] ++(1,0) coordinate (L1Top)
+                        to[L, l_=$L_1$, name=L1] ++(0,-2)
+                        to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+                        %to[open, v^<=$v_1$] (0,0)
+                        to[open] (0,0) coordinate (LeftVTop)
+                    ;
+                    \draw % Right Side
+                        (L1Top) ++(1,0) coordinate (L2Top)
+                        to[short, i<=$\mathbf{I}_2$, -o] ++(1,0) coordinate (RightVTop)
+                        %to[open, v^>=$v_2$] ++(0,-2)
+                        to[open] ++(0,-2) coordinate (RightVBottom)
+                        to[short, o-] ++(-1,0)
+                        to[L, l_=$L_2$, name=L2] (L2Top)
+                    ;
+                    \path
+                        (LeftVTop)  -- (LeftVBottom)  node[pos=0.2] {$+$} node[pos=0.5] {$\mathbf{V}_1$} node[pos=0.8] {$-$}
+                        (RightVTop) -- (RightVBottom) node[pos=0.2] {$+$} node[pos=0.5] {$\mathbf{V}_2$} node[pos=0.8] {$-$}
+                    ;
+                    \path
+                        (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                        (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                    ;
+                    \draw[simshadows/style/ee/magneticcouplingarrow]
+                        (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+                    ;
+                    \draw
+                        (MArcCenter) ++(90:0.5) node[above] {$M$}
+                    ;
+                    \draw
+                        #3
+                    ;
+                \end{scope}
+                \begin{scope}[shift={(#2,-2.70)}]
+                    \node[simshadows/GenericGrayBlockArrow, #1] {};
+                    \path
+                        (0,0) -- (0,-0.65) % Ghetto alignment
+                    ;
+                \end{scope}
+            \end{circuitikz}
+        }
+
+        \renewcommand{\MyReusableFormattingB}[2]{
+            \begin{center}
+            \begin{circuitikz}
+                \begin{scope}[shift={(0,-3.5)}]
+                    \draw % Left Side
+                        (0,0)
+                        to[short, i=$\mathbf{I}_1$, o-] ++(1,0) coordinate (L1Top)
+                        -- ++(0,-0.2)
+                        to[L, l_=$L_1$, name=L1] ++(0,-1.5)
+                        %to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
+                        to[cV, l_=$\displaystyle j \omega M \textbf{I}_2$, /tikz/circuitikz/bipoles/length=1.2cm, #1] ++(0,-1.5)
+                        to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+                        %to[open, v^<=$v_1$] (0,0)
+                        to[open] (0,0) coordinate (LeftVTop)
+                    ;
+                    \draw % Right Side
+                        (L1Top) ++(1,0) coordinate (L2Top)
+                        to[short, i<=$\mathbf{I}_2$, -o, name=I2] ++(1,0) coordinate (RightVTop)
+                        %to[open, v^>=$v_2$] ++(0,-2)
+                        to[open] ++(0,-0.2)
+                        to[open] ++(0,-1.5)
+                        to[open] ++(0,-1.5) coordinate (RightVBottom)
+                        to[short, o-] ++(-1,0)
+                        to[cV, l_=$\displaystyle j \omega M \textbf{I}_1$, /tikz/circuitikz/bipoles/length=1.2cm, #2] ++(0,1.5)
+                        to[L, l_=$L_2$, name=L2] ++(0,1.5)
+                        -- (L2Top)
+                    ;
+                    \path
+                        (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+                        (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+                    ;
+                \end{scope}
+            \end{circuitikz}
+            \end{center}
+        }
+
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{rotate=-90}{1.5}{
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+            }
+        }{
+            \MyReusableFormatting{rotate=-135}{0.2}{
+                (L1Top) ++(0,-2) ++(-0.20, 0.35) node[circ] {}
+                (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+            }
+        }%
+        \TwoColumnsMinipages{%
+            \MyReusableFormattingB{}{invert}
+        }{%
+            \begin{equation*}
+                \boxed{
+                \begin{aligned}
+                    \mathbf{V}_1 &= j \omega L_1 \mathbf{I}_1 + j \omega M \mathbf{I}_2 \\
+                    \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 + j \omega M \mathbf{I}_1
+                \end{aligned}
+                }
+                %\\
+                %\Exn{\boxed{
+                %\begin{aligned}
+                %    v_1 &= L_1 \frac{\diff{i_1}}{\diff{t}} + M \frac{\diff{i_2}}{\diff{t}} \\
+                %    v_2 &= L_2 \frac{\diff{i_2}}{\diff{t}} + M \frac{\diff{i_1}}{\diff{t}}
+                %\end{aligned}
+                %}}
+            \end{equation*}
+            \vspace{3.0ex}
+        }
+
+        \bigskip
+        \smallskip % A bit of additional space to make the section look nice.
+
+        \textbf{Case 2:} Currents flowing into \ul{different} side dot sides.
+
+        \phantom{\textbf{Case 2:}} Induced EMF \ul{opposes} self-induction.
+
+        \medskip
+
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{rotate=-90}{1.5}{
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+            }
+        }{
+            \MyReusableFormatting{rotate=-135}{0.2}{
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+                (L1Top) ++(0,-2) ++(-0.20, 0.35) node[circ] {}
+            }
+        }%
+        \TwoColumnsMinipages{%
+            \MyReusableFormattingB{invert}{}
+        }{%
+            \begin{equation*}
+                \boxed{
+                \begin{aligned}
+                    \mathbf{V}_1 &= j \omega L_1 \mathbf{I}_1 - j \omega M \mathbf{I}_2 \\
+                    \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 - j \omega M \mathbf{I}_1
+                \end{aligned}
+                }
+                %\\
+                %\Exn{\boxed{
+                %\begin{aligned}
+                %    v_1 &= L_1 \frac{\diff{i_1}}{\diff{t}} - M \frac{\diff{i_2}}{\diff{t}} \\
+                %    v_2 &= L_2 \frac{\diff{i_2}}{\diff{t}} - M \frac{\diff{i_1}}{\diff{t}}
+                %\end{aligned}
+                %}}
+            \end{equation*}
+            \vspace{3.0ex}
+        }
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \renewcommand{\MyReusableFormatting}[2]{
+            \begin{center}
+            \begin{circuitikz}
+                \begin{scope}[shift={(0,0)}, rotate=0]
+                    \draw
+                        (0,0)
+                        to[short, o-] ++(0,-0.2)
+                        %to[short, i=$i$] ++(0,-0.1)
+                        to[L, l_=$L_1$, name=L1, /tikz/circuitikz/bipoles/length=1.0cm] ++(0,-1.25) coordinate (Mid)
+                        to[L, l_=$L_2$, name=L2, /tikz/circuitikz/bipoles/length=1.0cm] ++(0,-1.25)
+                        to[short, -o] ++(0,-0.2)
+                    ;
+                    \draw[simshadows/style/ee/magneticcouplingarrow]
+                        (L2.above) ++(0.1,0) -- ++(0.2,0) arc (-90:90:0.30 and 0.65) -- ++(-0.2,0)
+                    ;
+                    %\draw
+                    %    (Mid -| L2.above) ++(0.55,0) node[right] {$M$}
+                    %;
+                    \draw
+                        #1
+                    ;
+                \end{scope}
+                \begin{scope}[shift={(1.25,0)}, rotate=0]
+                    \draw
+                        (0,0)
+                        to[short, o-] ++(0,-0.2)
+                        %to[short, i=$i$] ++(0,-0.1)
+                        to[L, l_=$L_1$, name=L1, /tikz/circuitikz/bipoles/length=1.0cm] ++(0,-1.25) coordinate (Mid)
+                        to[L, l_=$L_2$, name=L2, /tikz/circuitikz/bipoles/length=1.0cm] ++(0,-1.25)
+                        to[short, -o] ++(0,-0.2)
+                    ;
+                    \draw[simshadows/style/ee/magneticcouplingarrow]
+                        (L2.above) ++(0.1,0) -- ++(0.2,0) arc (-90:90:0.30 and 0.65) -- ++(-0.2,0)
+                    ;
+                    %\draw
+                    %    (Mid -| L2.above) ++(0.55,0) node[right] {$M$}
+                    %;
+                    \draw
+                        #2
+                    ;
+                \end{scope}
+            \end{circuitikz}
+            \end{center}
+        }
+
+        \CheatsheetEntryTitle{Coupled Inductors in Series}
+
+        \TwoColumnsMinipages[0.24]{
+            \raggedright
+            \textbf{Case 1:} \\[0mm]
+            \textbf{Series-Aiding Connection}
+            
+            Equivalent total inductance:
+            \begin{equation*}
+                L = L_1 + L_2 + 2M
+            \end{equation*}
+        }{
+            \MyReusableFormatting{
+                (L1.west) ++( 0.30, 0.00) node[circ] {}
+                (L2.west) ++( 0.30, 0.00) node[circ] {}
+            }{
+                (L1.east) ++( 0.30, 0.00) node[circ] {}
+                (L2.east) ++( 0.30, 0.00) node[circ] {}
+            }
+        }
+
+        \medskip
+
+        \TwoColumnsMinipages[0.24]{
+            \raggedright
+            \textbf{Case 2:} \\[0mm]
+            \textbf{Series-Opposing Connection}
+            
+            Equivalent total inductance:
+            \begin{equation*}
+                L = L_1 + L_2 - 2M
+            \end{equation*}
+        }{
+            \MyReusableFormatting{
+                (L1.west) ++( 0.30, 0.00) node[circ] {}
+                (L2.east) ++( 0.30, 0.00) node[circ] {}
+            }{
+                (L1.east) ++( 0.30, 0.00) node[circ] {}
+                (L2.west) ++( 0.30, 0.00) node[circ] {}
+            }
+        }
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Coefficient of Coupling}
+        \begin{equation*}
+            k = \frac{M}{\sqrt{L_1 L_2}}, \qquad 0 \le k \le 1
+        \end{equation*}
+
+        This value represents the fraction in which the flux from each coil links with the other coil:
+        \begin{equation*}
+            k = \frac{\phi_{12}}{\phi_{11} + \phi_{12}}
+            \qquad
+            k = \frac{\phi_{21}}{\phi_{22} + \phi_{21}}
+        \end{equation*}
+
+    }
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \renewcommand{\MyReusableFormatting}[3]{
+        \begin{circuitikz}
+            \draw % Left Side
+                (0,0)
+                to[short, #1] ++(1,0) coordinate (L1Top)
+                to[L, name=L1] ++(0,-2)
+                to[short] ++(-1,0) coordinate (LeftVBottom)
+                %to[open, o-o, v^<=$v_1$] (0,0)
+                to[open, o-o] (0,0) coordinate (LeftVTop)
+            ;
+            \draw % Right Side
+                (L1Top) ++(1,0) coordinate (L2Top)
+                to[short, #2] ++(1,0) coordinate (RightVTop)
+                %to[open, o-o, v^>=$v_2$] ++(0,-2)
+                to[open, o-o] ++(0,-2) coordinate (RightVBottom)
+                to[short] ++(-1,0)
+                to[L, name=L2] (L2Top)
+            ;
+            \path
+                (LeftVTop)  -- (LeftVBottom)  node[pos=0.2] {$+$} node[pos=0.5] {$\mathbf{V}_1$} node[pos=0.8] {$-$}
+                (RightVTop) -- (RightVBottom) node[pos=0.2] {$+$} node[pos=0.5] {$\mathbf{V}_2$} node[pos=0.8] {$-$}
+            ;
+            \path
+                (L1Top) -- coordinate[midway] (GapTop) (L2Top)
+            ;
+            \draw
+                (GapTop) ++(0,0.1) node[above] {$N_1 {:} N_2$}
+            ;
+            \draw
+                #3
+            ;
+            \draw
+                (1.5,-1) pic {simshadows/ee/ironcore}
+            ;
+        \end{circuitikz}
+    }
+
+    \CheatsheetEntryFrame{
+
+        %\CheatsheetEntryTitle{Real Transformer}
+
+        %\Todo{this.}
+
+        %\CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Ideal Transformer}
+
+        Properties:
+        \begin{alignat*}{3}
+            & \text{1)} \ && \text{Perfect/unity coupling.} & \qquad % Longest line
+                & (k = 1) \\
+            & \text{2)} && \text{Very large reactances.} &
+                & (L_1, L_2, M \to \infty) \\
+            & \text{3)} && \text{Lossless windings.} &
+                & (R_1 = R_2 = 0) \\
+            & \text{4)} && \text{No core losses.}
+        \end{alignat*}
+
+        For $N_1$ and $N_2$ coil windings and $n$ turns ratio, \\[0mm]
+        we consider four cases:
+
+        \textbf{Reference Case:} \\[0mm]
+        Voltages are \ul{same} dot-side. \\[0mm]
+        Currents enter \ul{different} voltage terminals. \\[0mm]
+        {\scriptsize (This is the most useful to remember.)}
+
+        \smallskip
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{i=$\mathbf{I}_1$,}{i>=$\mathbf{I}_2$,}{
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+            }
+        }{
+            \begin{equation*}
+                n = \frac{N_2}{N_1} = \frac{\mathbf{V}_2}{\mathbf{V}_1} = \frac{\mathbf{I}_1}{\mathbf{I}_2}
+            \end{equation*}
+        }
+
+        \medskip
+
+        \textbf{Alternative Case 1:} \\[0mm]
+        Instead, currents enter the \ul{same} voltage terminal.
+
+        \smallskip
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{i=$\mathbf{I}_1$,}{i<=$\memphR{\mathbf{I}_2}$, color=myred,}{
+                (L1Top) ++(-0.20,-0.35) node[circ] {}
+                (L2Top) ++( 0.20,-0.35) node[circ] {}
+            }
+        }{
+            \begin{equation*}
+                n = \frac{N_2}{N_1} = \frac{\mathbf{V}_2}{\mathbf{V}_1} = \memphR{-\frac{\mathbf{I}_1}{\mathbf{I}_2}}
+            \end{equation*}
+        }
+
+        \medskip
+
+        \textbf{Alternative Case 2:} \\[0mm]
+        Instead, voltages are at \ul{different} dot-sides.
+
+        \smallskip
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{i=$\mathbf{I}_1$,}{i>=$\mathbf{I}_2$,}{
+                (L1Top)          ++(-0.20,-0.35) node[circ, color=myred] {}
+                (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ, color=myred] {}
+            }
+        }{
+            \begin{equation*}
+                n = \frac{N_2}{N_1} = \memphR{-\frac{\mathbf{V}_2}{\mathbf{V}_1}} = \memphR{-\frac{\mathbf{I}_1}{\mathbf{I}_2}}
+            \end{equation*}
+        }
+
+        \medskip
+
+        \textbf{Alternative Case 3:} \\[0mm]
+        Voltages are at \ul{different} dot-sides. \\[0mm]
+        Currents enter the \ul{same} voltage terminal.
+
+        \smallskip
+        \TwoColumnsMinipages{
+            \MyReusableFormatting{i=$\mathbf{I}_1$,}{i<=$\memphR{\mathbf{I}_2}$, color=myred,}{
+                (L1Top)          ++(-0.20,-0.35) node[circ, color=myred] {}
+                (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ, color=myred] {}
+            }
+        }{
+            \begin{equation*}
+                n = \frac{N_2}{N_1} = \memphR{-\frac{\mathbf{V}_2}{\mathbf{V}_1}} = \frac{\mathbf{I}_1}{\mathbf{I}_2}
+            \end{equation*}
+        }
+
+    }
+    
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Ideal Autotransformer}
+
+        \Todo{Finish this!}
+
+    }
+
+    \Todo{Consider adding a section on reflected load.}
+    
 \end{multicols}
 \newpage
 \begin{multicols}{2}

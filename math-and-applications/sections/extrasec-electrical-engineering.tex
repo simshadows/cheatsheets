@@ -89,7 +89,7 @@
                 (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
                 (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
             ;
-            \draw[simshadows/style/magneticcouplingarrow]
+            \draw[simshadows/style/ee/magneticcouplingarrow]
                 (MArcCenter) ++(0:0.5) arc (0:180:0.5)
             ;
             \draw
@@ -419,7 +419,7 @@
                 (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
                 (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
             ;
-            \draw[simshadows/style/magneticcouplingarrow]
+            \draw[simshadows/style/ee/magneticcouplingarrow]
                 (MArcCenter) ++(0:0.5) arc (0:180:0.5)
             ;
             \draw
@@ -534,7 +534,7 @@
                     (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
                     (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
                 ;
-                \draw[simshadows/style/magneticcouplingarrow]
+                \draw[simshadows/style/ee/magneticcouplingarrow]
                     (MArcCenter) ++(0:0.5) arc (0:180:0.5)
                 ;
                 \draw
@@ -625,7 +625,7 @@
                         (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
                         (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
                     ;
-                    \draw[simshadows/style/magneticcouplingarrow]
+                    \draw[simshadows/style/ee/magneticcouplingarrow]
                         (MArcCenter) ++(0:0.5) arc (0:180:0.5)
                     ;
                     \draw
@@ -807,8 +807,6 @@
 
         When both currents flow, we apply our single-current model on both currents.
 
-        \Exn{(Note: The reference polarity here is always with current entering the positive terminal. This is not always be the case.)}
-
         \bigskip
 
         \textbf{Case 1:} Currents flowing into \ul{same} side dot sides.
@@ -844,7 +842,7 @@
                         (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
                         (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
                     ;
-                    \draw[simshadows/style/magneticcouplingarrow]
+                    \draw[simshadows/style/ee/magneticcouplingarrow]
                         (MArcCenter) ++(0:0.5) arc (0:180:0.5)
                     ;
                     \draw
@@ -983,7 +981,7 @@
 
         \medskip
 
-        \textbf{Case 1:} Current flows into the \ul{the same} dot. \\[0mm]
+        \textbf{Case 1:} Current flows into the \ul{same} side. \\[0mm]
         \phantom{\textbf{Case 1:}} \Exn{\textit{(series-aiding connection)}}
 
         \phantom{\textbf{Case 1:}} Mutual EMF \ul{adds}.
@@ -1006,7 +1004,7 @@
                     to[L, l_=$L_2$, name=L2] ++(2.0,0)
                     to[short, -o] ++(1.0,0)
                 ;
-                \draw[simshadows/style/magneticcouplingarrow]
+                \draw[simshadows/style/ee/magneticcouplingarrow]
                     %(L2.above) ++(-1,0.1) ellipse[x radius=1, y radius=0.5, start angle=0, end angle=180]
                     %(L2.above) ++(0,0.1) arc (0:180:1)
                     (L2.above) ++(0,0.1) -- ++(0,0.2) arc (0:180:1 and 0.4) -- ++(0,-0.2)
@@ -1030,7 +1028,7 @@
             (L2.east) ++( 0.00, 0.40) node[circ] {}
         }
 
-        \textbf{Case 2:} Current flows into the \ul{different} dots. \\[0mm]
+        \textbf{Case 2:} Current flows into \ul{different} sides. \\[0mm]
         \phantom{\textbf{Case 2:}} \Exn{\textit{(series-opposing connection)}}
 
         \phantom{\textbf{Case 2:}} Mutual EMF \ul{opposes}.

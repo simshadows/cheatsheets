@@ -303,7 +303,10 @@
 % Reusable Style Macros
 
 % Used for magnetic coupling arrows in electrical circuit diagrams.
-\tikzset{simshadows/style/magneticcouplingarrow/.style={latex-latex, magneticcouplingcolor, line width=1.2pt}}
+\tikzset{simshadows/style/ee/magneticcouplingarrow/.style={latex-latex, magneticcouplingcolor, line width=1.2pt}}
+
+% Used for iron/ferrite cores in electrical circuit diagrams.
+\tikzset{simshadows/style/ee/ironcore/.style={line width=2.0pt}}
 
 % Generic soft gray style
 % Example:
@@ -323,17 +326,32 @@
 % Mesh current indicators
 % Example:
 %     \draw
-%         (0,0) pic {simshadows/MeshCW} node {$i_1$}
+%         (0,0) pic {simshadows/ee/meshcw} node {$i_1$}
 %     ;
 \tikzset{
-    simshadows/MeshCW/.pic={
+    simshadows/ee/meshcw/.pic={
         \draw[thick, stealth-]
             (0,0) ++(-70:0.35) arc (-70:190:0.35)
         ;
     },
-    simshadows/MeshCC/.pic={
+    simshadows/ee/meshcc/.pic={
         \draw[thick, -stealth]
             (0,0) ++(-10:0.35) arc (-10:250:0.35)
+        ;
+    },
+}
+
+% Transformer core
+% (Note: This will need to be drawn manually if a longer/shorter core is desired. In which case, use this pic as a template.)
+% Example:
+%     \draw
+%         (0,0) pic {simshadows/ee/ironcore}
+%     ;
+\tikzset{
+    simshadows/ee/ironcore/.pic={
+        \draw[simshadows/style/ee/ironcore]
+            ( 0.08,0.55) -- ++(0,-1.1)
+            (-0.08,0.55) -- ++(0,-1.1)
         ;
     },
 }
@@ -616,6 +634,24 @@
     \end{easylist}
 }
 
+\newcommand{\TwoColumnsMinipages}[3][0]{% \TwoColumnsTextSeparated[Skew factor between -1 and 1]{col1}{col2}
+    \setlength{\AnonMinipageWidthA}{0.5\columnwidth}%
+    \setlength{\AnonMinipageWidthB}{\AnonMinipageWidthA - #1\AnonMinipageWidthA}%
+    \setlength{\AnonMinipageWidthA}{\AnonMinipageWidthA + #1\AnonMinipageWidthA}%
+    %\fbox{ % fboxes used for debugging
+    \begin{myminipage}[c]{\AnonMinipageWidthA}%
+        \centering%
+        #2
+    \end{myminipage}%
+    %}%
+    %\fbox{
+    \begin{myminipage}[c]{\AnonMinipageWidthB}%
+        \centering%
+        #3
+    \end{myminipage}
+    %}
+}
+
 \newlength{\AnonSepLen}%
 \newlength{\AnonMinipageWidthA}%
 \newlength{\AnonMinipageWidthB}%
@@ -636,23 +672,6 @@
         \centering%
         #4
     \end{myminipage}
-}
-\newcommand{\TwoColumnsMinipages}[3][0]{% \TwoColumnsTextSeparated[Skew factor between -1 and 1]{col1}{col2}
-    \setlength{\AnonMinipageWidthA}{0.5\columnwidth}%
-    \setlength{\AnonMinipageWidthB}{\AnonMinipageWidthA - #1\AnonMinipageWidthA}%
-    \setlength{\AnonMinipageWidthA}{\AnonMinipageWidthA + #1\AnonMinipageWidthA}%
-    %\fbox{ % fboxes used for debugging
-    \begin{myminipage}[c]{\AnonMinipageWidthA}%
-        \centering%
-        #2
-    \end{myminipage}%
-    %}%
-    %\fbox{
-    \begin{myminipage}[c]{\AnonMinipageWidthB}%
-        \centering%
-        #3
-    \end{myminipage}
-    %}
 }
 
 \newenvironment{SimpleFrame}{

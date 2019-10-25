@@ -1,4 +1,4 @@
-\subsection{Algebra}%
+\subsection{Elementary Algebra}%
 \label{sub:algebra}
 
 \begin{multicols}{2}
@@ -247,30 +247,34 @@
 
     \CheatsheetEntryFrame{
 
-        \CheatsheetEntryTitle{Quadratic Factorization}
+        \CheatsheetEntryTitle{Quadratic Formula}
+        %\begin{gather*}
+        %    x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \\
+        %    \intertext{Discriminant:}
+        %    \Delta = b^2 - 4ac
+        %\end{gather*}
         \begin{gather*}
-            a x^2 + bx + c = \frac{1}{a} \parens*{ax + v} \parens*{ax + u} \\
-            b = u+v, ac = uv
+            x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+            \qquad\quad
+            \MathOverLabel{\text{\ul{discriminant}}}{\Delta = b^2 - 4ac}
         \end{gather*}
 
-        \CheatsheetEntryTitle{Quadratic Formula}
-        \begin{gather*}
-            x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \\
-            \intertext{Discriminant:}
-            \Delta = b^2 - 4ac
-        \end{gather*}
+        \CheatsheetEntryTitle{Quadratic Factorization}
+        \begin{equation*}
+            x^2 + bx + c = \parens*{x+v} \parens*{x+u}
+            \qquad\quad
+            %\MathOverLabel{\text{\ul{sums and products}}}{ % Too much space. Not worth it.
+                \begin{array}{c}
+                    b = u+v \\
+                    c = uv
+                \end{array}
+            %}
+        \end{equation*}
+        \vspace{-2ex} % Not sure why there's so much whitespace
 
         \CheatsheetEntryTitle{Completing The Square}
-
-        % TODO: This is confusing! Fix it!
-
-        %{\footnotesize \textit{Obtain the square of half the coefficient of $x$ as the constant, and factorize.}}
-        %{\footnotesize \textit{Halve the coefficient of $x$, then add and subtract its square.}} % This version was found on my old cheatsheet.
-        {\footnotesize \textit{Halve the coefficient of $x$, square it, set this value as the constant, and factorize.}}
-
-        \CheatsheetSmallText{Result:}
         \begin{equation*}
-            \parens*{x + \frac{b}{2a}}^2 + \parens*{\frac{c}{a} - \parens*{\frac{b}{2a}}^2} = 0
+            x^2 + b x + c = \parens*{x + \xmemphR{\brackets*{\memphR{\frac{b}{2}}}}}^2 + c - \xmemphP{\brackets*{\memphP{\frac{b}{2}}}^2}
         \end{equation*}
 
     }
@@ -285,6 +289,51 @@
         \end{align*}
 
     }
+
+\end{multicols}
+\newpage
+
+\CheatsheetEntryFrame{
+
+    \CheatsheetEntryTitle{Partial Fraction Decomposition}
+
+    A \textit{proper rational function} can be rewritten as a sum of \textit{partial fractions}.
+
+    For each irreducible factor in the denominator, the partial fractions are as follows:
+    \renewcommand{\W}{\displaystyle}
+    \begin{equation*}
+        \begin{array}{ccccc}
+            \substack{\text{\ul{irreducible factor in denominator}}} &&&&
+                \substack{\text{\ul{partial fractions}}}
+                \\[1ex]
+            \W \memphR{(ax + b)}^k &
+                & \Longrightarrow & \quad &
+                %\W \sum_{n=1}^k{\frac{A_n}{\memphR{(ax + b)}^n}}
+                \W \frac{A_1}{ax + b} + \frac{A_2}{\parens*{ax + b}^2} + \dots + \frac{A_k}{\parens*{ax + b}^k}
+                \\[3ex]
+            \W \memphR{(ax^2 + bx + c)}^k &
+                & \Longrightarrow & \quad &
+                %\W \sum_{n=1}^k{\frac{A_n x + B_n}{\memphR{(ax^2 + bx + c)}^n}}
+                \W \frac{A_1 x + B_1}{ax^2 + bx + c} + \frac{A_2 x + B_2}{\parens*{ax^2 + bx + c}^2} + \dots + \frac{A_k x + B_k}{\parens*{ax^2 + bx + c}^k}
+                \\
+        \end{array}
+    \end{equation*}
+
+    For \textit{improper rational functions}, you must first convert it to a \textit{proper rational function}.
+
+}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{todo}
+
+    }
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
 
 \end{multicols}
 
@@ -829,7 +878,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
-\subsection{Calculus}%
+\subsection{Single Variable Calculus}%
 \label{sub:calculus}
 
 \begin{multicols}{2}
@@ -1125,8 +1174,202 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
+\subsection{Multivariable and Vector Calculus}%
+\label{sub:multivariable-calculus}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Notation of Second Order Partial Derivatives}
+
+        Consider a function of two variables $f(x, y)$.
+        \newcommand{\Fun}{\memphG{f}}
+        \renewcommand{\X}{\memphBC{x}}
+        \renewcommand{\Y}{\memphRC{y}}
+        \newcommand{\DFun}{\memphG{\partial{f}}}
+        \newcommand{\DX}{\memphBC{\partial{x}}}
+        \newcommand{\DY}{\memphRC{\partial{y}}}
+        \newcommand{\DsqFun}{\memphG{\partial^2{f}}}
+        \newcommand{\DXsq}{\memphBC{\partial{x}^2}}
+        \newcommand{\DYsq}{\memphRC{\partial{y}^2}}
+        \begin{alignat*}{4}
+            \frac{\DsqFun}{\DXsq}
+                &= \frac{\partial{}}{\DX} && \parens*{\frac{\DFun}{\DX}} &
+                &= (\memphG{f}_{\X})_{\X} &
+                &= \memphG{f}_{\X \X}
+                \\
+            \frac{\DsqFun}{\DYsq}
+                &= \frac{\partial{}}{\DY} && \parens*{\frac{\DFun}{\DY}} &
+                &= (\memphG{f}_{\Y})_{\Y} &
+                &= \memphG{f}_{\Y \Y}
+                \\[\EqExtraSkip]
+            \frac{\DsqFun}{\DY \, \DX}
+                &= \frac{\partial{}}{\DY} && \parens*{\frac{\DFun}{\DX}} &
+                &= (\memphG{f}_{\X})_{\Y} &
+                &= \memphG{f}_{\X \Y}
+                \\
+            \frac{\DsqFun}{\DX \, \DY}
+                &= \frac{\partial{}}{\DX} && \parens*{\frac{\DFun}{\DY}} &
+                &= (\memphG{f}_{\Y})_{\X} &
+                &= \memphG{f}_{\Y \X}
+        \end{alignat*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Equality of Mixed Partials}
+
+        Consider a function of two variables $f(x, y)$.
+        % Consider a multivariable function $f(x_1, x_2, \dots, x_n)$.
+        
+        If $f$ and all of its first and second order partial derivatives are continuous, then:
+        \newcommand{\DsqFun}{\memphG{\partial^2{f}}}
+        \newcommand{\DX}{\memphBC{\partial{x}}}
+        \newcommand{\DY}{\memphRC{\partial{y}}}
+        \begin{equation*}
+            \frac{\DsqFun}{\DX \, \DY}
+            = \frac{\DsqFun}{\DY \, \DX}
+        \end{equation*}
+
+        \Todo{This generalizes to higher derivatives. Rewrite this and find a good source about continuity requirements.}
+
+    }
+    
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\subsection{Differential Equations}%
+\label{sub:diff-eq}
+
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Separable ODEs}
+
+        Write the ODE in the form:
+        \begin{equation*}
+            h(y) \,\diff{y} = g(x) \,\diff{x}
+        \end{equation*}
+
+        To solve, integrate both sides:
+        \begin{equation*}
+            H(y) = G(x) + C
+        \end{equation*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{First-Order Linear ODEs}
+
+        Write the ODE in the form:
+        \begin{equation*}
+            \frac{\diff{y}}{\diff{x}} + f(x) \, y = g(x)
+        \end{equation*}
+
+        First, define the \textit{integrating factor} $h$:
+        \begin{equation*}
+            h(x) = e^{\int{f(x) \,\diff{x}}}
+            \Exn{
+                \qquad \Longrightarrow \qquad
+                h'(x) = f(x) \, h(x)
+            }
+        \end{equation*}
+
+        Multiply the ODE by $h$ and undo the product rule:
+        \begin{gather*}
+            h(x) \, \frac{\diff{y}}{\diff{x}} + h(x) \, f(x) \, y = g(x) \, h(x) \\
+            \frac{\diff{}}{\diff{x}} \parens*{h(x) \, y} = g(x) \, h(x)
+        \end{gather*}
+
+        To solve, integrate both sides:
+        \begin{equation*}
+            h(x) \, y = \int{g(x) \, h(x) \,\diff{x}}
+        \end{equation*}
+
+    }
+
+    \MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Exact ODEs}
+
+        Write the ODE in the form:
+        \begin{equation*}
+            F(x, y) + G(x, y) \frac{\diff{y}}{\diff{x}} = 0
+        \end{equation*}
+
+        First prove the ODE is \textit{exact} by showing:
+        \begin{equation*}
+            \frac{\partial{F}}{\partial{y}}
+            = \frac{\partial{G}}{\partial{x}}
+            \Exn{
+                {} = \underbrace{
+                    \frac{\partial^2{H}}{\partial{x} \, \partial{y}}
+                    = \frac{\partial^2{H}}{\partial{y} \, \partial{x}}
+                }_{\substack{\text{equality of}\\\text{mixed partials}}}
+            }
+        \end{equation*}
+        \NegateBelowDisplaySkip
+
+        Thus, our ODE can be rewritten:
+        \begin{equation*}
+            H_x(x, y) + H_y(x, y) \frac{\diff{y}}{\diff{x}} = 0
+        \end{equation*}
+
+        This is can be simplified by undoing the chain rule:
+        \begin{gather*}
+            \frac{\partial{H}}{\partial{x}} \frac{\diff{x}}{\diff{x}}
+            + \frac{\partial{H}}{\partial{y}} \frac{\diff{y}}{\diff{x}}
+            = 0 \\
+            \frac{\diff{}}{\diff{x}} \parens*{H \parens*{x, y(x)}} = 0
+        \end{gather*}
+
+        Therefore, the solution is:
+        \begin{equation*}
+            H(x, y) = C
+        \end{equation*}
+        \NegateBelowDisplaySkip
+
+        such that:
+        \begin{alignat*}{3}
+            H(x, y) &= \int{H_x(x, y) \,\partial{x}} &&= H_1(x, y) &&+ C_1(y) \\
+            H(x, y) &= \int{H_y(x, y) \,\partial{y}} &&= H_2(x, y) &&+ C_2(x)
+        \end{alignat*}
+
+    }
+
+    \Todo{Consider adding a section on change of variable.}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Second-Order Linear ODEs}
+
+        \Todo{Do this!}
+
+    }
+    
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
 \subsection{Complex Analysis}%
-\label{sub:Complex Analysis}
+\label{sub:complex-analysis}
 
 \begin{multicols}{2}
 

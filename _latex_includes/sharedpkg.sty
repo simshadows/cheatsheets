@@ -113,6 +113,10 @@
 \definecolor{myred}{RGB}{234,67,53}
 \definecolor{mypurple}{HTML}{9900FF}
 
+\definecolor{mycontrastblue}{HTML}{0000FF}
+\definecolor{mycontrastred}{HTML}{FF0000}
+\definecolor{mycontrastpurple}{HTML}{9900FF} % The same as mypurple... for now.
+
 \colorlet{mylightblue}{myblue!50!white}
 \colorlet{mylightteal}{myteal!50!white}
 \colorlet{mylightgreen}{mygreen!50!white}
@@ -133,8 +137,10 @@
 % NOTE: These commands can't be nested into each other for some reason, probably due to a bug.
 \newcommand{\memph}[2][myred]{{\color{#1}\bm{#2}}}
 \newcommand{\memphR}[1]{\memph[myred]{#1}}
+\newcommand{\memphRC}[1]{\memph[mycontrastred]{#1}}
 \newcommand{\memphG}[1]{\memph[mygreen]{#1}}
 \newcommand{\memphB}[1]{\memph[myblue]{#1}}
+\newcommand{\memphBC}[1]{\memph[mycontrastblue]{#1}}
 \newcommand{\memphP}[1]{\memph[mypurple]{#1}}
 % Alternatives if boldfacing is a problem
 \newcommand{\xmemph}[2][myred]{{\color{#1}{#2}}}
@@ -203,7 +209,12 @@
     % TODO: More fine-grained syntax highlighting?? This is extremely limited.
     breaklines        = true,
     breakatwhitespace = false,
-    tabsize           = 4
+    tabsize           = 4,
+    % This option below makes ASCII quotes appear instead of special Unicode quotes.
+    upquote           = true,
+    % This option below puts the tilde at the midline rather than above.
+    % Or, at least it should, if we were using a modern font.
+    %literate          = {~} {\texttildelow}{1}
 }
 
 % This Javascript syntax highlighting definition is a modified version taken from secondary source:
@@ -443,6 +454,15 @@
     \end{center}
 }
 
+%%%%%%%%%%%%%%%%%%
+% Custom Lengths %
+%%%%%%%%%%%%%%%%%%
+
+% This length is used where additional vertical spacing between equations in a gather/align environment
+% is needed to better-organize equations.
+\newlength{\EqExtraSkip}
+\setlength{\EqExtraSkip}{\abovedisplayskip}
+
 
 %%%%%%%%%%%%%%%
 % Math Macros %
@@ -458,7 +478,7 @@
 %\newcommand\HackEquationLeftAlign{ \setbool{@fleqn}{true} } % Command variant, though this is clunky to use.
 
 \newcommand{\Nth}[2]{\ensuremath{{#1}^\textit{#2}}}
-\newcommand{\diff}[1]{\ensuremath{\mathrm{d}#1}}
+\newcommand{\diff}{\ensuremath{\mathrm{d}}}
 \newcommand{\parallelsum}{\mathbin{\|}}
 
 \DeclarePairedDelimiter\parens{(}{)}
@@ -481,17 +501,23 @@
 
 % \newcommand*\Let[2]{\State #1 $\gets$ #2}% THERE MUST BE A BETTER WAY!!!
 
+\DeclareMathOperator{\dom}{Dom} % Domain of a function
+
 % Custom versions of the Re() and Im() functions in complex analysis
 \DeclareMathOperator{\MyRe}{Re}
 \DeclareMathOperator{\MyIm}{Im}
 %\DeclareMathOperator{\MyRe}{\Re} % If these are ever used, they don't space well.
 %\DeclareMathOperator{\MyIm}{\Im} % Should figure out how to fix this...
 
-
-% Other math functions that aren't in-built
+% Other common math functions that aren't in-built
 \DeclareMathOperator{\sech}{sech}
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\cis}{cis}
+
+% Relational algebra functions
+\DeclareMathOperator{\relselect}{\sigma}
+\DeclareMathOperator{\relproject}{\pi}
+\DeclareMathOperator{\relrename}{\rho}
 
 % Electrical Engineering Conventions
 \DeclareSIUnit\voltampere{VA} % Apparent Power
@@ -501,6 +527,9 @@
 % TODO: My implementation is actually a hack. I should find a better way of doing it...
 %       Though in the process, I may need to rework formatting where this command is being used.
 \newcommand{\MathOverLabel}[2]{\overset{\substack{#1\\\phantom{x}}}{#2}}
+
+% Crossing out and replacing a value
+\newcommand{\xcancelto}[2]{\underbracket{\xcancel{#2}}_{#1}}
 
 % Fraction in display mode
 \newcommand\DisplayFrac[2]{\displaystyle \frac{\displaystyle {#1}}{\displaystyle {#2}}}
@@ -544,6 +573,8 @@
 
 % General-purpose anonymous length variable that I use throughout my documents.
 \newlength{\anonlength} 
+
+% TODO: Make the move away from using these.
 
 % General-purpose reusable command name that I use throughout my documents.
 \newcommand{\MyReusableFormattingError}{\PackageError{[this document]}{Reusable formatting command must be redefined. This can be done with renewcommand.}{see error message.}}

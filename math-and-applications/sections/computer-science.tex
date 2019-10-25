@@ -1,11 +1,443 @@
-\subsection{Relational Algebra}%
+\subsection{Databases: The Relational Model, Relational Algebra, and some SQL}%
 \label{sub:relational-algebra}
 
-\begin{multicols}{3}
+\begin{multicols}{2}
+
+    % TODO: Find a way to work this into this cheatsheet.
+    %\begin{CheatsheetEntryFrameNew}
+
+    %    \CheatsheetEntryTitle{Relations}
+
+    %    The term \textit{relation} can refer to either:
+    %    \begin{itemize}
+    %        \item a \textit{relation schema}, or
+    %        \item a \textit{relation instance}.
+    %    \end{itemize}
+
+    %    Intended usage should be clear from context.
+
+    %\end{CheatsheetEntryFrameNew}
+
+    \begin{CheatsheetEntryFrameNew}
+
+        \CheatsheetEntryTitle{Relation Schemas}
+
+        Relation schemas are \ul{unordered sets} of \textit{attributes}.
+
+        Notation for relation $R$ and attributes $A, B, C, \dots$:
+        \begin{equation*}
+            R(A, B, C, \dots)
+        \end{equation*}
+        %% I want a visually annotated version like this below.
+        %% Problem is that the relation name annotation looks really awkward.
+        %\renewcommand{\X}{\rule{0mm}{1.1em}}
+        %\begin{equation*}
+        %    {
+        %        \color{mycontrastred}
+        %        \overbrace{\color{black} \X \hspace{1em} R}^{\mathclap{\substack{\textbf{\textit{relation}}\\\textbf{\textit{name}}}}}
+        %    }
+        %    ({
+        %        \color {mycontrastpurple}
+        %        \overbrace{\color{black} \X A, B, C, \dots}^{\textbf{\textit{attributes}}}
+        %    })
+        %\end{equation*}
+
+        Practical example:
+        \begin{center}
+            \ttd{Accounts(branch, accountno, balance)}
+            %% The original visually annotated version.
+            %% No longer used since it's already described elsewhere.
+
+            %\renewcommand{\X}{\rule{0mm}{1.1em}}
+
+            %$\color{mycontrastred} \overbrace{\color{black} \X \texttt{Accounts}}^{\substack{\textbf{\textit{relation}}\\\textbf{\textit{name}}}}$\texttt{(}$\color {mycontrastpurple} \overbrace{\color{black} \X \texttt{branch, accountno, balance}}^{\textbf{\textit{attributes}}}$\texttt{)}
+        \end{center}
+
+        \SqlSubsectionAddSeparation
+        \begin{SqlSubsection}{SQL Create/Remove Relation (Examples)}
+            \begin{CheatsheetSubsectionLst}
+                CREATE TABLE Accounts (
+                    branch      VARCHAR(20),
+                    accountno   CHAR(7)       PRIMARY KEY,
+                    balance     NUMERIC       NOT NULL,
+
+                    CONSTRAINT accountnoformat CHECK(
+                        accountno ~ '[A-Z]-[0-9]{5}'
+                    )
+                );
+            \end{CheatsheetSubsectionLst}
+
+            \medskip
+            {\footnotesize Note: The \texttt{\textasciitilde} regex operator is specific to \textit{PostgreSQL}.}
+            %% Would be nice if an explanation of syntax could be worked in...
+            %\medskip
+            %Syntax:
+            %\begin{CheatsheetSubsectionLst}
+            %    CREATE TABLE <tablename> (
+            %        <attribute> <data type> <constraints>,
+            %        <attribute> <data type> <constraints>,
+            %        <...>
+            %        <table-level constraint>,
+            %        <table-level constraint>,
+            %        <...>
+            %    );
+            %\end{CheatsheetSubsectionLst}
+        \end{SqlSubsection}
+        \SqlSubsectionReduceSkip
+        \begin{SqlSubsection}{SQL Remove Relation (Example)}%
+            \begin{CheatsheetSubsectionLst}
+                DROP TABLE Accounts;
+            \end{CheatsheetSubsectionLst}
+        \end{SqlSubsection}
+
+    \end{CheatsheetEntryFrameNew}
+
+    \begin{CheatsheetEntryFrameNew}
+
+        \CheatsheetEntryTitle{Attributes}
+
+        Attributes are labels for parts of a schema.
+
+        The \textit{domain} of an attribute is the set of values that can be associated with the attribute.
+
+        For attribute $A$, this is denoted:
+        \begin{equation*}
+            \dom{(A)}
+        \end{equation*}
+
+        \SqlSubsectionReduceSkip
+        \begin{SqlSubsection}{Some Common SQL Data Types and Constraints}
+            \newcommand{\SqlOptionalPart}[1]{{\color{SqlSubsectionTextColorGrayed}(p,s)}}
+            \texttt{INTEGER, SMALLINT, BIGINT, NUMERIC\SqlOptionalPart{(p,s)},}\\[0mm]
+            \texttt{REAL, DOUBLE PRECISION, FLOAT\SqlOptionalPart{(p)},}\\[0mm]
+            \texttt{CHAR(n), VARCHAR(n), CLOB,}\\[0mm]
+            \texttt{BOOLEAN, BINARY(n), VARBINARY(n), BLOB,}\\[0mm]
+            \texttt{DATE, TIME, TIMESTAMP, INTERVAL.}
+        \end{SqlSubsection}
+        %% Would be nice to add something like this, but I can't really fit it in while also having it be sufficiently useful.
+        %\SqlSubsectionReduceSkip
+        %\begin{SqlSubsection}{Some Common SQL Constraints}
+        %    \SqlSubsectionTableRemoveSpace
+        %    \begin{tabularx}{\textwidth}{X|X}
+        %        Column Constraint & Table Constraint \\ \hline
+        %        \texttt{NOT NULL} & \texttt{NOT NULL (col)} \\
+        %        \texttt{PRIMARY KEY} & \texttt{PRIMARY KEY (col)} \\
+        %        \texttt{UNIQUE} & \texttt{UNIQUE (col, ...)} \\
+        %        \texttt{REFERENCES rel(col)} & \texttt{FOREIGN KEY (col) REFERENCES rel(col)}
+        %    \end{tabularx}
+        %    \SqlSubsectionTableRemoveSpace
+        %\end{SqlSubsection}
+
+    \end{CheatsheetEntryFrameNew}
+
+    %\Todo{Discuss the domain of the whole schema?}
+
+    %\MulticolsBreak
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Relation Instances}
+
+        Relation instances are \ul{unordered sets} of \textit{tuples}.
+
+        Tuples are mappings from schema $R$ to domain $\dom{(R)}$.
+
+        Practical examples:
+
+        \begin{center}
+            % Old version
+            %\begin{tabularx}{\textwidth}{rXXrr}
+            %\begin{tabular}{|lllll|}
+            %    \multicolumn{5}{l}{\ttd{Flights}}
+            %        \\ \hline
+            %    \multicolumn{1}{|l}{\ttd{number}}
+            %        & \multicolumn{1}{l}{\ttd{from}}
+            %        & \multicolumn{1}{l}{\ttd{to}}
+            %        & \multicolumn{1}{l}{\ttd{depart}}
+            %        & \multicolumn{1}{l|}{\ttd{arrive}}
+            %        \\ \hline\hline
+            %    \ttd{QF401}
+            %        & \ttd{SYD}
+            %        & \ttd{MEL}
+            %        & \ttd{06:00}
+            %        & \ttd{07:35}
+            %        \\
+            %    \ttd{JQ603}
+            %        & \ttd{SYD}
+            %        & \ttd{MEL}
+            %        & \ttd{06:40}
+            %        & \ttd{08:15}
+            %        \\
+            %    \ttd{VA999}
+            %        & \ttd{SYD}
+            %        & \ttd{BNE}
+            %        & \ttd{21:30}
+            %        & \ttd{22:00}
+            %        \\
+            %    \ttd{TT206}
+            %        & \ttd{MEL}
+            %        & \ttd{SYD}
+            %        & \ttd{06:40}
+            %        & \ttd{08:15}
+            %        \\ \hline
+            %\end{tabular}
+
+            \renewcommand{\Y}{0.5}
+            \newcommand{\Yhalf}{0.25}
+            \newcommand{\MyTableCell}[3]{(R#1 -| C#2) node[right, align=left, font=\small] {\vphantom{$M_I^{I^x}$}\texttt{#3}}}
+            \begin{tikzpicture}[scale=1, transform shape]
+                \path
+                    (0,0)      coordinate (LeftEdge)
+                    ++(0.06,0) coordinate (C1)
+                    ++(2.18,0) coordinate (C2)
+                    ++(1.60,0) coordinate (C3)
+                    ++(2.30,0) coordinate (RightEdge)
+                    ++(0.15,0) coordinate (RightOS1)
+                    ++(0.40,0) coordinate (RightOS2)
+                ;
+                \begin{scope}[shift={(0,0)}]
+                    \path
+                        (0,0)         coordinate (Top)
+                        ++(0,-\Yhalf) coordinate (RA)
+                        ++(0,-\Yhalf) coordinate (Bottom)
+
+                        (Top)
+                        ++(0, 0.060) % Slight extra offset
+                        ++(0, \Yhalf) coordinate (RT) % Title row
+
+                        (Top)
+                        ++(0,-0.1) coordinate (TopOS1)
+
+                        (Top)
+                        ++(0,1.2) coordinate (TopOS2)
+                        ++(0,0.6) coordinate (TopOS3)
+                    ;
+                    \draw
+                        (Top -| LeftEdge) rectangle (RightEdge |- Bottom)
+                    ;
+                    \draw
+                        \MyTableCell{T}{1}{\textbf{Customers}}
+
+                        \MyTableCell{A}{1}{customerid}
+                        \MyTableCell{A}{2}{name}
+                        \MyTableCell{A}{3}{address}
+                    ;
+                \end{scope}
+                \begin{scope}[shift={(0,-0.58)}]
+                    \path
+                        (0,0)         coordinate (Top)
+                        ++(0,-\Yhalf) coordinate (R1)
+                        ++(0,-\Y)     coordinate (R2)
+                        ++(0,-\Y)     coordinate (R3) coordinate (HorizontalMid)
+                        ++(0,-\Y)     coordinate (R4)
+                        ++(0,-\Y)     coordinate (R5)
+                        ++(0,-\Yhalf) coordinate (Bottom)
+                    ;
+                    \draw
+                        (Top -| LeftEdge) rectangle (RightEdge |- Bottom)
+                    ;
+                    \draw
+                        \MyTableCell{1}{1}{17745042}
+                        \MyTableCell{1}{2}{Amy}
+                        \MyTableCell{1}{3}{Surry Hills}
+
+                        \MyTableCell{2}{1}{43891675}
+                        \MyTableCell{2}{2}{Chris}
+                        \MyTableCell{2}{3}{Richmond}
+
+                        \MyTableCell{3}{1}{46227800}
+                        \MyTableCell{3}{2}{Josh}
+                        \MyTableCell{3}{3}{North Ryde}
+                        
+                        \MyTableCell{4}{1}{56917294}
+                        \MyTableCell{4}{2}{Sam}
+                        \MyTableCell{4}{3}{Kensington}
+
+                        \MyTableCell{5}{1}{95272911}
+                        \MyTableCell{5}{2}{Vanessa}
+                        \MyTableCell{5}{3}{Richmond}
+                    ;
+
+                    \draw[mycontrastblue]
+                        (HorizontalMid -| RightOS2)
+                        ++(0.10,0) coordinate (RowArrowConvg)
+                        ++(0.05,0) node[right, align=left, font=\small] {
+                            \textbf{\textit{tuples,}} \\
+                            \textbf{\textit{rows,}} \\
+                            \textbf{\textit{records}}
+                        }
+                    ;
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastblue] (R1 -| RightOS2) -- (R1 -| RightOS1);
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastblue] (R2 -| RightOS2) -- (R2 -| RightOS1);
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastblue] (R3 -| RightOS2) -- (R3 -| RightOS1);
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastblue] (R4 -| RightOS2) -- (R4 -| RightOS1);
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastblue] (R5 -| RightOS2) -- (R5 -| RightOS1);
+                    \draw[          cap=round, line width=2.0pt, mycontrastblue] (R1 -| RightOS2) -- (R5 -| RightOS2);
+                    %\draw[         cap=round, line width=2.0pt, mycontrastblue] (RowArrowConvg) -- (RowArrowConvg -| RightOS2);
+
+                    \draw[mycontrastpurple]
+                        (TopOS2 -| C3)
+                        ++(1.8, 0) coordinate (ColArrowConvgRef)
+                        ++(0.05, 0) node[right, align=left, font=\small] {
+                            \textbf{\textit{attributes,}} \\
+                            \textbf{\textit{columns,}} \\
+                            \textbf{\textit{fields}}
+                        }
+                    ;
+                    \path
+                        (RA -| C1) ++(2.05, 0.30) coordinate (ColArrowEnd1)
+                        (RA -| C2) ++(1.05, 0.30) coordinate (ColArrowEnd2)
+                        (RA -| C3) ++(0.95, 0.30) coordinate (ColArrowEnd3)
+                        (ColArrowConvgRef) ++(0, -0.1) coordinate (ColArrowConvg)
+                    ;
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastpurple] (ColArrowConvg) -- (ColArrowEnd1);
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastpurple] (ColArrowConvg) -- (ColArrowEnd2);
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastpurple] (ColArrowConvg) -- (ColArrowEnd3);
+
+                    \draw[mycontrastred]
+                        (TopOS3 -| C2)
+                        ++(0.6, 0) coordinate (RelArrowConvgRef)
+                        ++(0.05, 0) node[right, align=left, font=\small] {
+                            \textbf{\textit{relation,}} \\
+                            \textbf{\textit{table}}
+                        }
+                    ;
+                    \path
+                        (RT -| C1) ++(1.65, 0.15) coordinate (RelArrowEnd)
+                        (RelArrowConvgRef) ++(0, -0.4) coordinate (RelArrowConvg)
+                    ;
+                    \draw[-stealth, cap=round, line width=2.0pt, mycontrastred] (RelArrowConvg) -- (RelArrowEnd);
+
+                    % An attempt was made to make smooth lines...
+                    %\draw[-stealth, cap=round, line width=1.5pt]
+                    %    plot [smooth] coordinates { (RowArrowConvg) (R1 -| RightOS2) (R1 -| RightOS1) };
+                    %\draw[-stealth, cap=round, line width=1.5pt]
+                    %    plot [smooth] coordinates { (RowArrowConvg) (R2 -| RightOS2) (R2 -| RightOS1) };
+                    %\draw[-stealth, cap=round, line width=1.5pt]
+                    %    plot [smooth] coordinates { (RowArrowConvg) (R3 -| RightOS2) (R3 -| RightOS1) };
+                    %\draw[-stealth, cap=round, line width=1.5pt]
+                    %    plot [smooth] coordinates { (RowArrowConvg) (R4 -| RightOS2) (R4 -| RightOS1) };
+                    %\draw[-stealth, cap=round, line width=1.5pt]
+                    %    plot [smooth] coordinates { (RowArrowConvg) (R5 -| RightOS2) (R5 -| RightOS1) };
+                \end{scope}
+            \end{tikzpicture}
+
+            \medskip
+
+            {\small%
+            \begin{tabular}{|llr|}
+                \multicolumn{3}{l}{\ttd{Accounts}}
+                    \\ \hline
+                \multicolumn{1}{|l}{\ttd{branch}}
+                    & \multicolumn{1}{l}{\ttd{accountno}}
+                    & \multicolumn{1}{l|}{\ttd{balance}}
+                    \\ \hline\hline
+                \ttd{Richmond}
+                    & \ttd{A-02772}
+                    & \ttd{20.87}
+                    \\
+                \ttd{Macquarie Park}
+                    & \ttd{J-31553}
+                    & \ttd{60899.58}
+                    \\
+                \ttd{Richmond}
+                    & \ttd{W-40018}
+                    & \ttd{84731.08}
+                    \\
+                \ttd{Haymarket}
+                    & \ttd{A-74884}
+                    & \ttd{483.94}
+                    \\
+                \ttd{Haymarket}
+                    & \ttd{P-85953}
+                    & \ttd{7294.62}
+                    \\ \hline
+            \end{tabular}%
+            }
+            
+            \medskip
+
+            {\small%
+            \begin{tabular}{|ll|}
+                \multicolumn{2}{l}{\ttd{HeldBy}}
+                    \\ \hline
+                \multicolumn{1}{|l}{\ttd{account}}
+                    & \multicolumn{1}{l|}{\ttd{customer}}
+                    \\ \hline\hline
+                \ttd{A-02772}
+                    & \ttd{43891675}
+                    \\
+                \ttd{A-02772}
+                    & \ttd{95272911}
+                    \\
+                \ttd{J-31553}
+                    & \ttd{46227800}
+                    \\
+                \ttd{W-40018}
+                    & \ttd{43891675}
+                    \\
+                \ttd{W-40018}
+                    & \ttd{95272911}
+                    \\
+                \ttd{A-74884}
+                    & \ttd{17745042}
+                    \\
+                \ttd{P-85953}
+                    & \ttd{17745042}
+                    \\ \hline
+            \end{tabular}%
+            }
+
+        \end{center}
+
+    }
+
+\end{multicols}
+\newpage
+\begin{multicols}{2}
     
     \CheatsheetEntryFrame{
 
-        \Todo{Start this!}
+        \CheatsheetEntryTitle{Selection}
+        \begin{equation*}
+            \relselect_{\text{expr}}{(\text{Rel})}
+        \end{equation*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Projection}
+        \begin{equation*}
+            \relproject_{A,B,C}{(\text{Rel})}
+        \end{equation*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Rename}
+        \begin{equation*}
+            \relrename_{\text{schema}}{(\text{Rel})}
+        \end{equation*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Natural Join}
+        \begin{equation*}
+            \text{Rel}_1 \bowtie \text{Rel}_2
+        \end{equation*}
+
+    }
+
+    \CheatsheetEntryFrame{
+
+        \CheatsheetEntryTitle{Theta Join}
+        \begin{equation*}
+            \text{Rel}_1 \bowtie_C \text{Rel}_2
+        \end{equation*}
 
     }
 

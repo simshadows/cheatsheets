@@ -14,6 +14,23 @@
 
 \colorlet{CheatsheetSepColor}{verylightgray}
 
+% TODO: Migrate the rest of the cheatsheet to this environment version.
+\newenvironment{CheatsheetEntryFrameNew}[1][]{%
+    %\scalebox{0.8}{#1}
+    %\unskip
+    \mdframed[
+            innerbottommargin=2\mdflength{innertopmargin},
+            skipabove=0pt,
+            %skipbelow=10mm,
+            %leftmargin=0.5mm,
+            %rightmargin=0.5mm,
+            #1
+        ]
+        \raggedright
+        \vspace*{0.75ex}%
+}{%
+    \endmdframed%
+}
 \newcommand{\CheatsheetEntryFrame}[2][]{%
     %\scalebox{0.8}{#1}
     %\unskip
@@ -67,6 +84,53 @@
 %\newcommand{\MarkSimilarToDC}{{\color{myred} \scriptsize \textsc{(Similar To DC!)}}} % Smallcaps don't mix with bold...
 \newcommand{\MarkSimilarToDC}{{\color{mygreen}\scriptsize\textbf{(SIMILAR to DC)}}}
 
+\newcommand{\NegateBelowDisplaySkip}{\vspace*{-2.5ex}} % Cuts vertical space after an equation by a reasonable amount.
+
+% \CheatsheetSubsectionFrame[<mdframed options>]{<title>}{<colour>}{<content>}
+\newenvironment{CheatsheetSubsection}[4][]{%
+    \bigskip
+    \mdframed[
+            %skipabove=0pt,
+            %skipbelow=10mm,
+            %leftmargin=0.5mm,
+            %rightmargin=0.5mm,
+            innerleftmargin=7pt,
+            innerrightmargin=7pt,
+            %innertopmargin=5pt,
+            innerbottommargin=2\mdflength{innertopmargin},
+            roundcorner=3pt,
+            linewidth=2.5pt,
+            linecolor={#3},
+            backgroundcolor={#3!20!white},
+            frametitle={#2},
+            frametitlefont={\scriptsize \normalfont \bfseries \color{#4} \hspace{-0.5em}},
+            %frametitlefont={\small \normalfont \bfseries \color{#4} \hspace{-0.4em}},
+            frametitlebackgroundcolor={#3},
+            frametitleaboveskip=2.5pt,
+            frametitlebelowskip=3.0pt,
+            #1
+        ]
+        \raggedright
+        \vspace*{0.75ex}%
+        \small%
+}{%
+    \endmdframed%
+}
+
+\lstnewenvironment{CheatsheetSubsectionLst}{%
+    \lstset{language={}, frame=none, aboveskip=4pt, belowskip=1pt, basicstyle={\small\ttfamily}}%
+}{%
+    \vspace{-\parskip} % So much extra whitespace...
+}
+
+\definecolor{SqlSubsectionColor}{rgb}{0.65,0.65,0.65}
+\definecolor{SqlSubsectionTextColorGrayed}{rgb}{0.65,0.65,0.65}
+\newenvironment{SqlSubsection}[1]{\CheatsheetSubsection{#1}{SqlSubsectionColor}{white}}{\endCheatsheetSubsection}
+\newcommand{\SqlSubsectionReduceSkip}{\vspace{-2ex}} % A temporary solution to the ridiculous amount of space after a frame.
+\newcommand{\SqlSubsectionAddSeparation}{\medskip} % Standard space between the SqlSubsection frame and other content.
+\newcommand{\SqlSubsectionTableRemoveSpace}{\vspace{-0.5ex}} % Tables put a lot of unwanted space above and below.
+
+
 \begin{document}
 
 \thispagestyle{plain}
@@ -85,6 +149,8 @@ I try to keep the main cheatsheets to only what I consider essentials. Anything 
 }
 
 \newpage
+\InvisiblePart{Cheatsheets}
+
 \section{Mathematics}
 \label{sec:mathgeneral}
 
@@ -129,7 +195,6 @@ I try to keep the main cheatsheets to only what I consider essentials. Anything 
 \newpage
 \InvisiblePart{Extras}
 
-\newpage
 \section{Extras: Mathematics}%
 \label{sec:extrasec-math}
 

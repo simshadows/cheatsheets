@@ -3,9 +3,9 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
-        \renewcommand{\MyReusableFormatting}[5]{ % This will be used for content
+        \newcommand{\MyReusableFormatting}[5]{ % This will be used for content
             %\vspace*{1ex}
             \begin{minipage}[c]{0.20\columnwidth}
                 \centering
@@ -37,22 +37,22 @@
             \end{minipage}%
             \vspace*{1ex}
         }
-        \renewcommand{\MyReusableFormattingB}{ % This will be used for separators
+        \newcommand{\MyReusableFormattingB}{ % This will be used for separators
             {\color{lightgray} \hrule{}}
         }
-        \renewcommand{\MyReusableFormattingC}{ % This will be used for special separators
+        \newcommand{\MyReusableFormattingC}{ % This will be used for special separators
             \MyReusableFormattingB%
             \vspace*{2.5pt}%
             \MyReusableFormattingB
         }
 
-        \renewcommand{\X}{{\cellcolor{myred}\color{white}$\bm{0}$}} % Used for logical low
-        \renewcommand{\Y}{{\cellcolor{mygreen}\color{white}$\bm{1}$}} % Used for logical high
+        \newcommand{\X}{{\cellcolor{myred}\color{white}$\bm{0}$}} % Used for logical low
+        \newcommand{\Y}{{\cellcolor{mygreen}\color{white}$\bm{1}$}} % Used for logical high
 
         \renewcommand{\W}[1]{{\cellcolor{black}\color{white}$\bm{#1}$}} % Used for headings
 
-        \renewcommand{\VRuleA}{\vrule width 3pt}
-        \renewcommand{\HLineA}{\noalign{\hrule height 3pt}}
+        \newcommand{\VRuleA}{\vrule width 3pt}
+        \newcommand{\HLineA}{\noalign{\hrule height 3pt}}
 
         \CheatsheetEntryTitle{Logic Gates}
 
@@ -151,11 +151,11 @@
             (G.out)  -- ++( 0.4,0)
         }
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Binary Numbers}
 
@@ -167,9 +167,9 @@
 
         \Todo{This!}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         %\CheatsheetEntryTitle{Commutative Laws}
         %\begin{gather*}
@@ -203,7 +203,7 @@
             \overline{A \cdot B} = \overline{A} + \overline{B}
         \end{gather*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 

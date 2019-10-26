@@ -5,7 +5,7 @@
 
     %% These are the Exponentiation and Log Identities sections in the original separated form.
     %
-    %\CheatsheetEntryFrame{
+    %\begin{CheatsheetEntryFrame}
     %
     %    \CheatsheetEntryTitle{Exponentiation Identities}
     %    \begin{align*}
@@ -27,9 +27,9 @@
     %        a^{\frac{x}{y}} &= \parens*{\sqrt[y]{a}}^x
     %    \end{align*}
     %
-    %}
+    %\end{CheatsheetEntryFrame}
     %
-    %\CheatsheetEntryFrame{
+    %\begin{CheatsheetEntryFrame}
     %
     %    \CheatsheetEntryTitle{Log Identities}
     %
@@ -70,17 +70,17 @@
     %        \log_a{\sqrt[b]{a}} &= \frac{1}{b}
     %    \end{align*}
     %
-    %}
+    %\end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Exponentiation and Logarithm Identities}
 
         % Hacks to ensure uniform height
         \renewcommand{\W}{\displaystyle} % Simple
-        \renewcommand{\X}{\displaystyle \vphantom{\parens*{\sqrt[\frac{I}{I}]{I}}}} % No fractions
-        \renewcommand{\Y}{\displaystyle \vphantom{\frac{I}{I}}} % Simple fractions
-        \renewcommand{\Z}{\displaystyle \vphantom{\parens*{\parens*{\frac{I}{I}}^I}}} % Complicated fractions
+        \newcommand{\X}{\displaystyle \vphantom{\parens*{\sqrt[\frac{I}{I}]{I}}}} % No fractions
+        \newcommand{\Y}{\displaystyle \vphantom{\frac{I}{I}}} % Simple fractions
+        \newcommand{\Z}{\displaystyle \vphantom{\parens*{\parens*{\frac{I}{I}}^I}}} % Complicated fractions
 
 
         \begin{center}
@@ -226,9 +226,9 @@
         \end{tabularx}
         \end{center}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Factorial}
         \begin{gather*}
@@ -241,11 +241,11 @@
             0! = 1
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     % \MulticolsBreak % I want a break here...
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Quadratic Formula}
         %\begin{gather*}
@@ -277,9 +277,9 @@
             x^2 + b x + c = \parens*{x + \xmemphR{\brackets*{\memphR{\frac{b}{2}}}}}^2 + c - \xmemphP{\brackets*{\memphP{\frac{b}{2}}}^2}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Quadratic/Cubic Identities}
         \begin{align*}
@@ -288,12 +288,12 @@
             a^3 + b^3 &= (a + b) (a^2 - ab + b^2)
         \end{align*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 \newpage
 
-\CheatsheetEntryFrame{
+\begin{CheatsheetEntryFrame}
 
     \CheatsheetEntryTitle{Partial Fraction Decomposition}
 
@@ -321,15 +321,15 @@
 
     For \textit{improper rational functions}, you must first convert it to a \textit{proper rational function}.
 
-}
+\end{CheatsheetEntryFrame}
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{todo}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
@@ -347,7 +347,7 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         %\begin{figure}[H]\centering
         %\begin{tikzpicture}[thick]
@@ -400,9 +400,9 @@
             \tan{\parens*{\alpha \pm \beta}} &= \frac{\tan{\alpha} \pm \tan{\beta}}{1 \mp \tan{\alpha} \tan{\beta}}
         \end{align*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{In Terms of Exponentials}
 
@@ -412,10 +412,10 @@
             \cos{x} = \frac{e^{ix} + e^{-ix}}{2}
         \end{align*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     %% Current prototype for this section.
-    %\CheatsheetEntryFrame{
+    %\begin{CheatsheetEntryFrame}
 
     %    \CheatsheetEntryTitle{Exact Values}
 
@@ -482,11 +482,11 @@
     %            \\ \hline
     %    \end{tabularx}
 
-    %}
+    %\end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Double-Angle Formulae}
 
@@ -531,11 +531,11 @@
             \cos{S} - \cos{T} &=          -  2 \sin&&{\parens*{\frac{S+T}{2}}} \sin&&{\parens*{\frac{S-T}{2}}}
         \end{alignat*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \pagebreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Hyperbolic Function Exponential Definitions}
         \begin{align*}
@@ -555,11 +555,11 @@
                 = \frac{e^{2x} - 1}{e^{2x} + 1}
         \end{align*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Hyperbolic: Difference of Squares} % TODO: Better title?
         \begin{gather*}
@@ -582,7 +582,7 @@
             \tanh{2x} &= \frac{2 \tanh{x}}{1 + \tanh^2{x}}
         \end{align*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 
@@ -596,7 +596,7 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Dot Product} {\tiny (or Scalar Product)}
 
@@ -617,9 +617,9 @@
             \item Vectors $\mathbf{a}, \mathbf{b} \in \mathbb{R}^n$ are orthogonal if $\mathbf{a} \cdot \mathbf{b} = 0$.
         \end{itemize}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Cross Product} {\tiny (or Vector Product)}
 
@@ -694,11 +694,11 @@
             \item $\abs*{\mathbf{a} \times \mathbf{b}} = \abs*{\mathbf{a}} \abs*{\mathbf{b}} \sin{\theta} = \text{area of a parallelogram}$
         \end{itemize}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Cramer's Rule}
 
@@ -869,7 +869,7 @@
                     }
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 
@@ -883,7 +883,7 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Derivative: First Principles}
         \begin{equation*}
@@ -930,9 +930,9 @@
                 = \frac{\memphR{\diff{y}}}{\memphB{\diff{u}}} \times \frac{\memphB{\diff{u}}}{\memphG{\diff{x}}}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Integration: Reverse Chain Rule}
         \begin{equation*}
@@ -946,7 +946,7 @@
             = \memphR{F(x)} \, \memphB{G(x)} - \int{\memphR{F(x)} \, \memphB{g(x)} \,\diff{x}}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
@@ -1179,14 +1179,14 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Notation of Second Order Partial Derivatives}
 
         Consider a function of two variables $f(x, y)$.
         \newcommand{\Fun}{\memphG{f}}
-        \renewcommand{\X}{\memphBC{x}}
-        \renewcommand{\Y}{\memphRC{y}}
+        \newcommand{\X}{\memphBC{x}}
+        \newcommand{\Y}{\memphRC{y}}
         \newcommand{\DFun}{\memphG{\partial{f}}}
         \newcommand{\DX}{\memphBC{\partial{x}}}
         \newcommand{\DY}{\memphRC{\partial{y}}}
@@ -1215,9 +1215,9 @@
                 &= \memphG{f}_{\Y \X}
         \end{alignat*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Equality of Mixed Partials}
 
@@ -1235,7 +1235,7 @@
 
         \Todo{This generalizes to higher derivatives. Rewrite this and find a good source about continuity requirements.}
 
-    }
+    \end{CheatsheetEntryFrame}
     
 \end{multicols}
 
@@ -1249,7 +1249,7 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Separable ODEs}
 
@@ -1263,9 +1263,9 @@
             H(y) = G(x) + C
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{First-Order Linear ODEs}
 
@@ -1294,11 +1294,11 @@
             h(x) \, y = \int{g(x) \, h(x) \,\diff{x}}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Exact ODEs}
 
@@ -1345,7 +1345,7 @@
             H(x, y) &= \int{H_y(x, y) \,\partial{y}} &&= H_2(x, y) &&+ C_2(x)
         \end{alignat*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \Todo{Consider adding a section on change of variable.}
     
@@ -1353,13 +1353,13 @@
 \newpage
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Second-Order Linear ODEs}
 
         \Todo{Do this!}
 
-    }
+    \end{CheatsheetEntryFrame}
     
 \end{multicols}
 
@@ -1373,7 +1373,7 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Imaginary Unit}
         \begin{equation*}
@@ -1430,9 +1430,9 @@
             e^{i \theta} = \cos{\theta} + i \sin{\theta}, \qquad \forall \theta \in \mathbb{R}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Complex Conjugate}
         \begin{equation*}
@@ -1450,7 +1450,7 @@
             \parens*{a + ib} \complexconjugate{\parens*{a + ib}} = \parens*{a + ib} \parens*{a - ib} = a^2 + b^2
         \end{gather*}
         
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 

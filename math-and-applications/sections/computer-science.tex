@@ -18,7 +18,7 @@
 
     %\end{CheatsheetEntryFrameNew}
 
-    \begin{CheatsheetEntryFrameNew}
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Relation Schemas}
 
@@ -30,7 +30,7 @@
         \end{equation*}
         %% I want a visually annotated version like this below.
         %% Problem is that the relation name annotation looks really awkward.
-        %\renewcommand{\X}{\rule{0mm}{1.1em}}
+        %\newcommand{\X}{\rule{0mm}{1.1em}}
         %\begin{equation*}
         %    {
         %        \color{mycontrastred}
@@ -48,7 +48,7 @@
             %% The original visually annotated version.
             %% No longer used since it's already described elsewhere.
 
-            %\renewcommand{\X}{\rule{0mm}{1.1em}}
+            %\newcommand{\X}{\rule{0mm}{1.1em}}
 
             %$\color{mycontrastred} \overbrace{\color{black} \X \texttt{Accounts}}^{\substack{\textbf{\textit{relation}}\\\textbf{\textit{name}}}}$\texttt{(}$\color {mycontrastpurple} \overbrace{\color{black} \X \texttt{branch, accountno, balance}}^{\textbf{\textit{attributes}}}$\texttt{)}
         \end{center}
@@ -90,9 +90,9 @@
             \end{CheatsheetSubsectionLst}
         \end{SqlSubsection}
 
-    \end{CheatsheetEntryFrameNew}
+    \end{CheatsheetEntryFrame}
 
-    \begin{CheatsheetEntryFrameNew}
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Attributes}
 
@@ -128,13 +128,13 @@
         %    \SqlSubsectionTableRemoveSpace
         %\end{SqlSubsection}
 
-    \end{CheatsheetEntryFrameNew}
+    \end{CheatsheetEntryFrame}
 
     %\Todo{Discuss the domain of the whole schema?}
 
     %\MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Relation Instances}
 
@@ -182,7 +182,7 @@
             %        \\ \hline
             %\end{tabular}
 
-            \renewcommand{\Y}{0.5}
+            \newcommand{\Y}{0.5}
             \newcommand{\Yhalf}{0.25}
             \newcommand{\MyTableCell}[3]{(R#1 -| C#2) node[right, align=left, font=\small] {\vphantom{$M_I^{I^x}$}\texttt{#3}}}
             \begin{tikzpicture}[scale=1, transform shape]
@@ -390,55 +390,55 @@
 
         \end{center}
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 \newpage
 \begin{multicols}{2}
     
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Selection}
         \begin{equation*}
             \relselect_{\text{expr}}{(\text{Rel})}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Projection}
         \begin{equation*}
             \relproject_{A,B,C}{(\text{Rel})}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Rename}
         \begin{equation*}
             \relrename_{\text{schema}}{(\text{Rel})}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Natural Join}
         \begin{equation*}
             \text{Rel}_1 \bowtie \text{Rel}_2
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Theta Join}
         \begin{equation*}
             \text{Rel}_1 \bowtie_C \text{Rel}_2
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}

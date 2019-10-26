@@ -3,7 +3,7 @@
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Single Inductor}
 
@@ -60,11 +60,11 @@
             v = L \frac{\diff{i}}{\diff{t}}
         \end{equation*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \renewcommand{\W}{25} % Controls field line opacity
 
-    \CheatsheetEntryFrameStart{
+    \begin{CheatsheetEntryFrameStart}
 
         \CheatsheetEntryTitle{Two Magnetically Coupled Inductors}
 
@@ -182,9 +182,9 @@
             \end{circuitikz}
         }
 
-    }
+    \end{CheatsheetEntryFrameStart}
 
-    \CheatsheetEntryFrameMid{
+    \begin{CheatsheetEntryFrameMid}
 
         Some of the flux $\memphR{\phi_1}$ also links/passes through $\memphB{L_2}$. \\[0mm]
         We will call this $\memphR{\phi_{12}}$. \\[0mm]
@@ -319,12 +319,12 @@
 
         \textit{(Note that these equations are only true for this configuration, indicated by the \ul{dot convention} in the circuit diagram. This will be explained later.)}
 
-    }
+    \end{CheatsheetEntryFrameMid}
 
 \end{multicols}
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrameEnd{
+    \begin{CheatsheetEntryFrameEnd}
 
         The final step will be to show that:
         \begin{equation*}
@@ -333,9 +333,9 @@
 
         \Todo{Finish this! I'm feeling a bit lazy right now.}
 
-    }
+    \end{CheatsheetEntryFrameEnd}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Coefficient of Coupling}
 
@@ -346,11 +346,11 @@
 
         \Todo{Again, I'm feeling a bit lazy to explain the equation.}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     \MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Single Inductor in the Frequency Domain}
 
@@ -455,15 +455,15 @@
             \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 + j \omega M \mathbf{I}_1
         \end{align*}
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 \newpage
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
-        %\renewcommand{\MyReusableFormatting}[2]{
+        %\newcommand{\MyReusableFormatting}[2]{
         %    \begin{minipage}[t]{0.41\columnwidth}
         %        \centering
         %        #1
@@ -601,7 +601,7 @@
         \end{circuitikz}
         \end{center}
 
-        \renewcommand{\MyReusableFormatting}[4]{%
+        \newcommand{\MyReusableFormatting}[4]{%
             \begin{center}
             \begin{circuitikz}
                 \begin{scope}[shift={(0,0)}]
@@ -797,11 +797,11 @@
         %    \end{circuitikz}
         %\end{center}
 
-    }
+    \end{CheatsheetEntryFrame}
 
     %\MulticolsBreak
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Dot Convention: Two Currents Flowing}
 
@@ -815,7 +815,7 @@
 
         \medskip
 
-        \renewcommand{\MyReusableFormatting}[3]{
+        \newcommand{\MyReusableFormatting}[3]{
             \begin{circuitikz}
                 \begin{scope}[shift={(0,0)}]
                     \draw % Left Side
@@ -861,7 +861,7 @@
             \end{circuitikz}
         }
 
-        \renewcommand{\MyReusableFormattingB}[2]{
+        \newcommand{\MyReusableFormattingB}[2]{
             \begin{center}
             \begin{circuitikz}
                 \begin{scope}[shift={(0,-3.5)}]
@@ -967,13 +967,13 @@
             \end{gather*}
         }
 
-    }
+    \end{CheatsheetEntryFrame}
     
 \end{multicols}
 
 \begin{multicols}{2}
 
-    \CheatsheetEntryFrame{
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Series Connection}
 
@@ -993,7 +993,7 @@
         \end{gather*}
 
 
-        \renewcommand{\MyReusableFormatting}[1]{
+        \newcommand{\MyReusableFormatting}[1]{
             \begin{center}
             \begin{circuitikz}
                 \draw
@@ -1048,7 +1048,7 @@
             (L2.west) ++( 0.00, 0.40) node[circ] {}
         }
 
-    }
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 

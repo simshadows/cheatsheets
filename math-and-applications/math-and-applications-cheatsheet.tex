@@ -15,7 +15,7 @@
 \colorlet{CheatsheetSepColor}{verylightgray}
 
 % TODO: Migrate the rest of the cheatsheet to this environment version.
-\newenvironment{CheatsheetEntryFrameNew}[1][]{%
+\newenvironment{CheatsheetEntryFrame}[1][]{%
     %\scalebox{0.8}{#1}
     %\unskip
     \mdframed[
@@ -31,29 +31,33 @@
 }{%
     \endmdframed%
 }
-\newcommand{\CheatsheetEntryFrame}[2][]{%
-    %\scalebox{0.8}{#1}
-    %\unskip
-    \begin{mdframed}[
-            innerbottommargin=2\mdflength{innertopmargin},
-            skipabove=0pt,
-            %skipbelow=10mm,
-            %leftmargin=0.5mm,
-            %rightmargin=0.5mm,
-            #1
-        ]
-        \raggedright
-        \vspace*{0.75ex}%
-        #2%
-    \end{mdframed}%
+\newenvironment{CheatsheetEntryFrameExn}[1][]{%
+    %\CheatsheetEntryFrame[fontcolor=extranotecolor, linecolor=extranotecolor, #1]
+    \CheatsheetEntryFrame[#1] % For now, we're not colouring them.
+}{%
+    \endCheatsheetEntryFrame%
 }
-%\newcommand{\CheatsheetEntryFrameExn}[2][]{\CheatsheetEntryFrame[fontcolor=extranotecolor,linecolor=extranotecolor,#1]{#2}}
-\newcommand{\CheatsheetEntryFrameExn}[2][]{\CheatsheetEntryFrame[#1]{#2}} % For now, we're not colouring them.
 
 % Hacks to get virtual breaks
-\newcommand{\CheatsheetEntryFrameStart}[2][]{\CheatsheetEntryFrame[bottomline=false,#1]{#2\vspace{4ex}}}
-\newcommand{\CheatsheetEntryFrameMid}[2][]{\CheatsheetEntryFrame[topline=false,bottomline=false,#1]{\vspace{1ex}#2\vspace{4ex}}}
-\newcommand{\CheatsheetEntryFrameEnd}[2][]{\CheatsheetEntryFrame[topline=false,#1]{\vspace{1ex}#2}}
+\newenvironment{CheatsheetEntryFrameStart}[1][]{%
+    \CheatsheetEntryFrame[bottomline=false,#1]%
+}{%
+    \vspace{4ex}%
+    \endCheatsheetEntryFrame%
+}
+\newenvironment{CheatsheetEntryFrameMid}[1][]{%
+    \CheatsheetEntryFrame[topline=false,bottomline=false,#1]%
+    \vspace{1ex}%
+}{%
+    \vspace{4ex}%
+    \endCheatsheetEntryFrame%
+}
+\newenvironment{CheatsheetEntryFrameEnd}[1][]{%
+    \CheatsheetEntryFrame[topline=false,#1]%
+    \vspace{1ex}%
+}{%
+    \endCheatsheetEntryFrame%
+}
 
 \newcommand{\CheatsheetEntryTitle}[1]{ % Put this inside CheatsheetEntryBox
     \textbu{#1} %\\[1.5ex]

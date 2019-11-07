@@ -42,19 +42,20 @@
         %    })
         %\end{equation*}
 
-        Practical example:
-        \begin{center}
-            \ttd{Accounts(branch, accountno, balance)}
-            %% The original visually annotated version.
-            %% No longer used since it's already described elsewhere.
+        %% TODO: Somehow work something like this in?
+        %Practical example:
+        %\begin{center}
+        %    \ttd{Accounts(branch, accountno, balance)}
+        %    %% The original visually annotated version.
+        %    %% No longer used since it's already described elsewhere.
 
-            %\newcommand{\X}{\rule{0mm}{1.1em}}
+        %    %\newcommand{\X}{\rule{0mm}{1.1em}}
 
-            %$\color{mycontrastred} \overbrace{\color{black} \X \texttt{Accounts}}^{\substack{\textbf{\textit{relation}}\\\textbf{\textit{name}}}}$\texttt{(}$\color {mycontrastpurple} \overbrace{\color{black} \X \texttt{branch, accountno, balance}}^{\textbf{\textit{attributes}}}$\texttt{)}
-        \end{center}
+        %    %$\color{mycontrastred} \overbrace{\color{black} \X \texttt{Accounts}}^{\substack{\textbf{\textit{relation}}\\\textbf{\textit{name}}}}$\texttt{(}$\color {mycontrastpurple} \overbrace{\color{black} \X \texttt{branch, accountno, balance}}^{\textbf{\textit{attributes}}}$\texttt{)}
+        %\end{center}
 
-        \SqlSubsectionAddSeparation
-        \begin{SqlSubsection}{SQL Create/Remove Relation (Examples)}
+        \SubsectionFrameAddSeparation
+        \begin{SqlSubsection}{SQL Create Relation (Examples)}
             \begin{CheatsheetSubsectionLst}
                 CREATE TABLE Accounts (
                     branch      VARCHAR(20),
@@ -83,7 +84,7 @@
             %    );
             %\end{CheatsheetSubsectionLst}
         \end{SqlSubsection}
-        \SqlSubsectionReduceSkip
+        \SubsectionFrameReduceSkip
         \begin{SqlSubsection}{SQL Remove Relation (Example)}%
             \begin{CheatsheetSubsectionLst}
                 DROP TABLE Accounts;
@@ -105,7 +106,7 @@
             \dom{(A)}
         \end{equation*}
 
-        \SqlSubsectionReduceSkip
+        \SubsectionFrameReduceSkip
         \begin{SqlSubsection}{Some Common SQL Data Types and Constraints}
             \newcommand{\SqlOptionalPart}[1]{{\color{SqlSubsectionTextColorGrayed}(p,s)}}
             \texttt{INTEGER, SMALLINT, BIGINT, NUMERIC\SqlOptionalPart{(p,s)},}\\[0mm]
@@ -115,9 +116,9 @@
             \texttt{DATE, TIME, TIMESTAMP, INTERVAL.}
         \end{SqlSubsection}
         %% Would be nice to add something like this, but I can't really fit it in while also having it be sufficiently useful.
-        %\SqlSubsectionReduceSkip
+        %\SubsectionFrameReduceSkip
         %\begin{SqlSubsection}{Some Common SQL Constraints}
-        %    \SqlSubsectionTableRemoveSpace
+        %    \SubsectionFrameTableRemoveSpace
         %    \begin{tabularx}{\textwidth}{X|X}
         %        Column Constraint & Table Constraint \\ \hline
         %        \texttt{NOT NULL} & \texttt{NOT NULL (col)} \\
@@ -125,14 +126,14 @@
         %        \texttt{UNIQUE} & \texttt{UNIQUE (col, ...)} \\
         %        \texttt{REFERENCES rel(col)} & \texttt{FOREIGN KEY (col) REFERENCES rel(col)}
         %    \end{tabularx}
-        %    \SqlSubsectionTableRemoveSpace
+        %    \SubsectionFrameTableRemoveSpace
         %\end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
 
     %\Todo{Discuss the domain of the whole schema?}
 
-    %\MulticolsBreak
+    \MulticolsBreak
 
     \begin{CheatsheetEntryFrame}
 
@@ -140,60 +141,30 @@
 
         Relation instances are \ul{unordered sets} of \textit{tuples}.
 
-        Tuples are mappings from schema $R$ to domain $\dom{(R)}$.
+        To show that $r$ is an instance of relation $R$, we write:
+        \begin{equation*}
+            r(R)
+        \end{equation*}
 
-        Practical examples:
+        %Tuples are mappings from schema $R$ to domain $\dom{(R)}$.
 
+        \SubsectionFrameRemoveSeparation
+        \begin{SqlAltSubsection}{Example Database}
         \begin{center}
-            % Old version
-            %\begin{tabularx}{\textwidth}{rXXrr}
-            %\begin{tabular}{|lllll|}
-            %    \multicolumn{5}{l}{\ttd{Flights}}
-            %        \\ \hline
-            %    \multicolumn{1}{|l}{\ttd{number}}
-            %        & \multicolumn{1}{l}{\ttd{from}}
-            %        & \multicolumn{1}{l}{\ttd{to}}
-            %        & \multicolumn{1}{l}{\ttd{depart}}
-            %        & \multicolumn{1}{l|}{\ttd{arrive}}
-            %        \\ \hline\hline
-            %    \ttd{QF401}
-            %        & \ttd{SYD}
-            %        & \ttd{MEL}
-            %        & \ttd{06:00}
-            %        & \ttd{07:35}
-            %        \\
-            %    \ttd{JQ603}
-            %        & \ttd{SYD}
-            %        & \ttd{MEL}
-            %        & \ttd{06:40}
-            %        & \ttd{08:15}
-            %        \\
-            %    \ttd{VA999}
-            %        & \ttd{SYD}
-            %        & \ttd{BNE}
-            %        & \ttd{21:30}
-            %        & \ttd{22:00}
-            %        \\
-            %    \ttd{TT206}
-            %        & \ttd{MEL}
-            %        & \ttd{SYD}
-            %        & \ttd{06:40}
-            %        & \ttd{08:15}
-            %        \\ \hline
-            %\end{tabular}
-
-            \newcommand{\Y}{0.5}
-            \newcommand{\Yhalf}{0.25}
-            \newcommand{\MyTableCell}[3]{(R#1 -| C#2) node[right, align=left, font=\small] {\vphantom{$M_I^{I^x}$}\texttt{#3}}}
+            \newcommand{\Y}{0.44}
+            \newcommand{\Yhalf}{0.22}
+            \newcommand{\MyTableCell}[3]{%
+                (R#1 -| C#2) node[right, align=left, font=\footnotesize] {\vphantom{$M_I^{I^x}$}\texttt{#3}}%
+            }
             \begin{tikzpicture}[scale=1, transform shape]
                 \path
                     (0,0)      coordinate (LeftEdge)
-                    ++(0.06,0) coordinate (C1)
-                    ++(2.18,0) coordinate (C2)
-                    ++(1.60,0) coordinate (C3)
-                    ++(2.30,0) coordinate (RightEdge)
-                    ++(0.15,0) coordinate (RightOS1)
-                    ++(0.40,0) coordinate (RightOS2)
+                    ++(0.08,0) coordinate (C1)
+                    ++(1.98,0) coordinate (C2)
+                    ++(1.50,0) coordinate (C3)
+                    ++(2.10,0) coordinate (RightEdge)
+                    ++(0.20,0) coordinate (RightOS1)
+                    ++(0.50,0) coordinate (RightOS2)
                 ;
                 \begin{scope}[shift={(0,0)}]
                     \path
@@ -202,7 +173,7 @@
                         ++(0,-\Yhalf) coordinate (Bottom)
 
                         (Top)
-                        ++(0, 0.060) % Slight extra offset
+                        ++(0, 0.040) % Slight extra offset
                         ++(0, \Yhalf) coordinate (RT) % Title row
 
                         (Top)
@@ -210,7 +181,7 @@
 
                         (Top)
                         ++(0,1.2) coordinate (TopOS2)
-                        ++(0,0.6) coordinate (TopOS3)
+                        ++(0,0.5) coordinate (TopOS3)
                     ;
                     \draw
                         (Top -| LeftEdge) rectangle (RightEdge |- Bottom)
@@ -223,7 +194,7 @@
                         \MyTableCell{A}{3}{address}
                     ;
                 \end{scope}
-                \begin{scope}[shift={(0,-0.58)}]
+                \begin{scope}[shift={(0,-0.52)}]
                     \path
                         (0,0)         coordinate (Top)
                         ++(0,-\Yhalf) coordinate (R1)
@@ -237,23 +208,23 @@
                         (Top -| LeftEdge) rectangle (RightEdge |- Bottom)
                     ;
                     \draw
-                        \MyTableCell{1}{1}{17745042}
+                        \MyTableCell{1}{1}{1774504}
                         \MyTableCell{1}{2}{Amy}
                         \MyTableCell{1}{3}{Surry Hills}
 
-                        \MyTableCell{2}{1}{43891675}
+                        \MyTableCell{2}{1}{4389167}
                         \MyTableCell{2}{2}{Chris}
                         \MyTableCell{2}{3}{Richmond}
 
-                        \MyTableCell{3}{1}{46227800}
+                        \MyTableCell{3}{1}{4622780}
                         \MyTableCell{3}{2}{Josh}
                         \MyTableCell{3}{3}{North Ryde}
                         
-                        \MyTableCell{4}{1}{56917294}
+                        \MyTableCell{4}{1}{5691729}
                         \MyTableCell{4}{2}{Sam}
                         \MyTableCell{4}{3}{Kensington}
 
-                        \MyTableCell{5}{1}{95272911}
+                        \MyTableCell{5}{1}{9527291}
                         \MyTableCell{5}{2}{Vanessa}
                         \MyTableCell{5}{3}{Richmond}
                     ;
@@ -285,9 +256,9 @@
                         }
                     ;
                     \path
-                        (RA -| C1) ++(2.05, 0.30) coordinate (ColArrowEnd1)
-                        (RA -| C2) ++(1.05, 0.30) coordinate (ColArrowEnd2)
-                        (RA -| C3) ++(0.95, 0.30) coordinate (ColArrowEnd3)
+                        (RA -| C1) ++(1.75, 0.30) coordinate (ColArrowEnd1)
+                        (RA -| C2) ++(0.85, 0.30) coordinate (ColArrowEnd2)
+                        (RA -| C3) ++(0.80, 0.30) coordinate (ColArrowEnd3)
                         (ColArrowConvgRef) ++(0, -0.1) coordinate (ColArrowConvg)
                     ;
                     \draw[-stealth, cap=round, line width=2.0pt, mycontrastpurple] (ColArrowConvg) -- (ColArrowEnd1);
@@ -296,15 +267,15 @@
 
                     \draw[mycontrastred]
                         (TopOS3 -| C2)
-                        ++(0.6, 0) coordinate (RelArrowConvgRef)
+                        ++(0.30, 0) coordinate (RelArrowConvgRef)
                         ++(0.05, 0) node[right, align=left, font=\small] {
                             \textbf{\textit{relation,}} \\
                             \textbf{\textit{table}}
                         }
                     ;
                     \path
-                        (RT -| C1) ++(1.65, 0.15) coordinate (RelArrowEnd)
-                        (RelArrowConvgRef) ++(0, -0.4) coordinate (RelArrowConvg)
+                        (RT -| C1) ++(1.00, 0.25) coordinate (RelArrowEnd)
+                        (RelArrowConvgRef) ++(0, -0.3) coordinate (RelArrowConvg)
                     ;
                     \draw[-stealth, cap=round, line width=2.0pt, mycontrastred] (RelArrowConvg) -- (RelArrowEnd);
 
@@ -324,7 +295,7 @@
 
             \medskip
 
-            {\small%
+            {\footnotesize%
             \begin{tabular}{|llr|}
                 \multicolumn{3}{l}{\ttd{Accounts}}
                     \\ \hline
@@ -336,7 +307,7 @@
                     & \ttd{A-02772}
                     & \ttd{20.87}
                     \\
-                \ttd{Macquarie Park}
+                \ttd{Macquarie} % The actual suburb is called Macquarie Park, but I want a smaller table.
                     & \ttd{J-31553}
                     & \ttd{60899.58}
                     \\
@@ -353,42 +324,56 @@
                     & \ttd{7294.62}
                     \\ \hline
             \end{tabular}%
-            }
-            
-            \medskip
 
-            {\small%
+            \medskip
+            %\hspace{2.0ex} % TODO: Prefer to instead make these two tables side-by-side if possible.
+
             \begin{tabular}{|ll|}
                 \multicolumn{2}{l}{\ttd{HeldBy}}
                     \\ \hline
-                \multicolumn{1}{|l}{\ttd{account}}
-                    & \multicolumn{1}{l|}{\ttd{customer}}
+                \multicolumn{1}{|l}{\ttd{accountno}}
+                    & \multicolumn{1}{l|}{\ttd{owner}}
                     \\ \hline\hline
                 \ttd{A-02772}
-                    & \ttd{43891675}
+                    & \ttd{4389167}
                     \\
                 \ttd{A-02772}
-                    & \ttd{95272911}
+                    & \ttd{9527291}
                     \\
                 \ttd{J-31553}
-                    & \ttd{46227800}
+                    & \ttd{4622780}
                     \\
                 \ttd{W-40018}
-                    & \ttd{43891675}
+                    & \ttd{4389167}
                     \\
                 \ttd{W-40018}
-                    & \ttd{95272911}
+                    & \ttd{9527291}
                     \\
                 \ttd{A-74884}
-                    & \ttd{17745042}
+                    & \ttd{1774504}
                     \\
                 \ttd{P-85953}
-                    & \ttd{17745042}
+                    & \ttd{1774504}
                     \\ \hline
             \end{tabular}%
             }
-
+            
         \end{center}
+        \end{SqlAltSubsection}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Tuples}
+
+        \Todo{I actually have no idea what a precise definition of a tuple could be.}
+
+        Useful notations:
+        \begin{itemize}
+            \item $t[X]$ extracts attributes $X$, producing a new tuple.
+            \item $(t_1 : t_2)$ is a union between $t_1$ and $t_2$, producing a new tuple.
+        \end{itemize}
 
     \end{CheatsheetEntryFrame}
 
@@ -399,46 +384,1090 @@
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Selection}
+
+        Produces the subset of tuples that satisfy a condition.
+        
+        For some relation $r(R)$ and selection condition $c$:
         \begin{equation*}
-            \relselect_{\text{expr}}{(\text{Rel})}
+            \relselect_{c}{(r)} = \setdef{t \in r}{c(t)}
         \end{equation*}
+
+        \SubsectionFrameRemoveSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $a_1$ & $2$ & $x$ \\
+                    $a_2$ & $8$ & $x$ \\
+                    $a_3$ & $7$ & $x$ \\
+                    $a_4$ & $9$ & $y$ \\ \hline
+                \end{tabular}
+                \qquad \qquad
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $\relselect_{(B>5) \wedge (C=x)}{(r)}$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $a_2$ & $8$ & $x$ \\
+                    $a_3$ & $7$ & $x$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+        \SubsectionFrameReduceSkip
+        \begin{SqlSubsection}{SQL Example}
+            \begin{CheatsheetSubsectionLst}
+                SELECT *
+                FROM Accounts
+                WHERE branch = 'Haymarket';
+            \end{CheatsheetSubsectionLst}
+
+            \medskip
+
+            \begin{center}
+                {\footnotesize%
+                    \begin{tabular}{|llr|}
+                        \hline
+                        \multicolumn{1}{|l}{\ttd{branch}}
+                            & \multicolumn{1}{l}{\ttd{accountno}}
+                            & \multicolumn{1}{l|}{\ttd{balance}}
+                            \\ \hline\hline
+                        \ttd{Haymarket}
+                            & \ttd{A-74884}
+                            & \ttd{483.94}
+                            \\
+                        \ttd{Haymarket}
+                            & \ttd{P-85953}
+                            & \ttd{7294.62}
+                            \\ \hline
+                    \end{tabular}%
+                }
+            \end{center}
+            \SubsectionFrameTableRemoveSpace
+        \end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
 
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Projection}
+
+        Produces a relation with a subset of attributes.
+
+        For some relation $r(R)$ and attribute set $X$:
         \begin{equation*}
-            \relproject_{A,B,C}{(\text{Rel})}
+            \relproject_{X}{(r)} = \setdef{t[X]}{t \in r}
         \end{equation*}
 
+        \SubsectionFrameRemoveSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ & $d_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $d_2$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $d_3$ \\ \hline
+                \end{tabular}
+                \qquad \qquad
+                \begin{tabular}{|cc|}
+                    \multicolumn{2}{l}{\normalsize $\relproject_{B, D}{(r)}$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$B$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $b_1$ & $d_1$ \\
+                    $b_2$ & $d_2$ \\
+                    $b_3$ & $d_3$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+        \SubsectionFrameReduceSkip
+        \begin{SqlSubsection}{SQL Example}
+            \begin{CheatsheetSubsectionLst}
+                SELECT accountno, balance
+                FROM Accounts;
+            \end{CheatsheetSubsectionLst}
+
+            \medskip
+
+            \begin{center}
+                {\footnotesize%
+                    \begin{tabular}{|lr|}
+                        \hline
+                        \multicolumn{1}{|l}{\ttd{accountno}}
+                            & \multicolumn{1}{l|}{\ttd{balance}}
+                        \\ \hline\hline
+                        \ttd{A-02772}
+                            & \ttd{20.87}
+                            \\
+                        \ttd{J-31553}
+                            & \ttd{60899.58}
+                            \\
+                        \ttd{W-40018}
+                            & \ttd{84731.08}
+                            \\
+                        \ttd{A-74884}
+                            & \ttd{483.94}
+                            \\
+                        \ttd{P-85953}
+                            & \ttd{7294.62}
+                            \\ \hline
+                    \end{tabular}%
+                }
+            \end{center}
+            \SubsectionFrameTableRemoveSpace
+        \end{SqlSubsection}
+
     \end{CheatsheetEntryFrame}
+
+    %\MulticolsBreak % No need, but it should naturally break anyway.
 
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Rename}
+
+        Produces the same tuples, but with a different schema.
+
+        For some relation $r(R)$ and some other schema $S$:
         \begin{equation*}
-            \relrename_{\text{schema}}{(\text{Rel})}
+            \relrename_{S}{(r)}
         \end{equation*}
+
+        \SubsectionFrameRemoveSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ \\
+                    $a_3$ & $b_3$ & $c_3$ \\ \hline
+                \end{tabular}
+                \qquad \qquad
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $\relrename_{S(D, E, F)}{(r)}$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$D$}
+                        & \multicolumn{1}{c}{$E$}
+                        & \multicolumn{1}{c|}{$F$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ \\
+                    $a_3$ & $b_3$ & $c_3$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+        \SubsectionFrameReduceSkip
+        \begin{SqlSubsection}{SQL Example}
+            \begin{CheatsheetSubsectionLst}
+                SELECT branch, accountno, balance AS funds
+                FROM Accounts;
+            \end{CheatsheetSubsectionLst}
+
+            \medskip
+
+            \begin{center}
+                {\footnotesize%
+                    \begin{tabular}{|llr|}
+                        \hline
+                        \multicolumn{1}{|l}{\ttd{branch}}
+                            & \multicolumn{1}{l}{\ttd{accountno}}
+                            & \multicolumn{1}{l|}{\ttd{funds}}
+                        \\ \hline\hline
+                        \ttd{Richmond}
+                            & \ttd{A-02772}
+                            & \ttd{20.87}
+                            \\
+                        \ttd{Macquarie}
+                            & \ttd{J-31553}
+                            & \ttd{60899.58}
+                            \\
+                        \ttd{Richmond}
+                            & \ttd{W-40018}
+                            & \ttd{84731.08}
+                            \\
+                        \ttd{Haymarket}
+                            & \ttd{A-74884}
+                            & \ttd{483.94}
+                            \\
+                        \ttd{Haymarket}
+                            & \ttd{P-85953}
+                            & \ttd{7294.62}
+                            \\ \hline
+                    \end{tabular}%
+                }
+            \end{center}
+            \SubsectionFrameTableRemoveSpace
+        \end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
 
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Natural Join}
+        \CheatsheetEntryTitle{Cartesian Product}
+
+        Produces every possible combination of tuples from two relations.
+
+        For two relations $r(R)$ and $s(S)$:
         \begin{equation*}
-            \text{Rel}_1 \bowtie \text{Rel}_2
+            r \times s = \setdef{(t_r:t_s)}{(t_r \in r) \wedge (t_s \in s)}
         \end{equation*}
 
-    \end{CheatsheetEntryFrame}
+        \SubsectionFrameRemoveSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $s$}
+                        \\ \cline{1-2}
+                    \multicolumn{1}{|c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        & \multicolumn{1}{c}{} % Empty cell
+                        \\ \cline{1-2} \cline{1-2}
+                    $m_1$ & \multicolumn{1}{c|}{$n_1$} & \multicolumn{1}{c}{} \\
+                    $m_2$ & \multicolumn{1}{c|}{$n_2$} & \multicolumn{1}{c}{} \\
+                    $m_3$ & \multicolumn{1}{c|}{$n_3$} & \multicolumn{1}{c}{} \\ \cline{1-2}
+                    \multicolumn{3}{c}{} \\[1.5ex] % Empty Gap
+                    \multicolumn{3}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ \\ \hline
+                \end{tabular}
+                \qquad \quad
+                \begin{tabular}{|ccccc|}
+                    \multicolumn{5}{l}{\normalsize $r \times s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ & $m_1$ & $n_1$ \\
+                    $a_1$ & $b_1$ & $c_1$ & $m_2$ & $n_2$ \\
+                    $a_1$ & $b_1$ & $c_1$ & $m_3$ & $n_3$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $m_1$ & $n_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $m_2$ & $n_2$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $m_3$ & $n_3$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $m_1$ & $n_1$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $m_2$ & $n_2$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $m_3$ & $n_3$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+        \SubsectionFrameReduceSkip
+        \begin{SqlSubsection}{SQL Example (Code-Only)}
+            \begin{CheatsheetSubsectionLst}
+                SELECT *
+                FROM Accounts JOIN Customers;
+            \end{CheatsheetSubsectionLst}
 
-    \begin{CheatsheetEntryFrame}
+            %\medskip
 
-        \CheatsheetEntryTitle{Theta Join}
-        \begin{equation*}
-            \text{Rel}_1 \bowtie_C \text{Rel}_2
-        \end{equation*}
+            %\begin{center}
+            %    {\footnotesize%
+            %        \textit{Use your imagination.}
+            %    }
+            %\end{center}
+            %\SubsectionFrameTableRemoveSpace
+        \end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
 
 \end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Union, Intersection, and Difference}
+
+        \textit{\myul{Union}} of relations $r_1(R)$ and $r_2(R)$:
+        \begin{equation*}
+            r_1 \cup r_2 = \setdef{t}{(t \in r_1) \vee (t \in r_2)}
+        \end{equation*}
+
+        \textit{\myul{Intersection}} of relations $r_1(R)$ and $r_2(R)$:
+        \begin{equation*}
+            r_1 \cap r_2 = \setdef{t}{(t \in r_1) \wedge (t \in r_2)}
+        \end{equation*}
+
+        \textit{\myul{Difference}} of relations $r_1(R)$ and $r_2(R)$:
+        \begin{equation*}
+            r_1 - r_2 = \setdef{t}{(t \in r_1) \wedge (t \notin r_2)}
+        \end{equation*}
+
+        \vspace{\TextExtraSkip}
+
+        All of these operators require \textit{union-compatibility} between participating relations (i.e. same schema).
+
+        \SubsectionFrameAddSeparation
+        \begin{RelAlgSubsection}{Example}
+            \ThreeColumnsMinipages{%
+                \footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r_1$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $\memphRC{a_1}$ & $\memphRC{b_1}$ & $\memphRC{c_1}$ \\
+                    $\memphRC{a_2}$ & $\memphRC{b_2}$ & $\memphRC{c_2}$ \\
+                    $\memphRC{a_3}$ & $\memphRC{b_3}$ & $\memphRC{c_3}$ \\
+                    $\memphPC{a_4}$ & $\memphPC{b_4}$ & $\memphPC{c_4}$ \\
+                    $\memphPC{a_5}$ & $\memphPC{b_5}$ & $\memphPC{c_5}$ \\ \hline
+                \end{tabular}
+
+                \vspace{0.8ex}
+
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r_2$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $\memphPC{a_4}$ & $\memphPC{b_4}$ & $\memphPC{c_4}$ \\
+                    $\memphPC{a_5}$ & $\memphPC{b_5}$ & $\memphPC{c_5}$ \\
+                    $\memphBC{a_6}$ & $\memphBC{b_6}$ & $\memphBC{c_6}$ \\
+                    $\memphBC{a_7}$ & $\memphBC{b_7}$ & $\memphBC{c_7}$ \\ \hline
+                \end{tabular}
+            }{%
+                \footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r_1 \cup r_2$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $\memphRC{a_1}$ & $\memphRC{b_1}$ & $\memphRC{c_1}$ \\
+                    $\memphRC{a_2}$ & $\memphRC{b_2}$ & $\memphRC{c_2}$ \\
+                    $\memphRC{a_3}$ & $\memphRC{b_3}$ & $\memphRC{c_3}$ \\
+                    $\memphPC{a_4}$ & $\memphPC{b_4}$ & $\memphPC{c_4}$ \\
+                    $\memphPC{a_5}$ & $\memphPC{b_5}$ & $\memphPC{c_5}$ \\
+                    $\memphBC{a_6}$ & $\memphBC{b_6}$ & $\memphBC{c_6}$ \\
+                    $\memphBC{a_7}$ & $\memphBC{b_7}$ & $\memphBC{c_7}$ \\ \hline
+                \end{tabular}
+            }{%
+                \footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r_1 - r_2$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $\memphRC{a_1}$ & $\memphRC{b_1}$ & $\memphRC{c_1}$ \\
+                    $\memphRC{a_2}$ & $\memphRC{b_2}$ & $\memphRC{c_2}$ \\
+                    $\memphRC{a_3}$ & $\memphRC{b_3}$ & $\memphRC{c_3}$ \\ \hline
+                \end{tabular}
+
+                \vspace{0.8ex}
+
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r_1 \cap r_2$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $\memphPC{a_4}$ & $\memphPC{b_4}$ & $\memphPC{c_4}$ \\
+                    $\memphPC{a_5}$ & $\memphPC{b_5}$ & $\memphPC{c_5}$ \\ \hline
+                \end{tabular}
+
+                \vspace{0.8ex}
+
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r_2 - r_1$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $\memphBC{a_6}$ & $\memphBC{b_6}$ & $\memphBC{c_6}$ \\
+                    $\memphBC{a_7}$ & $\memphBC{b_7}$ & $\memphBC{c_7}$ \\ \hline
+                \end{tabular}
+            }
+        \end{RelAlgSubsection}
+        %\SubsectionFrameReduceSkip
+        %\begin{SqlSubsection}{SQL Example}
+        %    TODO
+        %\end{SqlSubsection}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Division}
+
+        For relations $r(R)$ and $s(S)$, with $S \subseteq R$:
+        \newcommand{\X}{\rule[-2ex]{0mm}{2ex}}
+        \begin{gather*}
+            r \div s = \setdef{t \in \relproject_{R-S}{(r)}}{\Phi(t)} \\
+            \intertext{where:}
+            %\Phi(t) = \forall t_s \in s \, \exists t_r \in r \, (t_r[S] = t_s \wedge t = t_r[R-S])
+            \Phi(t) =
+                \underbrace{\X \forall t_s \in s}_{(1)}
+                \, \underbrace{\X \exists t_r \in r}_{(2)}
+                \, (
+                    \underbrace{\X t_r[S] = t_s}_{(3)}
+                    \underbrace{\X \wedge t = t_r[R-S]}_{(4)}
+                )
+        \end{gather*}
+
+        \textit{In plain English:} (1)~For all tuples in $s$, (2)~there is at least one relation in $r$ (3)~whose attributes match, (4)~and whose non-matching attributes are the same.
+
+        \vspace{\TextExtraSkip}%
+        Division can also be defined as:
+        \begin{gather*}
+            r \div s =
+                r' -
+                \underbrace{ \rule[-2ex]{0mm}{2ex}
+                    \relproject_{(R-S)}{\parens*{\vphantom{\frac{x}{x}} [r' \times s] - r}}
+                }_{\text{``disqualifier" term}}
+                \\
+            \intertext{where $r'$ is ``all possible result tuples":}
+            r' = \relproject_{(R-S)}{(r)}
+        \end{gather*}
+
+        \SubsectionFrameRemoveSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \newcommand{\FmtA}[1]{\memphBC{#1}} % Alternating formatting
+                \newcommand{\FmtB}[1]{\memphRC{#1}}
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $      \alpha   $ & $      \beta  $ & $      x $ & $      x $ \\
+                    $\FmtA{\alpha  }$ & $\FmtA{\beta }$ & $\FmtA{x}$ & $\FmtA{z}$ \\
+                    $\FmtA{\alpha  }$ & $\FmtA{\beta }$ & $\FmtA{w}$ & $\FmtA{z}$ \\
+                    $      \gamma   $ & $      \delta $ & $      x $ & $      x $ \\
+                    $\FmtB{\gamma  }$ & $\FmtB{\delta}$ & $\FmtB{x}$ & $\FmtB{y}$ \\
+                    $\FmtB{\gamma  }$ & $\FmtB{\delta}$ & $\FmtB{x}$ & $\FmtB{z}$ \\
+                    $      \gamma   $ & $      \delta $ & $      w $ & $      x $ \\
+                    $      \gamma   $ & $      \delta $ & $      w $ & $      y $ \\
+                    $\FmtB{\gamma  }$ & $\FmtB{\delta}$ & $\FmtB{w}$ & $\FmtB{z}$ \\
+                    $      \gamma   $ & $      \delta $ & $      w $ & $      w $ \\
+                    $\FmtA{\epsilon}$ & $\FmtA{\zeta }$ & $\FmtA{x}$ & $\FmtA{y}$ \\
+                    $\FmtA{\epsilon}$ & $\FmtA{\zeta }$ & $\FmtA{x}$ & $\FmtA{z}$ \\
+                    $\FmtA{\epsilon}$ & $\FmtA{\zeta }$ & $\FmtA{w}$ & $\FmtA{z}$ \\
+                    $\FmtB{\eta    }$ & $\FmtB{\theta}$ & $\FmtB{x}$ & $\FmtB{y}$ \\ \hline
+                \end{tabular}
+                \quad
+                \begin{tabular}{|cc|}
+                    \multicolumn{2}{l}{\normalsize $s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                    \\ \hline \hline
+                    $x$ & $y$ \\
+                    $x$ & $z$ \\
+                    $w$ & $z$ \\ \hline
+                \end{tabular}
+                \qquad\quad
+                \begin{tabular}{|cc|}
+                    \multicolumn{2}{l}{\normalsize $r \div s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c|}{$B$}
+                        \\ \hline\hline
+                    $\gamma  $ & $\delta$ \\
+                    $\epsilon$ & $\zeta $ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \medskip
+        {\footnotesize%
+            In $r$, values $(\gamma, \delta)$ and $(\epsilon, \zeta)$ are the only values that occur with all values $(x, y)$, $(x, z)$, and $(w, z)$.
+        }
+        \end{RelAlgSubsection}
+        %\SubsectionFrameReduceSkip
+        %\begin{SqlSubsection}{SQL Example}
+        %    TODO
+        %\end{SqlSubsection}
+
+    \end{CheatsheetEntryFrame}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Theta Join (or Inner Join) and Equijoin}
+
+        \textit{\myul{Theta join}} combines the tuples of two relations using a matching criterion.
+
+        For relations $r(R)$ and $s(S)$, and some arbitrary matching criterion $c$:
+        \begin{equation*}
+            r \bowtie_c s = \setdef{(t_r : t_s)}{(t_r \in r) \wedge (t_s \in s) \wedge c(t_r : t_s)}
+        \end{equation*}
+
+        Theta join can also be defined as:
+        \begin{equation*}
+            r \bowtie_c s = \relselect_{c(r, s)}{\parens*{r \times s}}
+        \end{equation*}
+        Duplicate attributes are not removed.
+
+        \vspace{\TextExtraSkip}%
+        \textit{\myul{Equijoin}} is a special case of theta join that only tests for equality between attributes.
+
+        \SubsectionFrameAddSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $0$ \\
+                    $a_2$ & $b_2$ & $3$ \\
+                    $a_3$ & $b_3$ & $2$ \\ \hline
+                    \multicolumn{3}{c}{} \\ % Empty Gap
+                    \multicolumn{3}{l}{\normalsize $s$}
+                        \\ \cline{1-2}
+                    \multicolumn{1}{|c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        & \multicolumn{1}{c}{} % Empty cell
+                    \\ \cline{1-2} \cline{1-2}
+                        $m_1$ & \multicolumn{1}{c|}{$3$} & \multicolumn{1}{c}{} \\
+                        $m_2$ & \multicolumn{1}{c|}{$4$} & \multicolumn{1}{c}{} \\
+                        $m_3$ & \multicolumn{1}{c|}{$1$} & \multicolumn{1}{c}{} \\
+                        $m_4$ & \multicolumn{1}{c|}{$2$} & \multicolumn{1}{c}{} \\ \cline{1-2}
+                \end{tabular}
+                \qquad
+                \begin{tabular}{|ccccc|}
+                    \multicolumn{5}{l}{\normalsize $r \bowtie_{N \le C} s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        \\ \hline\hline
+                    $a_2$ & $b_2$ & $3$ & $m_1$ & $3$ \\
+                    $a_2$ & $b_2$ & $3$ & $m_3$ & $1$ \\
+                    $a_2$ & $b_2$ & $3$ & $m_4$ & $2$ \\
+                    $a_3$ & $b_3$ & $2$ & $m_3$ & $1$ \\
+                    $a_3$ & $b_3$ & $2$ & $m_4$ & $2$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+        \SubsectionFrameReduceSkip
+        \begin{SqlSubsection}{SQL Example}
+            \begin{CheatsheetSubsectionLst}
+                SELECT *
+                FROM Customers
+                    JOIN HeldBy ON customerid = owner;
+            \end{CheatsheetSubsectionLst}
+
+            \medskip
+
+            \begin{center}
+                {\scriptsize%
+                \begin{tabular}{|llllr|}
+                    \hline
+                    \multicolumn{1}{|l}{\ttd{accountno}}
+                        & \multicolumn{1}{l}{\ttd{owner}}
+                        & \multicolumn{1}{l}{\ttd{customerid}}
+                        & \multicolumn{1}{l}{\ttd{name}}
+                        & \multicolumn{1}{l|}{\ttd{address}}
+                        \\ \hline\hline
+                    \ttd{A-74884}
+                        & \ttd{1774504}
+                        & \ttd{1774504}
+                        & \ttd{Amy}
+                        %& \ttd{Surry Hills}
+                        & \ttd{Surry..}
+                        \\
+                    \ttd{P-85953}
+                        & \ttd{1774504}
+                        & \ttd{1774504}
+                        & \ttd{Amy}
+                        %& \ttd{Surry Hills}
+                        & \ttd{Surry..}
+                        \\
+                    \ttd{A-02772}
+                        & \ttd{4389167}
+                        & \ttd{4389167}
+                        & \ttd{Chris}
+                        %& \ttd{Richmond}
+                        & \ttd{Richm..}
+                        \\
+                    \ttd{W-40018}
+                        & \ttd{4389167}
+                        & \ttd{4389167}
+                        & \ttd{Chris}
+                        %& \ttd{Richmond}
+                        & \ttd{Richm..}
+                        \\
+                    \ttd{J-31553}
+                        & \ttd{4622780}
+                        & \ttd{4622780}
+                        & \ttd{Josh}
+                        %& \ttd{North Ryde}
+                        & \ttd{North..}
+                        \\
+                    \ttd{A-02772}
+                        & \ttd{9527291}
+                        & \ttd{9527291}
+                        & \ttd{Vanessa}
+                        %& \ttd{Richmond}
+                        & \ttd{Richm..}
+                        \\
+                    \ttd{W-40018}
+                        & \ttd{9527291}
+                        & \ttd{9527291}
+                        & \ttd{Vanessa}
+                        %& \ttd{Richmond}
+                        & \ttd{Richm..}
+                        \\ \hline
+                \end{tabular}%
+                }
+            \end{center}
+        \end{SqlSubsection}
+
+    \end{CheatsheetEntryFrame}
+    
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Natural Join}
+
+        A special case of \textit{equijoin} that matches tuples on all their common attributes.
+
+        For relations $r(R)$ and $s(S)$:
+        \begin{gather*}
+            r \bowtie s = \setdef{\parens*{t_r : t_s[S - R]}}{(t_r \in r) \wedge (t_s \in s) \wedge m(t_r, t_s)} \\
+            \intertext{where $m$ is ``all common attributes must match":}
+            %m = \bigwedge_{X \in \parens*{R \cap S}}{\parens*{r[X] = s[X]}} % Original "each-attribute" version
+            m(t_r, t_s) = \parens*{\vphantom{\frac{x}{x}} t_r[R \cap S] = t_s[R \cap S]} % New in-line projection version
+        \end{gather*}
+
+        Natural join can also be defined as:
+        \begin{gather*}
+            r \bowtie s = \relproject_{R \cup S}{\parens*{\relselect_{m(r, s)}{\parens*{r \times s}}}} \\
+            \intertext{where $m$ is:}
+            %m = \bigwedge_{X \in \parens*{R \cap S}}{\parens*{r[X] = s[X]}} % Original "each-attribute" version
+            m(r, s) = \parens*{\vphantom{\frac{x}{x}} r[R \cap S] = s[R \cap S]} % New in-line projection version
+        \end{gather*}
+        and $\relproject_{R \cup S}$ assumes removal of duplicate attributes.
+
+        \vspace{\TextExtraSkip}%
+        \textbf{\color{mycontrastred}
+            \textit{Natural join} is dangerous in real applications.\\[0mm]
+            Use \textit{equijoin} to explicitly match tuples instead.
+        }
+
+        \SubsectionFrameAddSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $x$ & $x$ \\
+                    $a_2$ & $b_2$ & $\memphRC{x}$ & $\memphRC{y}$ \\
+                    $a_3$ & $b_3$ & $\memphRC{x}$ & $\memphRC{y}$ \\
+                    $a_4$ & $b_4$ & $\memphBC{y}$ & $\memphBC{x}$ \\ \hline
+                    \multicolumn{4}{c}{} \\ % Empty Gap
+                    \multicolumn{4}{l}{\normalsize $s$}
+                        \\ \cline{1-3}
+                    \multicolumn{1}{|c}{$C$}
+                        & \multicolumn{1}{c}{$D$}
+                        & \multicolumn{1}{c|}{$E$}
+                        & \multicolumn{1}{c}{} % Empty cell
+                    \\ \cline{1-3} \cline{1-3}
+                        $y$ & $y$ & \multicolumn{1}{c|}{$e_1$} & \multicolumn{1}{c}{} \\
+                        $\memphRC{x}$ & $\memphRC{y}$ & \multicolumn{1}{c|}{$e_2$} & \multicolumn{1}{c}{} \\
+                        $\memphBC{y}$ & $\memphBC{x}$ & \multicolumn{1}{c|}{$e_3$} & \multicolumn{1}{c}{} \\ \cline{1-3}
+                \end{tabular}
+                \quad
+                \begin{tabular}{|ccccc|}
+                    \multicolumn{5}{l}{\normalsize $r \bowtie s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$D$}
+                        & \multicolumn{1}{c|}{$E$}
+                        \\ \hline\hline
+                    $a_2$ & $b_2$ & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$ \\
+                    $a_3$ & $b_3$ & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$ \\
+                    $a_4$ & $b_4$ & $\memphBC{y}$ & $\memphBC{x}$ & $e_3$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+        \SubsectionFrameReduceSkip
+        \begin{SqlSubsection}{SQL Example}
+            \begin{CheatsheetSubsectionLst}
+                SELECT *
+                FROM Accounts
+                    NATURAL JOIN HeldBy;
+            \end{CheatsheetSubsectionLst}
+
+            \medskip
+
+            \begin{center}
+                {\footnotesize%
+                \begin{tabular}{|lllr|}
+                    \hline
+                    \multicolumn{1}{|l}{\ttd{branch}}
+                        & \multicolumn{1}{l}{\ttd{accountno}}
+                        & \multicolumn{1}{l}{\ttd{owner}}
+                        & \multicolumn{1}{l|}{\ttd{balance}}
+                        \\ \hline\hline
+                    \ttd{Richmond}
+                        & \ttd{A-02772}
+                        & \ttd{4389167}
+                        & \ttd{20.87}
+                        \\
+                    \ttd{Richmond}
+                        & \ttd{A-02772}
+                        & \ttd{9527291}
+                        & \ttd{20.87}
+                        \\
+                    \ttd{Macquarie}
+                        & \ttd{J-31553}
+                        & \ttd{4622780}
+                        & \ttd{60899.58}
+                        \\
+                    \ttd{Richmond}
+                        & \ttd{W-40018}
+                        & \ttd{4389167}
+                        & \ttd{84731.08}
+                        \\
+                    \ttd{Richmond}
+                        & \ttd{W-40018}
+                        & \ttd{9527291}
+                        & \ttd{84731.08}
+                        \\
+                    \ttd{Haymarket}
+                        & \ttd{A-74884}
+                        & \ttd{1774504}
+                        & \ttd{483.94}
+                        \\
+                    \ttd{Haymarket}
+                        & \ttd{P-85953}
+                        & \ttd{1774504}
+                        & \ttd{7294.62}
+                        \\ \hline
+                \end{tabular}%
+                }
+            \end{center}
+            \SubsectionFrameTableRemoveSpace
+        \end{SqlSubsection}
+
+    \end{CheatsheetEntryFrame}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \newcommand{\RelAlgVennDiagram}[3]{%
+            \begin{tikzpicture}[scale=0.4, transform shape]
+                \begin{scope} % Left
+                    \clip
+                        (-1, -1) rectangle (2.2, 1)
+                        (1.2, 0) circle (1)
+                    ;
+                    \fill[#1] (0, 0) circle (1);
+                \end{scope}
+                \begin{scope} % Middle
+                    \clip (1.2, 0) circle (1);
+                    \fill[#2] (0, 0) circle (1);
+                \end{scope}
+                \begin{scope} % Right
+                    \clip
+                        (-1, -1) rectangle (2.2, 1)
+                        (0, 0) circle (1)
+                    ;
+                    \fill[#3] (1.2, 0) circle (1);
+                \end{scope}
+                \begin{scope} % Outline
+                    \draw[line width=2.0pt]
+                        (1.2, 0) circle (1)
+                        (0, 0) circle (1)
+                    ;
+                \end{scope}
+            \end{tikzpicture}%
+        }
+
+        \CheatsheetEntryTitle{Outer Join}
+
+        Similar to \textit{theta join}, except in the result relation, we also include tuples that don't have matches in the join.
+
+        These unmatched tuples get padded with null values (written $\relnullvalue$ here) in the result relation.
+
+        %For each definition below, we consider two relations $r(R)$ and $s(S)$, and an arbitrary matching criterion $c$.
+        %% Leaving this out for space reasons... but I think I'd rather keep it?
+
+        \vspace{\TextExtraSkip}%
+        \textit{\myul{Full outer join}} includes all tuples of both operands:
+        \begin{align*}
+            r \relfullouterjoin_c s &=
+                (r \bowtie_c s)
+                \cup \parens*{\vphantom{\frac{x}{x}}
+                    \parens*{r - \relproject_R{(r \bowtie_c s)}}
+                    \times \braces*{(\relnullvalue, \dots)}
+                } \\
+            &
+                \qquad
+                \cup \parens*{\vphantom{\frac{x}{x}}
+                    \parens*{r - \relproject_R{(r \bowtie_c s)}}
+                    \times \braces*{(\relnullvalue, \dots)}
+                } \\
+            &= (r \relleftouterjoin_c s) \cup (r \relrightouterjoin_c s)
+        \end{align*}
+
+        \textit{\myul{Left outer join}} includes all tuples of the left:
+        \begin{align*}
+            r \relleftouterjoin_c s &=
+                (r \bowtie_c s)
+                \cup \parens*{\vphantom{\frac{x}{x}}
+                    \parens*{r - \relproject_R{(r \bowtie_c s)}}
+                    \times \braces*{(\relnullvalue, \dots)}
+                } \\
+            &=
+                s \relrightouterjoin_c r
+        \end{align*}
+
+        \textit{\myul{Right outer join}} includes all tuples of the right:
+        \begin{align*}
+            r \relrightouterjoin_c s &=
+                (r \bowtie_c s)
+                \cup \parens*{\vphantom{\frac{x}{x}}
+                    \parens*{s - \relproject_S{(r \bowtie_c s)}}
+                    \times \braces*{(\relnullvalue, \dots)}
+                } \\
+            &=
+                s \relleftouterjoin_c r
+        \end{align*}
+
+        To summarize the differences between the joins:
+
+        \vspace{1.0ex}
+        \FourColumnsMinipages{%
+            \footnotesize%
+            \textsc{Inner/Theta}\\[0.5ex]
+            \RelAlgVennDiagram{white}{mycontrastred}{white}
+        }{%
+            \footnotesize%
+            \textsc{Left Outer}\\[0.5ex]
+            \RelAlgVennDiagram{mycontrastred}{mycontrastred}{white}
+        }{%
+            \footnotesize%
+            \textsc{Right Outer}\\[0.5ex]
+            \RelAlgVennDiagram{white}{mycontrastred}{mycontrastred}
+        }{%
+            \footnotesize%
+            \textsc{Full Outer}\\[0.5ex]
+            \RelAlgVennDiagram{mycontrastred}{mycontrastred}{mycontrastred}
+        }
+
+        \vspace{\TextExtraSkip}
+        \textbf{\color{mycontrastred}
+            Note: The existence and definitions of null values and outer join in relational algebra is not particularly agreed upon.
+        }
+
+        \SubsectionFrameAddSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $x$ & $x$ \\
+                    $a_2$ & $b_2$ & $\memphRC{x}$ & $\memphRC{y}$ \\
+                    $a_3$ & $b_3$ & $\memphBC{y}$ & $\memphBC{x}$ \\
+                    $a_4$ & $b_4$ & $z$ & $w$ \\ \hline
+                    \multicolumn{4}{c}{} \\ % Empty Gap
+                    \multicolumn{4}{l}{\normalsize $s$}
+                        \\ \cline{1-3}
+                    \multicolumn{1}{|c}{$C$}
+                        & \multicolumn{1}{c}{$D$}
+                        & \multicolumn{1}{c|}{$E$}
+                        & \multicolumn{1}{c}{} % Empty cell
+                    \\ \cline{1-3} \cline{1-3}
+                        $y$ & $y$ & \multicolumn{1}{c|}{$e_1$} & \multicolumn{1}{c}{} \\
+                        $\memphRC{x}$ & $\memphRC{y}$ & \multicolumn{1}{c|}{$e_2$} & \multicolumn{1}{c}{} \\
+                        $\memphBC{y}$ & $\memphBC{x}$ & \multicolumn{1}{c|}{$e_3$} & \multicolumn{1}{c}{} \\ \cline{1-3}
+                \end{tabular}
+                \quad
+                \begin{tabular}{|ccccc|}
+                    \multicolumn{5}{l}{\normalsize $r \relfullouterjoin s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$D$}
+                        & \multicolumn{1}{c|}{$E$}
+                        \\ \hline\hline
+                    $a_1$           & $b_1$           & $x$           & $x$           & $\relnullvalue$ \\
+                    $a_2$           & $b_2$           & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$           \\
+                    $a_3$           & $b_3$           & $\memphBC{y}$ & $\memphBC{x}$ & $e_3$           \\
+                    $a_4$           & $b_4$           & $z$           & $w$           & $\relnullvalue$ \\
+                    $\relnullvalue$ & $\relnullvalue$ & $y$           & $y$           & $e_1$           \\ \hline
+                    \multicolumn{5}{c}{} \\ % Empty Gap
+                    \multicolumn{5}{l}{\normalsize $r \relleftouterjoin s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$D$}
+                        & \multicolumn{1}{c|}{$E$}
+                        \\ \hline\hline
+                    $a_1$           & $b_1$           & $x$           & $x$           & $\relnullvalue$ \\
+                    $a_2$           & $b_2$           & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$           \\
+                    $a_3$           & $b_3$           & $\memphBC{y}$ & $\memphBC{x}$ & $e_3$           \\
+                    $a_4$           & $b_4$           & $z$           & $w$           & $\relnullvalue$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+        %\SubsectionFrameReduceSkip
+        %\begin{SqlSubsection}{SQL Example}
+        %    TODO
+        %\end{SqlSubsection}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Grouping Operator (Aggregation)}
+
+        Performs calculations over groups of tuples within a relation. Produces a relation containing the results.
+
+        For some relation $r(R)$ and operator subscript $G$:
+        \begin{equation*}
+            \relgroup_G{(R)}
+        \end{equation*}
+        where $G$ is a list containing:
+        \begin{itemize}
+            \item one or more attributes from $R$ to be taken as \textit{grouping attributes}, and
+            \item one or more \textit{aggregate functions}, written in the form $\theta{(A, \dots)}$, where $\theta$ is an aggregate function to be applied to attributes $A, \dots$.
+        \end{itemize}
+
+        %The result relation has a schema with attributes $G$.
+        %% TODO: Figure out a way to represent this concisely...
+
+        Formally, aggregate functions can be considered to take a multiset (i.e. a set with duplicates) of values.
+
+        Aggregate functions defined in SQL-92:
+        \begin{center}
+            $\text{AVG}$, $\text{MAX}$, $\text{MIN}$, $\text{SUM}$, $\text{COUNT}$
+        \end{center}
+        Most major DBMS implementations offer many more aggregate functions and allow user-defined functions.
+
+        \SubsectionFrameAddSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $x$ & $\alpha$ & $5$ & $7$ \\
+                    $x$ & $\alpha$ & $7$ & $3$ \\
+                    $x$ & $\beta $ & $1$ & $9$ \\
+                    $x$ & $\beta $ & $5$ & $6$ \\
+                    $y$ & $\alpha$ & $3$ & $1$ \\
+                    $y$ & $\alpha$ & $2$ & $1$ \\
+                    $y$ & $\beta $ & $3$ & $5$ \\
+                    $z$ & $\alpha$ & $9$ & $4$ \\ \hline
+                \end{tabular}
+
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $\relgroup_{A, \text{COUNT}(A), \text{MAX}(C), \text{MAX}(D)}{(r)}$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$\text{COUNT}(A)$}
+                        & \multicolumn{1}{c}{$\text{MAX}(C)$}
+                        & \multicolumn{1}{c|}{$\text{MAX}(D)$}
+                        \\ \hline\hline
+                    $x$ & $4$ & $7$ & $9$ \\
+                    $y$ & $3$ & $3$ & $5$ \\
+                    $z$ & $1$ & $9$ & $4$ \\ \hline
+                \end{tabular}
+
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $\relgroup_{A, B, \text{COUNT}(A), \text{SUM}(C)}{(r)}$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$\text{COUNT}(A)$}
+                        & \multicolumn{1}{c|}{$\text{SUM}(C)$}
+                        \\ \hline\hline
+                    $x$ & $\alpha$ & $2$ & $12$ \\
+                    $x$ & $\beta $ & $2$ & $6$ \\
+                    $y$ & $\alpha$ & $2$ & $5$ \\
+                    $y$ & $\beta $ & $1$ & $3$ \\
+                    $z$ & $\alpha$ & $1$ & $9$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \medskip
+        {\footnotesize%
+            \textit{The $\text{COUNT}()$ function is interesting in that it doesn't really matter which column you use.}
+        }
+        \end{RelAlgSubsection}
+
+    \end{CheatsheetEntryFrame}
+    
+\end{multicols}
+

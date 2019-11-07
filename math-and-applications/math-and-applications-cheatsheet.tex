@@ -127,12 +127,24 @@
     \vspace{-\parskip} % So much extra whitespace...
 }
 
-\definecolor{SqlSubsectionColor}{rgb}{0.65,0.65,0.65}
-\definecolor{SqlSubsectionTextColorGrayed}{rgb}{0.65,0.65,0.65}
+\newcommand{\SubsectionFrameReduceSkip}{\vspace{-2ex}} % A temporary solution to the ridiculous amount of space after a frame.
+\newcommand{\SubsectionFrameAddSeparation}{\medskip} % Standard space between the SqlSubsection frame and other content.
+\newcommand{\SubsectionFrameRemoveSeparation}{\vspace{-\parskip}} % Vertical space is ridiculous after an equation.
+\newcommand{\SubsectionFrameTableRemoveSpace}{\vspace{-0.5ex}} % Tables put a lot of unwanted space above and below.
+
+% Macros for Computer Science: Databases
+
+\colorlet{RelAlgSubsectionColor}{myblue!80!white}
+\newenvironment{RelAlgSubsection}[1]{\CheatsheetSubsection{#1}{RelAlgSubsectionColor}{white}}{\endCheatsheetSubsection}
+
+%\definecolor{SqlSubsectionColor}{rgb}{0.65,0.65,0.65}
+%\definecolor{SqlSubsectionTextColorGrayed}{rgb}{0.65,0.65,0.65}
+\colorlet{SqlSubsectionColor}{myred!80!white}
+\colorlet{SqlSubsectionTextColorGrayed}{myred!65!white}
 \newenvironment{SqlSubsection}[1]{\CheatsheetSubsection{#1}{SqlSubsectionColor}{white}}{\endCheatsheetSubsection}
-\newcommand{\SqlSubsectionReduceSkip}{\vspace{-2ex}} % A temporary solution to the ridiculous amount of space after a frame.
-\newcommand{\SqlSubsectionAddSeparation}{\medskip} % Standard space between the SqlSubsection frame and other content.
-\newcommand{\SqlSubsectionTableRemoveSpace}{\vspace{-0.5ex}} % Tables put a lot of unwanted space above and below.
+
+\definecolor{SqlAltSubsectionColor}{rgb}{0.65,0.65,0.65}
+\newenvironment{SqlAltSubsection}[1]{\CheatsheetSubsection{#1}{SqlAltSubsectionColor}{white}}{\endCheatsheetSubsection}
 
 
 \begin{document}

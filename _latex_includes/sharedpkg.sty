@@ -56,6 +56,8 @@
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
+%\usepackage{unicode-math} % Doesn't work with pdfLaTeX
+%\usepackage{stix} % This broke my distribution...
 \usepackage{mathtools}
 %\usepackage{nccmath} % Too buggy, breaks minipages, please don't use.
 \usepackage{xfrac}
@@ -138,10 +140,12 @@
 \newcommand{\memph}[2][myred]{{\color{#1}\bm{#2}}}
 \newcommand{\memphR}[1]{\memph[myred]{#1}}
 \newcommand{\memphRC}[1]{\memph[mycontrastred]{#1}}
+\newcommand{\memphO}[1]{\memph[myorange]{#1}}
 \newcommand{\memphG}[1]{\memph[mygreen]{#1}}
 \newcommand{\memphB}[1]{\memph[myblue]{#1}}
 \newcommand{\memphBC}[1]{\memph[mycontrastblue]{#1}}
 \newcommand{\memphP}[1]{\memph[mypurple]{#1}}
+\newcommand{\memphPC}[1]{\memph[mycontrastpurple]{#1}}
 % Alternatives if boldfacing is a problem
 \newcommand{\xmemph}[2][myred]{{\color{#1}{#2}}}
 \newcommand{\xmemphR}[1]{\xmemph[myred]{#1}}
@@ -460,9 +464,14 @@
 
 % This length is used where additional vertical spacing between equations in a gather/align environment
 % is needed to better-organize equations.
+% Use as a line break parameter, e.g.: \\[\EqExtraSkip]
 \newlength{\EqExtraSkip}
 \setlength{\EqExtraSkip}{\abovedisplayskip}
 
+% This length is used where additional vertical spacing between paragraphs is needed.
+% Use in vspace, e.g.: \vspace{\TextExtraSkip}
+\newlength{\TextExtraSkip}
+\setlength{\TextExtraSkip}{1.8\parskip}
 
 %%%%%%%%%%%%%%%
 % Math Macros %
@@ -487,6 +496,11 @@
 
 \DeclarePairedDelimiter\abs{\lvert{}}{\rvert{}}
 \DeclarePairedDelimiter\inte{[}{]}
+
+% Common math structures
+%\newcommand{\setdef}[2]{\left\{{#1} \,\middle|\, {#2}\right\}} % Bar version. TODO: If this is used, fix the spacing around bar.
+%\newcommand{\setdef}[2]{\left\{{#1} : {#2}\right\}}
+\newcommand{\setdef}[2]{\left\{{#1} \mid {#2}\right\}}
 \newcommand{\eqsystem}[1]{\left\{\:{#1}\right.}
 
 \DeclarePairedDelimiter\ceil{\lceil{}}{\rceil{}}
@@ -518,6 +532,22 @@
 \DeclareMathOperator{\relselect}{\sigma}
 \DeclareMathOperator{\relproject}{\pi}
 \DeclareMathOperator{\relrename}{\rho}
+\DeclareMathOperator{\relgroup}{\gamma}
+
+% Relational algebra null symbol
+\newcommand{\relnullvalue}{\mathord{\bot}}
+% Preferred null value symbol is a matter of personal taste.
+% I prefer the upside-down "T" (\bot), as introduced to me in David Maier's The Theory of Relational Databases.
+% Omega is a common greek letter, while \emptyset (or \varnothing) should just denote an empty set (or empty relation).
+
+% Relational Algebra outer join symbols
+% (Packages that contain these symbols don't seem to work...)
+%     original source: https://tex.stackexchange.com/questions/20740/symbols-for-outer-joins/20749#20749
+%     answer original author: egreg (https://tex.stackexchange.com/users/4427/egreg)
+\newcommand\TmpOJoin{\setbox0=\hbox{$\bowtie$} \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\newcommand\relleftouterjoin{\mathbin{\TmpOJoin\mkern-5.8mu\bowtie}}
+\newcommand\relrightouterjoin{\mathbin{\bowtie\mkern-5.8mu\TmpOJoin}}
+\newcommand\relfullouterjoin{\mathbin{\TmpOJoin\mkern-5.8mu\bowtie\mkern-5.8mu\TmpOJoin}}
 
 % Electrical Engineering Conventions
 \DeclareSIUnit\voltampere{VA} % Apparent Power
@@ -572,7 +602,7 @@
 %%%%%%%%%%%%%%%%
 
 % General-purpose anonymous length variable that I use throughout my documents.
-\newlength{\anonlength} 
+\newlength{\anonlength}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Other General Utility Macros %
@@ -681,6 +711,44 @@
         \centering%
         #4
     \end{myminipage}
+}
+
+\newcommand{\ThreeColumnsMinipages}[3]{% \ThreeColumnsTextSeparated{col1}{col2}{col3}
+    \begin{center}
+    \begin{myminipage}[c]{0.33\columnwidth}%
+        \centering%
+        #1
+    \end{myminipage}%
+    \begin{myminipage}[c]{0.33\columnwidth}%
+        \centering%
+        #2
+    \end{myminipage}%
+    \begin{myminipage}[c]{0.33\columnwidth}%
+        \centering%
+        #3
+    \end{myminipage}
+    \end{center}
+}
+
+\newcommand{\FourColumnsMinipages}[4]{% \FourColumnsTextSeparated{col1}{col2}{col3}{col4}
+    \begin{center}
+    \begin{myminipage}[c]{0.25\columnwidth}%
+        \centering%
+        #1
+    \end{myminipage}%
+    \begin{myminipage}[c]{0.25\columnwidth}%
+        \centering%
+        #2
+    \end{myminipage}%
+    \begin{myminipage}[c]{0.25\columnwidth}%
+        \centering%
+        #3
+    \end{myminipage}%
+    \begin{myminipage}[c]{0.25\columnwidth}%
+        \centering%
+        #4
+    \end{myminipage}
+    \end{center}
 }
 
 \newenvironment{SimpleFrame}{

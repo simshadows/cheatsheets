@@ -1,4 +1,4 @@
-\subsection{Databases: The Relational Model, Relational Algebra, and some SQL}%
+\subsection{Databases: The Relational Model and Relational Algebra}%
 \label{sub:relational-algebra}
 
 \begin{multicols}{2}
@@ -22,11 +22,11 @@
 
         \CheatsheetEntryTitle{Relation Schemas}
 
-        Relation schemas are \ul{unordered sets} of \textit{attributes}.
+        Relation schemas are \myul{finite sets} of \textit{attributes}.
 
-        Notation for relation $R$ and attributes $A, B, C, \dots$:
+        Notation for some relation $R$ with attributes $A, B, C, D$ and primary key $B, D$:
         \begin{equation*}
-            R(A, B, C, \dots)
+            R(A, \underline{B}, C, \underline{D})
         \end{equation*}
         %% I want a visually annotated version like this below.
         %% Problem is that the relation name annotation looks really awkward.
@@ -42,54 +42,34 @@
         %    })
         %\end{equation*}
 
-        %% TODO: Somehow work something like this in?
-        %Practical example:
-        %\begin{center}
-        %    \ttd{Accounts(branch, accountno, balance)}
-        %    %% The original visually annotated version.
-        %    %% No longer used since it's already described elsewhere.
+        The \textit{domain} of a schema is the set of all possible tuples that can be associated with the schema.
 
-        %    %\newcommand{\X}{\rule{0mm}{1.1em}}
+        For relation $R$, this is denoted:
+        \begin{equation*}
+            \dom{(R)}
+        \end{equation*}
 
-        %    %$\color{mycontrastred} \overbrace{\color{black} \X \texttt{Accounts}}^{\substack{\textbf{\textit{relation}}\\\textbf{\textit{name}}}}$\texttt{(}$\color {mycontrastpurple} \overbrace{\color{black} \X \texttt{branch, accountno, balance}}^{\textbf{\textit{attributes}}}$\texttt{)}
-        %\end{center}
+        %\CheatsheetEntryExtraSeparation
 
-        \SubsectionFrameAddSeparation
-        \begin{SqlSubsection}{SQL Create Relation (Examples)}
-            \begin{CheatsheetSubsectionLst}
-                CREATE TABLE Accounts (
-                    branch      VARCHAR(20),
-                    accountno   CHAR(7)       PRIMARY KEY,
-                    balance     NUMERIC       NOT NULL,
+        \CheatsheetEntryTitle{Keys}
 
-                    CONSTRAINT accountnoformat CHECK(
-                        accountno ~ '[A-Z]-[0-9]{5}'
-                    )
-                );
-            \end{CheatsheetSubsectionLst}
+        A \textit{\myul{superkey}} of a relation schema is any subset of that schema that can always uniquely identify a tuple.
 
-            \medskip
-            {\footnotesize Note: The \texttt{\textasciitilde} regex operator is specific to \textit{PostgreSQL}.}
-            %% Would be nice if an explanation of syntax could be worked in...
-            %\medskip
-            %Syntax:
-            %\begin{CheatsheetSubsectionLst}
-            %    CREATE TABLE <tablename> (
-            %        <attribute> <data type> <constraints>,
-            %        <attribute> <data type> <constraints>,
-            %        <...>
-            %        <table-level constraint>,
-            %        <table-level constraint>,
-            %        <...>
-            %    );
-            %\end{CheatsheetSubsectionLst}
-        \end{SqlSubsection}
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{SQL Remove Relation (Example)}%
-            \begin{CheatsheetSubsectionLst}
-                DROP TABLE Accounts;
-            \end{CheatsheetSubsectionLst}
-        \end{SqlSubsection}
+        For $r(R)$ and any two distinct tuples $t_1, t_2 \in r$, the following condition must be true for any key $K \subseteq R$:
+        \begin{equation*}
+            %\forall t_1 \in r
+            %\quad \forall t_2 \in r \setminus \{t_1\}
+            %\quad
+            t_1[K] \neq t_2[K]
+        \end{equation*}
+
+        A \textit{\myul{candidate key}} is a ``minimal superkey".
+
+        More formally, superkey $K$ is a candidate key if no subset $K' \subset K$ is also a superkey.
+
+        A \textit{\myul{primary key}} is the specific designated candidate key for a relation schema.
+        
+        Uniqueness of primary key values to each tuple must always hold.
 
     \end{CheatsheetEntryFrame}
 
@@ -106,29 +86,6 @@
             \dom{(A)}
         \end{equation*}
 
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{Some Common SQL Data Types and Constraints}
-            \newcommand{\SqlOptionalPart}[1]{{\color{SqlSubsectionTextColorGrayed}(p,s)}}
-            \texttt{INTEGER, SMALLINT, BIGINT, NUMERIC\SqlOptionalPart{(p,s)},}\\[0mm]
-            \texttt{REAL, DOUBLE PRECISION, FLOAT\SqlOptionalPart{(p)},}\\[0mm]
-            \texttt{CHAR(n), VARCHAR(n), CLOB,}\\[0mm]
-            \texttt{BOOLEAN, BINARY(n), VARBINARY(n), BLOB,}\\[0mm]
-            \texttt{DATE, TIME, TIMESTAMP, INTERVAL.}
-        \end{SqlSubsection}
-        %% Would be nice to add something like this, but I can't really fit it in while also having it be sufficiently useful.
-        %\SubsectionFrameReduceSkip
-        %\begin{SqlSubsection}{Some Common SQL Constraints}
-        %    \SubsectionFrameTableRemoveSpace
-        %    \begin{tabularx}{\textwidth}{X|X}
-        %        Column Constraint & Table Constraint \\ \hline
-        %        \texttt{NOT NULL} & \texttt{NOT NULL (col)} \\
-        %        \texttt{PRIMARY KEY} & \texttt{PRIMARY KEY (col)} \\
-        %        \texttt{UNIQUE} & \texttt{UNIQUE (col, ...)} \\
-        %        \texttt{REFERENCES rel(col)} & \texttt{FOREIGN KEY (col) REFERENCES rel(col)}
-        %    \end{tabularx}
-        %    \SubsectionFrameTableRemoveSpace
-        %\end{SqlSubsection}
-
     \end{CheatsheetEntryFrame}
 
     %\Todo{Discuss the domain of the whole schema?}
@@ -139,9 +96,9 @@
 
         \CheatsheetEntryTitle{Relation Instances}
 
-        Relation instances are \ul{unordered sets} of \textit{tuples}.
+        Relation instances are \myul{finite sets} of \textit{tuples}.
 
-        To show that $r$ is an instance of relation $R$, we write:
+        To show that $r$ is an instance of schema $R$, we write:
         \begin{equation*}
             r(R)
         \end{equation*}
@@ -149,7 +106,7 @@
         %Tuples are mappings from schema $R$ to domain $\dom{(R)}$.
 
         \SubsectionFrameRemoveSeparation
-        \begin{SqlAltSubsection}{Example Database}
+        \begin{RelAlgSubsection}{Example}
         \begin{center}
             \newcommand{\Y}{0.44}
             \newcommand{\Yhalf}{0.22}
@@ -293,73 +250,78 @@
                 \end{scope}
             \end{tikzpicture}
 
-            \medskip
+            %%
+            %% THE OTHER EXAMPLE RELATIONS BELOW ARE FOR A MORE EXTENDED EXAMPLE.
+            %% I AM NOT INCLUDING THEM FOR SPACE REASONS... FOR NOW.
+            %%
 
-            {\footnotesize%
-            \begin{tabular}{|llr|}
-                \multicolumn{3}{l}{\ttd{Accounts}}
-                    \\ \hline
-                \multicolumn{1}{|l}{\ttd{branch}}
-                    & \multicolumn{1}{l}{\ttd{accountno}}
-                    & \multicolumn{1}{l|}{\ttd{balance}}
-                    \\ \hline\hline
-                \ttd{Richmond}
-                    & \ttd{A-02772}
-                    & \ttd{20.87}
-                    \\
-                \ttd{Macquarie} % The actual suburb is called Macquarie Park, but I want a smaller table.
-                    & \ttd{J-31553}
-                    & \ttd{60899.58}
-                    \\
-                \ttd{Richmond}
-                    & \ttd{W-40018}
-                    & \ttd{84731.08}
-                    \\
-                \ttd{Haymarket}
-                    & \ttd{A-74884}
-                    & \ttd{483.94}
-                    \\
-                \ttd{Haymarket}
-                    & \ttd{P-85953}
-                    & \ttd{7294.62}
-                    \\ \hline
-            \end{tabular}%
+            %\medskip
 
-            \medskip
-            %\hspace{2.0ex} % TODO: Prefer to instead make these two tables side-by-side if possible.
+            %{\footnotesize%
+            %\begin{tabular}{|llr|}
+            %    \multicolumn{3}{l}{\ttd{Accounts}}
+            %        \\ \hline
+            %    \multicolumn{1}{|l}{\ttd{branch}}
+            %        & \multicolumn{1}{l}{\ttd{accountno}}
+            %        & \multicolumn{1}{l|}{\ttd{balance}}
+            %        \\ \hline\hline
+            %    \ttd{Richmond}
+            %        & \ttd{A-02772}
+            %        & \ttd{20.87}
+            %        \\
+            %    \ttd{Macquarie} % The actual suburb is called Macquarie Park, but I want a smaller table.
+            %        & \ttd{J-31553}
+            %        & \ttd{60899.58}
+            %        \\
+            %    \ttd{Richmond}
+            %        & \ttd{W-40018}
+            %        & \ttd{84731.08}
+            %        \\
+            %    \ttd{Haymarket}
+            %        & \ttd{A-74884}
+            %        & \ttd{483.94}
+            %        \\
+            %    \ttd{Haymarket}
+            %        & \ttd{P-85953}
+            %        & \ttd{7294.62}
+            %        \\ \hline
+            %\end{tabular}%
 
-            \begin{tabular}{|ll|}
-                \multicolumn{2}{l}{\ttd{HeldBy}}
-                    \\ \hline
-                \multicolumn{1}{|l}{\ttd{accountno}}
-                    & \multicolumn{1}{l|}{\ttd{owner}}
-                    \\ \hline\hline
-                \ttd{A-02772}
-                    & \ttd{4389167}
-                    \\
-                \ttd{A-02772}
-                    & \ttd{9527291}
-                    \\
-                \ttd{J-31553}
-                    & \ttd{4622780}
-                    \\
-                \ttd{W-40018}
-                    & \ttd{4389167}
-                    \\
-                \ttd{W-40018}
-                    & \ttd{9527291}
-                    \\
-                \ttd{A-74884}
-                    & \ttd{1774504}
-                    \\
-                \ttd{P-85953}
-                    & \ttd{1774504}
-                    \\ \hline
-            \end{tabular}%
-            }
+            %\medskip
+            %%\hspace{2.0ex} % TODO: Prefer to instead make these two tables side-by-side if possible.
+
+            %\begin{tabular}{|ll|}
+            %    \multicolumn{2}{l}{\ttd{HeldBy}}
+            %        \\ \hline
+            %    \multicolumn{1}{|l}{\ttd{accountno}}
+            %        & \multicolumn{1}{l|}{\ttd{owner}}
+            %        \\ \hline\hline
+            %    \ttd{A-02772}
+            %        & \ttd{4389167}
+            %        \\
+            %    \ttd{A-02772}
+            %        & \ttd{9527291}
+            %        \\
+            %    \ttd{J-31553}
+            %        & \ttd{4622780}
+            %        \\
+            %    \ttd{W-40018}
+            %        & \ttd{4389167}
+            %        \\
+            %    \ttd{W-40018}
+            %        & \ttd{9527291}
+            %        \\
+            %    \ttd{A-74884}
+            %        & \ttd{1774504}
+            %        \\
+            %    \ttd{P-85953}
+            %        & \ttd{1774504}
+            %        \\ \hline
+            %\end{tabular}%
+            %}
             
         \end{center}
-        \end{SqlAltSubsection}
+        \end{RelAlgSubsection}
 
     \end{CheatsheetEntryFrame}
 
@@ -367,13 +329,21 @@
 
         \CheatsheetEntryTitle{Tuples}
 
-        \Todo{I actually have no idea what a precise definition of a tuple could be.}
+        Tuples are \myul{mappings} from schema to schema domain.
 
-        Useful notations:
-        \begin{itemize}
-            \item $t[X]$ extracts attributes $X$, producing a new tuple.
-            \item $(t_1 : t_2)$ is a union between $t_1$ and $t_2$, producing a new tuple.
-        \end{itemize}
+        Concretely, a tuple can be thought of as a set of attribute-value pairs.
+
+        We will use the following notation in this cheatsheet:
+        \begin{psmallindent}
+            $t[X]$ extracts attribute set $X$. \\[0mm]
+            $t[X]$ is itself a tuple.
+
+            $t[A]$ extracts a single attribute $A$. \\[0mm]
+            $t[A]$ is a value. \Exn{\textit{(Yes, I know this is confusing.)}}
+
+            $(t_r : t_s)$ combines tuples $t_r$ and $t_s$. \\[0mm]
+            $(t_r : t_s)$ is itself a tuple.
+        \end{psmallindent}
 
     \end{CheatsheetEntryFrame}
 
@@ -387,7 +357,7 @@
 
         Produces the subset of tuples that satisfy a condition.
         
-        For some relation $r(R)$ and selection condition $c$:
+        For $r(R)$ and selection condition $c$:
         \begin{equation*}
             \relselect_{c}{(r)} = \setdef{t \in r}{c(t)}
         \end{equation*}
@@ -409,50 +379,20 @@
                     $a_4$ & $9$ & $y$ \\ \hline
                 \end{tabular}
                 \qquad \qquad
-                \begin{tabular}{|ccc|}
-                    \multicolumn{3}{l}{\normalsize $\relselect_{(B>5) \wedge (C=x)}{(r)}$}
-                        \\ \hline
+                \begin{tabular}{|ccc|c}
+                    \multicolumn{4}{l}{\normalsize $\relselect_{(B>5) \wedge (C=x)}{(r)}$}
+                        \\ \cline{1-3}
                     \multicolumn{1}{|c}{$A$}
                         & \multicolumn{1}{c}{$B$}
                         & \multicolumn{1}{c|}{$C$}
-                        \\ \hline\hline
-                    $a_2$ & $8$ & $x$ \\
-                    $a_3$ & $7$ & $x$ \\ \hline
+                        & \multicolumn{1}{c}{} % Empty cell
+                        \\ \cline{1-3} \cline{1-3}
+                    $a_2$ & $8$ & $x$ & \multicolumn{1}{c}{} \\
+                    $a_3$ & $7$ & $x$ & \multicolumn{1}{c}{} \\ \cline{1-3}
                 \end{tabular}
             }
         \end{center}
         \end{RelAlgSubsection}
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{SQL Example}
-            \begin{CheatsheetSubsectionLst}
-                SELECT *
-                FROM Accounts
-                WHERE branch = 'Haymarket';
-            \end{CheatsheetSubsectionLst}
-
-            \medskip
-
-            \begin{center}
-                {\footnotesize%
-                    \begin{tabular}{|llr|}
-                        \hline
-                        \multicolumn{1}{|l}{\ttd{branch}}
-                            & \multicolumn{1}{l}{\ttd{accountno}}
-                            & \multicolumn{1}{l|}{\ttd{balance}}
-                            \\ \hline\hline
-                        \ttd{Haymarket}
-                            & \ttd{A-74884}
-                            & \ttd{483.94}
-                            \\
-                        \ttd{Haymarket}
-                            & \ttd{P-85953}
-                            & \ttd{7294.62}
-                            \\ \hline
-                    \end{tabular}%
-                }
-            \end{center}
-            \SubsectionFrameTableRemoveSpace
-        \end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
 
@@ -462,7 +402,7 @@
 
         Produces a relation with a subset of attributes.
 
-        For some relation $r(R)$ and attribute set $X$:
+        For $r(R)$ and attribute set $X$:
         \begin{equation*}
             \relproject_{X}{(r)} = \setdef{t[X]}{t \in r}
         \end{equation*}
@@ -497,54 +437,16 @@
             }
         \end{center}
         \end{RelAlgSubsection}
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{SQL Example}
-            \begin{CheatsheetSubsectionLst}
-                SELECT accountno, balance
-                FROM Accounts;
-            \end{CheatsheetSubsectionLst}
-
-            \medskip
-
-            \begin{center}
-                {\footnotesize%
-                    \begin{tabular}{|lr|}
-                        \hline
-                        \multicolumn{1}{|l}{\ttd{accountno}}
-                            & \multicolumn{1}{l|}{\ttd{balance}}
-                        \\ \hline\hline
-                        \ttd{A-02772}
-                            & \ttd{20.87}
-                            \\
-                        \ttd{J-31553}
-                            & \ttd{60899.58}
-                            \\
-                        \ttd{W-40018}
-                            & \ttd{84731.08}
-                            \\
-                        \ttd{A-74884}
-                            & \ttd{483.94}
-                            \\
-                        \ttd{P-85953}
-                            & \ttd{7294.62}
-                            \\ \hline
-                    \end{tabular}%
-                }
-            \end{center}
-            \SubsectionFrameTableRemoveSpace
-        \end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
-
-    %\MulticolsBreak % No need, but it should naturally break anyway.
 
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Rename}
 
-        Produces the same tuples, but with a different schema.
+        Casts a relation to a different schema.
 
-        For some relation $r(R)$ and some other schema $S$:
+        For $r(R)$ and a compatible schema $S$:
         \begin{equation*}
             \relrename_{S}{(r)}
         \end{equation*}
@@ -579,156 +481,25 @@
             }
         \end{center}
         \end{RelAlgSubsection}
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{SQL Example}
-            \begin{CheatsheetSubsectionLst}
-                SELECT branch, accountno, balance AS funds
-                FROM Accounts;
-            \end{CheatsheetSubsectionLst}
-
-            \medskip
-
-            \begin{center}
-                {\footnotesize%
-                    \begin{tabular}{|llr|}
-                        \hline
-                        \multicolumn{1}{|l}{\ttd{branch}}
-                            & \multicolumn{1}{l}{\ttd{accountno}}
-                            & \multicolumn{1}{l|}{\ttd{funds}}
-                        \\ \hline\hline
-                        \ttd{Richmond}
-                            & \ttd{A-02772}
-                            & \ttd{20.87}
-                            \\
-                        \ttd{Macquarie}
-                            & \ttd{J-31553}
-                            & \ttd{60899.58}
-                            \\
-                        \ttd{Richmond}
-                            & \ttd{W-40018}
-                            & \ttd{84731.08}
-                            \\
-                        \ttd{Haymarket}
-                            & \ttd{A-74884}
-                            & \ttd{483.94}
-                            \\
-                        \ttd{Haymarket}
-                            & \ttd{P-85953}
-                            & \ttd{7294.62}
-                            \\ \hline
-                    \end{tabular}%
-                }
-            \end{center}
-            \SubsectionFrameTableRemoveSpace
-        \end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
 
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Cartesian Product}
-
-        Produces every possible combination of tuples from two relations.
-
-        For two relations $r(R)$ and $s(S)$:
-        \begin{equation*}
-            r \times s = \setdef{(t_r:t_s)}{(t_r \in r) \wedge (t_s \in s)}
-        \end{equation*}
-
-        \SubsectionFrameRemoveSeparation
-        \begin{RelAlgSubsection}{Example}
-        \begin{center}
-            {\footnotesize%
-                \begin{tabular}{|ccc|}
-                    \multicolumn{3}{l}{\normalsize $s$}
-                        \\ \cline{1-2}
-                    \multicolumn{1}{|c}{$M$}
-                        & \multicolumn{1}{c|}{$N$}
-                        & \multicolumn{1}{c}{} % Empty cell
-                        \\ \cline{1-2} \cline{1-2}
-                    $m_1$ & \multicolumn{1}{c|}{$n_1$} & \multicolumn{1}{c}{} \\
-                    $m_2$ & \multicolumn{1}{c|}{$n_2$} & \multicolumn{1}{c}{} \\
-                    $m_3$ & \multicolumn{1}{c|}{$n_3$} & \multicolumn{1}{c}{} \\ \cline{1-2}
-                    \multicolumn{3}{c}{} \\[1.5ex] % Empty Gap
-                    \multicolumn{3}{l}{\normalsize $r$}
-                        \\ \hline
-                    \multicolumn{1}{|c}{$A$}
-                        & \multicolumn{1}{c}{$B$}
-                        & \multicolumn{1}{c|}{$C$}
-                        \\ \hline\hline
-                    $a_1$ & $b_1$ & $c_1$ \\
-                    $a_2$ & $b_2$ & $c_2$ \\ \hline
-                \end{tabular}
-                \qquad \quad
-                \begin{tabular}{|ccccc|}
-                    \multicolumn{5}{l}{\normalsize $r \times s$}
-                        \\ \hline
-                    \multicolumn{1}{|c}{$A$}
-                        & \multicolumn{1}{c}{$B$}
-                        & \multicolumn{1}{c}{$C$}
-                        & \multicolumn{1}{c}{$M$}
-                        & \multicolumn{1}{c|}{$N$}
-                        \\ \hline\hline
-                    $a_1$ & $b_1$ & $c_1$ & $m_1$ & $n_1$ \\
-                    $a_1$ & $b_1$ & $c_1$ & $m_2$ & $n_2$ \\
-                    $a_1$ & $b_1$ & $c_1$ & $m_3$ & $n_3$ \\
-                    $a_2$ & $b_2$ & $c_2$ & $m_1$ & $n_1$ \\
-                    $a_2$ & $b_2$ & $c_2$ & $m_2$ & $n_2$ \\
-                    $a_2$ & $b_2$ & $c_2$ & $m_3$ & $n_3$ \\
-                    $a_3$ & $b_3$ & $c_3$ & $m_1$ & $n_1$ \\
-                    $a_3$ & $b_3$ & $c_3$ & $m_2$ & $n_2$ \\
-                    $a_3$ & $b_3$ & $c_3$ & $m_3$ & $n_3$ \\ \hline
-                \end{tabular}
-            }
-        \end{center}
-        \end{RelAlgSubsection}
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{SQL Example (Code-Only)}
-            \begin{CheatsheetSubsectionLst}
-                SELECT *
-                FROM Accounts JOIN Customers;
-            \end{CheatsheetSubsectionLst}
-
-            %\medskip
-
-            %\begin{center}
-            %    {\footnotesize%
-            %        \textit{Use your imagination.}
-            %    }
-            %\end{center}
-            %\SubsectionFrameTableRemoveSpace
-        \end{SqlSubsection}
-
-    \end{CheatsheetEntryFrame}
-
-\end{multicols}
-\newpage
-\begin{multicols}{2}
+    \MulticolsBreak
 
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Union, Intersection, and Difference}
 
-        \textit{\myul{Union}} of relations $r_1(R)$ and $r_2(R)$:
-        \begin{equation*}
-            r_1 \cup r_2 = \setdef{t}{(t \in r_1) \vee (t \in r_2)}
-        \end{equation*}
+        Set theoretic operations between \textit{union-compatible} relations (i.e. same schema).
 
-        \textit{\myul{Intersection}} of relations $r_1(R)$ and $r_2(R)$:
-        \begin{equation*}
-            r_1 \cap r_2 = \setdef{t}{(t \in r_1) \wedge (t \in r_2)}
-        \end{equation*}
+        For $r_1(R)$ and $r_2(R)$:
+        \begin{align*}
+            r_1 \cup r_2 &= \setdef{t}{(t \in r_1) \vee   (t \in r_2)} \\[\EqExtraSkip]
+            r_1 \cap r_2 &= \setdef{t}{(t \in r_1) \wedge (t \in r_2)} \\[\EqExtraSkip]
+            r_1 - r_2    &= \setdef{t}{(t \in r_1) \wedge (t \notin r_2)}
+        \end{align*}
 
-        \textit{\myul{Difference}} of relations $r_1(R)$ and $r_2(R)$:
-        \begin{equation*}
-            r_1 - r_2 = \setdef{t}{(t \in r_1) \wedge (t \notin r_2)}
-        \end{equation*}
-
-        \vspace{\TextExtraSkip}
-
-        All of these operators require \textit{union-compatibility} between participating relations (i.e. same schema).
-
-        \SubsectionFrameAddSeparation
+        \SubsectionFrameRemoveSeparation
         \begin{RelAlgSubsection}{Example}
             \ThreeColumnsMinipages{%
                 \footnotesize%
@@ -818,18 +589,228 @@
                 \end{tabular}
             }
         \end{RelAlgSubsection}
-        %\SubsectionFrameReduceSkip
-        %\begin{SqlSubsection}{SQL Example}
-        %    TODO
-        %\end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
 
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Division}
+        \CheatsheetEntryTitle{Cartesian Product}
 
-        For relations $r(R)$ and $s(S)$, with $S \subseteq R$:
+        Produces every possible combination of tuples from two relations.
+
+        For $r(R)$ and $s(S)$:
+        \begin{equation*}
+            r \times s = \setdef{(t_r:t_s)}{(t_r \in r) \wedge (t_s \in s)}
+        \end{equation*}
+
+        \SubsectionFrameRemoveSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $s$}
+                        \\ \cline{1-2}
+                    \multicolumn{1}{|c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        & \multicolumn{1}{c}{} % Empty cell
+                        \\ \cline{1-2} \cline{1-2}
+                    $m_1$ & \multicolumn{1}{c|}{$n_1$} & \multicolumn{1}{c}{} \\
+                    $m_2$ & \multicolumn{1}{c|}{$n_2$} & \multicolumn{1}{c}{} \\
+                    $m_3$ & \multicolumn{1}{c|}{$n_3$} & \multicolumn{1}{c}{} \\ \cline{1-2}
+                    \multicolumn{3}{c}{} \\[1.5ex] % Empty Gap
+                    \multicolumn{3}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ \\ \hline
+                \end{tabular}
+                \qquad \quad
+                \begin{tabular}{|ccccc|}
+                    \multicolumn{5}{l}{\normalsize $r \times s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ & $m_1$ & $n_1$ \\
+                    $a_1$ & $b_1$ & $c_1$ & $m_2$ & $n_2$ \\
+                    $a_1$ & $b_1$ & $c_1$ & $m_3$ & $n_3$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $m_1$ & $n_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $m_2$ & $n_2$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $m_3$ & $n_3$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $m_1$ & $n_1$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $m_2$ & $n_2$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $m_3$ & $n_3$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Theta Join (or Inner Join) and Equijoin}
+
+        \textit{\myul{Theta join}} combines the tuples of two relations using a matching criterion.
+
+        For $r(R)$ and $s(S)$, and some arbitrary matching criterion $c$:
+        \begin{equation*}
+            r \bowtie_c s = \setdef{(t_r : t_s)}{(t_r \in r) \wedge (t_s \in s) \wedge c(t_r : t_s)}
+        \end{equation*}
+
+        Theta join can also be defined as:
+        \begin{equation*}
+            r \bowtie_c s = \relselect_{c(r, s)}{\parens*{r \times s}}
+        \end{equation*}
+        Duplicate attributes are not removed.
+
+        \vspace{\TextExtraSkip}%
+        \textit{\myul{Equijoin}} is a special case of theta join that only tests for equality between attributes.
+
+        \SubsectionFrameAddSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|ccc|}
+                    \multicolumn{3}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c|}{$C$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $0$ \\
+                    $a_2$ & $b_2$ & $3$ \\
+                    $a_3$ & $b_3$ & $2$ \\ \hline
+                    \multicolumn{3}{c}{} \\ % Empty Gap
+                    \multicolumn{3}{l}{\normalsize $s$}
+                        \\ \cline{1-2}
+                    \multicolumn{1}{|c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        & \multicolumn{1}{c}{} % Empty cell
+                    \\ \cline{1-2} \cline{1-2}
+                        $m_1$ & \multicolumn{1}{c|}{$3$} & \multicolumn{1}{c}{} \\
+                        $m_2$ & \multicolumn{1}{c|}{$4$} & \multicolumn{1}{c}{} \\
+                        $m_3$ & \multicolumn{1}{c|}{$1$} & \multicolumn{1}{c}{} \\
+                        $m_4$ & \multicolumn{1}{c|}{$2$} & \multicolumn{1}{c}{} \\ \cline{1-2}
+                \end{tabular}
+                \qquad
+                \begin{tabular}{|ccccc|}
+                    \multicolumn{5}{l}{\normalsize $r \bowtie_{N \le C} s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$M$}
+                        & \multicolumn{1}{c|}{$N$}
+                        \\ \hline\hline
+                    $a_2$ & $b_2$ & $3$ & $m_1$ & $3$ \\
+                    $a_2$ & $b_2$ & $3$ & $m_3$ & $1$ \\
+                    $a_2$ & $b_2$ & $3$ & $m_4$ & $2$ \\
+                    $a_3$ & $b_3$ & $2$ & $m_3$ & $1$ \\
+                    $a_3$ & $b_3$ & $2$ & $m_4$ & $2$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+
+    \end{CheatsheetEntryFrame}
+    
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Natural Join}
+
+        A special case of \textit{equijoin} that matches tuples on all their common attributes.
+
+        For $r(R)$ and $s(S)$:
+        \begin{gather*}
+            r \bowtie s = \setdef{\parens*{t_r : t_s[S - R]}}{(t_r \in r) \wedge (t_s \in s) \wedge m(t_r, t_s)} \\
+            \intertext{where $m$ is ``all common attributes must match":}
+            %m = \bigwedge_{X \in \parens*{R \cap S}}{\parens*{r[X] = s[X]}} % Original "each-attribute" version
+            m(t_r, t_s) = \parens*{\vphantom{\frac{x}{x}} t_r[R \cap S] = t_s[R \cap S]} % New in-line projection version
+        \end{gather*}
+
+        Natural join can also be defined as:
+        \begin{gather*}
+            r \bowtie s = \relproject_{R \cup S}{\parens*{\relselect_{m(r, s)}{\parens*{r \times s}}}} \\
+            \intertext{where $m$ is:}
+            %m = \bigwedge_{X \in \parens*{R \cap S}}{\parens*{r[X] = s[X]}} % Original "each-attribute" version
+            m(r, s) = \parens*{\vphantom{\frac{x}{x}} r[R \cap S] = s[R \cap S]} % New in-line projection version
+        \end{gather*}
+        and $\relproject_{R \cup S}$ assumes removal of duplicate attributes.
+
+        \vspace{\TextExtraSkip}%
+        \textbf{\color{mycontrastred}
+            \textit{Natural join} is dangerous in real applications.\\[0mm]
+            Use \textit{equijoin} to explicitly match tuples instead.
+        }
+
+        \SubsectionFrameRemoveSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $x$ & $x$ \\
+                    $a_2$ & $b_2$ & $\memphRC{x}$ & $\memphRC{y}$ \\
+                    $a_3$ & $b_3$ & $\memphRC{x}$ & $\memphRC{y}$ \\
+                    $a_4$ & $b_4$ & $\memphBC{y}$ & $\memphBC{x}$ \\ \hline
+                    \multicolumn{4}{c}{} \\ % Empty Gap
+                    \multicolumn{4}{l}{\normalsize $s$}
+                        \\ \cline{1-3}
+                    \multicolumn{1}{|c}{$C$}
+                        & \multicolumn{1}{c}{$D$}
+                        & \multicolumn{1}{c|}{$E$}
+                        & \multicolumn{1}{c}{} % Empty cell
+                    \\ \cline{1-3} \cline{1-3}
+                        $y$ & $y$ & \multicolumn{1}{c|}{$e_1$} & \multicolumn{1}{c}{} \\
+                        $\memphRC{x}$ & $\memphRC{y}$ & \multicolumn{1}{c|}{$e_2$} & \multicolumn{1}{c}{} \\
+                        $\memphBC{y}$ & $\memphBC{x}$ & \multicolumn{1}{c|}{$e_3$} & \multicolumn{1}{c}{} \\ \cline{1-3}
+                \end{tabular}
+                \quad
+                \begin{tabular}{|ccccc|}
+                    \multicolumn{5}{l}{\normalsize $r \bowtie s$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c}{$D$}
+                        & \multicolumn{1}{c|}{$E$}
+                        \\ \hline\hline
+                    $a_2$ & $b_2$ & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$ \\
+                    $a_3$ & $b_3$ & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$ \\
+                    $a_4$ & $b_4$ & $\memphBC{y}$ & $\memphBC{x}$ & $e_3$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
+        \end{RelAlgSubsection}
+
+    \end{CheatsheetEntryFrame}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Division} \MarkExtendedRelAlg
+
+        For $r(R)$ and $s(S)$, with $S \subseteq R$:
         \newcommand{\X}{\rule[-2ex]{0mm}{2ex}}
         \begin{gather*}
             r \div s = \setdef{t \in \relproject_{R-S}{(r)}}{\Phi(t)} \\
@@ -844,7 +825,7 @@
                 )
         \end{gather*}
 
-        \textit{In plain English:} (1)~For all tuples in $s$, (2)~there is at least one relation in $r$ (3)~whose attributes match, (4)~and whose non-matching attributes are the same.
+        \textit{In plain English:} (1)~For all tuples in $s$, (2)~there is at least one relation in $r$ (3)~whose common attributes match, (4)~and whose non-common attributes are the same.
 
         \vspace{\TextExtraSkip}%
         Division can also be defined as:
@@ -916,297 +897,8 @@
             In $r$, values $(\gamma, \delta)$ and $(\epsilon, \zeta)$ are the only values that occur with all values $(x, y)$, $(x, z)$, and $(w, z)$.
         }
         \end{RelAlgSubsection}
-        %\SubsectionFrameReduceSkip
-        %\begin{SqlSubsection}{SQL Example}
-        %    TODO
-        %\end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
-    
-\end{multicols}
-\newpage
-\begin{multicols}{2}
-
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Theta Join (or Inner Join) and Equijoin}
-
-        \textit{\myul{Theta join}} combines the tuples of two relations using a matching criterion.
-
-        For relations $r(R)$ and $s(S)$, and some arbitrary matching criterion $c$:
-        \begin{equation*}
-            r \bowtie_c s = \setdef{(t_r : t_s)}{(t_r \in r) \wedge (t_s \in s) \wedge c(t_r : t_s)}
-        \end{equation*}
-
-        Theta join can also be defined as:
-        \begin{equation*}
-            r \bowtie_c s = \relselect_{c(r, s)}{\parens*{r \times s}}
-        \end{equation*}
-        Duplicate attributes are not removed.
-
-        \vspace{\TextExtraSkip}%
-        \textit{\myul{Equijoin}} is a special case of theta join that only tests for equality between attributes.
-
-        \SubsectionFrameAddSeparation
-        \begin{RelAlgSubsection}{Example}
-        \begin{center}
-            {\footnotesize%
-                \begin{tabular}{|ccc|}
-                    \multicolumn{3}{l}{\normalsize $r$}
-                        \\ \hline
-                    \multicolumn{1}{|c}{$A$}
-                        & \multicolumn{1}{c}{$B$}
-                        & \multicolumn{1}{c|}{$C$}
-                        \\ \hline\hline
-                    $a_1$ & $b_1$ & $0$ \\
-                    $a_2$ & $b_2$ & $3$ \\
-                    $a_3$ & $b_3$ & $2$ \\ \hline
-                    \multicolumn{3}{c}{} \\ % Empty Gap
-                    \multicolumn{3}{l}{\normalsize $s$}
-                        \\ \cline{1-2}
-                    \multicolumn{1}{|c}{$M$}
-                        & \multicolumn{1}{c|}{$N$}
-                        & \multicolumn{1}{c}{} % Empty cell
-                    \\ \cline{1-2} \cline{1-2}
-                        $m_1$ & \multicolumn{1}{c|}{$3$} & \multicolumn{1}{c}{} \\
-                        $m_2$ & \multicolumn{1}{c|}{$4$} & \multicolumn{1}{c}{} \\
-                        $m_3$ & \multicolumn{1}{c|}{$1$} & \multicolumn{1}{c}{} \\
-                        $m_4$ & \multicolumn{1}{c|}{$2$} & \multicolumn{1}{c}{} \\ \cline{1-2}
-                \end{tabular}
-                \qquad
-                \begin{tabular}{|ccccc|}
-                    \multicolumn{5}{l}{\normalsize $r \bowtie_{N \le C} s$}
-                        \\ \hline
-                    \multicolumn{1}{|c}{$A$}
-                        & \multicolumn{1}{c}{$B$}
-                        & \multicolumn{1}{c}{$C$}
-                        & \multicolumn{1}{c}{$M$}
-                        & \multicolumn{1}{c|}{$N$}
-                        \\ \hline\hline
-                    $a_2$ & $b_2$ & $3$ & $m_1$ & $3$ \\
-                    $a_2$ & $b_2$ & $3$ & $m_3$ & $1$ \\
-                    $a_2$ & $b_2$ & $3$ & $m_4$ & $2$ \\
-                    $a_3$ & $b_3$ & $2$ & $m_3$ & $1$ \\
-                    $a_3$ & $b_3$ & $2$ & $m_4$ & $2$ \\ \hline
-                \end{tabular}
-            }
-        \end{center}
-        \end{RelAlgSubsection}
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{SQL Example}
-            \begin{CheatsheetSubsectionLst}
-                SELECT *
-                FROM Customers
-                    JOIN HeldBy ON customerid = owner;
-            \end{CheatsheetSubsectionLst}
-
-            \medskip
-
-            \begin{center}
-                {\scriptsize%
-                \begin{tabular}{|llllr|}
-                    \hline
-                    \multicolumn{1}{|l}{\ttd{accountno}}
-                        & \multicolumn{1}{l}{\ttd{owner}}
-                        & \multicolumn{1}{l}{\ttd{customerid}}
-                        & \multicolumn{1}{l}{\ttd{name}}
-                        & \multicolumn{1}{l|}{\ttd{address}}
-                        \\ \hline\hline
-                    \ttd{A-74884}
-                        & \ttd{1774504}
-                        & \ttd{1774504}
-                        & \ttd{Amy}
-                        %& \ttd{Surry Hills}
-                        & \ttd{Surry..}
-                        \\
-                    \ttd{P-85953}
-                        & \ttd{1774504}
-                        & \ttd{1774504}
-                        & \ttd{Amy}
-                        %& \ttd{Surry Hills}
-                        & \ttd{Surry..}
-                        \\
-                    \ttd{A-02772}
-                        & \ttd{4389167}
-                        & \ttd{4389167}
-                        & \ttd{Chris}
-                        %& \ttd{Richmond}
-                        & \ttd{Richm..}
-                        \\
-                    \ttd{W-40018}
-                        & \ttd{4389167}
-                        & \ttd{4389167}
-                        & \ttd{Chris}
-                        %& \ttd{Richmond}
-                        & \ttd{Richm..}
-                        \\
-                    \ttd{J-31553}
-                        & \ttd{4622780}
-                        & \ttd{4622780}
-                        & \ttd{Josh}
-                        %& \ttd{North Ryde}
-                        & \ttd{North..}
-                        \\
-                    \ttd{A-02772}
-                        & \ttd{9527291}
-                        & \ttd{9527291}
-                        & \ttd{Vanessa}
-                        %& \ttd{Richmond}
-                        & \ttd{Richm..}
-                        \\
-                    \ttd{W-40018}
-                        & \ttd{9527291}
-                        & \ttd{9527291}
-                        & \ttd{Vanessa}
-                        %& \ttd{Richmond}
-                        & \ttd{Richm..}
-                        \\ \hline
-                \end{tabular}%
-                }
-            \end{center}
-        \end{SqlSubsection}
-
-    \end{CheatsheetEntryFrame}
-    
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Natural Join}
-
-        A special case of \textit{equijoin} that matches tuples on all their common attributes.
-
-        For relations $r(R)$ and $s(S)$:
-        \begin{gather*}
-            r \bowtie s = \setdef{\parens*{t_r : t_s[S - R]}}{(t_r \in r) \wedge (t_s \in s) \wedge m(t_r, t_s)} \\
-            \intertext{where $m$ is ``all common attributes must match":}
-            %m = \bigwedge_{X \in \parens*{R \cap S}}{\parens*{r[X] = s[X]}} % Original "each-attribute" version
-            m(t_r, t_s) = \parens*{\vphantom{\frac{x}{x}} t_r[R \cap S] = t_s[R \cap S]} % New in-line projection version
-        \end{gather*}
-
-        Natural join can also be defined as:
-        \begin{gather*}
-            r \bowtie s = \relproject_{R \cup S}{\parens*{\relselect_{m(r, s)}{\parens*{r \times s}}}} \\
-            \intertext{where $m$ is:}
-            %m = \bigwedge_{X \in \parens*{R \cap S}}{\parens*{r[X] = s[X]}} % Original "each-attribute" version
-            m(r, s) = \parens*{\vphantom{\frac{x}{x}} r[R \cap S] = s[R \cap S]} % New in-line projection version
-        \end{gather*}
-        and $\relproject_{R \cup S}$ assumes removal of duplicate attributes.
-
-        \vspace{\TextExtraSkip}%
-        \textbf{\color{mycontrastred}
-            \textit{Natural join} is dangerous in real applications.\\[0mm]
-            Use \textit{equijoin} to explicitly match tuples instead.
-        }
-
-        \SubsectionFrameAddSeparation
-        \begin{RelAlgSubsection}{Example}
-        \begin{center}
-            {\footnotesize%
-                \begin{tabular}{|cccc|}
-                    \multicolumn{4}{l}{\normalsize $r$}
-                        \\ \hline
-                    \multicolumn{1}{|c}{$A$}
-                        & \multicolumn{1}{c}{$B$}
-                        & \multicolumn{1}{c}{$C$}
-                        & \multicolumn{1}{c|}{$D$}
-                        \\ \hline\hline
-                    $a_1$ & $b_1$ & $x$ & $x$ \\
-                    $a_2$ & $b_2$ & $\memphRC{x}$ & $\memphRC{y}$ \\
-                    $a_3$ & $b_3$ & $\memphRC{x}$ & $\memphRC{y}$ \\
-                    $a_4$ & $b_4$ & $\memphBC{y}$ & $\memphBC{x}$ \\ \hline
-                    \multicolumn{4}{c}{} \\ % Empty Gap
-                    \multicolumn{4}{l}{\normalsize $s$}
-                        \\ \cline{1-3}
-                    \multicolumn{1}{|c}{$C$}
-                        & \multicolumn{1}{c}{$D$}
-                        & \multicolumn{1}{c|}{$E$}
-                        & \multicolumn{1}{c}{} % Empty cell
-                    \\ \cline{1-3} \cline{1-3}
-                        $y$ & $y$ & \multicolumn{1}{c|}{$e_1$} & \multicolumn{1}{c}{} \\
-                        $\memphRC{x}$ & $\memphRC{y}$ & \multicolumn{1}{c|}{$e_2$} & \multicolumn{1}{c}{} \\
-                        $\memphBC{y}$ & $\memphBC{x}$ & \multicolumn{1}{c|}{$e_3$} & \multicolumn{1}{c}{} \\ \cline{1-3}
-                \end{tabular}
-                \quad
-                \begin{tabular}{|ccccc|}
-                    \multicolumn{5}{l}{\normalsize $r \bowtie s$}
-                        \\ \hline
-                    \multicolumn{1}{|c}{$A$}
-                        & \multicolumn{1}{c}{$B$}
-                        & \multicolumn{1}{c}{$C$}
-                        & \multicolumn{1}{c}{$D$}
-                        & \multicolumn{1}{c|}{$E$}
-                        \\ \hline\hline
-                    $a_2$ & $b_2$ & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$ \\
-                    $a_3$ & $b_3$ & $\memphRC{x}$ & $\memphRC{y}$ & $e_2$ \\
-                    $a_4$ & $b_4$ & $\memphBC{y}$ & $\memphBC{x}$ & $e_3$ \\ \hline
-                \end{tabular}
-            }
-        \end{center}
-        \end{RelAlgSubsection}
-        \SubsectionFrameReduceSkip
-        \begin{SqlSubsection}{SQL Example}
-            \begin{CheatsheetSubsectionLst}
-                SELECT *
-                FROM Accounts
-                    NATURAL JOIN HeldBy;
-            \end{CheatsheetSubsectionLst}
-
-            \medskip
-
-            \begin{center}
-                {\footnotesize%
-                \begin{tabular}{|lllr|}
-                    \hline
-                    \multicolumn{1}{|l}{\ttd{branch}}
-                        & \multicolumn{1}{l}{\ttd{accountno}}
-                        & \multicolumn{1}{l}{\ttd{owner}}
-                        & \multicolumn{1}{l|}{\ttd{balance}}
-                        \\ \hline\hline
-                    \ttd{Richmond}
-                        & \ttd{A-02772}
-                        & \ttd{4389167}
-                        & \ttd{20.87}
-                        \\
-                    \ttd{Richmond}
-                        & \ttd{A-02772}
-                        & \ttd{9527291}
-                        & \ttd{20.87}
-                        \\
-                    \ttd{Macquarie}
-                        & \ttd{J-31553}
-                        & \ttd{4622780}
-                        & \ttd{60899.58}
-                        \\
-                    \ttd{Richmond}
-                        & \ttd{W-40018}
-                        & \ttd{4389167}
-                        & \ttd{84731.08}
-                        \\
-                    \ttd{Richmond}
-                        & \ttd{W-40018}
-                        & \ttd{9527291}
-                        & \ttd{84731.08}
-                        \\
-                    \ttd{Haymarket}
-                        & \ttd{A-74884}
-                        & \ttd{1774504}
-                        & \ttd{483.94}
-                        \\
-                    \ttd{Haymarket}
-                        & \ttd{P-85953}
-                        & \ttd{1774504}
-                        & \ttd{7294.62}
-                        \\ \hline
-                \end{tabular}%
-                }
-            \end{center}
-            \SubsectionFrameTableRemoveSpace
-        \end{SqlSubsection}
-
-    \end{CheatsheetEntryFrame}
-    
-\end{multicols}
-\newpage
-\begin{multicols}{2}
 
     \begin{CheatsheetEntryFrame}
 
@@ -1239,7 +931,7 @@
             \end{tikzpicture}%
         }
 
-        \CheatsheetEntryTitle{Outer Join}
+        \CheatsheetEntryTitle{Outer Join} \MarkExtendedRelAlg
 
         Similar to \textit{theta join}, except in the result relation, we also include tuples that don't have matches in the join.
 
@@ -1376,20 +1068,20 @@
             }
         \end{center}
         \end{RelAlgSubsection}
-        %\SubsectionFrameReduceSkip
-        %\begin{SqlSubsection}{SQL Example}
-        %    TODO
-        %\end{SqlSubsection}
 
     \end{CheatsheetEntryFrame}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
 
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Grouping Operator (Aggregation)}
+        \CheatsheetEntryTitle{Grouping Operator} \MarkExtendedRelAlg
 
         Performs calculations over groups of tuples within a relation. Produces a relation containing the results.
 
-        For some relation $r(R)$ and operator subscript $G$:
+        For $r(R)$ and operator subscript $G$:
         \begin{equation*}
             \relgroup_G{(R)}
         \end{equation*}
@@ -1465,6 +1157,45 @@
         {\footnotesize%
             \textit{The $\text{COUNT}()$ function is interesting in that it doesn't really matter which column you use.}
         }
+        \end{RelAlgSubsection}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Generalized Projection} \MarkExtendedRelAlg
+
+        We can extend the projection operator $\pi$ to also contain expressions for computation.
+
+        \SubsectionFrameAddSeparation
+        \begin{RelAlgSubsection}{Example}
+        \begin{center}
+            {\footnotesize%
+                \begin{tabular}{|cccc|}
+                    \multicolumn{4}{l}{\normalsize $r$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c}{$B$}
+                        & \multicolumn{1}{c}{$C$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $a_1$ & $b_1$ & $c_1$ & $d_1$ \\
+                    $a_2$ & $b_2$ & $c_2$ & $d_2$ \\
+                    $a_3$ & $b_3$ & $c_3$ & $d_3$ \\ \hline
+                \end{tabular}
+                \qquad \qquad
+                \begin{tabular}{|cc|}
+                    \multicolumn{2}{l}{\normalsize $\relproject_{B, D}{(r)}$}
+                        \\ \hline
+                    \multicolumn{1}{|c}{$B$}
+                        & \multicolumn{1}{c|}{$D$}
+                        \\ \hline\hline
+                    $b_1$ & $d_1$ \\
+                    $b_2$ & $d_2$ \\
+                    $b_3$ & $d_3$ \\ \hline
+                \end{tabular}
+            }
+        \end{center}
         \end{RelAlgSubsection}
 
     \end{CheatsheetEntryFrame}

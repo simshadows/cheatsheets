@@ -53,23 +53,36 @@
 
         \CheatsheetEntryTitle{Keys}
 
-        A \textit{\myul{superkey}} of a relation schema is any subset of that schema that can always uniquely identify a tuple.
+        A \textit{\myul{superkey}} of a relation schema is any subset of that schema that can uniquely identify a tuple.
 
-        For $r(R)$ and any two distinct tuples $t_1, t_2 \in r$, the following condition must be true for any key $K \subseteq R$:
-        \begin{equation*}
-            %\forall t_1 \in r
-            %\quad \forall t_2 \in r \setminus \{t_1\}
-            %\quad
-            t_1[K] \neq t_2[K]
-        \end{equation*}
+        In other words, all tuples have unique values in the superkey.
 
+        Or more formally, for $r(R)$ and any two distinct tuples $t_1, t_2 \in r$, if $t_1[K] \neq t_2[K]$ for some $K \subseteq R$, then $K$ is a superkey.
+
+        Note that for $r(R)$, $R$ is always a superkey.
+
+        \vspace{\TextExtraSkip}%
         A \textit{\myul{candidate key}} is a ``minimal superkey".
 
-        More formally, superkey $K$ is a candidate key if no subset $K' \subset K$ is also a superkey.
+        More formally, superkey $K$ is a candidate key if no subset $K' \subset K$ exists that is also a superkey.
 
-        A \textit{\myul{primary key}} is the specific designated candidate key for a relation schema.
+        \vspace{\TextExtraSkip}%
+        A \textit{\myul{primary key}} is the specific candidate key designated to a relation schema.
+
+        All relations must have exactly one primary key.
+
+        \vspace{\TextExtraSkip}%
+        A \textit{\myul{foreign key}} of a relation schema is a subset of attributes that reference a particular primary key.
+
+        The referenced primary key is often a different relation, but may also be of the same relation.
+
+        %% I initially started writing this, but realized that null values are not part of the core relational model.
+        %Constraints on primary key:
+        %\begin{itemize}
+        %    \item \textit{Uniqueness constraint}: Primary key attributes must never allow duplicate values.
+        %    \item \textit{Entity integrity:} Primary key must never be null.
+        %\end{itemize}
         
-        Uniqueness of primary key values to each tuple must always hold.
 
     \end{CheatsheetEntryFrame}
 
@@ -346,6 +359,26 @@
         \end{psmallindent}
 
     \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{The Null Value} \MarkExtendedRelAlg
+
+        The null value is a special value that may be part of an attribute domain.
+
+        We will use the symbol $\relnullvalue$ to represent null in this cheatsheet.
+
+        While the null value is an important part of the relational model, \myul{it is not a core part of relational algebra}.
+
+    \end{CheatsheetEntryFrame}
+
+    %\begin{CheatsheetEntryFrame}
+
+    %    \CheatsheetEntryTitle{Constraints} {\scriptsize \textsc{(Brief Overview)}}
+
+    %    TODO: Consider doing a section on this!
+
+    %\end{CheatsheetEntryFrame}
 
 \end{multicols}
 \newpage
@@ -935,7 +968,7 @@
 
         Similar to \textit{theta join}, except in the result relation, we also include tuples that don't have matches in the join.
 
-        These unmatched tuples get padded with null values (written $\relnullvalue$ here) in the result relation.
+        These unmatched tuples get padded with null values in the result relation.
 
         %For each definition below, we consider two relations $r(R)$ and $s(S)$, and an arbitrary matching criterion $c$.
         %% Leaving this out for space reasons... but I think I'd rather keep it?
@@ -1001,11 +1034,6 @@
             \footnotesize%
             \textsc{Full Outer}\\[0.5ex]
             \RelAlgVennDiagram{mycontrastred}{mycontrastred}{mycontrastred}
-        }
-
-        \vspace{\TextExtraSkip}
-        \textbf{\color{mycontrastred}
-            Note: The existence and definitions of null values and outer join in relational algebra is not particularly agreed upon.
         }
 
         \SubsectionFrameAddSeparation
@@ -1179,24 +1207,34 @@
                         & \multicolumn{1}{c}{$C$}
                         & \multicolumn{1}{c|}{$D$}
                         \\ \hline\hline
-                    $a_1$ & $b_1$ & $c_1$ & $d_1$ \\
-                    $a_2$ & $b_2$ & $c_2$ & $d_2$ \\
-                    $a_3$ & $b_3$ & $c_3$ & $d_3$ \\ \hline
+                    $a_1$ & $2$ & $6$ & $d_1$ \\
+                    $a_2$ & $8$ & $9$ & $d_2$ \\
+                    $a_3$ & $3$ & $2$ & $d_3$ \\ \hline
                 \end{tabular}
                 \qquad \qquad
                 \begin{tabular}{|cc|}
-                    \multicolumn{2}{l}{\normalsize $\relproject_{B, D}{(r)}$}
+                    \multicolumn{2}{l}{\normalsize $\relproject_{A, B + C}{(r)}$}
                         \\ \hline
-                    \multicolumn{1}{|c}{$B$}
-                        & \multicolumn{1}{c|}{$D$}
+                    \multicolumn{1}{|c}{$A$}
+                        & \multicolumn{1}{c|}{$B + C$}
                         \\ \hline\hline
-                    $b_1$ & $d_1$ \\
-                    $b_2$ & $d_2$ \\
-                    $b_3$ & $d_3$ \\ \hline
+                    $a_1$ & $8$ \\
+                    $a_2$ & $17$ \\
+                    $a_3$ & $5$ \\ \hline
                 \end{tabular}
             }
         \end{center}
         \end{RelAlgSubsection}
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Functional Dependency}
 
     \end{CheatsheetEntryFrame}
     

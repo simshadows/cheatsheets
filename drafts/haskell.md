@@ -455,7 +455,7 @@ tellFirstLetter ""      = error "Can't call on an empty string."
 tellFirstLetter x @ (a:_) = "The first letter of " ++ x ++ " is " ++ [a]
 ```
 
-### 3.4) Basic Control Flow: If, Cases, and Guards
+### 3.3) Basic Control Flow: If, Cases, and Guards
 
 If-statements work as you'd expect:
 
@@ -492,7 +492,7 @@ sayMe x = case x of 1 -> "One!"
                     _ -> "Not between 1 and 5"
 ```
 
-### 3.3) `where` and `let`
+### 3.4) `where` and `let`
 
 `where` allows you to bind to variables for the scope of the whole function. Where constructs are also subject to pattern-matching rules:
 
@@ -531,4 +531,348 @@ quicksort (x:xs) =
         biggerSorted  = quicksort [a | a <- xs, a > x]
     in  smallerSorted ++ [x] ++ biggerSorted
 ```
+
+## 4) Higher-order Functions
+
+### 4.1) Currying
+
+In reality, seemingly multi-argument functions in Haskell are actually single-argument functions. This process of breaking a multi-argument function down like this is called *currying*.
+
+As a simple example, Consider this function:
+
+```Haskell
+multiplyThree :: (Num a) => a -> a -> a -> a
+multiplyThree x y z = x * y * z
+```
+
+The following calls are equivalent:
+
+```Haskell
+multiplyThree 2 3 4
+(multiplyThree 2) 3 4
+(multiplyThree 2 3) 4
+((multiplyThree 2) 3) 4
+```
+
+Inspecting the returned types in GHCI:
+
+```Haskell
+ghci> :t multiplyThree
+multiplyThree :: Num a => a -> a -> a -> a
+
+ghci> :t multiplyThree 2
+multiplyThree 2 :: Num a => a -> a -> a
+
+ghci> :t multiplyThree 2 3
+multiplyThree 2 3 :: Num a => a -> a
+
+ghci> :t multiplyThree 2 3 4
+multiplyThree 2 3 4 :: Num a => a
+```
+
+We can see here that calling with fewer than three arguments returns another function!
+
+To clarify what the `->` notation is doing, we can rewrite the `multiplyThree` type declaration using parentheses:
+
+```Haskell
+multiplyThree :: (Num a) => a -> (a -> (a -> a))
+```
+
+Infix functions can also be partially applied. This syntax is called sectioning, and it allows us to specify which argument is missing by changing the order:
+
+```Haskell
+divideNumberByTen :: (Floating a) => a -> a  
+divideNumberByTen = (/10)
+
+divideTenByNumber :: (Floating a) => a -> a  
+divideTenByNumber = (10/)
+```
+
+However, subtraction is the weird exception. `(-4)` will not result in sectioning the subtraction operator, and will instead return negative 4. Instead, we use `(subtract 4)`
+
+Currying is useful because *partially applied functions* (i.e. calling functions with incomplete arguments) can be a quick way of defining new functions.
+
+*For simplicity, we will still continue to call multi-argument functions as multi-argument functions.*
+
+### 4.2) Explicit Higher-Order Functions
+
+We can also define functions to explicitly take functions as parameters by using parentheses.
+
+Example:
+
+```Haskell
+myZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]  
+myZipWith _ [] _ = []  
+myZipWith _ _ [] = []  
+myZipWith f (x:xxx) (y:yyy) = (f x y) : myZipWith f xxx yyy
+```
+
+We can call it like so:
+
+```Haskell
+myZipWith (+) [2,3,4] [10,100,1000]  --->  [12,103,1004]
+```
+
+*(I'm going to assume you're already familiar with the basics of higher-order functions from other languages like Python. If not, you can refer to [this LYAHFGG chapter](http://learnyouahaskell.com/higher-order-functions#higher-orderism) for a better introduction.)*
+
+### 4.3) Lambdas
+
+Lambdas are anonymous functions. Or in other words, they're for when we need to define a function, but don't want to have to go through the lengthy syntax to name it.
+
+For example, rather than:
+
+```Haskell
+doubleUs x y = x*2 + y*2
+
+doSomething a b = zipWith (doubleUs) a b
+```
+
+If we don't really care to define `doubleUs`, we can just define it as a lambda using the `\` syntax:
+
+```Haskell
+doSomething a b = zipWith (\ x y -> x*2 + y*2) a b
+```
+
+Lambdas can also pattern match tuples:
+
+```Haskell
+map (\(a,b) -> a + b) [(1,2),(3,5),(6,3),(2,6),(2,5)]  --->  [3,8,9,8,7]
+```
+
+Lambdas will extend to the right, so they're usually defined with parentheses.
+
+For example, these two definitions are equivalent:
+
+```Haskell
+addThree x y z = x + y + z
+addThree = \x -> \y -> \z -> x + y + z
+```
+
+### 4.4) Some Common Higher-Order Functions
+
+#### 4.4.1) Map
+
+Consider the following example from earlier:
+
+```Haskell
+[x*2 | x <- [1..10]]
+```
+
+This pattern of applying something to every element of a list is implemented in the `map` function.
+
+Our example can be rewritten as:
+
+```Haskell
+map (*2) [1..10]
+```
+
+#### 4.4.2) Filter
+
+Consider the following example:
+
+```Haskell
+[x | x <- [1,5,3,2,1,6,4,3,2,1], x > 3]
+```
+
+This pattern of applying a predicate to decide when to include an element is implemented in the `filter` function.
+
+Our example can be rewritten as:
+
+```Haskell
+filter (>3) [1,5,3,2,1,6,4,3,2,1]
+```
+
+#### 4.4.3) Folds
+
+Consider the following example from earlier:
+
+```Haskell
+mySum :: (Num a) => [a] -> a  
+mySum []    = 0  
+mySum (e:lst) = e + mySum lst
+```
+
+This `(e:lst)` pattern is a fairly common pattern called a *fold*, and is implemented in several built-in functions.
+
+```Haskell
+mySum1 :: (Num a) => [a] -> a  
+mySum1 x = foldl (\ acc y -> acc + y) 0 x
+
+mySum2 :: (Num a) => [a] -> a  
+mySum2 x = foldr (\ y acc -> acc + y) 0 x
+
+mySum3 :: (Num a) => [a] -> a  
+mySum3 x = foldl1 (+) x
+
+mySum4 :: (Num a) => [a] -> a  
+mySum4 = foldl1 (+)
+```
+
+`mySum1` uses `foldl`, which starts applying the lambda from the left.
+
+`mySum2` uses `foldr`, which starts applying the lambda from the right. Do note the swapped arguments in the lambda!
+
+`mySum3` uses `foldl1`, which assumes the final element seen is the starting value. `foldr1` is the opposite-side equivalent.
+
+`mySum4` also uses `foldl1`, but is written more succinctly.
+
+#### 4.4.4) Scans
+
+The function `scanl` is like `foldl`, except `scanl` instead returns the intermediate accumulator states as a list:
+
+```Haskell
+scanl (+) 0 [3,5,2,1]  --->  [0,3,8,10,11]
+scanr (+) 0 [3,5,2,1]  --->  [11,8,3,1,0]
+
+scanl1 (+) [3,5,2,1]   --->  [3,8,10,11]
+scanr1 (+) [3,5,2,1]   --->  [11,8,3,1]
+```
+
+#### 4.4.5) Take-While
+
+Simply takes elements until the predicate is fulfilled:
+
+```Haskell
+takeWhile (<10) [1..]  --->  [1,2,3,4,5,6,7,8,9]
+```
+
+### 4.5) The Function Application Operator
+
+The function application operator `$` can be defined as:
+
+```Haskell
+($) :: (a -> b) -> a -> b
+f $ x = f x
+```
+
+All it does is apply an argument to a function.
+
+However, this operator is useful because it takes lower precedence than normal function application (i.e. just using spaces).
+
+Consider the following example:
+
+```Haskell
+sum (filter (> 10) (map (*2) [2..10]))
+```
+
+The parentheses are necessary to ensure correct grouping of functions and their arguments.
+
+Using `$`, we can rewrite it with less parentheses-nesting:
+
+```Haskell
+sum $ filter (> 10) $ map (*2) [2..10]
+```
+
+`$` is also useful for treating function application like a function:
+
+```Haskell
+map ($3) [(4+), (10*), (^2), sqrt]  --->  [7.0,30.0,9.0,1.7320508075688772]
+```
+
+### 4.6) The Function Composition Operator
+
+The function composition operator `.` works like the mathematical notation for function composition `(f∘g)(x) ≡ f(g(x))`.
+
+The operator can be defined as:
+
+```Haskell
+(.) :: (b -> c) -> (a -> b) -> a -> c
+f . g = \x -> f (g x)
+```
+
+Consider the following examples are equivalent:
+
+```Haskell
+map (\xs -> negate (sum (tail xs))) [[1..5],[3..6],[1..7]]
+map (negate . sum . tail)           [[1..5],[3..6],[1..7]]
+```
+
+Multi-argument functions can work here using partial application. For example, these two are equivalent:
+
+```Haskell
+sum (replicate 5 (max 6.7 8.9))
+(sum . replicate 5 . max 6.7) 8.9
+```
+
+### 4.7) Pointfree Style
+
+If we omit the explicit arguments, a definition is said to be in *pointfree style*.
+
+For example:
+
+```Haskell
+mySum :: (Num a) => [a] -> a     
+mySum = foldl1 (+)
+```
+
+However, consider the following function composition NOT written in pointfree style:
+
+```Haskell
+doSomething x = ceiling (negate (tan (cos (max 50 x))))
+```
+
+To write it in pointfree style, we use the function composition operator:
+
+```Haskell
+doSomething = ceiling . negate . tan . cos . max 50
+```
+
+## 5) Modules
+
+### 5.1) Importing from the Haskell Standard Library
+
+To import all of the `Data.List` library functions into the global namespace:
+
+```Haskell
+import Data.List
+```
+
+To import just the `nub` and `sort` functions into the global namespace:
+
+```Haskell
+import Data.List (num, sort)
+```
+
+To import all `Data.List` functions into the global namespace except for `nub` and `sort`:
+
+```Haskell
+import Data.List hiding (nub, sort)
+```
+
+One possible issue when importing is name clashes. For example, the `filter` function from `Data.Map` will clash with the `filter` function from `Prelude` (the module that is automatically imported into all Haskell modules).
+
+We can resolve this with:
+
+```Haskell
+import qualified Data.Map
+```
+
+However, to use the `filter` function from `Data.Map`, we'd have to write `Data.Map.filter`.
+
+As an alternative, we can rename the import:
+
+```Haskell
+import qualified Data.Map as M
+```
+
+This allows us to instead write `M.filter` to call the `filter` function from `Data.Map`.
+
+### 5.2) The Haskell Standard Library
+
+Some of theh important libraries are:
+
+- `Data.List`: Stuff to do with lists.
+- `Data.Char`: Stuff to do with characters.
+- `Data.Map`: Deals with the dictionary data structure. These work like Python's dictionaries.
+- `Data.Set`: Deals with the set data structure. These work like Python's sets.
+
+Documentation can be found [here](https://downloads.haskell.org/~ghc/latest/docs/html/libraries/).
+
+LYAHFGG also provides a nice discussion [here](http://learnyouahaskell.com/modules).
+
+*(I'm assuming you're already familiar with the dictionary and set data structures, particularly if you come from a Python background. In which case, there's nothing for me to add. Just refer to the documentation as needed.)*
+
+### 5.3) User-Defined Modules
+
+*(I'll write this section later! I think I'll play around with user-defined modules first before writing about it.)*
 

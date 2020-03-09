@@ -6,6 +6,8 @@ I am using [*Learn You a Haskell for Great Good!* by Miran Lipovača](http://lea
 
 [Learn X in Y minutes](https://learnxinyminutes.com/docs/haskell/) is also a great resource that I refer to, and also tries to summarize the language in its own way.
 
+**This document is probably turning more into a crash course document for experienced programmers. I'll make a proper cheatsheet some time down the line.**
+
 ## 1) Hello, World!
 
 Write this to a file `helloworld.hs`:
@@ -169,6 +171,7 @@ List comprehensions:
 [x*2 | x <- [1..10]]                              --->  [2,4,6,8,10,12,14,16,18,20]
 [x*2 | x <- [1..10], x*2 >= 8]                    --->  [8,10,12,14,16,18,20]
 [x*2 | x <- [1..10], x*2 >= 8, x*2 < 16]          --->  [8,10,12,14]
+[y | x <- [1..10], let y = x*2, y >= 8, y < 16]   --->  [8,10,12,14]
 
 [x*y | x <- [1,2,3], y <- [1,10,100]]             --->  [1,10,100,2,20,200,3,30,300]
 [x*y | x <- [1,2,3], y <- [1,10,100], x /= y]     --->  [10,100,2,20,200,3,30,300]
@@ -198,15 +201,16 @@ Tuples are **fixed-length** data structures, and are **inhomogeneous** (i.e. ele
 
 While lists are written with brackets `[` and `]`, tuples are written with parentheses `(` and `)`.
 
-A mixed example involving tuples:
+A mixed examples involving tuples:
 
 ```Haskell
 numberNames = [(1,"One"), (2,"Two"), (3,"Three"), (4,"Four"), (5,"Five")]
 
-[(snd x) | x <- numberNames, (fst x) > 2]  --->  ["Three","Four","Five"]
+[snd x | x <- numberNames, fst x > 2]  --->  ["Three","Four","Five"]
+[y | (x,y) <- numberNames, x > 2]      --->  ["Three","Four","Five"]
 ```
 
-`fst` takes the first component of the tuple, and `snd` takes the second component. These two built-in functions only work on 2-tuples.
+`fst` and `snd` are built-in functions that only work on 2-tuples.
 
 Tuples can also be empty:
 
@@ -315,7 +319,6 @@ doubleMe    x     = x + x
 doubleUs    x y   = x*2 + y*2
 doubleUs'   x y z = x*2 + y*2 + z*2
 doubleThem  y     = [x*2 | x <- y]
-doSomething x     = (if x > 100 then x else x*2) + 1
 ```
 
 Calling the functions:
@@ -325,7 +328,6 @@ doubleMe    3        --->  6
 doubleUs    2 3      --->  10
 doubleUs'   1 2 3    --->  12
 doubleThem  [1..10]  --->  [2,4,6,8,10,12,14,16,18,20]
-doSomething 3        --->  7
 
 2 `doubleUs` 3       --->  10
 ```
@@ -344,9 +346,6 @@ doubleUs' :: Num a => a -> a -> a -> a
 
 ghci> :t doubleThem
 doubleThem :: Num t => [t] -> [t]
-
-ghci> :t doSomething
-doSomething :: (Num a, Ord a) => a -> a
 ```
 
 We can also try built-in functions:
@@ -379,3 +378,157 @@ addThree x y z = x + y + z
 ```
 
 The right-most type in `Int -> Int -> Int -> Int` is the return type. *(We will see why it's done this way later!)*
+
+### 3.2) Pattern Matching
+
+You can define separate function bodies for different patterns:
+
+```Haskell
+sayMe :: (Integral a) => a -> String
+sayMe 1 = "One!"
+sayMe 2 = "Two!"
+sayMe 3 = "Three!"
+sayMe 4 = "Four!"
+sayMe 5 = "Five!"
+sayMe x = "Not between 1 and 5"
+
+sayMeButBroken :: (Integral a) => a -> String
+sayMeButBroken 1 = "One!"
+sayMeButBroken 2 = "Two!"
+sayMeButBroken x = "Not between 1 and 5"
+sayMeButBroken 3 = "Three!"
+sayMeButBroken 4 = "Four!"
+sayMeButBroken 5 = "Five!"
+
+sayMeButLimited :: (Integral a) => a -> String
+sayMeButLimited 1 = "One!"
+sayMeButLimited 2 = "Two!"
+```
+
+Function calls with effectively check the definitions from top to bottom for the first definition with matching parameters. Hence:
+
+```Haskell
+sayMe           4  --->  "Four!"
+sayMeButBroken  4  --->  "Not between 1 and 5"
+sayMeButLimited 4  --->  (raises an exception)
+```
+
+Tuple expansion is also another form of pattern matching (and in fact, we've already seen a similar thing in an earlier example!):
+
+```Haskell
+addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
+addVectors (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
+
+myFst :: (a, b) -> a  
+myFst (x, _) = x  
+  
+mySnd :: (a, b) -> b  
+mySnd (_, y) = y  
+```
+
+Lists can also be used for pattern matching:
+
+```Haskell
+myHead :: [a] -> a  
+myHead []    = error "Can't call on an empty list."
+myHead (x:_) = x
+
+firstTwo :: [a] -> (a, a)
+firstTwo []      = error "Can't call on an empty list."
+firstTwo [_]     = error "Must have at least two items in the list."
+firstTwo (x:y:_) = (x,y)
+
+myLen :: (Num b) => [a] -> b  
+myLen []    = 0  
+myLen (_:x) = 1 + myLen x
+
+mySum :: (Num a) => [a] -> a  
+mySum []    = 0  
+mySum (e:lst) = e + mySum lst
+```
+
+`@` syntax can be used to keep a reference to the original object:
+
+```Haskell
+tellFirstLetter :: String -> String  
+tellFirstLetter ""      = error "Can't call on an empty string."
+tellFirstLetter x @ (a:_) = "The first letter of " ++ x ++ " is " ++ [a]
+```
+
+### 3.4) Basic Control Flow: If, Cases, and Guards
+
+If-statements work as you'd expect:
+
+```Haskell
+doSomething x = (if x > 100 then x else x*2) + 1
+```
+
+Guards are effectively chained if-statements, checking each condition sequentially and stopping on the first true condition.
+
+For the example below, calling `bmiTell 85 1.90` will make `bmi` equal approximately 23.5. We check the first guard condition `bmi <= skinny`, but it's false, so we move to the next one. Since `bmi <= normal` is true, we stop there and execute that condition's expression.
+
+```Haskell
+bmiTell :: (RealFloat a) => a -> a -> String  
+bmiTell weight height  
+    | bmi <= skinny = "You're underweight, you emo, you!"  
+    | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"  
+    | bmi <= fat    = "You're fat! Lose some weight, fatty!"  
+    | otherwise     = "You're a whale, congratulations!"  
+    where bmi    = weight / (height ^ 2)
+          skinny = 18.5  
+          normal = 25.0  
+          fat    = 30.0
+```
+
+Cases are a pattern-matching construct following the same rules as function parameter pattern matching:
+
+```
+sayMe :: (Integral a) => a -> String
+sayMe x = case x of 1 -> "One!"
+                    2 -> "Two!"
+                    3 -> "Three!"
+                    4 -> "Four!"
+                    5 -> "Five!"
+                    _ -> "Not between 1 and 5"
+```
+
+### 3.3) `where` and `let`
+
+`where` allows you to bind to variables for the scope of the whole function. Where constructs are also subject to pattern-matching rules:
+
+```Haskell
+initials :: String -> String -> String  
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."  
+    where (f:_) = firstname  
+          (l:_) = lastname
+```
+
+`let` allows you to bind to variables more locally. Also, `let` is an expression you can use in-line, while `where` isn't.
+
+```Haskell
+cylinder :: (RealFloat a) => a -> a -> a  
+cylinder r h = 
+    let sideArea = 2 * pi * r * h  
+        topArea = pi * r ^2  
+    in  sideArea + 2 * topArea
+```
+
+*(This isn't a very good example. I should try to come up with something better...)*
+
+### 3.5) Recursion
+
+Factorial and quicksort are two classic examples of recursion:
+
+```Haskell
+factorial :: (Integral a) => a -> a  
+factorial 0 = 1  
+factorial n = n * factorial (n - 1)
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) =
+    let smallerSorted = quicksort [a | a <- xs, a <= x]
+        biggerSorted  = quicksort [a | a <- xs, a > x]
+    in  smallerSorted ++ [x] ++ biggerSorted
+```
+

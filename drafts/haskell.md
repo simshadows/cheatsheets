@@ -2,11 +2,15 @@
 
 I'm still learning Haskell. This cheatsheet was written in an attempt to summarize the important bits as I go.
 
-I am using [*Learn You a Haskell for Great Good!* by Miran Lipovača](http://learnyouahaskell.com/) to learn the concepts, then applying them on [a personal project](https://github.com/simshadows/mhwi-build-search-hs-rewrite) to see the concepts at work. **Many of these examples will come straight from this book, because I'm lazy.**
-
-[Learn X in Y minutes](https://learnxinyminutes.com/docs/haskell/) is also a great resource that I refer to, and also tries to summarize the language in its own way.
-
 **This document is probably turning more into a crash course document for experienced programmers. I'll make a proper cheatsheet some time down the line.**
+
+## 0) Sources Used
+
+- I am primarily using [*Learn You a Haskell for Great Good!* by Miran Lipovača](http://learnyouahaskell.com/). **Many of these examples will come straight from this book, because I'm lazy.**
+
+- *Haskell Programming from First Principles* by Christopher Allen and Julie Moronuki is an alternative resource I am also using. I primarily used it for Chapter 11 on Algebraic Datatypes since LYAHFGG is a bit unclear on the topic.
+
+- [*Learn X in Y minutes*](https://learnxinyminutes.com/docs/haskell/) is also a great resource that I refer to, and also tries to summarize the language in its own way.
 
 ## 1) Hello, World!
 
@@ -875,4 +879,476 @@ LYAHFGG also provides a nice discussion [here](http://learnyouahaskell.com/modul
 ### 5.3) User-Defined Modules
 
 *(I'll write this section later! I think I'll play around with user-defined modules first before writing about it.)*
+
+## 6) Types
+
+*There's a lot going on here at once, so I'll try to break it down with a series of examples.*
+
+### 6.1) Example #1: `Bool`
+
+We can query GHCI about the `Bool` type:
+
+```Haskell
+ghci> :info Bool
+data Bool = False | True        -- Defined in ‘GHC.Types’
+instance Bounded Bool -- Defined in ‘GHC.Enum’
+instance Enum Bool -- Defined in ‘GHC.Enum’
+instance Eq Bool -- Defined in ‘GHC.Classes’
+instance Ord Bool -- Defined in ‘GHC.Classes’
+instance Read Bool -- Defined in ‘GHC.Read’
+instance Show Bool -- Defined in ‘GHC.Show’
+```
+
+And here, we observe how the `Bool` type is actually defined:
+
+```Haskell
+data Bool = False | True
+```
+
+Let's break this down:
+
+- The `data` keyword indicates that this is indeed a type declaration, and it comes in two parts, separated by the `=`.
+
+- The left side is the *type constructor*. This one is named `Bool`.
+
+- The right side lists *data constructors* separated by `|`. We have two data constructors `False` and `True`.
+
+### 6.2) Example #2: `YeahNah`
+
+```Haskell
+data NahYeah = Nah | Yeah | Potato
+
+sayYeah :: NahYeah -> String
+sayYeah x = case x of Yeah    -> "nah, yeah"
+                      Nah     -> "yeah, nah"
+                      Potato  -> "what?"
+```
+
+Calling this function works like you'd expect!
+
+```Haskell
+sayYeah Yeah    --->  "nah, yeah"
+sayYeah Nah     --->  "yeah, nah"
+sayYeah Potato  --->  "what?"
+```
+
+Let's break this down:
+
+- This should hopefully prove that there isn't anything particularly special about `True` and `False`.
+
+- It's not obvious yet, but for our examples so far for `Bool` and `NahYeah`, the type and data constructors have no arguments.
+
+### 6.3) Example #3: `Shape`
+
+Let's suppose we define a circle with three numbers:
+
+- the midpoint x-coordinate,
+- the midpoint y-coordinate, and
+- the circle's radius.
+
+And similarly, let's suppose we define a rectangle with four numbers:
+
+- the bottom-left corner's x-coordinate,
+- the bottom-left corner's y-coordinate,
+- the top-right corner's x-coordinate, and
+- the top-right corner's y-coordinate.
+
+With these two ideas, we can define the following:
+
+```Haskell
+data Shape = Circle Double Double Double | Rectangle Double Double Double Double
+
+surface :: Shape -> Double
+surface (Circle    _  _  r    ) = pi * r ^ 2
+surface (Rectangle x1 y1 x2 y2) = (abs $ x2 - x1) * (abs $ y2 - y1)
+```
+
+Calling this function:
+
+```Haskell
+surface $ Circle 10 20 10        --->  314.1592653589793
+surface $ Circle 0 0 10          --->  314.1592653589793
+surface $ Rectangle 0 0 100 100  --->  10000.0
+```
+
+Now, our data constructors `Circle` and `Rectangle` have arguments!
+
+And in fact, `Circle` and `Rectangle` are functions that return a `Shape`:
+
+```Haskell
+ghci> :t Circle
+Circle :: Double -> Double -> Double -> Shape
+
+ghci> :t Rectangle
+Rectangle :: Double -> Double -> Double -> Double -> Shape
+```
+
+However, inspecting `Shape`'s type doesn't work...
+
+```Haskell
+ghci> :t Shape
+<interactive>:1:1: error: Data constructor not in scope: Shape
+```
+
+### 6.4) Returning back to examples #1 and #2...
+
+Let's also try inspecting the data constructors of `Bool` and `YeahNah`:
+
+```Haskell
+ghci> :t True
+True :: Bool
+
+ghci> :t False
+False :: Bool
+
+ghci> :t Yeah
+Yeah :: NahYeah
+
+ghci> :t Nah
+Nah :: NahYeah
+
+ghci> :t Potato
+Potato :: NahYeah
+```
+
+However, inspecting the type constructors doesn't work...
+
+```Haskell
+ghci> :t Bool
+<interactive>:1:1: error: Data constructor not in scope: Bool
+
+ghci> :t NahYeah
+<interactive>:1:1: error: Data constructor not in scope: NahYeah
+```
+
+### 6.5) Example #4: `Coordinate3D`
+
+Suppose instead of having two data constructors like in `Shape`, we instead just have one?
+
+Let's consider the following definitions.
+
+```Haskell
+data Coordinate3D = Coordinate3D Double Double Double
+
+xCoordinate :: Coordinate3D -> Double
+xCoordinate (Coordinate3D x _ _) = x
+
+yCoordinate :: Coordinate3D -> Double
+yCoordinate (Coordinate3D _ y _) = y
+
+zCoordinate :: Coordinate3D -> Double
+zCoordinate (Coordinate3D _ _ z) = z
+```
+
+We can apply it like this:
+
+```Haskell
+ghci> obj = Coordinate3D 4 5 6
+
+ghci> xCoordinate obj
+4.0
+
+ghci> yCoordinate obj
+5.0
+
+ghci> zCoordinate obj
+6.0
+```
+
+This clearly allows us to define a type that's a composite of other types!
+
+### 6.6) Example #5: `Coordinate4D`
+
+Turns out, the *named fields* pattern we used in `Coordinate3D` is a very common pattern. However, writing out all the field access functions like that can get very clunky.
+
+Instead, we can use *record syntax* to automatically define field access for us:
+
+```Haskell
+data Coordinate4D = Coordinate4D {
+        xCoordinate :: Double,
+        yCoordinate :: Double,
+        zCoordinate :: Double,
+        wCoordinate :: Double
+    }
+```
+
+This works exactly the same:
+
+```Haskell
+ghci> obj = Coordinate3D 4 5 6 7
+
+ghci> xCoordinate obj
+4.0
+
+ghci> yCoordinate obj
+5.0
+
+ghci> zCoordinate obj
+6.0
+
+ghci> xCoordinate obj
+7.0
+```
+
+### 6.7) Example #6: `ThreeOfTheSameType`
+
+This will be a bit of a contrived example, but it should hopefully make the idea clear.
+
+Also, let's assume for now that `deriving (Show)` just magically implements the `Show` Typeclass.
+
+```Haskell
+data ThreeOfTheSameType a = ThreeOfTheSameType {
+        itemA :: a,
+        itemB :: a,
+        itemC :: a
+    } deriving (Show)
+```
+
+Now, let's try evaluating this type:
+
+```Haskell
+ghci> ThreeOfTheSameType 1 2 3
+ThreeOfTheSameType {itemA = 1, itemB = 2, itemC = 3}
+
+ghci> ThreeOfTheSameType True False True
+ThreeOfTheSameType {itemA = True, itemB = False, itemC = True}
+
+ghci> ThreeOfTheSameType 2 5 True
+<interactive>:48:20: error:
+    • No instance for (Num Bool) arising from the literal ‘2’
+    • In the first argument of ‘ThreeOfTheSameType’, namely ‘2’
+      In the expression: ThreeOfTheSameType 2 5 True
+      In an equation for ‘it’: it = ThreeOfTheSameType 2 5 True
+```
+
+When we attempt to evaluate `ThreeOfTheSameType` with mixed types, it just doesn't work.
+
+Let's also try inspecting some types...
+
+```Haskell
+ghci> ThreeOfTheSameType 1 2 3
+ThreeOfTheSameType 1 2 3 :: Num a => ThreeOfTheSameType a
+
+ghci> ThreeOfTheSameType 4.5 6.7 8.9
+ThreeOfTheSameType 4.5 6.7 8.9 :: Fractional a => ThreeOfTheSameType a
+
+ghci> True False False
+ThreeOfTheSameType True False False :: ThreeOfTheSameType Bool
+```
+
+All three of these are different types! The first is `Num a => ThreeOfTheSameType a`, the second is `Fractional a => ThreeOfTheSameType a`, and the third is `ThreeOfTheSameType Bool`. The *type variable* `a` in `ThreeOfTheSame a` allows us to make many types from the same type constructor! This is called *parametric polymorphism*.
+
+### 6.8) Example #7: `[]`
+
+Querying GHCI about `[]`:
+
+```Haskell
+Prelude> :info []
+data [] a = [] | a : [a]        -- Defined in ‘GHC.Types’
+instance Eq a => Eq [a] -- Defined in ‘GHC.Classes’
+instance Monad [] -- Defined in ‘GHC.Base’
+instance Functor [] -- Defined in ‘GHC.Base’
+instance Ord a => Ord [a] -- Defined in ‘GHC.Classes’
+instance Read a => Read [a] -- Defined in ‘GHC.Read’
+instance Show a => Show [a] -- Defined in ‘GHC.Show’
+instance Applicative [] -- Defined in ‘GHC.Base’
+instance Foldable [] -- Defined in ‘Data.Foldable’
+instance Traversable [] -- Defined in ‘Data.Traversable’
+instance Monoid [a] -- Defined in ‘GHC.Base’
+```
+
+We observe that the `[]` type is defined as:
+
+```Haskell
+data [] a = [] | a : [a]
+```
+
+Let's try to define our own weird list type to figure out what's going on.
+
+### 6.9) Example #8: `MyList`
+
+We can define our custom list type as follows:
+
+```Haskell
+data MyList a = Empty | Cons a (MyList a) deriving (Show)
+```
+
+To construct our list:
+
+```
+ghci> Empty
+Empty
+
+ghci> Cons 1 Empty
+Cons 1 Empty
+
+ghci> Cons 2 (Cons 1 Empty)
+Cons 2 (Cons 1 Empty)
+
+ghci> Cons 3 (Cons 2 (Cons 1 Empty))
+Cons 3 (Cons 2 (Cons 1 Empty))
+```
+
+Inspecting their types:
+
+```
+ghci> :t Empty
+Empty :: MyList a
+
+ghci> :t Cons 1 Empty
+Cons 1 Empty :: Num a => MyList a
+
+ghci> :t Cons 2 (Cons 1 Empty)
+Cons 2 (Cons 1 Empty) => MyList a
+
+ghci> :t Cons 3 (Cons 2 (Cons 1 Empty))
+Cons 3 (Cons 2 (Cons 1 Empty)) :: Num a => MyList a
+```
+
+Let's break this down:
+
+- With the odd exception of `Empty`, the other three are of the same type `MyList Num`.
+
+- What you see here is basically what the built-in `[]` type does, logically. The main difference is that `[]` *sugars* the syntax, allowing you to write `[1,2,3,4]` instead of `4:3:2:1:[]`.
+
+- `[]` and `MyList` are our first examples of *recursive datastructures*.
+
+### 6.10) Example #9: `Tree`
+
+To drive home the concept of a recursive data structure, here's an implementation of a [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree):
+
+```Haskell
+data Tree a = NullNode | Node a (Tree a) (Tree a)
+```
+
+*I don't think I need to explain what you can do with this data structure. I will assume you've already covered it in other programming languages. If you're interested, just check out [the LYAHFGG chapter](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#recursive-data-structures).*
+
+### 6.11) Example #10: `String`
+
+We can query GHCI about the `String` type:
+
+```
+ghci> :info String
+type String = [Char]    -- Defined in ‘GHC.Base’
+```
+
+String is just a *type synonym* of `[Char]`!
+
+### 6.12) Example 11: `PhoneBook`
+
+Using this idea of type synonyms, we can do something like this:
+
+```Haskell
+type PhoneNumber = String
+type Name = String
+type PhoneBook = [(Name,PhoneNumber)]
+```
+
+This sort of thing can be easier than read than simply using `[(String, String)]` (or even `[([Char], [Char])]`).
+
+Alternatively, we could use the `Map` type if we wanted to use a dictionary instead of a list:
+
+```Haskell
+import qualified Data.Map as M
+
+type PhoneNumber = String
+type Name = String
+type PhoneBook = M.Map Name PhoneNumber
+```
+
+## 7) Typeclasses
+
+### 7.1) `deriving`
+
+Consider again our `MyList` example from earlier:
+
+```Haskell
+data MyList a = Empty | Cons a (MyList a) deriving (Show)
+```
+
+The `deriving` keyword automatically implements the `Show` typeclass for us, provided that `a` is an instance of `Show`.
+
+### 7.2) Defining Typeclasses
+
+The `Eq` typeclass may be defined like this:
+
+```
+class Eq a where
+    (==) :: a -> a -> Bool
+    (/=) :: a -> a -> Bool
+    x == y = not (x /= y)
+    x /= y = not (x == y)
+```
+
+Here, we observe:
+
+- Type `a` is to become an *instance* of the class `Eq`.
+
+- `a` must support two operators: `==` and `/=` operators.
+
+- The class also provides *mutually recursive* default definitions for `==` and `/=`. In this case, you only need to define either `==` or `/=`, and missing definition will be generated automatically.
+
+Let's go back to our `NahYeah` example:
+
+```Haskell
+data NahYeah = Nah | Yeah | Potato
+```
+
+As it is, we can't simply use the `==` operator:
+
+```
+ghci> Nah == Yeah
+<interactive>:19:1: error:
+    • No instance for (Eq NahYeah) arising from a use of ‘==’
+      In an equation for ‘it’: it = Nah == Yeah
+```
+
+What we need to do is write an *instance declaration*:
+
+```Haskell
+instance Eq NahYeah where
+    Nah    == Nah    = True
+    Yeah   == Yeah   = True
+    Potato == Potato = True
+    _      == _      = False
+```
+
+Now, we can test for equality:
+
+```
+ghci> Nah == Yeah
+False
+
+ghci> Yeah == Yeah
+True
+```
+
+### 7.3) Defining Typeclasses with Parametric Polymorphism
+
+Consider the following type declaration:
+
+```Haskell
+data MyMaybe a = MyNothing | MyJust a
+```
+
+Again, we can't use the `==` on it as-is. We'd have to write an instance declaration to make `MyMaybe` an instance of `Eq`:
+
+```Haskell
+instance (Eq a) => Eq (MyMaybe a) where
+    MyJust x  == MyJust y  = (x == y)
+    MyNothing == MyNothing = True
+    _         == _         = False
+```
+
+Note the use of the class constraint `(Eq a) =>`, requiring `a` to be part of the `Eq` typeclass.
+
+### 7.4) More Defining Typeclasses!
+
+We can go crazy and implement typeclasses everywhere.
+
+*(I'll write a section on this later. But for now, just read [this section of LYAHFGG](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#a-yes-no-typeclass).)*
+
+## 8) Functors
+
+## 9) I/O
 

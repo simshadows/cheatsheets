@@ -2,7 +2,17 @@
 
 I'm still learning Haskell. This cheatsheet was written in an attempt to summarize the important bits as I go.
 
-**This document is probably turning more into a crash course document for experienced programmers. I'll make a proper cheatsheet some time down the line.**
+This cheatsheet will assume:
+
+- You're already experienced with an imperative language to the point of having used things like classes, inheritance, abstract classes, and ADTs.
+
+- I will also assume that your imperative languages have already introduced you to many programming concepts shared with functional programming, such as first-class functions, lambdas, list comprehension, and mapping.
+
+- You've already covered data structures to a fairly decent depth (probably through college courses, like I did). For example, you already know what a linked list, binary search tree, hash table, and dictionary are. I will make very strong assumptions that you can immediately identify a data structure when you see it!
+
+- You've already covered algorithms and recursion. For example, I assume you should already know what quicksort is (or can Google it and can refresh yourself within a minute). This should hopefully mean that I don't have to over-explain what's going on!
+
+**This document is probably turning more into a crash course document for experienced programmers. I'll just edit this down and make a proper cheatsheet some time down the line.**
 
 ## 0) Sources Used
 
@@ -863,7 +873,7 @@ This allows us to instead write `M.filter` to call the `filter` function from `D
 
 ### 5.2) The Haskell Standard Library
 
-Some of theh important libraries are:
+Some of the important libraries are:
 
 - `Data.List`: Stuff to do with lists.
 - `Data.Char`: Stuff to do with characters.
@@ -1055,7 +1065,7 @@ ghci> zCoordinate obj
 6.0
 ```
 
-This clearly allows us to define a type that's a composite of other types!
+This clearly allows us to define a type that's simply a composite of other types!
 
 ### 6.6) Example #5: `Coordinate4D`
 
@@ -1199,7 +1209,7 @@ ghci> :t Cons 1 Empty
 Cons 1 Empty :: Num a => MyList a
 
 ghci> :t Cons 2 (Cons 1 Empty)
-Cons 2 (Cons 1 Empty) => MyList a
+Cons 2 (Cons 1 Empty) :: Num a => MyList a
 
 ghci> :t Cons 3 (Cons 2 (Cons 1 Empty))
 Cons 3 (Cons 2 (Cons 1 Empty)) :: Num a => MyList a
@@ -1221,7 +1231,7 @@ To drive home the concept of a recursive data structure, here's an implementatio
 data Tree a = NullNode | Node a (Tree a) (Tree a)
 ```
 
-*I don't think I need to explain what you can do with this data structure. I will assume you've already covered it in other programming languages. If you're interested, just check out [the LYAHFGG chapter](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#recursive-data-structures).*
+*I don't think I need to explain the binary search tree. I will assume you've already covered it in other programming languages. If you're interested, just check out [the LYAHFGG chapter](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#recursive-data-structures).*
 
 ### 6.11) Example #10: `String`
 
@@ -1344,11 +1354,245 @@ Note the use of the class constraint `(Eq a) =>`, requiring `a` to be part of th
 
 ### 7.4) More Defining Typeclasses!
 
-We can go crazy and implement typeclasses everywhere.
-
 *(I'll write a section on this later. But for now, just read [this section of LYAHFGG](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#a-yes-no-typeclass).)*
 
-## 8) Functors
+## 8) Kinds
 
-## 9) I/O
+*(I'll write a section on the concept of a kind later. I'll need to return to [the final section of LYAHFGG chapter 8](http://learnyouahaskell.com/making-our-own-types-and-typeclasses#kinds-and-some-type-foo) for this.)*
+
+## 9) Monoids
+
+*(TODO: Start this!)*
+
+## 10) Functors
+
+### 10.1) Functor Basics
+
+The built-in `Functor` typeclass can be defined as:
+
+```Haskell
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+```
+
+A good example to start with is the list type. List types are part of the `Functor` typeclass:
+
+```Haskell
+instance Functor [] where
+    fmap = map
+```
+
+All `fmap` does is map the inner objects to different inner objects using the `(a -> b)` argument.
+
+*(TODO: Figure out a better concise explanation. "Inner objects" makes sense in my head as I wrote it, but I don't think it would make sense to anybody else...)*
+
+We can also turn our `Tree` type from earlier into a Functor:
+
+```Haskell
+data Tree a = NullNode | Node a (Tree a) (Tree a)
+
+instance Functor Tree where
+    fmap f NullNode = NullNode
+    fmap f (Node x leftsub rightsub) = Node (f x) (fmap f leftsub) (fmap f rightsub)
+```
+
+Many other types of one type variable can be made into functors.
+
+### 10.2) Functor Laws
+
+These are required for something to be a valid functor:
+
+- **First Law:** `fmap id = id`
+
+- **Second law:** `fmap (f . g) = (fmap f) . (fmap g)`
+
+The identity function is simply a built-in function that returns its argument unchanged:
+
+```Haskell
+id x = x
+```
+
+Examples of functor law consistency:
+
+```
+ghci> fmap id [1,2,3]
+[1,2,3]
+
+ghci> fmap ((*100) . (+1)) [1,2,3]
+[200,300,400]
+
+ghci> (fmap (*100) . fmap (+1)) [1,2,3]
+[200,300,400]
+```
+
+### 10.3) An Unexpected Functor: `(->) r`
+
+Turns out that `->` is a type constructor that takes two type variables and evaluates to a function type, which is a concrete type:
+
+```
+ghci> :k (->)
+(->) :: * -> * -> *
+```
+
+We see it often written in `r -> a` form, but we can write it in prefix notation as `(->) r a` instead.
+
+Since `->` takes two type variables, we can partially apply it with `(->) r` to get a type constructor of one type variable. Thus, `->` can become a functor. But how is `fmap` implemented?
+
+Here's a possible implementation:
+
+```Haskell
+instance Functor ((->) r) where
+    fmap f g = (\x -> f (g x))
+```
+
+`fmap` maps inner objects to different inner objects. In this case, the inner objects in question corresponds to the missing side of `->`. When we rewrite it as `r ->`, the missing side is clearly the output of the function. So the inner objects are the output values of the function.
+
+*(TODO: This paragraph above makes no sense at all to anyone other than me. I'll need to figure out a better way to phrase it...)*
+
+So `fmap` for `(->) r` basically builds a function where the output of `g` is then mapped to a different value using the function `f`.
+
+So... it's basically just composition:
+
+```Haskell
+instance Functor ((->) r) where
+    fmap = (.)
+```
+
+Calling both `fmap` and `.` should make this obvious, especially when expressing `fmap` in infix notation:
+
+```
+ghci> fmap (*3) (+100) 1
+303
+
+ghci> (*3) `fmap` (+100) $ 1
+303
+
+ghci> (*3) . (+100) $ 1
+303
+```
+
+### 10.4) Lifting
+
+*(TODO: Consider writing a section on this. I think I'll need to learn more about it first. I'll need to return to the relevant parts of [LYAHFGG chapter 11](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#functors-redux).)*
+
+### 10.5) The `<$>` Operator
+
+Optionally, you can use the `<$>`, which is just `fmap` as an infix operator.
+
+`Control.Applicative`'s definition looks something like this:
+
+```Haskell
+(<$>) :: (Functor f) => (a -> b) -> f a -> f b  
+f <$> x = fmap f x
+```
+
+*(TODO: Use this operator as part of the applicative functors explanation?)*
+
+## 11) Applicative Functors
+
+### 11.1) Applicative Functors Basics
+
+The built-in `Applicative` typeclass can be defined as:
+
+```Haskell
+class (Functor f) => Applicative f where
+    pure :: a -> f a
+    (<*>) :: f (a -> b) -> f a -> f b
+```
+
+Recall that `fmap` has the type `(a -> b) -> f a -> f b`. The difference is that instead of a simple function `(a -> b)`, the `<*>` operator takes a functor of mapping functions (`f (a -> b)`, e.g. a list of `(a -> b)` functions).
+
+But how does it work?
+
+To start, let's have a look at two implementations:
+
+```Haskell
+data [] a = [] | a : [a]
+
+instance Applicative [] where
+    pure x = [x]
+    fs <*> xs = [f x | f <- fs, x <- xs]
+
+data Maybe a = Nothing | Just a
+
+instance Applicative Maybe where  
+    pure = Just  
+    Nothing <*> _ = Nothing  
+    (Just f) <*> something = fmap f something
+```
+
+To use `<*>` on the list, we might do something like this:
+
+```
+ghci> [(*2), (+3), (*4)] <*> pure 10
+[20,13,40]
+
+ghci> [(+),(*)] <*> [2,3,4] <*> pure 10
+[12,13,14,20,30,40]
+
+ghci> [(\ x y z -> x + y + z),(\ x y z -> x * y * z)] <*> [100,1000] <*> [2,3,4] <*> pure 10
+[112,113,114,1012,1013,1014,2000,3000,4000,20000,30000,40000]
+
+ghci> [(\ x y z -> x + y + z),(\ x y z -> x * y * z)] <*> [100,1000] <*> [5,6,7] <*> [2,3,4]
+[107,108,109,108,109,110,109,110,111,1007,1008,1009,1008,1009,1010,1009,1010,1011,1000,1500,2000,1200,1800,2400,1400,2100,2800,10000,15000,20000,12000,18000,24000,14000,21000,28000]
+```
+
+And to use `<*>` on `Maybe`, we might do something like this:
+
+```
+ghci> Just (+2) <*> Just 3
+Just 5
+
+ghci> pure (+2) <*> Just 3
+Just 5
+
+ghci> Just (+) <*> Just 2 <*> Just 3
+Just 5
+
+Just (\ x y z -> x + y * z) <*> Just 2 <*> Just 3 <*> Just 4
+Just 14
+
+Just (\ x y z -> x + y * z) <*> Just 2 <*> Just 3 <*> Nothing
+Nothing
+
+Just (\ x y z -> x + y * z) <*> Just 2 <*> Nothing <*> Just 4
+Nothing
+
+Nothing <*> Just 2 <*> Just 3 <*> Just 4
+Nothing
+```
+
+Interesting! So it seems to be taking a list of n-argument functions, which is then applied to the *product* of all arguments in the n lists that follow!
+
+And `pure` just puts a value in some default context.
+
+But to explain why `(Applicative f) => f (a -> b) -> f a -> f b` is the type of `<*>`...
+
+*(TODO: Explain that last sentence! This stuff is getting pretty abstract. I'm gonna have to go through the entirety of [LYAHFGG's applicative functors section](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#applicative-functors) all over again.)*
+
+### 11.2) Applicative Functor Laws
+
+These are required for something to be a valid functor:
+
+- **Identity Law:** `pure id <*> v = v`
+
+- **Homomorphism Law:** `pure f <*> pure x = pure (f x)`
+
+- **Interchange Law:** `u <*> pure y = pure ($ y) <*> u`
+
+- **Composition Law:** `pure (.) <*> u <*> v <*> w = u <*> (v <*> w)`
+
+*(TODO: Explain them?)*
+
+## 12) Monads
+
+*(TODO: Start this!)*
+
+## 13) I/O
+
+*(I'll write a section on this later. I'll need to return to [LYAHFGG Chapter 9](http://learnyouahaskell.com/input-and-output#hello-world), and [the bit about `IO` being Functors](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#functors-redux).)*
+
+## 14) Unit Testing
+
+*(TODO: Start this!)*
 

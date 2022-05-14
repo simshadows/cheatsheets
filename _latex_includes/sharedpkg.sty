@@ -513,6 +513,10 @@
 \newcommand\rhs{\textit{RHS}}
 \newcommand\lhs{\textit{LHS}}
 
+% The nothing-unit, for use when siunitx gives the "Found prefix part with no unit." error.
+% Use this sparingly!
+\DeclareSIUnit{\sinounit}{\relax}
+
 % \newcommand*\Let[2]{\State #1 $\gets$ #2}% THERE MUST BE A BETTER WAY!!!
 
 \DeclareMathOperator{\dom}{Dom} % Domain of a function

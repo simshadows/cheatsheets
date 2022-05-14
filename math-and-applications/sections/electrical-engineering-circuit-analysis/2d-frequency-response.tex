@@ -1,0 +1,133 @@
+\subsubsection{Frequency Response}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Power Gain (in Decibels)}
+
+        \begin{center}
+        \begin{circuitikz}
+            \path
+                (0,0)     coordinate (BoxBLref)
+                ++(2.0,0) coordinate (BoxBRref)
+
+                (BoxBLref)            ++(0, -0.5) coordinate (BoxBL)
+                (BoxBRref) ++(0, 1.5) ++(0,  0.5) coordinate (BoxTR)
+            ;
+            \draw
+                (BoxBLref)
+                to[short, -o] ++(-1.2,0)
+                ++(-1.0, 0)
+                to[open, v_<=$V_i$] ++(0, 1.5)
+                ++(1.0, 0)
+                to[short, o-, i=$I_i$] ++( 1.2,0)
+
+                (BoxBRref)
+                -- ++( 1.2,0)
+                to[R, l=$R_l$] ++(0, 1.5)
+                to[short, i<_=$I_o$] ++(-1.2,0)
+
+                (BoxBRref)
+                ++( 1.2,0)
+                ++(1.0, 0)
+                to[open, v<=$V_o$] ++(0, 1.5)
+                ++(-1.0, 0)
+            ;
+            \draw
+                (BoxBL) rectangle (BoxTR)
+            ;
+            %\draw
+            %    ($(BoxTR)!0.5!(BoxBL)$) coordinate (BoxMid)
+            %    (BoxMid) node[align=center] {some label}
+            %;
+            \draw[stealth-, line width=2.0]
+                (BoxBLref)
+                ++(-0.3,0.5)
+                -- ++(-0.7,0) node[midway,above] {$R_i$}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        \begin{align*}
+            G &= 10 \log_{10}\frac{P_o}{P_i} \,\unit{\decibel} \\
+            &= \parens*{20 \log_{10}\frac{V_o}{V_i} - 10 \log_{10}\frac{R_l}{R_i}} \,\unit{\decibel} \\
+            &= \parens*{20 \log_{10}\frac{I_o}{I_i} + 10 \log_{10}\frac{R_l}{R_i}} \,\unit{\decibel}
+        \end{align*}
+
+        If $R_l = R_i$ is assumed, then:
+        \begin{equation*}
+            G
+            = 20 \log_{10}\frac{V_o}{V_i} \,\unit{\decibel}
+            = 20 \log_{10}\frac{I_o}{I_i} \,\unit{\decibel}
+        \end{equation*}
+
+        \Todo{This section will need to be verified, and I need to find more information on when the ``$20 \log_{10}$" form is used.}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Bode Plots}
+
+        \Todo{This! (It's not too important for me right now, so I'll do it later.)}
+
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Frequency Response Transfer Function}
+
+        \begin{center}
+        \begin{circuitikz}
+            \path
+                (0,0)     coordinate (BoxLref)
+                ++(2.0,0) coordinate (BoxRref)
+
+                (BoxLref) ++(0, -0.7) coordinate (BoxBL)
+                (BoxRref) ++(0,  0.7) coordinate (BoxTR)
+            ;
+            \draw
+                (BoxLref)
+                to[short, i<_=$\mathbf{X}_i(\omega)$] ++(-1.2,0)
+                %% Alternative version
+                %to[short, i<_=$\mathbf{V}_i(\omega)$, l=$\mathbf{I}_i(\omega)$] ++(-1.2,0)
+
+                (BoxRref)
+                to[short, i=$\mathbf{X}_o(\omega)$] ++(1.2,0)
+                %% Alternative version
+                %to[short, i=$\mathbf{V}_o(\omega)$, l_=$\mathbf{I}_o(\omega)$] ++(1.2,0)
+            ;
+            \draw
+                (BoxBL) rectangle (BoxTR)
+            ;
+            \draw
+                ($(BoxTR)!0.5!(BoxBL)$) coordinate (BoxMid)
+                (BoxMid) node[align=center] {linear\\network}
+                ++(0, 1.0) node[align=center] {$\mathbf{H}(\omega)$}
+            ;
+            \draw
+                (BoxRref) ++(3.2,0) node[align=center] {$
+                    \displaystyle
+                    \boxed{ \mathbf{H}(\omega) = \frac{\mathbf{X}_o(\omega)}{\mathbf{X}_i(\omega)} }
+                $}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        In this context, a \textit{transfer function} is a frequency-dependent ratio of a phasor output to a phasor input.
+        \begin{align*}
+            \text{Voltage Gain:}        \qquad & \mathbf{H}(\omega) = \frac{\mathbf{V}_o(\omega)}{\mathbf{V}_i(\omega)} \\
+            \text{Current Gain:}        \qquad & \mathbf{H}(\omega) = \frac{\mathbf{I}_o(\omega)}{\mathbf{I}_i(\omega)} \\
+            \text{Transfer Impedance:}  \qquad & \mathbf{H}(\omega) = \frac{\mathbf{V}_o(\omega)}{\mathbf{I}_i(\omega)} \\
+            \text{Transfer Admittance:} \qquad & \mathbf{H}(\omega) = \frac{\mathbf{I}_o(\omega)}{\mathbf{V}_i(\omega)}
+        \end{align*}
+
+        (Note: Sometimes, $\mathbf{H}(j\omega)$ is used instead.)
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+

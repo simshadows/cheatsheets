@@ -1,0 +1,515 @@
+\subsubsection{Power}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Power in the Time Domain}
+        
+        If we consider an arbitrary load (potentially both resistive and reactive) where:
+        \begin{alignat*}{2}
+            v(t) &= V_m && \cos{(\omega t + \theta_v)} \qquad \qquad \theta = \theta_v - \theta_i \\
+            i(t) &= I_m && \cos{(\omega t + \theta_i)}
+        \end{alignat*}
+        The instantaneous power can be expressed as:
+        \begin{align*}
+            p(t)
+                &= v(t)\ i(t) \vphantom{\frac{}{2}} \\ % Fraction with empty numerator. Makes for slightly better vertical space.
+                &= \frac{1}{2} V_m I_m \cos{(\theta)} \memphR{[\underbrace{\vphantom{\frac{1}{2}} 1 + \cos{(2 \omega t + 2 \theta_v)}}_{\textbf{average value} = 1}]} \\
+                &\qquad + \frac{1}{2} V_m I_m \sin{(\theta)} \memphB{\underbrace{\vphantom{\frac{1}{2}} \sin{(2 \omega t + 2 \theta_v)}}_{\textbf{average value} = 0}}
+                %% Original version below:
+                %&= \underbrace{\frac{1}{2} V_m I_m \cos{(\theta)}}_{\text{constant}}
+                %+ \underbrace{\frac{1}{2} V_m I_m \cos{(2 \omega t + 2 \theta_v - \theta)}}_{\text{average value} = 0}
+        \end{align*}
+        %\Exn{\scriptsize \textit{Rarely applied directly, but useful for understanding and context.}}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{RMS Value}
+
+        The \textit{RMS} (or effective) value of \myul{any periodic voltage/current} is the equivalent value in DC to deliver the same average power to a load.
+        \begin{equation*}
+            F_\text{rms} =\sqrt{\frac{1}{T} \int_0^T{\parens*{f(t)}^2 \,\diff{t}}} 
+        \end{equation*}
+
+        For sinusoidal waveforms:
+
+        \begin{minipage}{0.5\columnwidth}%
+            \begin{equation*}
+                V_\text{rms} = \frac{V_m}{\sqrt{2}} \approx 0.707 \, V_m
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}{0.5\columnwidth}%
+            \begin{equation*}
+                I_\text{rms} = \frac{I_m}{\sqrt{2}} \approx 0.707 \, I_m
+            \end{equation*}
+        \end{minipage}%
+
+        %% I'm not 100% sure on this one. Will need to learn more!
+        %% TODO: Look into this section!
+        %\vspace{\parskip}%
+        %For a waveform produced from a sum of waveforms:
+        %\begin{gather*}
+        %    f(t) = f_1(t) + f_2(t) + \dots + f_n(t) \\
+        %    F_\text{rms}^2 = F_{\text{rms}1}^2 + F_{\text{rms}2}^2 + \dots + F_{\text{rms}n}^2 
+        %\end{gather*}
+
+        \CheatsheetEntryExtraSeparation
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}%
+%\vspace{-5ex}% Looks better to remove this excess whitespace, but idk...
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Power Factor (PF) and Power Angle ($\theta$)}
+
+        \vspace{\parskip}
+        \begin{tabularx}{\textwidth}{CC}
+            $\text{PF} = \cos{\theta}$ &
+            $\theta = \theta_v - \theta_i$ \\
+        \end{tabularx}%
+        \vspace{\parskip}
+
+        $\theta$ can be taken as the current lag (relative to voltage).%\\[0mm]
+        %{\scriptsize (relative to the voltage)}
+
+        %\vspace{1.5ex}%
+        %\begin{tabularx}{\textwidth}{CC}
+        %    $\text{PF} = \cos{\theta}$ & $\theta = \theta_v - \theta_i$ \\
+        %\end{tabularx}
+
+        %\vspace{-0.5ex}
+        \begin{center}
+        \begin{tikzpicture}[x=2.0cm, y=2.0cm, transform shape]
+            \path (0,0) coordinate (Origin);
+            \draw[-stealth, line width=1.7pt] (0:0.5) arc (0:-45:0.5);
+            \draw (-22.5:0.35) node {$\theta$};
+            \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(-45:1) coordinate (IEnd);
+            \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(  0:1) coordinate (VEnd);
+            \draw
+                (VEnd)
+                ++(0.0,0) node[right, color=myred] {
+                    $\mathbf{V}$
+                }
+                %++(1.6,0) node[align=center, color=myred, font=\scriptsize] {
+                %    \textbf{(assuming voltage as reference)} %\\
+                %    %\textbf{($\theta_v = 0$ assumed)}
+                %}
+
+                %(0.5,0.05) node[above, align=center, color=myred, font=\scriptsize] {\textbf{REFERENCE}}
+                
+                (IEnd)
+                ++(0,-0.05) node[below, color=mypurple] {$\mathbf{I}$}
+            ;
+            \draw[angle 60 reversed-angle 60, mygreen, line width=1.7pt, line cap=round]
+                ( 10:1.6) arc ( 10: 35:1.6) node[above] {\textbf{$\bm{-}$ve $\bm{\theta}$}}
+            ;
+            \draw[angle 60 reversed-angle 60, myblue,  line width=1.7pt, line cap=round]
+                (-10:1.6) arc (-10:-35:1.6) node[below] {\textbf{$\bm{+}$ve $\bm{\theta}$}}
+            ;
+            \draw
+                ( 15:1.7) ++(1.1, 0.00) coordinate (LeadLabel)
+                node[above, align=left, color=mygreen, font=\scriptsize] {
+                    \textbf{current \ul{leads} the voltage} \\
+                    \textbf{$\quad \implies$ \ul{leading} power factor} \\
+                    \textbf{$\quad \implies$ \ul{capacitive} load}
+                }
+
+                %(LeadLabel |- Origin)
+                %node[align=center] {
+                %    $\theta = \theta_v - \theta_i$ \\%[0.75ex]
+                %    {\scriptsize ($\theta$ is the current lag angle.)} %\\
+                %    %$\text{PF} = \cos{\theta}$
+                %}
+
+                (-15:1.7) ++(1.1,-0.00)
+                node[below, align=left, color=myblue, font=\scriptsize] {
+                    \textbf{current \ul{lags} the voltage} \\
+                    \textbf{$\quad \implies$ \ul{lagging} power factor} \\
+                    \textbf{$\quad \implies$ \ul{inductive} load}
+                }
+            ;
+        \end{tikzpicture}
+        \end{center}
+        \vspace{-1ex}
+
+        %{\scriptsize
+        %    \smallskip
+
+        %    \ul{\textit{Lagging}} PF means \ul{current lags} voltage ($+$ve $\theta$; \ul{inductive load}).\\[0mm]
+        %    \ul{\textit{Leading}} PF means \ul{current leads} voltage ($-$ve $\theta$; \ul{capacitive load}).
+
+        %    %\smallskip
+
+        %    %PF is frequently stated as a percentage.\\[0mm]
+        %    %Example: $90\%$ Lagging means $\cos{\theta} = 0.9$ with current lagging the voltage.
+        %}
+
+        %\CheatsheetEntryExtraSeparation
+
+        %\CheatsheetEntryTitle{Power Factor}
+        %\begin{equation*}
+        %    \text{PF} = \cos{\theta}
+        %\end{equation*}
+
+        \CheatsheetEntryTitle{Average Power}
+        \begin{equation*}
+            %P = \frac{V_m I_m}{2} \cos{\theta} = V_{\text{rms}} I_{\text{rms}} \cos{\theta}
+            P = \frac{1}{2} V_m I_m \cos{\theta} = V_{\text{rms}} I_{\text{rms}} \cos{\theta}
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Reactive Power}
+        \begin{equation*}
+            %Q = \frac{V_m I_m}{2} \sin{\theta} = V_{\text{rms}} I_{\text{rms}} \sin{\theta}
+            Q = \frac{1}{2} V_m I_m \sin{\theta} = V_{\text{rms}} I_{\text{rms}} \sin{\theta}
+        \end{equation*}
+        {\scriptsize%
+        \begin{tabular}{lcccc}
+            Inductive Loads
+                & $\implies$
+                %& $\phantom{x} \implies \phantom{x}$ % Ghetto Alignment
+                & $+$ve $\theta$
+                & $\implies$
+                %& $\phantom{x} \implies \phantom{x}$ % Ghetto Alignment
+                & $+$ve $Q$
+                \\
+            Capacitive Loads
+                & $\implies$
+                & $-$ve $\theta$
+                & $\implies$
+                & $-$ve $Q$
+                \\
+        \end{tabular}
+        }
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Apparent Power}
+        \begin{align*}
+            S = \frac{1}{2} V_m I_m = V_{\text{rms}} I_{\text{rms}}
+        \end{align*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Complex Power}
+        \begin{align*}
+            \mathbf{S}
+                &= \frac{1}{2} \mathbf{V} \mathbf{I}^* \\
+                %= \mathbf{V}_{\text{rms}}^{\phantom{*}} \mathbf{I}_{\text{rms}}^* % meh, not important
+                &= \frac{1}{2} V_m I_m \phase{\theta}
+                %= V_{\text{rms}} I_{\text{rms}} \phase{\theta} % Probably not necessary
+                = \frac{1}{2} V_m I_m \brackets*{\cos{\theta} + j \sin{\theta}} \\
+                &= P + j Q
+        \end{align*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Power Triangle}
+
+        \vspace{-3.5ex}%
+        \begin{center}
+        \begin{tikzpicture}[x=2.0cm, y=2.0cm, transform shape]
+            \path
+                (0,0) -- (-0.2,0) % Ghetto alignment
+
+                (0,0) coordinate (Origin)
+                (30:2.0) coordinate (TopCorner)
+                (TopCorner |- Origin) coordinate (BottomCorner)
+
+                (Origin)       -- coordinate[midway] (SMid) (TopCorner)
+                (Origin)       -- coordinate[midway] (PMid) (BottomCorner)
+                (BottomCorner) -- coordinate[midway] (QMid) (TopCorner)
+
+                (BottomCorner) ++(1.0, 0   ) coordinate (ArrowsMiddle)
+                (ArrowsMiddle) ++(0  , 0.25) coordinate (TopArrowStart)
+                (ArrowsMiddle) ++(0  ,-0.25) coordinate (BottomArrowStart)
+            ;
+            \draw[-stealth,                line width=3.0pt, line cap=round] (Origin) -- (TopCorner);
+            \draw[-stealth, line width=1.7pt] (0:0.6) arc (0:30:0.6);
+            \draw (15:0.45) node {$\theta$};
+            \draw[-stealth, color=magenta, line width=3.0pt, line cap=round] (BottomCorner) -- (TopCorner);
+            \draw[-stealth, color=blue,    line width=3.0pt, line cap=round] (Origin) -- (BottomCorner);
+            \draw[angle 60 reversed-angle 60, mygreen, line width=2.0pt, line cap=round]
+                (BottomArrowStart) -- ++(0,-0.8) node[below, align=left] {
+                    \textbf{$\bm{-}$ve $\bm{\theta}$} \\
+                    \textbf{$\bm{-}$ve $\bm{Q}$}
+                }
+            ;
+            \draw[angle 60 reversed-angle 60, myblue,  line width=2.0pt, line cap=round]
+                (TopArrowStart) -- ++(0,0.8) node[above, align=left] {
+                    \textbf{$\bm{+}$ve $\bm{\theta}$} \\
+                    \textbf{$\bm{+}$ve $\bm{Q}$}
+                }
+            ;
+            \draw[mygreen] (BottomArrowStart) ++(0.7,-0.4) node[align=center] {\textbf{Capacitive}\\\textbf{Load}};
+            \draw[myblue]  (TopArrowStart)    ++(0.7, 0.4) node[align=center] {\textbf{Inductive}\\\textbf{Load}};
+            \draw
+                (SMid)
+                ++(120:0.16) node {$\mathbf{S}$}
+                ++(120:0.25) node[align=center, rotate=30, font=\scriptsize] {\textsc{Complex Power}} % and Apparent Power?
+            ;
+            \draw[blue]
+                (PMid)
+                ++(-90:0.16) node {$P$}
+                ++(-90:0.22) node[align=center, rotate=0, font=\scriptsize] {\textsc{Average Power}}
+            ;
+            \draw[magenta]
+                (QMid)
+                ++(  0:0.16) node {$Q$}
+                ++(  0:0.25) node[align=center, rotate=-90, font=\scriptsize] {\textsc{Reactive Power}}
+            ;
+        \end{tikzpicture}
+        \end{center}
+
+        \vspace{-15ex}
+        \begin{minipage}{0.6\columnwidth}
+        %\centering
+        %Some other useful results:
+        \begin{equation*}
+            \boxed{
+                \hphantom{x} % Ghetto Whitespace
+                \begin{aligned}
+                    \vphantom{\sqrt{P^2}} \mathbf{S} &= P + jQ \\
+                    \vphantom{\sqrt{P^2}} S &= \abs*{\mathbf{S}} = \sqrt{P^2 + Q^2} \\
+                    \vphantom{\sqrt{P^2}} P &= \MyRe{\mathbf{S}} = S \cos{\theta} \\
+                    \vphantom{\sqrt{P^2}} Q &= \MyIm{\mathbf{S}} = S \sin{\theta}
+                \end{aligned}
+                \hphantom{x} % Ghetto Whitespace
+            }
+        \end{equation*}
+        \end{minipage}
+        %{\color{blue} \vrule{}}% Useful for debugging
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Maximum Average Power Transfer}
+
+        \vspace{1ex}%
+        \begin{minipage}[c]{0.6\columnwidth}
+            \begin{center}
+            \begin{circuitikz}
+                \path
+                    (0,0) coordinate (InsideBL)
+                    ++(1.8,0  ) coordinate (InsideBR)
+                    ++(0  ,1.5) coordinate (InsideTR)
+                ;
+                \draw[simshadows/style/softgray]
+                    (InsideTR) ++( 0  , 0.8) coordinate (BoxTR)
+                    (InsideBL) ++(-1.2,-0.8) coordinate (BoxBL)
+                    (BoxBL) rectangle (BoxTR)
+                ;
+                \draw
+                    (InsideBL)
+                    to[V, l=$\mathbf{V}_{th}$, invert] (InsideBL |- InsideTR)
+                    to[generic, l=$\mathbf{Z}_{th}$] (InsideTR)
+                    to[short, -o] ++( 0.4,0)
+                    to[short]     ++( 0.4,0)
+                    to[generic, l=$\mathbf{Z}_L$] ++(0,-1.5)
+                    to[short]     ++(-0.4,0)
+                    to[short, o-] ++(-0.4,0)
+                    to[short]     (InsideBL)
+                ;
+            \end{circuitikz}
+            \end{center}
+        \end{minipage}%
+        \begin{minipage}[c]{0.4\columnwidth}
+            \centering
+            Maximum average power is transferred to $\mathbf{Z}_L$ if:
+            \begin{equation*}
+                \mathbf{Z}_L = \mathbf{Z}_{th}^*
+            \end{equation*}
+            %\phantom{Maximum average power is transferred to $\mathbf{Z}_L$ if:} % For alignment
+            \phantom{x} \\[0mm]
+            \phantom{x} \\[0mm]
+            \phantom{x}
+        \end{minipage}
+
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Conservation of AC Power}
+
+        Complex/average/reactive power supplied by sources equals the sum delivered to each individual load:
+        \begin{align*}
+            \sum{\mathbf{S}_k} &= 0 \\
+            \sum{P_k} &= 0 \\
+            \sum{Q_k} &= 0
+        \end{align*}
+
+        However, this does NOT hold for apparent power.
+
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Power Delivered to a Load Impedance}
+
+        Power delivered to impedance $\mathbf{Z} = R + jX$:
+        \vspace{3ex}
+        \TwoColumnsMinipages[0.175]{
+            \raggedright
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    -- ++(0,0.8)
+                    -- ++(0,0.9)
+                    to[V, l=$\mathbf{V}$, invert] ++(0,1.8)
+                    -- ++(0,0.9)
+                    -- ++(0,0.8)
+                    to[short, i=$\mathbf{I}$] ++(2.0,0)
+                    -- ++(0,-0.5) coordinate (ZTop)
+                    -- ++(0,-0.3)
+                    to[R, l=$R$, v=$\mathbf{V}_R$] ++(0,-1.8) coordinate (ZMid)
+                    to[generic, l=$jX$, v=$\mathbf{V}_X$] ++(0,-1.8)
+                    -- ++(0,-0.3) coordinate (ZBottom)
+                    -- ++(0,-0.5)
+                    -- (0,0)
+                ;
+                \begin{scope}[on background layer]
+                    \draw[simshadows/style/softgray]
+                        (ZTop)    ++( 1.0,0) coordinate (BoxTR)
+                        (ZBottom) ++(-1.0,0) coordinate (BoxBL)
+                        (BoxBL) rectangle (BoxTR)
+                    ;
+                    \draw
+                        (BoxTR |- ZMid) ++(0.1,0) node[right] {$\mathbf{Z}$}
+                    ;
+                    % Below is the old version of the impedance label.
+                    %\draw
+                    %    (BoxTR) ++(0.2,0) coordinate (BoxTRRef)
+                    %    (BoxTRRef |- ZBottom) coordinate (BoxBRRef)
+                    %;
+                    %\draw
+                    %    (BoxTRRef)
+                    %    -- ++(0.3,0) coordinate (ZLabelHorizontalRef)
+                    %    |- (BoxBRRef)
+
+                    %    (ZLabelHorizontalRef |- ZMid) ++(0.1,0) node[right] {$\mathbf{Z}$}
+                    %;
+                \end{scope}
+            \end{circuitikz}
+        }{
+            \raggedright
+            \begin{align*}
+                P &= I_{\text{rms}}^2 R \\
+                Q &= I_{\text{rms}}^2 X
+                %\\[\abovedisplayskip]
+            \end{align*}
+            \begin{align*}
+                P &= \frac{V_{\text{Rrms}}^2}{R} \\
+                &= V_{\text{rms}}^2 \frac{R}{R^2 + X^2} \\[2ex]
+                Q &= \frac{V_{\text{Xrms}}^2}{X} \\
+                &= V_{\text{rms}}^2 \frac{X}{R^2 + X^2}
+            \end{align*}
+            %\phantom{x} % Actually looks worse with this
+        }
+
+        %\CheatsheetEntryExtraSeparation
+
+        %\CheatsheetEntryTitle{Power Delivered to a Load Admittance}
+        %% This section is still being worked on.
+
+        %\Exn{\scriptsize \textit{(Hint: These expressions can be found by converting $R$ and $X$ to $G$ and $B$ from the previous section.)}}
+
+        %Power delivered to admittance $\mathbf{Y} = G + jB$:
+
+        %%\TwoColumnsMinipages[0.275]{
+        %\TwoColumnsMinipages[0.38]{
+        %    \raggedright
+        %    \begin{circuitikz}
+        %        \draw
+        %            (0,0)
+        %            -- ++(0,0.3)
+        %            to[V, l=$\mathbf{V}$, invert] ++(0,1.8)
+        %            -- ++(0,0.3)
+        %            to[short, i=$\mathbf{I}$] ++(1,0) coordinate (YTL)
+        %            -- ++(1,0) coordinate (GTop)
+        %            -- ++(1.2,0)
+        %            to[generic, l=$jB$, i>_=$\mathbf{I}_B$] ++(0,-2.4) coordinate (YBR)
+        %            -- ++(-1.2,0) coordinate (GBottom)
+        %            -- (0,0)
+
+        %            (GTop)
+        %            to[generic, l=$G$, i>_=$\mathbf{I}_G$] (GBottom)
+        %        ;
+        %        \begin{scope}[on background layer]
+        %            \draw[lightgray, fill=verylightgray, line width=3.0pt]
+        %                (YTL) ++(0, 0.4) coordinate (BoxTL)
+        %                (YBR) ++(1,-0.4) coordinate (BoxBR)
+        %                (BoxBR) rectangle (BoxTL)
+        %            ;
+        %            \path
+        %                (BoxTL -| BoxBR) -- coordinate[midway] (BoxMR) (BoxBR) % Calculate midright point
+        %            ;
+        %            \draw
+        %                (BoxMR) ++(0.1,0) node[right] {$\mathbf{Y}$}
+        %            ;
+        %            % Below is the old version of the impedance label.
+        %            %\draw
+        %            %    (BoxTR) ++(0.2,0) coordinate (BoxTRRef)
+        %            %    (BoxTRRef |- ZBottom) coordinate (BoxBRRef)
+        %            %;
+        %            %\draw
+        %            %    (BoxTRRef)
+        %            %    -- ++(0.3,0) coordinate (ZLabelHorizontalRef)
+        %            %    |- (BoxBRRef)
+
+        %            %    (ZLabelHorizontalRef |- ZMid) ++(0.1,0) node[right] {$\mathbf{Z}$}
+        %            %;
+        %        \end{scope}
+        %    \end{circuitikz}%
+        %}{%
+        %    \phantom{x}
+        %    \begin{align*}
+        %        P &= \phantom{-} V_{\text{rms}}^2 G \\
+        %        Q &= -V_{\text{rms}}^2 B
+        %    \end{align*}
+        %    %\phantom{x} \\[0mm] % Ghetto alignment
+        %    %\phantom{x} \\[0mm]
+        %    %\phantom{x} \\[0mm]
+        %    \phantom{x}
+        %}%
+        %\begin{alignat*}{2}
+        %    P &= \frac{I_{\text{Rrms}}^2}{R} & \qquad\quad
+        %        Q &= \frac{I_{\text{Xrms}}^2}{X} \\
+        %    &= I_{\text{rms}}^2 \frac{G}{G^2 + B^2} & \qquad\quad
+        %        &= I_{\text{rms}}^2 \frac{B}{G^2 + B^2}
+        %\end{alignat*}
+
+        %%\begin{align*}
+        %%    P &= \phantom{-} V_{\text{rms}}^2 G \\
+        %%    Q &= -V_{\text{rms}}^2 B
+        %%\end{align*}
+        %%\begin{align*}
+        %%    P &= TODO \\
+        %%    &= V_{\text{rms}}^2 \frac{R}{R^2 + X^2} \\[2ex]
+        %%    Q &= TODO \\
+        %%    &= V_{\text{rms}}^2 \frac{X}{R^2 + X^2}
+        %%\end{align*}
+
+        %\CheatsheetEntryExtraSeparation
+
+    \end{CheatsheetEntryFrame}
+
+    \Todo{Power Factor Correction?}
+
+\end{multicols}
+

@@ -1,0 +1,541 @@
+\subsection{Sinusoidal Steady-State Analysis}%
+\label{sub:sinusoidal-steady-state-analysis}
+
+\subsubsection{Introduction}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Phasor Domain Conversion}
+
+        \newcommand{\X}{\hphantom{x}} % Adding horizontal space to make the table distribute better and look nicer
+        \begin{tabularx}{\textwidth}{ccC}
+            {\scriptsize \textbf{Time Domain}}   &                             & {\scriptsize \textbf{Phasor Domain}} \\
+            \X $v(t) = V_m \cos{(\omega t + \phi)}$ \X & $\Longleftrightarrow$ & $\mathbf{V} = V_m \phase{\phi}$      \\
+            \X $i(t) = I_m \cos{(\omega t + \phi)}$ \X & $\Longleftrightarrow$ & $\mathbf{I} = I_m \phase{\phi}$      \\
+        \end{tabularx}
+
+        %\begin{tikzpicture}[scale=0.85, transform shape]
+        %    \draw[help lines, lightgray]
+        %        (0,-1) grid (4,1)
+        %    ;
+        %    \draw[-latex, line width=1.5pt]
+        %        (0,0) -- (4.4,0) coordinate (LabelX)
+        %    ;
+        %    \draw[myred, dotted, line width=1.2pt, domain=0:4, samples=100]
+        %        plot (\x, {cos(0.5*pi*\x r)}) node[right] {\color{mylightred} $\cos{(\omega t)}$}
+        %    ;
+        %    \draw[myred, line width=2pt, domain=0:4, samples=100]
+        %        plot (\x, {cos(0.5*pi*\x r + 70)}) node[right] {$\cos{(\omega t + \phi)}$}
+        %    ;
+        %    \draw[latex-latex, line width=1.5pt] % Draw vertical line over the curve cuz it looks nicer
+        %        (0,-1.4) -- (0,1.4) coordinate (LabelY)
+        %    ;
+        %    \draw
+        %        (LabelX) ++(0  ,-0.1) node[below] {$t$}
+        %        (LabelY) ++(0.1, 0  ) node[right] {$x$}
+        %    ;
+        %\end{tikzpicture}
+
+        \vspace*{1ex}
+
+        \renewcommand{\W}{60} % Phasor angle.
+        % IMPORTANT: We will need to manually calculate WaveActualIntercept.
+        %            To make it easy, just input this into WolframAlpha:
+        %                2*(arccos(0) + (- YOUR_PHASOR_ANGLE_HERE * pi / 180))/pi + 2
+        \begin{center}
+        \begin{tikzpicture}[x=1.72cm, y=1.72cm, transform shape]
+            \begin{scope}[shift={(0,-1.8)}, rotate=-90]
+                \path
+                    (0,0) coordinate (WaveOrigin)
+                    (3,0) coordinate (WaveReferenceIntercept) % Manually calculated.
+                    (2.33333333,0) coordinate (WaveActualIntercept) % Manually calculated.
+                    % TODO: Maybe automatically calculate these intercepts next time?
+                ;
+                %\draw[help lines, lightgray]
+                %    (0,-1) grid (4,1)
+                %;
+                \draw[-latex, line width=1.5pt]
+                    (0,0) -- (4.4,0) coordinate (LabelX1)
+                ;
+                \draw[myred, dashed, line width=1.2pt, domain=0:4, samples=100, line cap=round]
+                    plot (\x, {cos(0.5*pi*\x r)}) node[right] {\color{myred} $\bm{V_m \cos{(\omega t)}}$}
+                ;
+                \draw[myred, line width=2pt, domain=0:4, samples=100, line cap=round]
+                    plot (\x, {cos(0.5*pi*\x r + \W)}) node[right] {$\bm{V_m \cos{(\omega t + \phi)}}$}
+                    coordinate (WaveEnd)
+                ;
+                \draw[latex-latex, line width=1.5pt] % Draw vertical line over the curve cuz it looks nicer
+                    (0,-1.4) -- (0,1.4) coordinate (LabelY1)
+                ;
+                \draw
+                    (LabelX1) ++(0  ,-0.1) node[below] {$\omega t$}
+                    (LabelY1) ++(0.1, 0  ) node[right] {$v(t)$}
+                ;
+                \draw[mypurple]
+                    (WaveOrigin) ++(0, 1) ++(0,0.17) node[left] {$\bm{V_m}$}
+                    (WaveOrigin) ++(0,-1) ++(0,0.17) node[left] {$\bm{-V_m}$}
+                ;
+            \end{scope}
+            \begin{scope}[shift={(0,0)}]
+                \draw[help lines, verylightgray, line width=1.5pt]
+                    (0,0) coordinate (PhasorOrigin) circle[radius=1]
+                    (1,0) coordinate (CircleRight)
+                    (-1,0) coordinate (CircleLeft)
+                ;
+                \draw[latex-latex, line width=1.5pt]
+                    (-1.4,0) -- (1.4,0) coordinate (LabelX2)
+                ;
+                \draw[latex-latex, line width=1.5pt]
+                    (0,-1.4) -- (0,1.4) coordinate (LabelY2)
+                ;
+                \draw[-latex, myred, line width=2pt, line cap=round]
+                    (PhasorOrigin) -- ++(\W:1) coordinate (PhasorEnd)
+                ;
+                \draw
+                    (LabelX2) ++(-0.1 ,-0.05) node[below] {$\MyRe$}
+                    (LabelY2) ++( 0.05,-0.1 ) node[right] {$\MyIm$}
+                ;
+                \draw[mypurple] (30:0.25) node {$\bm{\phi}$};
+                \draw[-latex, mypurple, line width=1.2pt, line cap=round] (0:0.40) arc (0:\W:0.40);
+                \draw[myred] (PhasorEnd) ++(\W:0.15) node {$\mathbf{V}$};
+                % Directions
+                \draw[angle 60 reversed-angle 60, mygreen,  line width=1.7pt, line cap=round] ( 10:1.8) arc ( 10: 40:1.8);
+                \draw[angle 60 reversed-angle 60, myblue,   line width=1.7pt, line cap=round] (-10:1.8) arc (-10:-40:1.8);
+                \draw[angle 60 reversed-angle 60, mypurple, line width=1.7pt, line cap=round] ( 60:1.8) arc ( 60:120:1.8);
+                \draw[mygreen]  ( 20:1.8) node[above right, align=left] {\textbf{leading}\\\textbf{direction}};
+                \draw[myblue]   (-20:1.8) node[below right, align=left] {\textbf{lagging}\\\textbf{direction}};
+                \draw[mypurple] ( 90:1.8) node[above] {\textbf{angular velocity} $\bm{\omega}$};
+                %\draw (0,0) circle[radius=2.5]; % Ghetto alignment
+            \end{scope}
+            \begin{scope}[on background layer]
+                %\draw[myblue, dashed, line width=1.5pt] % Old styling for the phasor connector
+                \draw[help lines, verylightgray, line width=1.5pt]
+                    (PhasorEnd) -- (PhasorEnd |- WaveOrigin)
+                ;
+                \draw[help lines, verylightgray, line width=1.5pt]
+                    (CircleRight)  -- (CircleRight  |- WaveEnd)
+                    (CircleLeft)   -- (CircleLeft   |- WaveEnd)
+                    (PhasorOrigin |- WaveEnd) ++(-1.4,0) -- ++(2.8,0)
+                    %(PhasorOrigin) -- (PhasorOrigin |- WaveOrigin) % Looks ugly
+                ;
+                \draw[help lines, {mypurple!30!white}, line width=1.5pt]
+                    (WaveActualIntercept)    ++(-1.4,0) -- ++(2.8,0) -- ++(0.5,0) ++(-0.2,-0.00) coordinate (WavePhaseDiffEnd)
+                ;
+                \draw[help lines, {mypurple!30!white}, dashed, line width=1.5pt]
+                    (WaveReferenceIntercept) ++(-1.4,0) -- ++(2.8,0) -- ++(0.5,0) ++(-0.2, 0.00) coordinate (WavePhaseDiffStart)
+                ;
+            \end{scope}
+            \begin{scope}[rotate=-90]
+                \draw[-angle 60, mypurple, line width=1.7pt]
+                    (WavePhaseDiffStart) -- (WavePhaseDiffEnd)
+                ;
+                \draw[mypurple]
+                    ($(WavePhaseDiffStart)!0.5!(WavePhaseDiffEnd)$) coordinate (WavePhaseDiffMid)
+                    (WavePhaseDiffMid) ++(0,0.05) node[above] {$\bm{\phi}$}
+                    %(WavePhaseDiffStart) ++(0.05,0) node[right, align=left] {\textbf{phase}} % Ugly
+                    %(WavePhaseDiffEnd) ++(-0.05,0) node[left, align=right] {\textbf{phase}} % Also ugly
+                    (WavePhaseDiffMid) ++(0,0.35) node[above, align=center] {\textbf{phase}}
+                ;
+                \draw[angle 60 reversed-angle 60, mygreen, line width=1.7pt, line cap=round]
+                    (WavePhaseDiffEnd)   ++(-0.6,0) -- ++(-1,0);
+                \draw[angle 60 reversed-angle 60, myblue,  line width=1.7pt, line cap=round]
+                    (WavePhaseDiffStart) ++( 0.6,0) -- ++( 1,0);
+                \draw[myblue]  (WavePhaseDiffStart) ++( 1.1,0.35) node[above, align=center] {\textbf{lagging}\\\textbf{direction}};
+                \draw[mygreen] (WavePhaseDiffEnd)   ++(-1.1,0.35) node[above, align=center] {\textbf{leading}\\\textbf{direction}};
+            \end{scope}
+        \end{tikzpicture}
+        \end{center}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrameExn}
+
+        \CheatsheetEntryTitle{Appendix: Useful Periodic Function Relations}
+        \begin{gather*}
+            \omega = 2 \pi f = \frac{2 \pi}{T}
+            \qquad
+            \begin{aligned}
+                \cos{\parens*{\omega t}} &= \sin{\parens*{\omega t + \ang{90}}} \\
+                \sin{\parens*{\omega t}} &= \cos{\parens*{\omega t - \ang{90}}}
+            \end{aligned}
+            \\
+            F_{\text{avg}} = \frac{1}{T} \int_0^T{f(t) \,\diff{t}}
+            \qquad
+            F_{\text{rms}} = \sqrt{\frac{1}{T} \int_0^T{\parens*{f(t)}^2 \,\diff{t}}}
+        \end{gather*}%
+
+    \end{CheatsheetEntryFrameExn}
+
+    % Should naturally column-break here
+
+    \begin{CheatsheetEntryFrame}
+
+        \newcommand{\MinipagesThreeColumns}[3]{
+            \begin{minipage}[c]{0.33\columnwidth}%
+                \centering
+                #1
+            \end{minipage}%
+            \begin{minipage}[c]{0.33\columnwidth}%
+                \centering
+                #2
+            \end{minipage}%
+            \begin{minipage}[c]{0.33\columnwidth}%
+                \centering
+                #3
+            \end{minipage}%
+        }
+
+        \CheatsheetEntryTitle{Resistor, Capacitor, and Inductor}
+
+        \vspace*{1.5ex}
+        \MinipagesThreeColumns{
+            $\displaystyle \mathbf{Z}_R = R$
+        }{
+            $\displaystyle \mathbf{Z}_C = \frac{1}{j \omega C}$
+        }{
+            $\displaystyle \mathbf{Z}_L = j \omega L$
+        }
+
+        \newcommand{\MyTikzGhettoAlignmentA}{\path (0,0.6) -- (0,-0.6);} % Ghetto alignment
+        \MinipagesThreeColumns{
+            \begin{circuitikz}
+                \MyTikzGhettoAlignmentA
+                \draw (0,0) to[R, o-o] ++(2,0);
+            \end{circuitikz}
+        }{
+            \begin{circuitikz}
+                \MyTikzGhettoAlignmentA
+                \draw (0,0) to[C, o-o] ++(2,0);
+            \end{circuitikz}
+        }{
+            \begin{circuitikz}
+                \MyTikzGhettoAlignmentA
+                \draw (0,0) to[L, o-o] ++(2,0);
+            \end{circuitikz}
+        }%
+        \vspace{-2.0ex} % Too much whitespace for some reason. Need to cut it down.
+        \newcommand{\MyTikzGhettoAlignmentB}{\path (0,-1.2) -- (0,1.2) (-0.40,0) -- (1.40,0);} % Ghetto alignment
+        %\newcommand{\MyTikzGhettoAlignmentB}{\path (-0.40,0) -- (1.40,0);} % Ghetto alignment
+        \MinipagesThreeColumns{%
+            \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
+                \MyTikzGhettoAlignmentB
+                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.30) coordinate (VEnd);
+                \draw[-stealth, white,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.05);
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(0:1.00) coordinate (IEnd);
+                \draw[myred]    (VEnd) ++( 0  ,-0.05) node[below] {$\mathbf{V}$};
+                \draw[mypurple] (IEnd) ++(-0.1,-0.05) node[below] {$\mathbf{I}$};
+            \end{tikzpicture}
+        }{%
+            \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
+                \MyTikzGhettoAlignmentB
+                \draw[line width=1.2pt] (0.2,0) -- (0.2,-0.2) -- (0,-0.2);
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(  0:1) coordinate (IEnd);
+                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(-90:1) coordinate (VEnd);
+                \draw[myred]    (VEnd) ++(0.0, 0   ) node[right] {$\mathbf{V}$};
+                \draw[mypurple] (IEnd) ++(0  ,-0.05) node[below] {$\mathbf{I}$};
+            \end{tikzpicture}
+        }{%
+            \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
+                \MyTikzGhettoAlignmentB
+                \draw[line width=1.2pt] (0.2,0) -- (0.2,0.2) -- (0,0.2);
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++( 0:1) coordinate (IEnd);
+                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(90:1) coordinate (VEnd);
+                \draw[myred]    (VEnd) ++(0.0, 0   ) node[right] {$\mathbf{V}$};
+                \draw[mypurple] (IEnd) ++(0  ,-0.05) node[below] {$\mathbf{I}$};
+            \end{tikzpicture}
+        }%
+        \vspace{-1.0ex} % Move closer to the next section
+
+        \newcommand{\MinipagesTwoColumns}[2]{%
+            \begin{myminipage}[t]{0.82\columnwidth}
+                \raggedright
+                #1
+            \end{myminipage}%
+            %\hspace{0.06\columnwidth}% TODO: Do something better than this ghetto center-alignment.
+            \begin{minipage}[t]{0.16\columnwidth}
+                {\color{CheatsheetSepColor} \vrule{}}%
+                #2
+            \end{minipage}
+        }
+
+        \MinipagesTwoColumns{%
+            \CheatsheetEntryTitle{Ohm's Law} \MarkSimilarToDC
+
+            For impedance $\mathbf{Z}$ and admittance $\mathbf{Y}$: \\[2\parskip]
+
+            \begin{tabularx}{\textwidth}{CcC}
+                $\displaystyle \mathbf{V} = \mathbf{I} \mathbf{Z}$
+                    & $\displaystyle \mathbf{Y} \triangleq \frac{1}{\mathbf{Z}}$
+                    & $\displaystyle \mathbf{I} = \mathbf{V} \mathbf{Y}$\\
+            \end{tabularx}
+        }{%
+            \begin{circuitikz}
+                \path (-0.9,0) -- (0,0) (-0.65,-1) -- (0.65,-1); % Ghetto alignment
+                \draw
+                    (0,0) to[short] ++(0,-0.2)
+                    to[short, i=$\mathbf{I}$] ++(0,-0.1)
+                    to[generic, l=$\mathbf{Z}$, v=$\mathbf{V}$] ++(0,-1.6)
+                    to[short] ++(0,-0.3)
+                ;
+            \end{circuitikz}%
+        }
+
+        %\CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Rectangular Form}
+        \begin{alignat*}{3}
+            \mathbf{Z} &= R + jX
+                &&= {\textstyle \frac{G}{G^2 + B^2} + j \frac{-B}{G^2 + B^2}} % This line is optional
+                ,
+                %& \qquad R, X &\in \mathbb{R}, % TODO: Should I add these parts in?
+                %& \; R &\ge 0,
+                & \qquad
+                    {\scriptsize
+                    \begin{aligned}
+                        R & \\
+                        X &
+                    \end{aligned}
+                    }
+                    &
+                    {\scriptsize
+                    \begin{aligned}
+                        &= \text{Resistance} \\
+                        &= \text{Reactance}
+                    \end{aligned}
+                    }
+                \\[1ex]
+            \mathbf{Y} &= G + jB
+                &&= {\textstyle \frac{R}{R^2 + X^2} + j \frac{-X}{R^2 + X^2}} % This line is optional
+                ,
+                %& \qquad G, B &\in \mathbb{R},
+                %& \; G &\ge 0,
+                & \qquad
+                    {\scriptsize
+                    \begin{aligned}
+                        G & \\
+                        B &
+                    \end{aligned}
+                    }
+                    &
+                    {\scriptsize
+                    \begin{aligned}
+                        &= \text{Conductance} \\
+                        &= \text{Susceptance}
+                    \end{aligned}
+                    }
+        \end{alignat*}
+
+        % TODO: Figure out a better way to deliver this warning.
+        %\textsc{Please note that $R = \frac{1}{G}$ only applies to resistive circuits.}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        % TODO: This is basically a reuse of the DC Analysis section's version. See if we can just make a macro for it?
+        \CheatsheetEntryTitle{Series and Parallel Equivalent} \MarkSimilarToDC
+
+        \vspace{1.5ex}
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \scalebox{0.8}{
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    to[generic, o-] ++(2,0)
+                    to[generic, -o] ++(2,0)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \centering
+            \scalebox{0.8}{
+            \begin{circuitikz}
+                \draw
+                    (0.5,0) to[short, o-]
+                    (1,0) -- (1, 0.4) to[generic] (3, 0.4) -- (3,0)
+                    to[short, -o] (3.5,0)
+                    (1,0) -- (1,-0.4) to[generic] (3,-0.4) -- (3,0)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}
+
+        \vspace*{1.5ex}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \mathbf{Z}_S = \sum{\mathbf{Z}_i}
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \frac{1}{\mathbf{Z}_P} = \sum{\frac{1}{\mathbf{Z}_i}}
+            \end{equation*}
+        \end{minipage}
+
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \frac{1}{\mathbf{Y}_S} = \sum{\frac{1}{\mathbf{Y}_i}}
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.5\columnwidth}
+            \begin{equation*}
+                \mathbf{Y}_P = \sum{\mathbf{Y}_i}
+            \end{equation*}
+        \end{minipage}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        % TODO: This is basically a reuse of the DC Analysis section's version. See if we can just make a macro for it?
+        \CheatsheetEntryTitle{Voltage and Current Division} \MarkSimilarToDC
+
+        \begin{minipage}[c]{0.6\columnwidth}
+            \centering
+            \scalebox{1}{
+            \begin{circuitikz}
+                \draw
+                    (0,0)
+                    to[short, o-] ++(1,0)
+                    -- ++(0,-0.2)
+                    to[generic, l_=$\mathbf{Z}_1$, v^=${\displaystyle \mathbf{V}_1 = \frac{\mathbf{Z}_1}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{V}}$] ++(0,-1.5)
+                    -- ++(0,-0.3)
+                    to[generic, l_=$\mathbf{Z}_2$, v^=${\displaystyle \mathbf{V}_2 = \frac{\mathbf{Z}_2}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{V}}$] ++(0,-1.5)
+                    -- ++(0,-0.2)
+                    to[short, -o] ++(-1,0)
+                    (0,0)
+                    to[open, v=$\mathbf{V}$] (0,-3.7)
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}%
+        \begin{minipage}[c]{0.4\columnwidth}
+            \centering
+            \scalebox{1}{
+            \begin{circuitikz}
+                \draw
+                    (0,1.65)
+                    to[short, i=$\mathbf{I}$, o-] ++(1,0)
+                    to[short] ++(0,-0.15)
+                    to[generic, l_=$\mathbf{Z}_1$, i>_=$\mathbf{I}_1$] ++(0,-1.5)
+                    %to[short] ++(0,-0.25)
+                    to[short, -o] ++(-1,0)
+                    (1,1.65)
+                    to[short] ++(1,0)
+                    to[short] ++(0,-0.15)
+                    to[generic, l_=$\mathbf{Z}_2$, i>_=$\mathbf{I}_2$] ++(0,-1.5)
+                    %to[short] ++(0,-0.25)
+                    to[short] ++(-1,0)
+                    (1,0) ++(0,-0.1)
+                    node[below] {${\displaystyle \mathbf{I}_1 = \frac{\mathbf{Z}_2}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{I}}$} ++(0,-1)
+                    node[below] {${\displaystyle \mathbf{I}_2 = \frac{\mathbf{Z}_1}{\mathbf{Z}_1+\mathbf{Z}_2}\mathbf{I}}$}
+                ;
+            \end{circuitikz}%
+            }
+        \end{minipage}
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \newcommand{\MyReusableFormatting}{
+            \path (0,0) -- (0,1.6); % Ghetto alignment
+            \path
+                (0,0)      coordinate (N)
+                (150:1.70) coordinate (A)
+                ( 30:1.70) coordinate (B)
+                (-90:1.70) coordinate (C)
+            ;
+            \draw
+                (A) ++(150:0.3) node {$a$}
+                (B) ++( 30:0.3) node {$b$}
+                %(A) ++( 90:0.3) node {$a$} % These require less horizontal space, but look worse
+                %(B) ++( 90:0.3) node {$b$}
+                (C) ++(-90:0.3) node {$c$}
+            ;
+        }
+
+        \CheatsheetEntryTitle{$\mathrm{Y}$-$\Delta$ Transform} \MarkSimilarToDC
+
+        \TwoColumnsTextSeparated{$\Longleftrightarrow$}{
+            \begin{circuitikz}
+                \MyReusableFormatting
+                \draw
+                    (N) to[generic, l_=$\memphR{\mathbf{Z}_1}$, name=Z1, color=myred, /tikz/circuitikz/bipoles/thickness=4] (A) node[ocirc] {}
+                    (N) to[generic, l=$\mathbf{Z}_2$, name=Z2] (B) node[ocirc] {}
+                    (N) to[generic, l=$\mathbf{Z}_3$, name=Z3] (C) node[ocirc] {}
+                    (N) node[circ] {}
+                    (N) ++(-30:0.3) node {$n$}
+                ;
+            \end{circuitikz}
+        }{
+            \begin{circuitikz}
+                \MyReusableFormatting
+                \draw
+                    (A)
+                    to[generic, l=$\mathbf{Z}_c$, name=ZB] (B) node[circ] {}
+                    to[generic, l=$\memphB{\mathbf{Z}_a}$, name=ZC, color=myblue, /tikz/circuitikz/bipoles/thickness=4] (C) node[circ] {}
+                    to[generic, l=$\mathbf{Z}_b$, name=ZA] (A) node[circ] {}
+                ;
+            \end{circuitikz}
+        }
+        \TwoColumnsTextSeparated{}{
+            \begin{equation*}
+                \memphR{\mathbf{Z}_1} = \frac{\mathbf{Z}_b \mathbf{Z}_c}{\mathbf{Z}_a + \mathbf{Z}_b + \mathbf{Z}_c}
+            \end{equation*}
+        }{
+            \begin{equation*}
+                \memphB{\mathbf{Z}_a}
+                    = \frac{\mathbf{Z}_1 \mathbf{Z}_2 + \mathbf{Z}_2 \mathbf{Z}_3 + \mathbf{Z}_3 \mathbf{Z}_1}{\mathbf{Z}_1}
+            \end{equation*}
+        }
+
+        For $\mathrm{Y}$ and $\Delta$ loads to be balanced:
+        \TwoColumnsTextSeparated{\phantom{$\Longleftrightarrow$}}{%
+            \begin{equation*}
+                \mathbf{Z}_Y = \mathbf{Z}_1 = \mathbf{Z}_2 = \mathbf{Z}_3
+            \end{equation*}
+        }{%
+            \begin{equation*}
+                \mathbf{Z}_\Delta = \mathbf{Z}_a = \mathbf{Z}_b = \mathbf{Z}_c
+            \end{equation*}
+        }
+
+        So when our $\mathrm{Y}$ or $\Delta$ circuit is balanced:
+        \begin{equation*}
+            \mathbf{Z}_\Delta = 3 \mathbf{Z}_Y
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Other resistor circuit time-domain analysis techniques that translate to the frequency domain}
+        \begin{itemize}
+            \item Superposition Principle
+            \item Kirchoff's Current Law and Supernodes
+            \item Kitchoff's Voltage Law and Supermeshes
+            \item Source Transformation
+            \item Th\'evenin and Norton's Theorems
+        \end{itemize}
+
+        \Todo{Consider either: 1) making properly-expanded sections for these, or 2) find a way to neatly merge the resistor circuit time-domain analysis sections with their analogous frequency domain techniques.}
+
+    \end{CheatsheetEntryFrame}
+
+    \Todo{Topic on phasor diagram trigonometry? E.g. adding two voltage phasors with cosine rule?}
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}
+

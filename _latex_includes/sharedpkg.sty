@@ -173,6 +173,10 @@
 % it will indeed be very close to the base of text.
 \setuldepth{x}
 
+% Sets emphasis to italics
+% (The ulem package switches it to underline for some reason)
+\normalem
+
 \def\arraystretch{1.3} % Makes spaces between rows wider.
 
 \hypersetup{
@@ -620,8 +624,6 @@
 \newcommand{\espace}{\hspace{5mm}}
 
 \newcommand{\SectionBreak}{\newpage}
-\newcommand{\MulticolsBreak}{\vfill\null\columnbreak} % For use in the multicols environment.
-\newcommand{\MulticolsPhantomPlaceholder}{\phantom{x}} % An arbitrary box to occupy a multicols column.
 
 % Table Column Types
 \newcolumntype{C}{>{\centering\arraybackslash}X} % Centered version of tabularx's X column type

@@ -11,83 +11,247 @@
 
 \begin{CheatsheetEntryFrame}
 
-    \CheatsheetEntryTitle{Ideal Operational Amplifier}
+    \CheatsheetEntryTitle{Ideal Opamp}
 
-    DC-coupled, high-gain, differential-input.
+    \begin{MulticolsNoSepRule}{2}
 
-    \begin{center}
-    \begin{circuitikz}
-        \draw 
-            (0,0)
-                node[op amp, noinv input up, anchor=-](OA){}
-            (OA.+)
-                -- ++(-0.5,0)
-                    node[ocirc, label=left:$v_+$]{}
-                ++(-1,0)
-                    node[label=left:{\emph{(non-inverting input)}}]{}
-            (OA.-)
-                -- ++(-0.5,0)
-                    node[ocirc, label=left:$v_-$]{}
-                ++(-1,0)
-                    node[label=left:{\emph{(inverting input)}}]{}
-            (OA.out)
-                -- ++(0.5,0)
-                    node[ocirc, label=right:$v_o$]{}
-            (OA.up)
-                -- ++(0,0.8)
-                    node[ocirc, label=above:$V_\text{CC}$]{}
-            (OA.down)
-                -- ++(0,-0.8)
-                    node[ocirc, label=below:$V_\text{EE}$]{}
-        ;
-    \end{circuitikz}
-    \end{center}
+        \begin{center}
+            \phantom{\myul{\textbf{\footnotesize Schematic Symbol}}}
 
-    Equivalent model:
-    \begin{center}
-    \begin{circuitikz}
-        \draw 
-            (0,0)
-                    node[ocirc, label=left:$v_+$]{}
-                to[short, i=$i_+$] ++(2,0)
-                    coordinate(TR1)
-                to[R, l=$R_i$, v=$v_i$] ++(0,-2)
-                to[short, i<=$i_-$] ++(-2,0)
-                    node[ocirc, label=left:$v_-$]{}
-            (TR1) ++(2,0)
-                to[cvsource, l=$A v_i$] ++(0,-2)
-                    node[ground, scale=2]{}
-            (TR1) ++(2,0)
-                to[R, l=$R_o$] ++(2,0)
-                node[ocirc, label=right:$v_o$]{}
-        ;
-    \end{circuitikz}
-    \end{center}
+            \begin{circuitikz}
+                \draw 
+                    (0,0)
+                        node[op amp, anchor=-](OA){}
+                    (OA.+)
+                        -- ++(-0.5,0)
+                            node[ocirc, label=left:$v_+$]{}
+                    (OA.-)
+                        -- ++(-0.5,0)
+                            node[ocirc, label=left:$v_-$]{}
+                    (OA.out)
+                        -- ++(0.2,0)
+                            node[ocirc, label=right:$v_o$]{}
+                    %% Biasing is probably not needed here.
+                    %(OA.up)
+                    %    -- ++(0,0.8)
+                    %        node[ocirc, label=above:$V_\text{CC}$]{}
+                    %(OA.down)
+                    %    -- ++(0,-0.8)
+                    %        node[ocirc, label=below:$V_\text{EE}$]{}
+                    (OA.out)
+                        ++(1.2,1.4)
+                        node[]{$\displaystyle \boxed{v_o = A \parens{v_+ - v_-}}$}
+                ;
+                \draw[stealth-, ultra thick, extranotecolor, color=extranotecolor]
+                    (OA.-)
+                        ++(0,0.4)
+                        -- ++(-0.7,0.5)
+                        %node[label={above:{\footnotesize \textsc{Inverting Input}}}]{}
+                        node[above, align=center, font={\footnotesize \sc}]{Inverting\\Input}
+                ;
+                \draw[stealth-, ultra thick, extranotecolor, color=extranotecolor]
+                    (OA.+)
+                        ++(0,-0.4)
+                        -- ++(-0.7,-0.5)
+                        %node[label={below:[align=left]{\footnotesize \textsc{Non-Inverting\\Input}}}]{}
+                        node[below, align=center, font={\footnotesize \sc}]{Non-Inverting\\Input}
+                ;
+            \end{circuitikz}
+        \end{center}
 
-    Properties:
-    \begin{enumerate}
-        \item $R_i \to \infty$ \ExtraNotes{($R_i = \text{input resistance}$)}
-        \item $R_o = 0$ \ExtraNotes{($R_o = \text{output resistance}$)}
-        \item zero common-mode gain \ExtraNotes{(or equivalently, infinite common-mode rejection)}
-        \item $A \to \infty$ \ExtraNotes{($A = \text{open loop voltage gain}$)}
-        \item infinite bandwidth
-    \end{enumerate}
+        \MulticolsBreak
 
-    \emph{Golden rules}:
-    \begin{enumerate}
-        \item In negative feedback mode, $v_+ = v_-$ (``virtual ground")
-        \item $i_+ = i_- = 0$
-    \end{enumerate}
+        \begin{center}
+            \myul{\textbf{\footnotesize Equivalent Model}}
+
+            \begin{circuitikz}
+                \draw 
+                    (0,0)
+                            node[ocirc, label=left:$v_+$]{}
+                        to[short, i=$i_+$] ++(2,0)
+                            coordinate(TR1)
+                        to[R, l=$R_i$, v=$v_i$] ++(0,-2)
+                        to[short, i<=$i_-$] ++(-2,0)
+                            node[ocirc, label=left:$v_-$]{}
+                    (TR1) ++(2,0)
+                        to[cvsource, l=$A v_i$] ++(0,-2)
+                            node[ground, scale=2]{}
+                    (TR1) ++(2,0)
+                        to[R, l=$R_o$] ++(2,0)
+                        node[ocirc, label=right:$v_o$]{}
+                ;
+            \end{circuitikz}
+        \end{center}
+
+        \MulticolsCleanEnd
+    \end{MulticolsNoSepRule}%
+    \MulticolsReduceVspaceAfter%
+    \begin{MulticolsNoSepRule}{2}
+        DC-coupled, high-gain differential-input amplifier.
+
+        \myul{\textbf{Golden rules}}:
+        \begin{enumerate}
+            \item $v_+ = v_-$ \\ %{\footnotesize (\emph{virtual ground})}
+                \emph{\footnotesize (``virtual ground"; appies in \myul{negative feedback} only)}
+            \item $i_+ = i_- = 0$
+        \end{enumerate}
+
+        %\emph{(Golden rule \#1 is also known as ``virtual ground".)}
+
+        \MulticolsBreak
+
+        \myul{\textbf{Some properties}}:
+        \begin{enumerate}
+            \item $R_i \to \infty$
+            \item $R_o = 0$
+            \item $A \to \infty$
+            \item infinite CMRR \Exn{(common-mode rejection ratio)}
+            \item infinite bandwidth
+        \end{enumerate}
+
+        \MulticolsCleanEnd
+    \end{MulticolsNoSepRule}
+    \MulticolsReduceVspaceAfter%
 \end{CheatsheetEntryFrame}
+
+\begin{multicols}{2}
+    \begin{CheatsheetEntryFrame}
+        \CheatsheetEntryTitle{Opamp DC Imperfection Modeling}
+        \bigskip
+
+        \begin{center}
+            \begin{circuitikz}
+                \draw 
+                    (0,0)
+                        node[op amp, anchor=-](OA){}
+                    (OA.-)
+                        -- ++(-0.5,0)
+                        -- ++(-2,0)
+                            node[ocirc]{}
+                    (OA.+)
+                        -- ++(-0.5,0)
+                        to[V, invert, color=red, l=$\color{red} V_\text{io}$] ++(-2,0)
+                            node[ocirc]{}
+                    (OA.out)
+                        -- ++(0.2,0)
+                            node[ocirc]{}
+                ;
+                \draw[red, color=red]
+                    (OA.-)
+                        ++(-0.25,0)
+                        node[currarrow, label=above:$I_{\text{B}-}$]{}
+                    (OA.+)
+                        ++(-0.25,0)
+                        node[currarrow, label=above:$I_{\text{B}+}$]{}
+                ;
+            \end{circuitikz}
+        \end{center}
+
+        Currents usually specified in terms of $I_\text{B}$ and $I_\text{io}$:
+        \begin{gather*}
+            \begin{gathered}
+                %\overbrace{
+                I_\text{B} = \frac{I_{\text{B}+} + I_{\text{B}-}}{2}
+                %}^\text{input bias current}
+                \\
+                %\underbrace{
+                I_\text{io} = I_{\text{B}+} - I_{\text{B}-}
+                %}_\text{input offset current}
+            \end{gathered}
+            \qquad
+            \quad
+            \begin{aligned}
+                I_{\text{B}+} &= I_\text{B} + \frac{1}{2} I_\text{io} \\
+                I_{\text{B}-} &= I_\text{B} - \frac{1}{2} I_\text{io}
+            \end{aligned}
+        \end{gather*}
+
+        Calculate worst-case output offset voltage of a circuit using superposition principle:
+        \begin{gather*}
+            V_\text{os}
+            = \abs*{
+                V_\text{os} \parens{I_{\text{B}+}}
+                + V_\text{os} \parens{I_{\text{B}-}}
+            }
+            + \abs*{
+                V_\text{os} \parens{V_\text{io}}
+            }
+        \end{gather*}
+
+        \Exn{
+            Terminology:
+            \begin{pindent}
+                $I_\text{B} = \text{input bias current}$ \\
+                $I_\text{io} = \text{input offset current}$ \\
+                $V_\text{io} = \text{input offset voltage}$
+            \end{pindent}
+        }
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+        \CheatsheetEntryTitle{Opamp Large Signal Characteristics}
+
+        \begin{enumerate}
+            \item Output Saturation
+            \item Output Current Limit
+            \item Slew Rate Limit
+        \end{enumerate}
+        %\begin{enumerate}
+        %    \setcounter{enumi}{1}
+        %    \item Output Current Limit
+        %\end{enumerate}
+        %\begin{enumerate}
+        %    \setcounter{enumi}{2}
+        %    \item Slew Rate Limit
+        %\end{enumerate}
+
+        \Todo{Expand on this?}
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
 
 \newpage
 
 \begin{CheatsheetEntryFrame}
 
-    \CheatsheetEntryTitle{Inverting Amplifier \scriptsize (Op-Amp Common Configuration)}
+    \newcommand{\TmpOpampConfigRow}[3]{
+        %\vspace*{1ex}
+        \begin{minipage}[c]{0.40\textwidth}
+            \MinipageInheritDocumentFormatting
+            \myul{#1}
 
-    \begin{center}
-    \begin{circuitikz}
+            #2
+        \end{minipage}%
+        \begin{minipage}[c]{0.60\textwidth}
+        \begin{center}
+            \begin{circuitikz}
+                #3
+            \end{circuitikz}
+        \end{center}
+        \end{minipage}%
+        \vspace*{1ex}
+    }
+    \newcommand{\TmpOpampSeparator}{
+        \bigskip
+        {\color{lightgray} \hrule{}}
+        \bigskip
+    }
+    \newcommand{\TmpOpampSpecialSeparator}{
+        \MyReusableFormattingB%
+        \vspace*{2.5pt}%
+        \MyReusableFormattingB
+    }
+
+    \CheatsheetEntryTitle{Common Opamp Configurations}
+
+    \TmpOpampConfigRow{Inverting Amplifier}{
+        \begin{gather*}
+            \boxed{
+                \frac{v_o}{v_i}
+                = \frac{- \color{blue} R_2}{ \color{red} R_1}
+            }
+        \end{gather*}
+    }{
         \draw 
             % Op-Amp
             (0,0)
@@ -107,27 +271,33 @@
 
             % Left Side
             (A)
-                to[R, l_=$R_1$] ++(-3,0)
+                to[R, l_=$R_1$, red, color=red] ++(-3,0)
                     node[ocirc, label=left:$v_i$]{}
 
             % Feedback
             (C)
                 -- ++(0,1.8)
-                to[R, l=$R_2$] ++(-2.8,0)
+                to[R, l=$R_2$, blue, color=blue] ++(-2.8,0)
                 -| (A)
 
-            % Equation
-            (OA.out)
-                ++(3,1.6)
-                    node[]{$\displaystyle \boxed{\frac{v_o}{v_i} = \frac{-R_2}{R_1}}$}
+            %% Equation
+            %(OA.out)
+            %    ++(3,1.6)
+            %        node[]{$
+            %            \displaystyle
+            %            \boxed{\frac{v_o}{v_i} = \frac{- \color{blue} R_2}{ \color{red} R_1}}
+            %        $}
         ;
-    \end{circuitikz}
-    \end{center}
+    }
+    \TmpOpampSeparator
 
-    \CheatsheetEntryTitle{Non-Inverting Amplifier \scriptsize (Op-Amp Common Configuration)}
-
-    \begin{center}
-    \begin{circuitikz}
+    \TmpOpampConfigRow{Non-Inverting Amplifier}{
+        \begin{gather*}
+            \boxed{
+                \frac{v_o}{v_i} = 1 + \frac{\color{blue} R_2}{\color{red} R_1}
+            }
+        \end{gather*}
+    }{
         \draw 
             % Op-Amp
             (0,0)
@@ -147,77 +317,53 @@
 
             % Left Side
             (A)
-                to[R, l_=$R_1$] ++(-3,0)
+                to[R, red, color=red, l_=$R_1$] ++(-3,0)
                 \MyGround{}
 
             % Feedback
             (C)
                 -- ++(0,1.8)
-                to[R, l=$R_2$] ++(-2.8,0)
+                to[R, blue, color=blue, l=$R_2$] ++(-2.8,0)
                 -| (A)
 
-            % Equation
-            (OA.out)
-                ++(3,1.6)
-                    node[]{$\displaystyle \boxed{\frac{v_o}{v_i} = 1 + \frac{R_2}{R_1}}$}
+            %% Equation
+            %(OA.out)
+            %    ++(3,1.6)
+            %        node[]{$\displaystyle \boxed{\frac{v_o}{v_i} = 1 + \frac{R_2}{R_1}}$}
         ;
-    \end{circuitikz}
-    \end{center}
+    }
+    \TmpOpampSeparator
 
-    \CheatsheetEntryTitle{Integrator \scriptsize (Op-Amp Common Configuration)}
+    \TmpOpampConfigRow{Integrator}{
+        Without {\color{darkgreen}$R_m$}:
+        \begin{gather*}
+            \boxed{
+                \begin{gathered}
+                    \frac{v_i}{\color{red} R}
+                    + {\color{blue} C} \frac{\diff{v_o}}{\diff{t}} = 0
+                    \\
+                    v_o = \frac{-1}{\color{blue} C \color{red} R} \int{v_i \,\diff{t}}
+                \end{gathered}
+            }
+        \end{gather*}
 
-    \begin{center}
-    \begin{circuitikz}
-        \draw 
-            % Op-Amp
-            (0,0)
-                node[op amp, noinv input down, anchor=out](OA){}
-            (OA.+)
-                -| ++(-0.4,-0.5)
-                    coordinate(GND)
-                \MyGround{}
-            (OA.-)
-                -- ++(-0.4,0)
-                    coordinate(A)
-            (OA.out)
-                -- ++(0.3,0)
-                    coordinate(C)
-                -- ++(0.8,0)
-                    node[ocirc, label=right:$v_o$]{}
+        {\footnotesize
+            {\color{darkgreen}$R_m$} is \myul{optional}, but without it, practical implementations quickly saturate (since $v_i$ is never perfectly zero).
+        }
 
-            % Left Side
-            (A)
-                to[R, l_=$R$] ++(-3,0)
-                    node[ocirc, label=left:$v_i$]{}
+        {\footnotesize
+            To select {\color{darkgreen}$R_m$}:
+        }
+        \begin{gather*}
+            \boxed{
+                \begin{gathered}
+                    \abs*{\frac{1}{j \omega \color{blue} C}} \gg {\color{darkgreen} R_m}
+                \end{gathered}
+            }
+        \end{gather*}
 
-            % Feedback
-            (C)
-                -- ++(0,1.8)
-                to[C, l=$C$] ++(-2.8,0)
-                -| (A)
-
-            % Equation
-            (OA.out)
-                ++(3,2)
-                    node[]{$
-                        \displaystyle
-                        \boxed{
-                            \begin{gathered}
-                                \frac{v_i}{R} + C \frac{\diff{v_o}}{\diff{t}} = 0
-                                \\
-                                v_o = \frac{-1}{CR} \int{v_i \,\diff{t}}
-                            \end{gathered}
-                        }
-                    $}
-        ;
-    \end{circuitikz}
-    \end{center}
-
-    However, this design will saturate very quickly in practical cases since $v_i$ is never perfectly zero.
-
-    To get around this issue, a resistor is added:
-    \begin{center}
-    \begin{circuitikz}
+        {\footnotesize \Todo{I'm not 100\% sure how $R_m$ works.} }
+    }{
         \draw 
             % Op-Amp
             (0,0)
@@ -237,42 +383,49 @@
 
             % Left Side
             (A)
-                to[R, l_=$R$] ++(-3,0)
+                to[R, red, color=red, l_=$R$] ++(-3,0)
                     node[ocirc, label=left:$v_i$]{}
 
             % Feedback
             (C)
                 -- ++(0,1.8)
                     coordinate(D)
-                to[C, l=$C$] ++(-2.8,0)
+                to[C, blue, color=blue, l=$C$] ++(-2.8,0)
                 -| (A)
 
-            % Equation
-            (OA.out)
-                ++(2.6,2)
-                    node[]{$
-                        \displaystyle
-                        \boxed{
-                            \begin{gathered}
-                                \abs*{\frac{1}{j \omega C}} \gg R_m
-                            \end{gathered}
-                        }
-                    $}
+            %% Equation
+            %(OA.out)
+            %    ++(2.6,2)
+            %        node[]{$
+            %            \displaystyle
+            %            \boxed{
+            %                \begin{gathered}
+            %                    \abs*{\frac{1}{j \omega C}} \gg R_m
+            %                \end{gathered}
+            %            }
+            %        $}
         ;
-        \draw[color=red]
+        \draw[darkgreen, color=darkgreen]
             % Extra Resistor
             (D)
                 -- ++(0,1)
                 to[R, l_=$R_m$] ++(-2.8,0)
                 -| (D -| A)
         ;
-    \end{circuitikz}
-    \end{center}
+    }
+    \TmpOpampSeparator
 
-    \CheatsheetEntryTitle{Differentiator \scriptsize (Op-Amp Common Configuration)}
-
-    \begin{center}
-    \begin{circuitikz}
+    \TmpOpampConfigRow{Differentiator}{
+        \begin{gather*}
+            \boxed{
+                \begin{gathered}
+                    \frac{v_o}{\color{blue} R} + {\color{red} C} \frac{\diff{v_i}}{\diff{t}} = 0
+                    \\
+                    v_o = - {\color{red} C} {\color{blue} R} \frac{\diff{v_i}}{\diff{t}}
+                \end{gathered}
+            }
+        \end{gather*}
+    }{
         \draw 
             % Op-Amp
             (0,0)
@@ -292,36 +445,43 @@
 
             % Left Side
             (A)
-                to[C, l=$C$] ++(-3,0)
+                to[C, red, color=red, l=$C$] ++(-3,0)
                     node[ocirc, label=left:$v_i$]{}
 
             % Feedback
             (C)
                 -- ++(0,1.8)
-                to[R, l_=$R$] ++(-2.8,0)
+                to[R, blue, color=blue, l_=$R$] ++(-2.8,0)
                 -| (A)
 
             % Equation
-            (OA.out)
-                ++(3,2)
-                    node[]{$
-                        \displaystyle
-                        \boxed{
-                            \begin{gathered}
-                                \frac{v_o}{R} + C \frac{\diff{v_i}}{\diff{t}} = 0
-                                \\
-                                v_o = - C R \frac{\diff{v_i}}{\diff{t}}
-                            \end{gathered}
-                        }
-                    $}
+            %(OA.out)
+            %    ++(3,2)
+            %        node[]{$
+            %            \displaystyle
+            %            \boxed{
+            %                \begin{gathered}
+            %                    \frac{v_o}{R} + C \frac{\diff{v_i}}{\diff{t}} = 0
+            %                    \\
+            %                    v_o = - C R \frac{\diff{v_i}}{\diff{t}}
+            %                \end{gathered}
+            %            }
+            %        $}
         ;
-    \end{circuitikz}
-    \end{center}
+    }
+    \TmpOpampSeparator
 
-    \CheatsheetEntryTitle{Difference Amplifier \scriptsize (Op-Amp Common Configuration)}
+    \TmpOpampConfigRow{Difference Amplifier}{
+        \begin{gather*}
+            \boxed{
+                v_o = \frac{\color{blue} R_2}{\color{red} R_1} \parens{v_1 - v_2}
+            }
+        \end{gather*}
 
-    \begin{center}
-    \begin{circuitikz}
+        However, the input impedance can be too low for practical use.
+
+        To solve this, we use an \emph{instrumentational amplifier} instead.
+    }{
         \draw 
             % Op-Amp
             (0,0)
@@ -329,7 +489,7 @@
             (OA.+)
                 -- ++(-0.4,0)
                     coordinate(D)
-                to[R, l_=$R_2$] ++(0,-1.8)
+                to[R, blue, color=blue, l_=$R_2$] ++(0,-1.8)
                     coordinate(GND)
                 \MyGround{}
             (OA.-)
@@ -343,34 +503,27 @@
 
             % Left Side
             (A)
-                to[R, l_=$R_1$] ++(-3,0)
+                to[R, red, color=red, l_=$R_1$] ++(-3,0)
                     node[ocirc, label=left:$v_2$]{}
             (D)
-                to[R, l_=$R_1$] ++(-3,0)
+                to[R, red, color=red, l_=$R_1$] ++(-3,0)
                     node[ocirc, label=left:$v_1$]{}
 
             % Feedback
             (C)
                 -- ++(0,1.8)
-                to[R, l=$R_2$] ++(-2.8,0)
+                to[R, blue, color=blue, l=$R_2$] ++(-2.8,0)
                 -| (A)
 
-            % Equation
-            (OA.out)
-                ++(3,1.6)
-                    node[]{$\displaystyle \boxed{v_o = \frac{R_2}{R_1} \parens{v_1 - v_2}}$}
+            %% Equation
+            %(OA.out)
+            %    ++(3,1.6)
+            %        node[]{$\displaystyle \boxed{v_o = \frac{R_2}{R_1} \parens{v_1 - v_2}}$}
         ;
-    \end{circuitikz}
-    \end{center}
+    }
+    \TmpOpampSeparator
 
-    However, the input impedance can be too low for practical use.
-
-    To solve this, we use an \emph{instrumentational amplifier} instead.
-    \bigskip
-
-    \CheatsheetEntryTitle{Instrumentational Amplifier \scriptsize (Op-Amp Common Configuration)}
-
-    \Todo{Write this section up. (It's not important quite yet for the assignment, so I'm holding off for a while.)}
+    \Todo{Write a section for Instrumentational Amplifier}
 
 \end{CheatsheetEntryFrame}
 

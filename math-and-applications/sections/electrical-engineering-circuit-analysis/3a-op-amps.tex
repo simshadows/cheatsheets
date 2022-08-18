@@ -13,7 +13,7 @@
 
     \CheatsheetEntryTitle{Ideal Opamp}
 
-    \begin{MulticolsNoSepRule}{2}
+    \begin{multicols}{2}
 
         \begin{center}
             \phantom{\myul{\textbf{\footnotesize Schematic Symbol}}}
@@ -84,9 +84,9 @@
         \end{center}
 
         \MulticolsCleanEnd
-    \end{MulticolsNoSepRule}%
+    \end{multicols}%
     \MulticolsReduceVspaceAfter%
-    \begin{MulticolsNoSepRule}{2}
+    \begin{multicols}{2}
         DC-coupled, high-gain differential-input amplifier.
 
         \myul{\textbf{Golden rules}}:
@@ -110,7 +110,7 @@
         \end{enumerate}
 
         \MulticolsCleanEnd
-    \end{MulticolsNoSepRule}
+    \end{multicols}
     \MulticolsReduceVspaceAfter%
 \end{CheatsheetEntryFrame}
 
@@ -243,6 +243,47 @@
     }
 
     \CheatsheetEntryTitle{Common Opamp Configurations}
+
+    \bigskip
+
+    \TmpOpampConfigRow{Unity Gain Buffer}{
+        \begin{gather*}
+            \boxed{
+                v_o = v_i
+            }
+        \end{gather*}
+
+        Useful for its high input impedance and low output impedance.
+    }{
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -- ++(-0.4,0)
+                    node[ocirc, label=left:$v_i$]{}
+                    coordinate(GND)
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Feedback
+            (C)
+                |- ++(-2.8,1.5)
+                -| (A)
+
+            %% Equation
+            %(OA.out)
+            %    ++(3,1.6)
+            %        node[]{$\displaystyle \boxed{\frac{v_o}{v_i} = 1 + \frac{R_2}{R_1}}$}
+        ;
+    }
+    \TmpOpampSeparator
 
     \TmpOpampConfigRow{Inverting Amplifier}{
         \begin{gather*}
@@ -524,6 +565,10 @@
     \TmpOpampSeparator
 
     \Todo{Write a section for Instrumentational Amplifier}
+    
+    \Todo{Maybe also add the summing amplifier?}
 
 \end{CheatsheetEntryFrame}
+
+\Todo{Add notes on frequency response?}
 

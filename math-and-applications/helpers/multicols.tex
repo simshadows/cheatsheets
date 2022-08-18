@@ -1,9 +1,9 @@
-% Adds a line between multicols columns
-\def\MulticolsReset{%
-    \setlength{\columnseprule}{0.4pt}%
-    \setlength{\columnsep}{40pt}%
-}
-\MulticolsReset
+%% Adds a line between multicols columns
+%\def\MulticolsReset{%
+%    \setlength{\columnseprule}{0.4pt}%
+%    \setlength{\columnsep}{40pt}%
+%}
+%\MulticolsReset
 
 \newcommand{\MulticolsBreak}{\vfill\null\columnbreak} % For use in the multicols environment.
 \newcommand{\MulticolsCleanEnd}{\vfill\null} % For use in the multicols environment.
@@ -14,13 +14,13 @@
 % TODO: If there's a better solution to this, fix all usage of this command!
 \newcommand{\MulticolsReduceVspaceAfter}{\vspace*{-10mm}}
 
-\newenvironment{MulticolsNoSepRule}[1]{%
-    \setlength{\columnseprule}{0pt}%
-    \setlength{\columnsep}{40pt}%
-    \begin{multicols}{#1}%
-}{%
-    \MulticolsCleanEnd%
-    \end{multicols}%
-    \MulticolsReset%
-}
+%\newenvironment{MulticolsNoSepRule}[1]{%
+%    \setlength{\columnseprule}{0pt}%
+%    \setlength{\columnsep}{40pt}%
+%    \begin{multicols}{#1}%
+%}{%
+%    \MulticolsCleanEnd%
+%    \end{multicols}%
+%    \MulticolsReset%
+%}
 

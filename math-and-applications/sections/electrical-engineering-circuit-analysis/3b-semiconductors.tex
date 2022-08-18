@@ -1,0 +1,114 @@
+\subsubsection{Semiconductor Devices}
+
+%\begin{multicols}{2}
+%
+%    \Todo{this}
+%
+%\end{multicols}
+
+\begin{CheatsheetEntryFrame}
+
+    \CheatsheetEntryTitle{Bipolar Junction Transistor (BJT)}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw
+            (0,-1)
+                rectangle ++(1.5,1.5)
+                    node[pos=0.5, label=above:{\small{Emitter}}]{}
+                    node[pos=0.5, label=below:{\small{n-type}}]{}
+                rectangle ++(1.5,-1.5)
+                    node[pos=0.5, label=above:{\small{Base}}](A){}
+                    node[pos=0.5, label=below:{\small{p-type}}]{}
+                rectangle ++(1.5,1.5)
+                    node[pos=0.5, label=above:{\small{Collector}}]{}
+                    node[pos=0.5, label=below:{\small{n-type}}]{}
+            (A)
+                ++(0.375,0) % EYEBALL ADJUST
+                ++(0,-2.4)
+                    node[npn, anchor=center](Q1){}
+                ++(-0.375,0) % UNDO EYEBALL ADJUST
+                ++(0,-1.6)
+                    node[label=below:NPN Type]{}
+            (Q1.B)
+                node[ocirc, label=left:B]{}
+            (Q1.E)
+                node[ocirc, label=below:E]{}
+            (Q1.C)
+                node[ocirc, label=above:C]{}
+
+            (6,-1)
+                rectangle ++(1.5,1.5)
+                    node[pos=0.5, label=above:{\small{Emitter}}]{}
+                    node[pos=0.5, label=below:{\small{p-type}}]{}
+                rectangle ++(1.5,-1.5)
+                    node[pos=0.5, label=above:{\small{Base}}](B){}
+                    node[pos=0.5, label=below:{\small{n-type}}]{}
+                rectangle ++(1.5,1.5)
+                    node[pos=0.5, label=above:{\small{Collector}}]{}
+                    node[pos=0.5, label=below:{\small{p-type}}]{}
+            (B)
+                ++(0.375,0) % EYEBALL ADJUST
+                ++(0,-2.4)
+                    node[pnp, anchor=center, yscale=-1](Q2){}
+                ++(-0.375,0) % UNDO EYEBALL ADJUST
+                ++(0,-1.6)
+                    node[label=below:PNP Type]{}
+            (Q2.B)
+                node[ocirc, label=left:B]{}
+            (Q2.E)
+                node[ocirc, label=below:E]{}
+            (Q2.C)
+                node[ocirc, label=above:C]{}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    Basic modes:
+    \begin{itemize}
+        \item \emph{Forward Active} (BE forward-biased, BC reverse-biased)
+        \item \emph{Reverse Active} (BE reverse-biased, BC forward-biased)
+        \item \emph{Saturation} (both junctions forward-biased)
+        \item \emph{Cut-off} (both junctions reverse-biased)
+    \end{itemize}
+
+\end{CheatsheetEntryFrame}
+
+\begin{CheatsheetEntryFrame}
+
+    \CheatsheetEntryTitle{MOSFET}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw
+            (0,0)
+                ++(0.375,0) % EYEBALL ADJUST
+                    node[nmos, anchor=center](Q1){}
+                ++(-0.375,0) % UNDO EYEBALL ADJUST
+                ++(0,-1.6)
+                    node[label=below:N-Channel Type]{}
+            (Q1.G)
+                node[ocirc, label=left:G]{}
+            (Q1.S)
+                node[ocirc, label=below:S]{}
+            (Q1.D)
+                node[ocirc, label=above:D]{}
+
+            (6,0)
+                ++(0.375,0) % EYEBALL ADJUST
+                    node[pmos, anchor=center, yscale=-1](Q2){}
+                ++(-0.375,0) % UNDO EYEBALL ADJUST
+                ++(0,-1.6)
+                    node[label=below:P-Channel Type]{}
+            (Q2.G)
+                node[ocirc, label=left:G]{}
+            (Q2.S)
+                node[ocirc, label=below:S]{}
+            (Q2.D)
+                node[ocirc, label=above:D]{}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+\end{CheatsheetEntryFrame}
+

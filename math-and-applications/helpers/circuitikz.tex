@@ -1,0 +1,43 @@
+%% Not needed yet
+%\def\meshcw#1#2#3#4{
+%    \draw[thick, stealth-, #3] (#1) node{#4}  ++(-70:#2) arc (-70:190:#2);
+%}
+%\def\meshcc#1#2#3#4{
+%    \draw[thick, -stealth, #3] (#1) node{#4}  ++(-10:#2) arc (-10:250:#2);
+%}
+%
+%\def\meshright#1#2#3{
+%    \draw[thick, -stealth, #2]
+%        (#1)
+%            ++(0,-0.1)
+%                node[label=above:{#3}]{}
+%            ++(-0.4,0.1)
+%            -- ++(0.8,0)
+%    ;
+%}
+
+% Draws a slight offset and a well-scaled ground symbol.
+\newcommand{\MyGround}[1]{%
+    -- ++(0,-0.1)
+        node[ground, scale=2, #1]{}
+}
+
+%% Not needed yet
+%% Borrowing the tground symbol for VCC and VEE
+%\newcommand{\MyVCC}[1]{%
+%    node[tground, #1]{}
+%}
+%\newcommand{\MyVEE}[1]{%
+%    node[tground, #1]{}
+%}
+%
+%% (Shortcuts for op-amp VCC/VEE)
+%\newcommand{\MyOpAmpVCC}[1]{%
+%    -- ++(0,0.6)
+%        node[tground, label={[label distance=1mm]right:{#1}}]{}
+%}
+%\newcommand{\MyOpAmpVEE}[1]{%
+%    -- ++(0,-0.6)
+%        node[tground, label={[label distance=1mm]right:{#1}}]{}
+%}
+

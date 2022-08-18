@@ -1,0 +1,120 @@
+\colorlet{CheatsheetSepColor}{verylightgray}
+
+% TODO: Migrate the rest of the cheatsheet to this environment version.
+\newenvironment{CheatsheetEntryFrame}[1][]{%
+    %\scalebox{0.8}{#1}
+    %\unskip
+    \mdframed[
+            innerbottommargin=2\mdflength{innertopmargin},
+            skipabove=0pt,
+            %skipbelow=10mm,
+            %leftmargin=0.5mm,
+            %rightmargin=0.5mm,
+            #1
+        ]
+        \raggedright
+        \vspace*{0.75ex}%
+}{%
+    \endmdframed%
+}
+\newenvironment{CheatsheetEntryFrameExn}[1][]{%
+    %\CheatsheetEntryFrame[fontcolor=extranotecolor, linecolor=extranotecolor, #1]
+    \CheatsheetEntryFrame[#1] % For now, we're not colouring them.
+}{%
+    \endCheatsheetEntryFrame%
+}
+
+% Hacks to get virtual breaks
+\newenvironment{CheatsheetEntryFrameStart}[1][]{%
+    \CheatsheetEntryFrame[bottomline=false,#1]%
+}{%
+    \vspace{4ex}%
+    \endCheatsheetEntryFrame%
+}
+\newenvironment{CheatsheetEntryFrameMid}[1][]{%
+    \CheatsheetEntryFrame[topline=false,bottomline=false,#1]%
+    \vspace{1ex}%
+}{%
+    \vspace{4ex}%
+    \endCheatsheetEntryFrame%
+}
+\newenvironment{CheatsheetEntryFrameEnd}[1][]{%
+    \CheatsheetEntryFrame[topline=false,#1]%
+    \vspace{1ex}%
+}{%
+    \endCheatsheetEntryFrame%
+}
+
+\newcommand{\CheatsheetEntryTitle}[1]{ % Put this inside CheatsheetEntryBox
+    \textbu{#1} %\\[1.5ex]
+    %\vspace*{1.5ex}%
+}
+\newcommand{\CheatsheetEntryExtraSeparation}{ % Temporary fix while I figure out how to automatically set this separation.
+    \vspace*{1ex}%
+}
+\newcommand{\CheatsheetSmallEquationTitle}[1]{%
+    \begin{center}%
+        \vspace*{\abovedisplayskip}%
+        \scriptsize%
+        %\framebox[1.1\width]{\textbf{#1}} % Framed version
+        \textbf{#1}%
+        \vspace*{0.75ex}%
+        \vspace*{-\parskip}%
+    \end{center}%
+}
+\newcommand{\CheatsheetSmallText}[1]{%
+    \begin{center}%
+        \scriptsize%
+        {#1}%
+        \vspace*{0.75ex}%
+        \vspace*{-\parskip}%
+    \end{center}%
+}
+
+%\newcommand{\MarkSimilarToDC}{{\color{myred} \scriptsize \textsc{(Similar To DC!)}}} % Smallcaps don't mix with bold...
+\newcommand{\MarkSimilarToDC}{{\color{mygreen}\scriptsize\textbf{(SIMILAR to DC)}}}
+
+\newcommand{\NegateBelowDisplaySkip}{\vspace*{-2.5ex}} % Cuts vertical space after an equation by a reasonable amount.
+
+% \CheatsheetSubsectionFrame[<mdframed options>]{<title>}{<colour>}{<content>}
+\newenvironment{CheatsheetSubsection}[4][]{%
+    \bigskip
+    \mdframed[
+            %skipabove=0pt,
+            %skipbelow=10mm,
+            %leftmargin=0.5mm,
+            %rightmargin=0.5mm,
+            innerleftmargin=7pt,
+            innerrightmargin=7pt,
+            %innertopmargin=5pt,
+            innerbottommargin=2\mdflength{innertopmargin},
+            roundcorner=3pt,
+            linewidth=2.5pt,
+            linecolor={#3},
+            backgroundcolor={#3!20!white},
+            frametitle={#2},
+            frametitlefont={\scriptsize \normalfont \bfseries \color{#4} \hspace{-0.5em}},
+            %frametitlefont={\small \normalfont \bfseries \color{#4} \hspace{-0.4em}},
+            frametitlebackgroundcolor={#3},
+            frametitleaboveskip=2.5pt,
+            frametitlebelowskip=3.0pt,
+            #1
+        ]
+        \raggedright
+        \vspace*{0.75ex}%
+        \small%
+}{%
+    \endmdframed%
+}
+
+\lstnewenvironment{CheatsheetSubsectionLst}{%
+    \lstset{language={}, frame=none, aboveskip=4pt, belowskip=1pt, basicstyle={\small\ttfamily}}%
+}{%
+    \vspace{-\parskip} % So much extra whitespace...
+}
+
+\newcommand{\SubsectionFrameReduceSkip}{\vspace{-2ex}} % A temporary solution to the ridiculous amount of space after a frame.
+\newcommand{\SubsectionFrameAddSeparation}{\medskip} % Standard space between the SqlSubsection frame and other content.
+\newcommand{\SubsectionFrameRemoveSeparation}{\vspace{-\parskip}} % Vertical space is ridiculous after an equation.
+\newcommand{\SubsectionFrameTableRemoveSpace}{\vspace{-0.5ex}} % Tables put a lot of unwanted space above and below.
+

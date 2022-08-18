@@ -1,0 +1,376 @@
+\subsection{Amplifier Analysis}%
+\label{sub:amplifier-analysis}
+
+\subsubsection{Operational Amplifiers}
+
+%\begin{multicols}{2}
+%
+%    \Todo{this}
+%
+%\end{multicols}
+
+\begin{CheatsheetEntryFrame}
+
+    \CheatsheetEntryTitle{Ideal Operational Amplifier}
+
+    DC-coupled, high-gain, differential-input.
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0)
+                node[op amp, noinv input up, anchor=-](OA){}
+            (OA.+)
+                -- ++(-0.5,0)
+                    node[ocirc, label=left:$v_+$]{}
+                ++(-1,0)
+                    node[label=left:{\emph{(non-inverting input)}}]{}
+            (OA.-)
+                -- ++(-0.5,0)
+                    node[ocirc, label=left:$v_-$]{}
+                ++(-1,0)
+                    node[label=left:{\emph{(inverting input)}}]{}
+            (OA.out)
+                -- ++(0.5,0)
+                    node[ocirc, label=right:$v_o$]{}
+            (OA.up)
+                -- ++(0,0.8)
+                    node[ocirc, label=above:$V_\text{CC}$]{}
+            (OA.down)
+                -- ++(0,-0.8)
+                    node[ocirc, label=below:$V_\text{EE}$]{}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    Equivalent model:
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0)
+                    node[ocirc, label=left:$v_+$]{}
+                to[short, i=$i_+$] ++(2,0)
+                    coordinate(TR1)
+                to[R, l=$R_i$, v=$v_i$] ++(0,-2)
+                to[short, i<=$i_-$] ++(-2,0)
+                    node[ocirc, label=left:$v_-$]{}
+            (TR1) ++(2,0)
+                to[cvsource, l=$A v_i$] ++(0,-2)
+                    node[ground, scale=2]{}
+            (TR1) ++(2,0)
+                to[R, l=$R_o$] ++(2,0)
+                node[ocirc, label=right:$v_o$]{}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    Properties:
+    \begin{enumerate}
+        \item $R_i \to \infty$ \ExtraNotes{($R_i = \text{input resistance}$)}
+        \item $R_o = 0$ \ExtraNotes{($R_o = \text{output resistance}$)}
+        \item zero common-mode gain \ExtraNotes{(or equivalently, infinite common-mode rejection)}
+        \item $A \to \infty$ \ExtraNotes{($A = \text{open loop voltage gain}$)}
+        \item infinite bandwidth
+    \end{enumerate}
+
+    \emph{Golden rules}:
+    \begin{enumerate}
+        \item In negative feedback mode, $v_+ = v_-$ (``virtual ground")
+        \item $i_+ = i_- = 0$
+    \end{enumerate}
+\end{CheatsheetEntryFrame}
+
+\newpage
+
+\begin{CheatsheetEntryFrame}
+
+    \CheatsheetEntryTitle{Inverting Amplifier \scriptsize (Op-Amp Common Configuration)}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -| ++(-0.4,-0.5)
+                    coordinate(GND)
+                \MyGround{}
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[R, l_=$R_1$] ++(-3,0)
+                    node[ocirc, label=left:$v_i$]{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                to[R, l=$R_2$] ++(-2.8,0)
+                -| (A)
+
+            % Equation
+            (OA.out)
+                ++(3,1.6)
+                    node[]{$\displaystyle \boxed{\frac{v_o}{v_i} = \frac{-R_2}{R_1}}$}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    \CheatsheetEntryTitle{Non-Inverting Amplifier \scriptsize (Op-Amp Common Configuration)}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -- ++(-0.4,0)
+                    node[ocirc, label=left:$v_i$]{}
+                    coordinate(GND)
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[R, l_=$R_1$] ++(-3,0)
+                \MyGround{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                to[R, l=$R_2$] ++(-2.8,0)
+                -| (A)
+
+            % Equation
+            (OA.out)
+                ++(3,1.6)
+                    node[]{$\displaystyle \boxed{\frac{v_o}{v_i} = 1 + \frac{R_2}{R_1}}$}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    \CheatsheetEntryTitle{Integrator \scriptsize (Op-Amp Common Configuration)}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -| ++(-0.4,-0.5)
+                    coordinate(GND)
+                \MyGround{}
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[R, l_=$R$] ++(-3,0)
+                    node[ocirc, label=left:$v_i$]{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                to[C, l=$C$] ++(-2.8,0)
+                -| (A)
+
+            % Equation
+            (OA.out)
+                ++(3,2)
+                    node[]{$
+                        \displaystyle
+                        \boxed{
+                            \begin{gathered}
+                                \frac{v_i}{R} + C \frac{\diff{v_o}}{\diff{t}} = 0
+                                \\
+                                v_o = \frac{-1}{CR} \int{v_i \,\diff{t}}
+                            \end{gathered}
+                        }
+                    $}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    However, this design will saturate very quickly in practical cases since $v_i$ is never perfectly zero.
+
+    To get around this issue, a resistor is added:
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -| ++(-0.4,-0.5)
+                    coordinate(GND)
+                \MyGround{}
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[R, l_=$R$] ++(-3,0)
+                    node[ocirc, label=left:$v_i$]{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                    coordinate(D)
+                to[C, l=$C$] ++(-2.8,0)
+                -| (A)
+
+            % Equation
+            (OA.out)
+                ++(2.6,2)
+                    node[]{$
+                        \displaystyle
+                        \boxed{
+                            \begin{gathered}
+                                \abs*{\frac{1}{j \omega C}} \gg R_m
+                            \end{gathered}
+                        }
+                    $}
+        ;
+        \draw[color=red]
+            % Extra Resistor
+            (D)
+                -- ++(0,1)
+                to[R, l_=$R_m$] ++(-2.8,0)
+                -| (D -| A)
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    \CheatsheetEntryTitle{Differentiator \scriptsize (Op-Amp Common Configuration)}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -| ++(-0.4,-0.5)
+                    coordinate(GND)
+                \MyGround{}
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[C, l=$C$] ++(-3,0)
+                    node[ocirc, label=left:$v_i$]{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                to[R, l_=$R$] ++(-2.8,0)
+                -| (A)
+
+            % Equation
+            (OA.out)
+                ++(3,2)
+                    node[]{$
+                        \displaystyle
+                        \boxed{
+                            \begin{gathered}
+                                \frac{v_o}{R} + C \frac{\diff{v_i}}{\diff{t}} = 0
+                                \\
+                                v_o = - C R \frac{\diff{v_i}}{\diff{t}}
+                            \end{gathered}
+                        }
+                    $}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    \CheatsheetEntryTitle{Difference Amplifier \scriptsize (Op-Amp Common Configuration)}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -- ++(-0.4,0)
+                    coordinate(D)
+                to[R, l_=$R_2$] ++(0,-1.8)
+                    coordinate(GND)
+                \MyGround{}
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[R, l_=$R_1$] ++(-3,0)
+                    node[ocirc, label=left:$v_2$]{}
+            (D)
+                to[R, l_=$R_1$] ++(-3,0)
+                    node[ocirc, label=left:$v_1$]{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                to[R, l=$R_2$] ++(-2.8,0)
+                -| (A)
+
+            % Equation
+            (OA.out)
+                ++(3,1.6)
+                    node[]{$\displaystyle \boxed{v_o = \frac{R_2}{R_1} \parens{v_1 - v_2}}$}
+        ;
+    \end{circuitikz}
+    \end{center}
+
+    However, the input impedance can be too low for practical use.
+
+    To solve this, we use an \emph{instrumentational amplifier} instead.
+    \bigskip
+
+    \CheatsheetEntryTitle{Instrumentational Amplifier \scriptsize (Op-Amp Common Configuration)}
+
+    \Todo{Write this section up. (It's not important quite yet for the assignment, so I'm holding off for a while.)}
+
+\end{CheatsheetEntryFrame}
+

@@ -118,3 +118,15 @@
 \newcommand{\SubsectionFrameRemoveSeparation}{\vspace{-\parskip}} % Vertical space is ridiculous after an equation.
 \newcommand{\SubsectionFrameTableRemoveSpace}{\vspace{-0.5ex}} % Tables put a lot of unwanted space above and below.
 
+
+% "Soft" separator lines
+% Named so because they are meant to be "soft" in appearance, achieved by being a thin grey line rather than
+% a thick black line, so it's a lot easier ("softer") on the eyes.
+% Very useful with minipages.
+\newcommand{\SoftVSep}{%
+    \hfill{\color{lightgray} \vline}\hfill%
+}
+\newcommand{\SoftHLine}{%
+    {\color{lightgray} \hrule{}}
+}
+

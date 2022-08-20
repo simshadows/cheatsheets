@@ -1,8 +1,178 @@
 \subsubsection{Feedback}
 
-\begin{multicols}{2}
 
-    \Todo{this}
+\begin{CheatsheetEntryFrame}
 
-\end{multicols}
+    \begin{minipage}[c]{0.27\textwidth}
+        \MinipageInheritDocumentFormatting
+        \CheatsheetEntryTitle{Feedback \emph{\footnotesize (generalization)}}
+        \begin{gather*}
+            A_f
+            = \frac{x_o}{x_s}
+            = \frac{A_o}{1 + \beta A_o}
+            \underbrace{
+                \approx \frac{1}{\beta}
+                \vphantom{\frac{1}{\displaystyle \sum}}
+            }_{\mathclap{\substack{
+                \mathstrut \text{if} \\
+                \mathstrut \beta A_o \gg 1
+            }}}
+        \end{gather*}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.73\textwidth}
+    \begin{tikzpicture}[node distance=1.5cm]
+        \node (amplifier) [MyBlockDiagramRectangle, align=center]
+            {Amplifier \\ $A_o$};
+        \node (feedback) [MyBlockDiagramRectangle, align=center, below of=amplifier, minimum width=3.5cm]
+            {Feedback Network \\ $\beta$};
+        \node (summing) [MyBlockDiagramEllipse, align=center, left of=amplifier, scale=0.8, xshift=-3.5cm]
+            {Summing \\ Network};
+        \node (sampling) [MyBlockDiagramEllipse, align=center, right of=amplifier, scale=0.8, xshift=2.8cm]
+            {Sampling \\ Network};
+
+        \node (input) [align=center, left of=summing, left]
+            {$x_s$};
+        \node (output) [align=center, right of=sampling, right]
+            {$\begin{gathered} x_o \\ = A_f x_s \end{gathered}$};
+
+        \draw[MyBlockDiagramArrow]
+            (summing) -- (amplifier)
+                node[midway, above]{$x_i$}
+                node[midway, below]{$= x_s - \beta x_o$}
+        ;
+        \draw[MyBlockDiagramArrow]
+            (amplifier) -- (sampling)
+                node[midway, above]{$x_o$}
+                node[midway, below]{$= A_o x_i$}
+        ;
+        \draw[MyBlockDiagramArrow]
+            (sampling) -- (feedback -| sampling)
+            -- (feedback)
+                node[midway, above]{$x_o$}
+        ;
+        \draw[MyBlockDiagramArrow]
+            (feedback) -- (feedback -| summing)
+                node[midway, above]{$x_f$}
+                node[midway, below]{$= \beta x_o$}
+            -- (summing)
+        ;
+
+        \draw[MyBlockDiagramArrow] (input) -- (summing);
+        \draw[MyBlockDiagramArrow] (sampling) -- (output);
+    \end{tikzpicture}
+    \end{minipage}
+
+\end{CheatsheetEntryFrame}
+
+\begin{CheatsheetEntryFrame}
+
+    \CheatsheetEntryTitle{Feedback Topologies}
+
+    Basic topology identification strategy:
+    \vspace*{-5mm}
+    \begin{center}
+    \begin{tabular}{|l|c|c|}
+        \cline{2-3}
+        \multicolumn{1}{c|}{}
+            & \thead{Yes}
+            & \thead{No} \\\hline
+        Is \myul{$A_o$ input node} the same as \myul{$\beta$ input node}?
+            & \emph{Shunt} Input
+            & \emph{Series} Input \\\hline
+        Is \myul{$A_o$ output node} the same as \myul{$\beta$ output node}?
+            & \emph{Shunt} Output
+            & \emph{Series} Output \\\hline
+    \end{tabular}
+    \end{center}
+
+    \bigskip
+
+    \newcommand{\TmpFBSeries}[0]{\textbf{\color{mypurple}series}}
+    \newcommand{\TmpFBShunt}[0]{\textbf{\color{myblue}shunt}}
+    \newcommand{\TmpFBVoltage}[0]{\textbf{\color{mygreen}Voltage}}
+    \newcommand{\TmpFBCurrent}[0]{\textbf{\color{myred}Current}}
+
+    \newcommand{\TmpFBAF}[2]{%
+        $\displaystyle \MathSumStrut{I} #1$\hspace{3mm}
+        {\footnotesize \parbox[c]{2.4cm}{#2 \\ amplifier}}%
+    }
+
+    Topologies and their appropriate feedback network two-port parameters:
+    %\begin{gather*}
+    %    \text{series-series} \to z
+    %    \qquad\qquad
+    %    \text{series-shunt} \to h
+    %    \qquad\qquad
+    %    \text{shunt-shunt} \to y
+    %    \qquad\qquad
+    %    \text{shunt-series} \to g
+    %\end{gather*}
+    \begin{center}
+    \begin{tabular}{|c||c|c|c||c|c||c|}
+        \hline
+        \thead{Topology}
+            & \thead{Input \\ Loading Effect}
+            & \thead{$\beta$}
+            & \thead{Output \\ Loading Effect}
+            & \thead{Input \\ Summing}
+            & \thead{Output \\ Sampling}
+            & $A_f$
+            \\\hline\hline
+        \TmpFBSeries{}-\TmpFBSeries{}
+            & $z_{11}$ & $z_{12}$ & $z_{22}$ & \TmpFBVoltage{} & \TmpFBCurrent{}
+            & \TmpFBAF{\frac{i_o}{v_s}}{transconductance}
+            \\\hline
+        \TmpFBSeries{}-\TmpFBShunt{}
+            & $h_{11}$ & $h_{12}$ & $h_{22}$ & \TmpFBVoltage{} & \TmpFBVoltage{}
+            & \TmpFBAF{\frac{v_o}{v_s}}{voltage}
+            \\\hline
+        \TmpFBShunt{}-\TmpFBShunt{}
+            & $y_{11}$ & $y_{12}$ & $y_{22}$ & \TmpFBCurrent{} & \TmpFBVoltage{}
+            & \TmpFBAF{\frac{v_o}{i_s}}{transimpedance}
+            \\\hline
+        \TmpFBShunt{}-\TmpFBSeries{}
+            & $g_{11}$ & $g_{12}$ & $g_{22}$ & \TmpFBCurrent{} & \TmpFBCurrent{}
+            & \TmpFBAF{\frac{i_o}{i_s}}{current}
+            \\\hline
+    \end{tabular}
+    \end{center}
+
+    \bigskip
+
+    \Todo{Sort these equations}
+    \begin{gather*}
+        R_{if} =
+            \begin{cases}
+                \displaystyle R_i \parens{1 + \beta A_o}  & \quad \text{if \emph{series} input} \\
+                \displaystyle R_i \frac{\mathstrut 1}{1 + \beta A_o} & \quad \text{if \emph{shunt} input}
+            \end{cases}
+        \qquad\qquad
+        R_{of} =
+            \begin{cases}
+                \displaystyle R_o \parens{1 + \beta A_o}  & \quad \text{if \emph{series} output} \\
+                \displaystyle R_o \frac{\mathstrut 1}{1 + \beta A_o} & \quad \text{if \emph{shunt} output}
+            \end{cases}
+        \\
+        \omega_{fH} = \omega_H \parens{1 + \beta A_o}
+        \qquad\qquad
+        \omega_{fL} = \omega_L \frac{1}{1 + \beta A_o}
+    \end{gather*}
+
+\end{CheatsheetEntryFrame}
+
+\begin{CheatsheetEntryFrame}
+
+    \CheatsheetEntryTitle{Feedback Amplifier General Analysis Method}
+    \begin{enumerate}
+        \item Identify the \emph{feedback topology} and \emph{feedback network}.
+        \item Choose the appropriate \emph{two-port network parameters} and calculate them.
+        \item Draw a small signal equivalent circuit of the open loop amplifier \myul{with loading effects included}.
+        \item Calculate $A_f$, $R_{if}$, and $R_{of}$ as required.
+    \end{enumerate}
+
+\end{CheatsheetEntryFrame}
+
+%\begin{multicols}{2}
+%\end{multicols}
 

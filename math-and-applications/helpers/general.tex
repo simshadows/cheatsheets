@@ -4,3 +4,22 @@
 
 \renewcommand\theadfont{\normalfont\bfseries}
 
+%
+% "Soft" separator lines
+% Named so because they are meant to be "soft" in appearance, achieved by being a thin grey line rather than
+% a thick black line, so it's a lot easier ("softer") on the eyes.
+% Very useful with minipages.
+%
+
+\newcommand{\SoftVSep}{% DEPRECATED
+    \hfill{\color{lightgray} \vline}\hfill%
+}
+\newcommand{\SoftVLine}{%
+    \hfill{\color{lightgray} \vline}\hfill%
+}
+\newcommand{\SoftHLine}{%
+    {\color{lightgray} \hrule{}}
+}
+
+
+

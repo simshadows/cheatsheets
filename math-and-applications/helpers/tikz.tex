@@ -1,3 +1,23 @@
+%
+% Generic soft gray style
+% Example:
+%     \draw[simshadows/style/softgray]
+%         (0,0) rectangle (1,1)
+%     ;
+%
+
+\tikzset{
+    simshadows/style/softgray/.style={
+        lightgray,
+        line width=3.0pt,
+        fill=verylightgray,
+    }
+}
+
+%
+% Block Diagram helpers
+%
+
 \tikzstyle{MyBlockDiagramArrow} = [
     ultra thick,
     ->,

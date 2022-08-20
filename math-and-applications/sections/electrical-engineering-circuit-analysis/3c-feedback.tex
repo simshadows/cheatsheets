@@ -65,6 +65,11 @@
 
 \end{CheatsheetEntryFrame}
 
+\newcommand{\TmpFBSeries}[0]{\textbf{\color{mypurple}series}}
+\newcommand{\TmpFBShunt}[0]{\textbf{\color{myblue}shunt}}
+\newcommand{\TmpFBVoltage}[0]{\textbf{\color{mygreen}voltage}}
+\newcommand{\TmpFBCurrent}[0]{\textbf{\color{myred}current}}
+
 \begin{CheatsheetEntryFrame}
 
     \CheatsheetEntryTitle{Feedback Topologies}
@@ -121,11 +126,6 @@
 
         \bigskip
 
-        \newcommand{\TmpFBSeries}[0]{\textbf{\color{mypurple}series}}
-        \newcommand{\TmpFBShunt}[0]{\textbf{\color{myblue}shunt}}
-        \newcommand{\TmpFBVoltage}[0]{\textbf{\color{mygreen}voltage}}
-        \newcommand{\TmpFBCurrent}[0]{\textbf{\color{myred}current}}
-
         %\newcommand{\TmpFBAF}[2]{%
         %    $\displaystyle \MathSumStrut{I} #1$\hspace{3mm}
         %    {\footnotesize \parbox[c]{2.4cm}{#2 \\ amplifier}}%
@@ -163,86 +163,77 @@
         \end{center}
         \bigskip
     \end{minipage}%
+    \smallskip
     \SoftHLine
-    \bigskip
 
-    \myul{Series-Series Topology}
-    \begin{center}
-    \begin{circuitikz}
+    \newcommand{\TmpFBBaseDrawing}[2]{%
+        \begin{minipage}[c]{0.49\columnwidth}
+            \MinipageInheritDocumentFormatting
+            #1
+            \vspace*{-4mm}
+            \begin{center}
+            \scalebox{0.88}{
+            \begin{circuitikz}
+                \draw
+                    % Box: A
+                    (0,0)
+                        node[
+                            rectangle,
+                            minimum width=1.2cm,
+                            minimum height=2cm,
+                            text centered,
+                            draw=black,
+                            fill=black!10,
+                            anchor=center
+                        ] (AmplifierOL1) {$A$}
+                    (AmplifierOL1.west) ++(0, 0.6) coordinate (AmplifierOL1_i1)
+                    (AmplifierOL1.west) ++(0,-0.6) coordinate (AmplifierOL1_i2)
+                    (AmplifierOL1.east) ++(0, 0.6) coordinate (AmplifierOL1_o1)
+                    (AmplifierOL1.east) ++(0,-0.6) coordinate (AmplifierOL1_o2)
+
+                    % Box: Feedback Network
+                    (0,-3)
+                        node[
+                            rectangle,
+                            minimum width=3cm,
+                            minimum height=2cm,
+                            text centered,
+                            draw=black,
+                            %fill=black!10,
+                            anchor=center
+                        ] (AmplifierFB) {}
+                    (AmplifierFB.west) ++(0, 0.6) coordinate (AmplifierFB_i1)
+                    (AmplifierFB.west) ++(0,-0.6) coordinate (AmplifierFB_i2)
+                    (AmplifierFB.east) ++(0, 0.6) coordinate (AmplifierFB_o1)
+                    (AmplifierFB.east) ++(0,-0.6) coordinate (AmplifierFB_o2)
+                ;
+                #2
+            \end{circuitikz}
+            }
+            \end{center}
+            \bigskip
+        \end{minipage}%
+    }
+    \newcommand{\TmpFBInputSeries}[2]{
         \draw
-            % Box: A
-            (0,0)
-                node[
-                    rectangle,
-                    minimum width=2cm,
-                    minimum height=2cm,
-                    text centered,
-                    draw=black,
-                    fill=black!10,
-                    anchor=center
-                ] (AmplifierOL1) {$A$}
-            (AmplifierOL1.west) ++(0, 0.6) coordinate (AmplifierOL1_i1)
-            (AmplifierOL1.west) ++(0,-0.6) coordinate (AmplifierOL1_i2)
-            (AmplifierOL1.east) ++(0, 0.6) coordinate (AmplifierOL1_o1)
-            (AmplifierOL1.east) ++(0,-0.6) coordinate (AmplifierOL1_o2)
-
-            % Box: Feedback Network
-            (0,-3)
-                node[
-                    rectangle,
-                    minimum width=3cm,
-                    minimum height=2cm,
-                    text centered,
-                    draw=black,
-                    %fill=black!10,
-                    anchor=center
-                ] (AmplifierFB) {}
-            (AmplifierFB.west) ++(0, 0.6) coordinate (AmplifierFB_i1)
-            (AmplifierFB.west) ++(0,-0.6) coordinate (AmplifierFB_i2)
-            (AmplifierFB.east) ++(0, 0.6) coordinate (AmplifierFB_o1)
-            (AmplifierFB.east) ++(0,-0.6) coordinate (AmplifierFB_o2)
+            % Around Box A
+            (AmplifierOL1_i1) to[R, l_=$R_s      $] ++(-1.6,0) coordinate (AmplifierOL2_i1)
+            (AmplifierOL1_i2) to[R, l_=${#1}_{11}$] ++(-1.6,0) coordinate (AmplifierOL2_i2)
 
             % Feedback Network Internals
             (AmplifierFB_i1)
                 -- ++(0.65,0)
                     coordinate (AmplifierFB_i1_TMP)
-                to[american controlled voltage source, l=$\beta i_o$, bipoles/length=1.2cm] (AmplifierFB_i1_TMP |- AmplifierFB_i2)
+                to[american controlled voltage source, l=$\beta {#2}_o$, bipoles/length=1.2cm] (AmplifierFB_i1_TMP |- AmplifierFB_i2)
                 -- (AmplifierFB_i2)
-            (AmplifierFB_o1)
-                -- ++(-0.65,0)
-                |- (AmplifierFB_o2)
 
-            % Around Box A
-            (AmplifierOL1_i1) to[R, l_=$R_s   $] ++(-2,0) coordinate (AmplifierOL2_i1)
-            (AmplifierOL1_i2) to[R, l_=$z_{11}$] ++(-2,0) coordinate (AmplifierOL2_i2)
-            (AmplifierOL1_o1) to[R, l^=$R_L   $] ++( 2,0) coordinate (AmplifierOL2_o1)
-            (AmplifierOL1_o2) to[R, l^=$z_{22}$] ++( 2,0) coordinate (AmplifierOL2_o2)
-        ;
-        %\draw[lightgray, line width=2.0pt]
-        \draw[lightgray, dashed]
-            % Box: A_o
-            (AmplifierOL2_i1) ++(0, 0.85) coordinate (AmplifierOL2_TL)
-            (AmplifierOL2_o2) ++(0,-0.85) coordinate (AmplifierOL2_BR)
-            (AmplifierOL2_TL) rectangle (AmplifierOL2_BR)
-            
-        ;
-        \draw
-            % Box: A_o (continued)
-            (AmplifierOL2_TL) node[above right] {$A_o$}
-
-            % Everything Else
-
+            % Outer
             (AmplifierOL2_i2) -- ++(-0.7,0) |- (AmplifierFB_i1)
-            (AmplifierOL2_o2) -- ++( 0.7,0) |- (AmplifierFB_o1)
-
             (AmplifierOL2_i1) -- ++(-1.7,0)
                 to[V, v_=$v_s$] ++(0,-2)
                 |- (AmplifierFB_i2)
-            (AmplifierOL2_o1) -- ++( 1.7,0) |- (AmplifierFB_o2)
 
-            (AmplifierOL2_o1) ++(0.75,0) node[currarrow, label=above:$i_o$, rotate=180]{}
-            (AmplifierFB_o1)  ++(1.00,0) node[currarrow, label=above:$i_o$, rotate=180]{}
-
+            % Annotations
             (AmplifierOL2_i1) ++(-0.35,0) coordinate (AmplifierOL2_i1_v_TMP)
             (AmplifierOL2_i2) ++(-0.35,0) coordinate (AmplifierOL2_i2_v_TMP)
             (AmplifierFB_i1)  ++(-0.35,0) coordinate (AmplifierFB_i1_v_TMP)
@@ -251,11 +242,159 @@
             (AmplifierOL2_i1_v_TMP) to[open, v=$v_i$] (AmplifierOL2_i2_v_TMP)
             (AmplifierFB_i1_v_TMP)  to[open, v=$v_f$] (AmplifierFB_i2_v_TMP)
         ;
-    \end{circuitikz}
-    \end{center}
-    \bigskip
+    }
+    \newcommand{\TmpFBOutputSeries}[1]{
+        \draw
+            % Around Box A
+            (AmplifierOL1_o1) to[R, l^=$R_L      $] ++( 1.6,0) coordinate (AmplifierOL2_o1)
+            (AmplifierOL1_o2) to[R, l^=${#1}_{22}$] ++( 1.6,0) coordinate (AmplifierOL2_o2)
+
+            % Feedback Network Internals
+            (AmplifierFB_o1)
+                -- ++(-0.65,0)
+                |- (AmplifierFB_o2)
+
+            % Outer
+            (AmplifierOL2_o2) -- ++( 0.7,0) |- (AmplifierFB_o1)
+            (AmplifierOL2_o1) -- ++( 1.7,0) |- (AmplifierFB_o2)
+
+            % Annotations
+            (AmplifierOL2_o1) ++(0.75,0) node[currarrow, label=above:$i_o$, rotate=180]{}
+            (AmplifierFB_o1)  ++(1.00,0) node[currarrow, label=above:$i_o$, rotate=180]{}
+        ;
+    }
+    \newcommand{\TmpFBInputShunt}[2]{
+        \draw
+            % Around Box A
+            (AmplifierOL1_i1)
+                -- ++(-0.5,0) coordinate (AmplifierOL1_i1_TMP1)
+                -- ++(-1.2,0) coordinate (AmplifierOL1_i1_TMP2)
+                -- ++(-0.8,0) coordinate (AmplifierOL2_i1)
+            (AmplifierOL1_i2)
+                -- (AmplifierOL1_i2 -| AmplifierOL2_i1)
+                    coordinate (AmplifierOL2_i2)
+
+            (AmplifierOL1_i1_TMP1)
+                to[R, l_=$\displaystyle \frac{1}{{#1}_{11}}$] (AmplifierOL1_i1_TMP1 |- AmplifierOL1_i2)
+            (AmplifierOL1_i1_TMP2)
+                to[R, l_=$R_s$] (AmplifierOL1_i1_TMP2 |- AmplifierOL1_i2)
+
+            % Feedback Network Internals
+            (AmplifierFB_i1)
+                -- ++(0.65,0)
+                    coordinate (AmplifierFB_i1_TMP)
+                to[american controlled current source, l=$\beta {#2}_o$, bipoles/length=1.2cm] (AmplifierFB_i1_TMP |- AmplifierFB_i2)
+                -- (AmplifierFB_i2)
+
+            % Outer
+            (AmplifierOL2_i1)
+                -- ++(-1.2,0)
+                    coordinate (AmplifierOL2_i1_TMP)
+                to[I, invert, l_=$i_s$] (AmplifierOL2_i1_TMP |- AmplifierOL2_i2)
+                -- (AmplifierOL2_i2)
+
+            (AmplifierOL2_i1)
+                ++(-0.3,0)
+                    node[circ]{}
+                to[crossing] ++(0,-2.4)
+                |- (AmplifierFB_i1)
+            (AmplifierOL2_i2)
+                ++(-0.8,0)
+                    node[circ]{}
+                |- (AmplifierFB_i2)
+
+            %(AmplifierOL2_o1) ++(0.75,0) node[currarrow, label=above:$i_o$, rotate=180]{}
+            (AmplifierFB_i1)  ++(-1.00,0) node[currarrow, label=above:$i_f$]{}
+        ;
+    }
+    \newcommand{\TmpFBOutputShunt}[1]{
+        \draw
+            % Around Box A
+            (AmplifierOL1_o1)
+                -- ++(0.5,0) coordinate (AmplifierOL1_o1_TMP1)
+                -- ++(1.2,0) coordinate (AmplifierOL1_o1_TMP2)
+                -- ++(0.8,0) coordinate (AmplifierOL2_o1)
+            (AmplifierOL1_o2)
+                -- (AmplifierOL1_o2 -| AmplifierOL2_o1)
+                    coordinate (AmplifierOL2_o2)
+
+            (AmplifierOL1_o1_TMP1)
+                to[R, l^=$\displaystyle \frac{1}{{#1}_{22}}$] (AmplifierOL1_o1_TMP1 |- AmplifierOL1_o2)
+            (AmplifierOL1_o1_TMP2)
+                to[R, l^=$R_L$] (AmplifierOL1_o1_TMP2 |- AmplifierOL1_o2)
+
+            % Feedback Network Internals
+            (AmplifierFB_o1)
+                -- ++(-0.65,0)
+                    node[ocirc]{}
+            (AmplifierFB_o2)
+                -- ++(-0.65,0)
+                    node[ocirc]{}
+
+            % Outer
+                (AmplifierOL2_o1) -- ++(1.2,0) node[ocirc]{} ++(0,-0.1) coordinate (TMP_output1)
+            (AmplifierOL2_o2) -- ++(1.2,0)
+                node[ocirc]{}
+                ++(0,0.1)
+                to[open, v<=$v_o$] (TMP_output1)
+
+            (AmplifierOL2_o1)
+                ++(0.3,0)
+                    node[circ]{}
+                to[crossing] ++(0,-2.4)
+                |- (AmplifierFB_o1)
+            (AmplifierOL2_o2)
+                ++(0.8,0)
+                    node[circ]{}
+                |- (AmplifierFB_o2)
+
+            (AmplifierFB_o1) ++(0.35,0) coordinate (AmplifierFB_o1_v_TMP)
+            (AmplifierFB_o2) ++(0.35,0) coordinate (AmplifierFB_o2_v_TMP)
+
+            (AmplifierFB_o1_v_TMP) to[open, v=$v_o$] (AmplifierFB_o2_v_TMP)
+        ;
+    }
+    \newcommand{\TmpFBOLBox}{
+        \draw[lightgray, dashed]
+            % Box: A_o
+            (AmplifierOL2_o1) ++(0, 0.85) coordinate (AmplifierOL2_TR)
+            (AmplifierOL2_i2) ++(0,-0.85) coordinate (AmplifierOL2_BL)
+            (AmplifierOL2_TR) rectangle (AmplifierOL2_BL)
+        ;
+        \draw
+            % Box: A_o (continued)
+            (AmplifierOL2_TR) node[above left] {$A_o$}
+        ;
+    }
+
+    \TmpFBBaseDrawing{\TmpFBSeries{}-\TmpFBSeries{}}{
+        \TmpFBInputSeries{z}{i}
+        \TmpFBOutputSeries{z}
+        \TmpFBOLBox{}
+    }%
+    \SoftVLine{}%
+    \TmpFBBaseDrawing{\TmpFBShunt{}-\TmpFBShunt{}}{
+        \TmpFBInputShunt{y}{v}
+        \TmpFBOutputShunt{y}
+        \TmpFBOLBox{}
+    }%
+    \smallskip%
+    \SoftHLine%
+    \TmpFBBaseDrawing{\TmpFBSeries{}-\TmpFBShunt{}}{
+        \TmpFBInputSeries{h}{v}
+        \TmpFBOutputShunt{h}
+        \TmpFBOLBox{}
+    }%
+    \SoftVLine{}%
+    \TmpFBBaseDrawing{\TmpFBShunt{}-\TmpFBSeries{}}{
+        \TmpFBInputShunt{g}{i}
+        \TmpFBOutputSeries{g}
+        \TmpFBOLBox{}
+    }%
 
 \end{CheatsheetEntryFrame}
+
+\newpage
 
 \begin{CheatsheetEntryFrame}
 

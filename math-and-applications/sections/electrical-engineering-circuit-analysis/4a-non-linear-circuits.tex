@@ -5,7 +5,117 @@
 
 \begin{multicols}{2}
 
-    \Todo{this}
+    \begin{CheatsheetEntryFrame}
+        \CheatsheetEntryTitle{Multivibrators}
 
+        Three major categories:
+        \begin{itemize}
+            \item \textbf{Bistable:} Two stable states
+            \item \textbf{Monostable:} One stable state {\footnotesize (pulse generator)}
+            \item \textbf{Astable:} No stable states  {\footnotesize (waveform generator)}
+        \end{itemize}
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+        \CheatsheetEntryTitle{Inverting Schmitt Trigger}\\[0mm]
+        \emph{\footnotesize (Bistable Multivibrator)}
+        \begin{center}
+        \begin{circuitikz}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input up, anchor=out](OA){}
+                (OA.-)
+                    -- ++(-0.4,0)
+                        node[ocirc, label=left:$v_i$]{}
+                        coordinate(GND)
+                (OA.+)
+                    -- ++(-0.4,0)
+                        coordinate(A)
+                (OA.out)
+                    -- ++(0.3,0)
+                        coordinate(C)
+                    -- ++(0.8,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Left Side
+                (A)
+                    to[R, red, color=red, l_=$R_1$] ++(-3,0)
+                    \MyGround{}
+
+                % Feedback
+                (C)
+                    -- ++(0,1.8)
+                    to[R, blue, color=blue, l=$R_2$] ++(-2.8,0)
+                    -| (A)
+
+                %% TODO: Replace this with a proper equation?
+                %% Equation
+                %(OA.-)
+                %    ++(-2.6,-0.2)
+                %        node[below]{$
+                %            \displaystyle
+                %            \boxed{\frac{v_o}{v_i} = 1 + \frac{\color{blue} R_2}{\color{red} R_1}}
+                %        $}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        \Todo{Add more notes?}
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+        \CheatsheetEntryTitle{Non-Inverting Schmitt Trigger}\\[0mm]
+        \emph{\footnotesize (Bistable Multivibrator)}
+        \begin{center}
+        \begin{circuitikz}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input up, anchor=out](OA){}
+                (OA.-)
+                    -- ++(-0.4,0)
+                    \MyGround{}
+                        coordinate(GND)
+                (OA.+)
+                    -- ++(-0.4,0)
+                        coordinate(A)
+                (OA.out)
+                    -- ++(0.3,0)
+                        coordinate(C)
+                    -- ++(0.8,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Left Side
+                (A)
+                    to[R, red, color=red, l_=$R_1$] ++(-3,0)
+                        node[ocirc, label=left:$v_i$]{}
+
+                % Feedback
+                (C)
+                    -- ++(0,1.8)
+                    to[R, blue, color=blue, l=$R_2$] ++(-2.8,0)
+                    -| (A)
+
+                %% TODO: Replace this with a proper equation?
+                %% Equation
+                %(OA.-)
+                %    ++(-2.6,-0.2)
+                %        node[below]{$
+                %            \displaystyle
+                %            \boxed{\frac{v_o}{v_i} = 1 + \frac{\color{blue} R_2}{\color{red} R_1}}
+                %        $}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        \Todo{Add more notes?}
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \Todo{}
+
+    \MulticolsCleanEnd
 \end{multicols}
 

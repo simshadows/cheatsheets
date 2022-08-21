@@ -1074,7 +1074,7 @@
 \end{multicols}
 \begin{multicols}{2}
 
-    \begin{CheatsheetEntryFrame}
+    \begin{CheatsheetEntryFrameStart}
 
         \CheatsheetEntryTitle{Two-Port Network}
 
@@ -1092,19 +1092,19 @@
                 to[short, -o] ++(-1.2,0)
                 node[left] {$b_1$}
                 ++(-1.0, 0)
-                to[open, v_<=$V_1$] ++(0, 1.5)
+                to[open, v_<=$\memphR{V_1}$] ++(0, 1.5)
                 ++(1.0, 0)
                 node[left] {$a_1$}
-                to[short, o-, i=$I_1$] ++( 1.2,0)
+                to[short, o-, i=$\memphR{I_1}$] ++( 1.2,0)
 
                 (BoxBRref)
                 to[short, -o] ++( 1.2,0)
                 node[right] {$b_2$}
                 ++(1.0, 0)
-                to[open, v<=$V_2$] ++(0, 1.5)
+                to[open, v<=$\memphB{V_2}$] ++(0, 1.5)
                 ++(-1.0, 0)
                 node[right] {$a_2$}
-                to[short, o-, i_=$I_2$] ++(-1.2,0)
+                to[short, o-, i_=$\memphB{I_2}$] ++(-1.2,0)
             ;
             \draw
                 (BoxBL) rectangle (BoxTR)
@@ -1119,8 +1119,8 @@
         Impedance Parameters:
         \begin{equation*}
             \begin{bmatrix}
-                V_1 \\
-                V_2
+                \memphR{V_1} \\
+                \memphB{V_2}
             \end{bmatrix}
             =
             \begin{bmatrix}
@@ -1128,15 +1128,15 @@
                 z_{21} & z_{22}
             \end{bmatrix}
             \begin{bmatrix}
-                I_1 \\
-                I_2
+                \memphR{I_1} \\
+                \memphB{I_2}
             \end{bmatrix}
         \end{equation*}
         \begin{align*}
-            z_{11} &= \evalat{\frac{V_1}{I_1}}{I_2 = 0} \quad &
-            z_{12} &= \evalat{\frac{V_1}{I_2}}{I_1 = 0} \\
-            z_{21} &= \evalat{\frac{V_2}{I_1}}{I_2 = 0} \quad &
-            z_{22} &= \evalat{\frac{V_2}{I_2}}{I_1 = 0}
+            z_{11} &= \evalat{\frac{\memphR{V_1}}{\memphR{I_1}}}{\memphB{I_2 = 0}} \quad &
+            z_{12} &= \evalat{\frac{\memphR{V_1}}{\memphB{I_2}}}{\memphR{I_1 = 0}} \\
+            z_{21} &= \evalat{\frac{\memphB{V_2}}{\memphR{I_1}}}{\memphB{I_2 = 0}} \quad &
+            z_{22} &= \evalat{\frac{\memphB{V_2}}{\memphB{I_2}}}{\memphR{I_1 = 0}}
         \end{align*}
         %\begin{align*}
         %    z_{11} &= \evalat{\frac{V_1}{I_1}}{I_2 = 0} \\
@@ -1154,8 +1154,8 @@
         Admittance Parameters:
         \begin{equation*}
             \begin{bmatrix}
-                I_1 \\
-                I_2
+                \memphR{I_1} \\
+                \memphB{I_2}
             \end{bmatrix}
             =
             \begin{bmatrix}
@@ -1163,16 +1163,16 @@
                 y_{21} & y_{22}
             \end{bmatrix}
             \begin{bmatrix}
-                V_1 \\
-                V_2
+                \memphR{V_1} \\
+                \memphB{V_2}
             \end{bmatrix}
         \end{equation*}
-        %\begin{align*}
-        %    y_{11} &= \evalat{\frac{I_1}{V_1}}{V_2 = 0} \quad &
-        %    y_{12} &= \evalat{\frac{I_1}{V_2}}{V_1 = 0} \\
-        %    y_{21} &= \evalat{\frac{I_2}{V_1}}{V_2 = 0} \quad &
-        %    y_{22} &= \evalat{\frac{I_2}{V_2}}{V_1 = 0}
-        %\end{align*}
+        \begin{align*}
+            y_{11} &= \evalat{\frac{\memphR{I_1}}{\memphR{V_1}}}{\memphB{V_2 = 0}} \quad &
+            y_{12} &= \evalat{\frac{\memphR{I_1}}{\memphB{V_2}}}{\memphR{V_1 = 0}} \\
+            y_{21} &= \evalat{\frac{\memphB{I_2}}{\memphR{V_1}}}{\memphB{V_2 = 0}} \quad &
+            y_{22} &= \evalat{\frac{\memphB{I_2}}{\memphB{V_2}}}{\memphR{V_1 = 0}}
+        \end{align*}
         %\begin{equation*}
         %    \begin{bmatrix}
         %        z_{11} & z_{12} \\
@@ -1196,8 +1196,8 @@
         Hybrid Parameters:
         \begin{equation*}
             \begin{bmatrix}
-                V_1 \\
-                I_2
+                \memphR{V_1} \\
+                \memphB{I_2}
             \end{bmatrix}
             =
             \begin{bmatrix}
@@ -1205,22 +1205,22 @@
                 h_{21} & h_{22}
             \end{bmatrix}
             \begin{bmatrix}
-                I_1 \\
-                V_2
+                \memphR{I_1} \\
+                \memphB{V_2}
             \end{bmatrix}
         \end{equation*}
         \begin{align*}
-            h_{11} &= \evalat{\frac{V_1}{I_1}}{V_2 = 0} \quad &
-            h_{12} &= \evalat{\frac{V_1}{V_2}}{I_1 = 0} \\
-            h_{21} &= \evalat{\frac{I_2}{I_1}}{V_2 = 0} \quad &
-            h_{22} &= \evalat{\frac{I_2}{V_2}}{I_1 = 0}
+            h_{11} &= \evalat{\frac{\memphR{V_1}}{\memphR{I_1}}}{\memphB{V_2 = 0}} \quad &
+            h_{12} &= \evalat{\frac{\memphR{V_1}}{\memphB{V_2}}}{\memphR{I_1 = 0}} \\
+            h_{21} &= \evalat{\frac{\memphB{I_2}}{\memphR{I_1}}}{\memphB{V_2 = 0}} \quad &
+            h_{22} &= \evalat{\frac{\memphB{I_2}}{\memphB{V_2}}}{\memphR{I_1 = 0}}
         \end{align*}
 
         Inverse Hybrid Parameters:
         \begin{equation*}
             \begin{bmatrix}
-                I_1 \\
-                V_2
+                \memphR{I_1} \\
+                \memphB{V_2}
             \end{bmatrix}
             =
             \begin{bmatrix}
@@ -1228,16 +1228,29 @@
                 g_{21} & g_{22}
             \end{bmatrix}
             \begin{bmatrix}
-                V_1 \\
-                I_2
+                \memphR{V_1} \\
+                \memphB{I_2}
             \end{bmatrix}
         \end{equation*}
+        \begin{align*}
+            g_{11} &= \evalat{\frac{\memphR{I_1}}{\memphR{V_1}}}{\memphB{I_2 = 0}} \quad &
+            g_{12} &= \evalat{\frac{\memphR{I_1}}{\memphB{I_2}}}{\memphR{V_1 = 0}} \\
+            g_{21} &= \evalat{\frac{\memphB{V_2}}{\memphR{V_1}}}{\memphB{I_2 = 0}} \quad &
+            g_{22} &= \evalat{\frac{\memphB{V_2}}{\memphB{I_2}}}{\memphR{V_1 = 0}}
+        \end{align*}
+        \vspace*{-6mm} % TODO: Why does this work?
+
+    \end{CheatsheetEntryFrameStart}
+
+    \MulticolsBreak
+
+    \begin{CheatsheetEntryFrameEnd}
 
         Transmission Parameters:
         \begin{equation*}
             \begin{bmatrix}
-                V_1 \\
-                I_1
+                \memphR{V_1} \\
+               \memphR{I_1} 
             \end{bmatrix}
             =
             \begin{bmatrix}
@@ -1245,16 +1258,16 @@
                 C & D
             \end{bmatrix}
             \begin{bmatrix}
-                V_2 \\
-                -I_2
+                \memphB{V_2} \\
+                -\memphB{I_2}
             \end{bmatrix}
         \end{equation*}
 
         Inverse Transmission Parameters:
         \begin{equation*}
             \begin{bmatrix}
-                V_2 \\
-                I_2
+                \memphB{V_2} \\
+                \memphB{I_2}
             \end{bmatrix}
             =
             \begin{bmatrix}
@@ -1262,14 +1275,12 @@
                 C' & D'
             \end{bmatrix}
             \begin{bmatrix}
-                V_1 \\
-                -I_1
+                \memphR{V_1} \\
+                -\memphR{I_1}
             \end{bmatrix}
         \end{equation*}
 
-    \end{CheatsheetEntryFrame}
-
-    \MulticolsBreak
+    \end{CheatsheetEntryFrameEnd}
 
     \begin{CheatsheetEntryFrame}
 

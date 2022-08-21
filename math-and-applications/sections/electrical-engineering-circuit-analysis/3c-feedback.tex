@@ -166,11 +166,20 @@
     \smallskip
     \SoftHLine
 
-    \newcommand{\TmpFBBaseDrawing}[2]{%
+    \newcommand{\TmpFBBaseDrawing}[4]{%
         \begin{minipage}[c]{0.49\columnwidth}
             \MinipageInheritDocumentFormatting
-            #1
-            \vspace*{-4mm}
+            %#1\\[0mm]
+            %{\footnotesize \textsc{(#2}}\\[0mm]
+            %{\footnotesize \textsc{Amplifier)}}
+            %\vspace*{-10mm}
+            %%
+            %#1 \hfill {\footnotesize \textsc{(#2 Amplifier)}}\\[3mm]
+            #1 {\footnotesize \textsc{(#2 Amplifier)}}\\[3mm]
+            \phantom{x}\scalebox{0.88}{
+                $\displaystyle A_f = #3$
+            }%
+            \vspace*{-11mm}
             \begin{center}
             \scalebox{0.88}{
             \begin{circuitikz}
@@ -207,11 +216,11 @@
                     (AmplifierFB.east) ++(0, 0.6) coordinate (AmplifierFB_o1)
                     (AmplifierFB.east) ++(0,-0.6) coordinate (AmplifierFB_o2)
                 ;
-                #2
+                #4
             \end{circuitikz}
             }
             \end{center}
-            \bigskip
+            \vspace*{3mm}
         \end{minipage}%
     }
     \newcommand{\TmpFBInputSeries}[2]{
@@ -275,7 +284,9 @@
                     coordinate (AmplifierOL2_i2)
 
             (AmplifierOL1_i1_TMP1)
-                to[R, l_=$\displaystyle \frac{1}{{#1}_{11}}$] (AmplifierOL1_i1_TMP1 |- AmplifierOL1_i2)
+                % TODO: I'm not sure which one's right
+                %to[R, l_=$\displaystyle \frac{1}{{#1}_{11}}$] (AmplifierOL1_i1_TMP1 |- AmplifierOL1_i2)
+                to[R, l_=$\displaystyle {#1}_{11}$] (AmplifierOL1_i1_TMP1 |- AmplifierOL1_i2)
             (AmplifierOL1_i1_TMP2)
                 to[R, l_=$R_s$] (AmplifierOL1_i1_TMP2 |- AmplifierOL1_i2)
 
@@ -303,7 +314,7 @@
                     node[circ]{}
                 |- (AmplifierFB_i2)
 
-            %(AmplifierOL2_o1) ++(0.75,0) node[currarrow, label=above:$i_o$, rotate=180]{}
+            (AmplifierOL2_i1) ++( 0.50,0) node[currarrow, label=above:$i_i$]{}
             (AmplifierFB_i1)  ++(-1.00,0) node[currarrow, label=above:$i_f$]{}
         ;
     }
@@ -319,7 +330,9 @@
                     coordinate (AmplifierOL2_o2)
 
             (AmplifierOL1_o1_TMP1)
-                to[R, l^=$\displaystyle \frac{1}{{#1}_{22}}$] (AmplifierOL1_o1_TMP1 |- AmplifierOL1_o2)
+                % TODO: I'm not sure which one's right?
+                %to[R, l^=$\displaystyle \frac{1}{{#1}_{22}}$] (AmplifierOL1_o1_TMP1 |- AmplifierOL1_o2)
+                to[R, l^=$\displaystyle {#1}_{22}$] (AmplifierOL1_o1_TMP1 |- AmplifierOL1_o2)
             (AmplifierOL1_o1_TMP2)
                 to[R, l^=$R_L$] (AmplifierOL1_o1_TMP2 |- AmplifierOL1_o2)
 
@@ -367,26 +380,26 @@
         ;
     }
 
-    \TmpFBBaseDrawing{\TmpFBSeries{}-\TmpFBSeries{}}{
+    \TmpFBBaseDrawing{\TmpFBSeries{}-\TmpFBSeries{}}{Transconductance}{\frac{i_o}{v_s}}{
         \TmpFBInputSeries{z}{i}
         \TmpFBOutputSeries{z}
         \TmpFBOLBox{}
     }%
     \SoftVLine{}%
-    \TmpFBBaseDrawing{\TmpFBShunt{}-\TmpFBShunt{}}{
+    \TmpFBBaseDrawing{\TmpFBShunt{}-\TmpFBShunt{}}{Transimpedance}{\frac{v_o}{i_s}}{
         \TmpFBInputShunt{y}{v}
         \TmpFBOutputShunt{y}
         \TmpFBOLBox{}
     }%
     \smallskip%
     \SoftHLine%
-    \TmpFBBaseDrawing{\TmpFBSeries{}-\TmpFBShunt{}}{
+    \TmpFBBaseDrawing{\TmpFBSeries{}-\TmpFBShunt{}}{Voltage}{\frac{v_o}{v_s}}{
         \TmpFBInputSeries{h}{v}
         \TmpFBOutputShunt{h}
         \TmpFBOLBox{}
     }%
     \SoftVLine{}%
-    \TmpFBBaseDrawing{\TmpFBShunt{}-\TmpFBSeries{}}{
+    \TmpFBBaseDrawing{\TmpFBShunt{}-\TmpFBSeries{}}{Current}{\frac{i_o}{i_s}}{
         \TmpFBInputShunt{g}{i}
         \TmpFBOutputSeries{g}
         \TmpFBOLBox{}
@@ -403,12 +416,58 @@
         \item Identify the \emph{feedback topology} and \emph{feedback network}.
         \item Choose the appropriate \emph{two-port network parameters} and calculate them.
         \item Draw a small signal equivalent circuit of the open loop amplifier \myul{with loading effects included}.
+        \begin{itemize}
+            \item \emph{Your open loop amplifier should be equivalent to the closed loop amplifier with $\beta = 0$.}
+                % TODO: This can be a bit confusing without context.
+        \end{itemize}
         \item Calculate $A_o$, $R_i$, and $R_o$ {\footnotesize (via. circuit analysis of the previous step)}.
         \item Calculate $A_f$, $R_{if}$, and $R_{of}$ {\footnotesize (using the results of the previous step)}.
     \end{enumerate}
 
 \end{CheatsheetEntryFrame}
 
-%\begin{multicols}{2}
-%\end{multicols}
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Feedback Stability \emph{\footnotesize (introduction)}}
+
+        A system is \emph{stable} iff all bounded input signals produce bounded output.
+
+        Feedback can change from negative ($\qty{180}{\degree}$) \linebreak to positive ($\qty{360}{\degree}$) due to phase shift changes.
+
+        $\beta A_o \in (0, 1)$: {\color{mygreen} \textbf{stable}}, {\color{myblue} \textbf{negative feedback}}
+        \begin{pindent}
+            Output will quickly die after initial pulse.
+        \end{pindent}
+        $\beta A_o \in (-1, 0)$: {\color{mygreen} \textbf{stable}}, {\color{mypurple} \textbf{positive feedback}}
+        \begin{pindent}
+            Output will die away slowly after initial pulse.
+        \end{pindent}
+        $\beta A_o = -1$: {\color{myred} \textbf{unstable}}, {\color{mypurple} \textbf{positive feedback}}
+        \begin{pindent}
+            Output will be sustained and oscillate.
+        \end{pindent}
+        $\beta A_o \in (-\infty, -1)$: {\color{myred} \textbf{unstable}}, {\color{mypurple} \textbf{positive feedback}}
+        \begin{pindent}
+            Output will increase to saturation.
+        \end{pindent}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Properties of Negative Feedback}
+        \begin{enumerate}
+            \item Gain is reduced.
+            \item Bandwidth is increased.
+            \item Input and output impedance is affected (depending on topology/design)
+            \item Gain is desensitized from variations in the basic amplifier (e.g. from temperature changes).
+            \item Reduces non-linear distortion.
+            \item Can be used for noise reduction (using a low-noise amplifier stage).
+        \end{enumerate}
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
 

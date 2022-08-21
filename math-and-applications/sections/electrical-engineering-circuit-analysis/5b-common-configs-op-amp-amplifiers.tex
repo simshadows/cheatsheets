@@ -1,0 +1,358 @@
+\subsubsection{Opamp Amplifiers}
+
+\begin{CheatsheetEntryFrame}
+
+    \newcommand{\TmpOpampConfigRow}[3]{
+        %\vspace*{1ex}
+        \begin{minipage}[c]{0.40\textwidth}
+            \MinipageInheritDocumentFormatting
+            \myul{#1}
+
+            #2
+        \end{minipage}%
+        \begin{minipage}[c]{0.60\textwidth}
+        \begin{center}
+            \begin{circuitikz}
+                #3
+            \end{circuitikz}
+        \end{center}
+        \end{minipage}%
+        \vspace*{1ex}
+    }
+    \newcommand{\TmpOpampSeparator}{
+        \bigskip
+        {\color{lightgray} \hrule{}}
+        \bigskip
+    }
+
+    \CheatsheetEntryTitle{Common Opamp Configurations}
+
+    \TmpOpampSeparator
+
+    \begin{minipage}[t]{0.46\textwidth}
+        \MinipageInheritDocumentFormatting
+        \myul{Inverting Amplifier}
+
+        \begin{center}
+        %\scalebox{0.8}{
+        \begin{circuitikz}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -| ++(-0.4,-0.5)
+                        coordinate(GND)
+                    \MyGround{}
+                (OA.-)
+                    -- ++(-0.4,0)
+                        coordinate(A)
+                (OA.out)
+                    -- ++(0.3,0)
+                        coordinate(C)
+                    -- ++(0.8,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Left Side
+                (A)
+                    to[R, l_=$R_1$, red, color=red] ++(-3,0)
+                        node[ocirc, label=left:$v_i$]{}
+
+                % Feedback
+                (C)
+                    -- ++(0,1.8)
+                    to[R, l=$R_2$, blue, color=blue] ++(-2.8,0)
+                    -| (A)
+
+                % Equation
+                (OA.+)
+                    ++(-2.6,0.2)
+                        node[below]{$
+                            \displaystyle
+                            \boxed{\frac{v_o}{v_i} = \frac{- \color{blue} R_2}{ \color{red} R_1}}
+                        $}
+            ;
+        \end{circuitikz}
+        %}
+        \end{center}
+    \end{minipage}%
+    \SoftVSep%
+    \begin{minipage}[t]{0.46\textwidth}
+        \MinipageInheritDocumentFormatting
+        \myul{Non-Inverting Amplifier}
+
+        \begin{center}
+        \begin{circuitikz}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -- ++(-0.4,0)
+                        node[ocirc, label=left:$v_i$]{}
+                        coordinate(GND)
+                (OA.-)
+                    -- ++(-0.4,0)
+                        coordinate(A)
+                (OA.out)
+                    -- ++(0.3,0)
+                        coordinate(C)
+                    -- ++(0.8,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Left Side
+                (A)
+                    to[R, red, color=red, l_=$R_1$] ++(-3,0)
+                    \MyGround{}
+
+                % Feedback
+                (C)
+                    -- ++(0,1.8)
+                    to[R, blue, color=blue, l=$R_2$] ++(-2.8,0)
+                    -| (A)
+
+                % Equation
+                (OA.+)
+                    ++(-2.6,-0.2)
+                        node[below]{$
+                            \displaystyle
+                            \boxed{\frac{v_o}{v_i} = 1 + \frac{\color{blue} R_2}{\color{red} R_1}}
+                        $}
+            ;
+        \end{circuitikz}
+        \end{center}
+    \end{minipage}%
+    \TmpOpampSeparator
+
+    \begin{minipage}[t]{0.46\textwidth}
+        \MinipageInheritDocumentFormatting
+        \myul{Unity-Gain Buffer}
+        \bigskip
+
+        \begin{center}
+        \begin{circuitikz}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -- ++(-0.4,0)
+                        node[ocirc, label=left:$v_i$]{}
+                        coordinate(GND)
+                (OA.-)
+                    -- ++(-0.4,0)
+                        coordinate(A)
+                (OA.out)
+                    -- ++(0.3,0)
+                        coordinate(C)
+                    -- ++(0.8,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Feedback
+                (C)
+                    |- ++(-2.8,1.5)
+                    -| (A)
+
+                % Equation
+                (OA.out)
+                    ++(0.7,-0.9)
+                        node[]{$\displaystyle \boxed{v_o = v_i}$}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        \bigskip
+        Useful for its high input impedance and low output impedance.
+    \end{minipage}%
+    \SoftVSep%
+    \begin{minipage}[t]{0.46\textwidth}
+        \MinipageInheritDocumentFormatting
+        \myul{Differentiator}
+        \begin{center}
+        \begin{circuitikz}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -| ++(-0.4,-0.5)
+                        coordinate(GND)
+                    \MyGround{}
+                (OA.-)
+                    -- ++(-0.4,0)
+                        coordinate(A)
+                (OA.out)
+                    -- ++(0.3,0)
+                        coordinate(C)
+                    -- ++(0.8,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Left Side
+                (A)
+                    to[C, red, color=red, l_=$C$] ++(-3,0)
+                        node[ocirc, label=left:$v_i$]{}
+
+                % Feedback
+                (C)
+                    -- ++(0,1.8)
+                    to[R, blue, color=blue, l_=$R$] ++(-2.8,0)
+                    -| (A)
+
+                % Equation
+                (OA.+)
+                    ++(-2.6,0.2)
+                        node[below]{$
+                            \displaystyle
+                            \boxed{
+                            \begin{gathered}
+                                \frac{v_o}{\color{blue} R} + {\color{red} C} \frac{\diff{v_i}}{\diff{t}} = 0
+                                \\
+                                v_o = - {\color{red} C} {\color{blue} R} \frac{\diff{v_i}}{\diff{t}}
+                            \end{gathered}
+                            }
+                        $}
+            ;
+        \end{circuitikz}
+        \end{center}
+    \end{minipage}%
+    \TmpOpampSeparator
+
+    \TmpOpampConfigRow{Integrator}{
+        Without {\color{darkgreen}$R_m$}:
+        \begin{gather*}
+            \boxed{
+                \begin{gathered}
+                    \frac{v_i}{\color{red} R}
+                    + {\color{blue} C} \frac{\diff{v_o}}{\diff{t}} = 0
+                    \\
+                    v_o = \frac{-1}{\color{blue} C \color{red} R} \int{v_i \,\diff{t}}
+                \end{gathered}
+            }
+        \end{gather*}
+
+        {\footnotesize
+            {\color{darkgreen}$R_m$} is \myul{optional}, but without it, practical implementations quickly saturate (since $v_i$ is never perfectly zero).
+        }
+
+        {\footnotesize
+            To select {\color{darkgreen}$R_m$}:
+        }
+        \begin{gather*}
+            \boxed{
+                \begin{gathered}
+                    \abs*{\frac{1}{j \omega \color{blue} C}} \gg {\color{darkgreen} R_m}
+                \end{gathered}
+            }
+        \end{gather*}
+
+        {\footnotesize \Todo{I'm not 100\% sure how $R_m$ works.} }
+    }{
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -| ++(-0.4,-0.5)
+                    coordinate(GND)
+                \MyGround{}
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[R, red, color=red, l_=$R$] ++(-3,0)
+                    node[ocirc, label=left:$v_i$]{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                    coordinate(D)
+                to[C, blue, color=blue, l=$C$] ++(-2.8,0)
+                -| (A)
+
+            %% Equation
+            %(OA.out)
+            %    ++(2.6,2)
+            %        node[]{$
+            %            \displaystyle
+            %            \boxed{
+            %                \begin{gathered}
+            %                    \abs*{\frac{1}{j \omega C}} \gg R_m
+            %                \end{gathered}
+            %            }
+            %        $}
+        ;
+        \draw[darkgreen, color=darkgreen]
+            % Extra Resistor
+            (D)
+                -- ++(0,1)
+                to[R, l_=$R_m$] ++(-2.8,0)
+                -| (D -| A)
+        ;
+    }
+    \TmpOpampSeparator
+
+    \TmpOpampConfigRow{Difference Amplifier}{
+        \begin{gather*}
+            \boxed{
+                v_o = \frac{\color{blue} R_2}{\color{red} R_1} \parens{v_1 - v_2}
+            }
+        \end{gather*}
+
+        However, the input impedance can be too low for practical use.
+
+        To solve this, we use an \emph{instrumentational amplifier} instead.
+    }{
+        \draw 
+            % Op-Amp
+            (0,0)
+                node[op amp, noinv input down, anchor=out](OA){}
+            (OA.+)
+                -- ++(-0.4,0)
+                    coordinate(D)
+                to[R, blue, color=blue, l_=$R_2$] ++(0,-1.8)
+                    coordinate(GND)
+                \MyGround{}
+            (OA.-)
+                -- ++(-0.4,0)
+                    coordinate(A)
+            (OA.out)
+                -- ++(0.3,0)
+                    coordinate(C)
+                -- ++(0.8,0)
+                    node[ocirc, label=right:$v_o$]{}
+
+            % Left Side
+            (A)
+                to[R, red, color=red, l_=$R_1$] ++(-3,0)
+                    node[ocirc, label=left:$v_2$]{}
+            (D)
+                to[R, red, color=red, l_=$R_1$] ++(-3,0)
+                    node[ocirc, label=left:$v_1$]{}
+
+            % Feedback
+            (C)
+                -- ++(0,1.8)
+                to[R, blue, color=blue, l=$R_2$] ++(-2.8,0)
+                -| (A)
+
+            %% Equation
+            %(OA.out)
+            %    ++(3,1.6)
+            %        node[]{$\displaystyle \boxed{v_o = \frac{R_2}{R_1} \parens{v_1 - v_2}}$}
+        ;
+    }
+    \TmpOpampSeparator
+
+    \Todo{Write a section for Instrumentational Amplifier}
+    
+    \Todo{Maybe also add the summing amplifier?}
+
+\end{CheatsheetEntryFrame}
+

@@ -1,0 +1,236 @@
+\subsection{More Common Circuit Configurations}%
+\label{sub:more-common-circuit-configurations}
+
+\subsubsection{Transistor Amplifier Analysis}
+
+\begin{multicols}{2}
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Basic BJT Configurations}
+
+        Three basic configurations:
+        \begin{itemize}
+            \item \textbf{CE (Common Emitter)}
+            \begin{itemize}
+                \item Structure:
+                \begin{itemize}
+                    \item Base = Input
+                    \item Collector = Output
+                    \item \myul{Emitter = Common}
+                \end{itemize}
+                \item Typical Characteristics:
+                \begin{itemize}
+                    \item Low input impedance (but can be improved with an emitter resistor).
+                    \item Inverting amplifier.
+                \end{itemize}
+            \end{itemize}
+            \item \textbf{CB (Common Base)}
+            \begin{itemize}
+                \item Structure:
+                \begin{itemize}
+                    \item Emitter = Input
+                    \item Collector = Output
+                    \item \myul{Base = Common}
+                \end{itemize}
+                \item Typical Characteristics:
+                \begin{itemize}
+                    \item Low input impedance.
+                    \item Not suitable for voltage amplification, but very good at converting current to voltage.
+                    \item Non-inverting amplifier.
+                \end{itemize}
+            \end{itemize}
+            \item \textbf{CC (Common Collector)}
+            \begin{itemize}
+                \item Structure:
+                \begin{itemize}
+                    \item Base = Input
+                    \item Emitter = Output
+                    \item \myul{Collector = Common}
+                \end{itemize}
+                \item Typical Characteristics:
+                \begin{itemize}
+                    \item High input impedance.
+                    \item Low output impedance.
+                    \item Suitable for voltage transfer.
+                    \item Low voltage gain.
+                    %\item Non-inverting amplifier.
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+
+        \Todo{Turn this into better notes?}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Basic MOSFET Configurations}
+
+        Three basic configurations:
+        \begin{itemize}
+            \item \textbf{CS (Common Source)}
+            \begin{itemize}
+                \item Structure:
+                \begin{itemize}
+                    \item Gate = Input
+                    \item Drain = Output
+                    \item \myul{Source = Common}
+                \end{itemize}
+                \item Typical Characteristics:
+                \begin{itemize}
+                    \item Infinite input impedance.
+                    \item Very low output impedance.
+                    \item Has Miller effect, limiting $f_H$.
+                \end{itemize}
+            \end{itemize}
+            \item \textbf{CG (Common Gate)}
+            \begin{itemize}
+                \item Structure:
+                \begin{itemize}
+                    \item Source = Input
+                    \item Drain = Output
+                    \item \myul{Gate = Common}
+                \end{itemize}
+                \item Typical Characteristics:
+                \begin{itemize}
+                    \item Low input impedance.
+                    \item No Miller effect.
+                \end{itemize}
+            \end{itemize}
+            \item \textbf{CD (Common Drain)}
+            \begin{itemize}
+                \item Structure:
+                \begin{itemize}
+                    \item Gate = Input
+                    \item Source = Output
+                    \item \myul{Drain = Common}
+                \end{itemize}
+                \item Typical Characteristics:
+                \begin{itemize}
+                    \item Low voltage gain.
+                    \item Infinite input impedance.
+                    \item Low output impedance.
+                    \item No Miller effect (because gain is very low).
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+
+        \Todo{Turn this into better notes?}
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+
+\newpage
+
+\newcommand{\TmpCircuitTransformArrow}[2]{%
+    \begin{tikzpicture}[scale=1, transform shape]
+        %\node[simshadows/GenericGrayBlockArrow] {};
+        \draw
+            (0,0)
+                node [simshadows/GenericGrayBlockArrow] {};
+        ;
+        % Ghetto Spacing. TODO: Improve this?
+        \path (0,0) -- ++(0,#1);
+        \path (0,0) -- ++(#2,0);
+        \path (0,0) -- ++(-#2,0);
+    \end{tikzpicture}%
+}
+
+\begin{CheatsheetEntryFrame}
+    \CheatsheetEntryTitle{Useful Transforms}
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0)
+                    node [ocirc, label=above:B] {}
+                -- ++(1,0)
+                    node [currarrow, label=above:$i_B$] {}
+                -- ++(1,0)
+                to[R, l=$r_\pi$, v=$v_{BE}$] ++(0,-2)
+                -- ++(2,0)
+                    node (TMP_A) [circ, label=right:E] {}
+                to[R, l=$R_E$] ++(0,-2)
+                \MyGround{}
+            (TMP_A)
+                to[american controlled current source, invert, l_={$
+                        \begin{gathered}
+                            g_m v_{BE} \\
+                            = \beta i_B
+                        \end{gathered}
+                    $}] ++(0,2)
+                -- ++(2,0)
+                    node [ocirc, label=above:C] {}
+        ;
+    \end{circuitikz}%
+    \TmpCircuitTransformArrow{-2.6}{2}%
+    \begin{circuitikz}
+        \draw 
+            (0,0)
+                    node [ocirc, label=above:B] {}
+                -- ++(1,0)
+                    node [currarrow, label=above:$i_B$] {}
+                -- ++(1,0)
+                to[R, l=$r_\pi$] ++(0,-2)
+                %to[R, l=$r_\pi$, v=$v_{BE}$] ++(0,-2) % TODO: Is this version better?
+                to[R, l={$
+                    \begin{gathered}
+                        R_E \parens{1 + g_m r_\pi} \\
+                        = R_E \parens{1 + \beta}
+                    \end{gathered}
+                $}] ++(0,-2)
+                \MyGround{}
+        ;
+    \end{circuitikz}
+    \end{center}
+    \bigskip
+
+    \begin{center}
+    \begin{circuitikz}
+        \draw 
+            (0,0)
+                -- ++(0.7,0)
+                    node [currarrow, label=above:$i_B$] {}
+                -- ++(0.7,0)
+                    node [circ, label=above:B] {}
+                to[R, l=$R_B$] ++(0,-2)
+                -- ++(2,0)
+                    node (TMP_A) [circ, label=right:E] {}
+                -- ++(0,-0.5)
+                    coordinate (TMP_B)
+                to[R, l=$R_E$] ++(0,-2)
+                \MyGround{}
+            (TMP_A)
+                to[american controlled current source, invert, l_={$\beta i_B$}] ++(0,2)
+                -- ++(2,0)
+                    node [ocirc, label=above:C] {}
+            (TMP_B)
+                -- ++(2,0)
+                    node [ocirc, label=above:X] {}
+            (0,0)
+                \MyGround{}
+        ;
+    \end{circuitikz}%
+    \TmpCircuitTransformArrow{-2.6}{2}%
+    \begin{circuitikz}
+        \draw 
+            (0,0)
+                    node [ocirc, label=above:X] {}
+                -- ++(-2,0)
+                    coordinate (TMP_A)
+                -- ++(-2,0)
+                to[R, l=$R_E$] ++(0,-2)
+                \MyGround{}
+            (TMP_A)
+                to[R, l=$\displaystyle \frac{R_B}{1 + \beta}$] ++(0,-2)
+                \MyGround{}
+        ;
+        % Ghetto alignment. TODO: Improve this!
+        \path
+            (0,0) -- ++(0,-4)
+        ;
+    \end{circuitikz}
+    \end{center}
+\end{CheatsheetEntryFrame}
+

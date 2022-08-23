@@ -46,8 +46,10 @@
 }
 
 \newcommand{\CheatsheetEntryTitle}[1]{ % Put this inside CheatsheetEntryBox
-    \textbu{#1} %\\[1.5ex]
-    %\vspace*{1.5ex}%
+    \textbu{#1}%
+}
+\newcommand{\CheatsheetEntrySubtitle}[1]{ % Put this inside CheatsheetEntryBox
+    {\footnotesize{}\textit{#1}}%
 }
 \newcommand{\CheatsheetEntryExtraSeparation}{ % Temporary fix while I figure out how to automatically set this separation.
     \vspace*{1ex}%

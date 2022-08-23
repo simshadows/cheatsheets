@@ -3,128 +3,162 @@
 
 \subsubsection{Operational Amplifiers}
 
-\begin{CheatsheetEntryFrame}
-
-    \CheatsheetEntryTitle{Ideal Opamp}
-
-    \begin{multicols}{2}
-
-        \begin{center}
-            \phantom{\myul{\textbf{\footnotesize Schematic Symbol}}}
-
-            \begin{circuitikz}
-                \draw 
-                    (0,0)
-                        node[op amp, anchor=-](OA){}
-                    (OA.+)
-                        -- ++(-0.5,0)
-                            node[ocirc, label=left:$v_+$]{}
-                    (OA.-)
-                        -- ++(-0.5,0)
-                            node[ocirc, label=left:$v_-$]{}
-                    (OA.out)
-                        -- ++(0.2,0)
-                            node[ocirc, label=right:$v_o$]{}
-                    %% Biasing is probably not needed here.
-                    %(OA.up)
-                    %    -- ++(0,0.8)
-                    %        node[ocirc, label=above:$V_\text{CC}$]{}
-                    %(OA.down)
-                    %    -- ++(0,-0.8)
-                    %        node[ocirc, label=below:$V_\text{EE}$]{}
-                    (OA.out)
-                        ++(1.2,1.4)
-                        node[]{$\displaystyle \boxed{v_o = A \parens{v_+ - v_-}}$}
-                ;
-                \draw[stealth-, ultra thick, extranotecolor, color=extranotecolor]
-                    (OA.-)
-                        ++(0,0.4)
-                        -- ++(-0.7,0.5)
-                        %node[label={above:{\footnotesize \textsc{Inverting Input}}}]{}
-                        node[above, align=center, font={\footnotesize \sc}]{Inverting\\Input}
-                ;
-                \draw[stealth-, ultra thick, extranotecolor, color=extranotecolor]
-                    (OA.+)
-                        ++(0,-0.4)
-                        -- ++(-0.7,-0.5)
-                        %node[label={below:[align=left]{\footnotesize \textsc{Non-Inverting\\Input}}}]{}
-                        node[below, align=center, font={\footnotesize \sc}]{Non-Inverting\\Input}
-                ;
-            \end{circuitikz}
-        \end{center}
-
-        \MulticolsBreak
-
-        \begin{center}
-            \myul{\textbf{\footnotesize Equivalent Model}}
-
-            \begin{circuitikz}
-                \draw 
-                    (0,0)
-                            node[ocirc, label=left:$v_+$]{}
-                        to[short, i=$i_+$] ++(2,0)
-                            coordinate(TR1)
-                        to[R, l=$R_i$, v=$v_i$] ++(0,-2)
-                        to[short, i<=$i_-$] ++(-2,0)
-                            node[ocirc, label=left:$v_-$]{}
-                    (TR1) ++(2,0)
-                        to[cvsource, l=$A v_i$] ++(0,-2)
-                            node[ground, scale=2]{}
-                    (TR1) ++(2,0)
-                        to[R, l=$R_o$] ++(2,0)
-                        node[ocirc, label=right:$v_o$]{}
-                ;
-            \end{circuitikz}
-        \end{center}
-
-        \MulticolsCleanEnd
-    \end{multicols}%
-    \MulticolsReduceVspaceAfter%
-    \begin{multicols}{2}
-        DC-coupled, high-gain differential-input amplifier.
-
-        \myul{\textbf{Golden rules}}:
-        \begin{enumerate}
-            \item $v_+ = v_-$ \\ %{\footnotesize (\emph{virtual ground})}
-                \emph{\footnotesize (``virtual ground"; appies in \myul{negative feedback} only)}
-            \item $i_+ = i_- = 0$
-        \end{enumerate}
-
-        %\emph{(Golden rule \#1 is also known as ``virtual ground".)}
-
-        \MulticolsBreak
-
-        \myul{\textbf{Some properties}}:
-        \begin{enumerate}
-            \item $R_i \to \infty$
-            \item $R_o = 0$
-            \item $A \to \infty$
-            \item infinite CMRR \Exn{(common-mode rejection ratio)}
-            \item infinite bandwidth
-        \end{enumerate}
-
-        \MulticolsCleanEnd
-    \end{multicols}
-    \MulticolsReduceVspaceAfter%
-\end{CheatsheetEntryFrame}
-
 \begin{multicols}{2}
-    \begin{CheatsheetEntryFrame}
-        \CheatsheetEntryTitle{Opamp DC Imperfection Modeling}
-        \bigskip
 
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Ideal Opamp}
+        \vspace*{-8mm}
         \begin{center}
+        \begin{circuitikz}
+            \tikzset{/tikz/circuitikz/bipoles/length=1.2cm}
+            \draw[thick] % Opamp Shape
+                (0,0) coordinate (OA_BL)
+                    ++(0,1.1) coordinate (OA_INV)
+                (4.9,4.9) coordinate (OA_TR)
+                (OA_BL -| OA_TR) coordinate (OA_BR)
+                (OA_BL |- OA_TR) coordinate (OA_TL)
+                    ++(0,-1.1) coordinate (OA_NONINV)
+
+                (OA_TL)
+                    -- (OA_BL)
+                    -- ($(OA_BR)!0.5!(OA_TR)$)
+                        coordinate (OA_OUT)
+                    -- (OA_TL)
+            ;
+            \draw
+                (OA_NONINV) ++(0.5,0) coordinate (TMP_A)
+                (OA_NONINV)
+                    ++(-1.2,0)
+                        node (TMP_B) [ocirc] {}
+                    -- (TMP_A)
+                    to[R, l=$R_i$] (OA_INV -| TMP_A)
+                    -- (TMP_B |- OA_INV)
+                        node [ocirc] {}
+                    to[open, v^<=$v_i$] (TMP_B)
+                    
+                (TMP_A)                node [above] {\Large $+$}
+                (TMP_A |- OA_INV)      node [below] {\Large $-$}
+                (OA_NONINV) ++(-0.6,0) node [currarrow, label=above:$i_+$] {}
+                (OA_INV)    ++(-0.6,0) node [currarrow, label=below:$i_-$] {}
+
+                (OA_OUT)
+                    ++(0.6,0)
+                        node [ocirc, label=right:$v_o$] {}
+                    -- ++(-1.5,0)
+                    to[R, l_=$R_o$] ++(-1.1,0)
+                    -- ++(-0.1,0)
+                    to[
+                        american controlled voltage source,
+                        l_=$A v_i$,
+                        /tikz/circuitikz/bipoles/length=1.4cm
+                    ] ++(-1.1,0)
+                    -| ++(-0.2,-0.2)
+                    \MyGround{}
+                    
+            ;
+            \draw[stealth-, ultra thick, extranotecolor, color=extranotecolor]
+                (OA_INV)
+                    ++(-0.6,-0.9)
+                    -- ++(-0.6,-0.5)
+                    node[below, align=center, font={\footnotesize \sc}]{Inverting\\Input}
+            ;
+            \draw[stealth-, ultra thick, extranotecolor, color=extranotecolor]
+                (OA_NONINV)
+                    ++(-0.6,0.9)
+                    -- ++(-0.6,0.5)
+                    node[above, align=center, font={\footnotesize \sc}]{Non-Inverting\\Input}
+            ;
+            \draw
+                (OA_OUT)
+                    ++(-2.5,3.9)
+                    node[below left]{$\displaystyle \boxed{v_o = A v_i}$}
+                (OA_OUT)
+                    ++(-2.0,4.5)
+                    node [below right] {$\displaystyle \boxed{
+                        \begin{aligned}
+                            R_i &\to \infty \\
+                            R_o &\to 0 \\
+                            A &\to \infty \\
+                            \text{CMRR} &\to \infty \\
+                            \text{Bandwidth} &\to \infty
+                        \end{aligned}
+                    }$}
+                %(OA_OUT)
+                %    ++(-2.7,-2.8)
+                %    node [above] {\small \myul{\textbf{Golden Rule \#1}}}
+                %    node [below] {$\displaystyle \boxed{i_+ = i_- = 0}$}
+                (OA_OUT)
+                    ++(-0.7,-1.7)
+                    node [above] {\small \myul{\textbf{Golden Rules}}}
+                    node [below] {$\displaystyle
+                        %\boxed{
+                        \begin{gathered}
+                            \boxed{
+                            \begin{gathered}
+                                v_+ = v_- \\
+                                \textit{\footnotesize ``virtual ground"} \\[-1.2mm]
+                                \textit{\footnotesize (only in \myul{negative feedback})}
+                            \end{gathered}
+                            } \\
+                            \boxed{i_+ = i_- = 0}
+                        \end{gathered}
+                        %}
+                    $}
+            ;
+        \end{circuitikz}
+        \end{center}
+        \vspace*{-1.5mm}
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Non-Ideal Opamp Model} \CheatsheetEntrySubtitle{(simple version)}
+        \begin{minipage}[c]{0.38\columnwidth}
+            \MinipageInheritDocumentFormatting
+            \begin{gather*}
+                \begin{aligned}
+                    %\overbrace{
+                    I_\text{B} &= \frac{I_{\text{B}+} + I_{\text{B}-}}{2}
+                    %}^\text{input bias current}
+                    \\[1mm]
+                    %\underbrace{
+                    I_\text{io} &= I_{\text{B}+} - I_{\text{B}-}
+                    %}_\text{input offset current}
+                \end{aligned}
+                \\[4mm]
+                \begin{aligned}
+                    I_{\text{B}+} &= I_\text{B} + \frac{1}{2} I_\text{io}
+                    \\[1mm]
+                    I_{\text{B}-} &= I_\text{B} - \frac{1}{2} I_\text{io}
+                \end{aligned}
+            \end{gather*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.62\columnwidth}%
+            \MinipageInheritDocumentFormatting
+            \smallskip
+            \begin{center}
             \begin{circuitikz}
                 \draw 
                     (0,0)
-                        node[op amp, anchor=-](OA){}
+                        node[
+                            op amp,
+                            anchor=-%,
+                            %/tikz/circuitikz/bipoles/length=1.3cm
+                        ](OA){}
                     (OA.-)
-                        -- ++(-0.5,0)
-                        -- ++(-2,0)
+                        -- ++(-0.4,0)
+                        -- ++(-1.6,0)
                             node[ocirc]{}
                     (OA.+)
-                        -- ++(-0.5,0)
-                        to[V, invert, color=red, l=$\color{red} V_\text{io}$] ++(-2,0)
+                        -- ++(-0.4,0)
+                        to[
+                            V,
+                            invert,
+                            color=red,
+                            l=$\color{red} V_\text{io}$,
+                            /tikz/circuitikz/bipoles/length=1.2cm
+                        ] ++(-1.6,0)
                             node[ocirc]{}
                     (OA.out)
                         -- ++(0.2,0)
@@ -139,50 +173,37 @@
                         node[currarrow, label=above:$I_{\text{B}+}$]{}
                 ;
             \end{circuitikz}
+            \end{center}
+            \vspace*{-4mm}%
+            \Exn{\small%
+                \begin{align*}
+                    I_\text{B} &= \text{input bias current} \\[-0.5mm]
+                    I_\text{io} &= \text{input offset current} \\[-0.5mm]
+                    V_\text{io} &= \text{input offset voltage}
+                \end{align*}%
+            }%
+            \vspace*{-8mm}%
+        \end{minipage}
+        \vspace*{1mm}
+
+        \begin{center}
+            {\footnotesize Worst-case output offset voltage of a circuit:}
+            \vspace*{-2mm} % TODO: How do we make it so we don't have to do this?
+            \begin{gather*}
+                V_\text{os}
+                = \abs*{
+                    V_\text{os} \parens{I_{\text{B}+}}
+                    + V_\text{os} \parens{I_{\text{B}-}}
+                }
+                + \abs*{
+                    V_\text{os} \parens{V_\text{io}}
+                }
+            \end{gather*}
         \end{center}
-
-        Currents usually specified in terms of $I_\text{B}$ and $I_\text{io}$:
-        \begin{gather*}
-            \begin{gathered}
-                %\overbrace{
-                I_\text{B} = \frac{I_{\text{B}+} + I_{\text{B}-}}{2}
-                %}^\text{input bias current}
-                \\
-                %\underbrace{
-                I_\text{io} = I_{\text{B}+} - I_{\text{B}-}
-                %}_\text{input offset current}
-            \end{gathered}
-            \qquad
-            \quad
-            \begin{aligned}
-                I_{\text{B}+} &= I_\text{B} + \frac{1}{2} I_\text{io} \\
-                I_{\text{B}-} &= I_\text{B} - \frac{1}{2} I_\text{io}
-            \end{aligned}
-        \end{gather*}
-
-        Calculate worst-case output offset voltage of a circuit using superposition principle:
-        \begin{gather*}
-            V_\text{os}
-            = \abs*{
-                V_\text{os} \parens{I_{\text{B}+}}
-                + V_\text{os} \parens{I_{\text{B}-}}
-            }
-            + \abs*{
-                V_\text{os} \parens{V_\text{io}}
-            }
-        \end{gather*}
-
-        \Exn{
-            Terminology:
-            \begin{pindent}
-                $I_\text{B} = \text{input bias current}$ \\
-                $I_\text{io} = \text{input offset current}$ \\
-                $V_\text{io} = \text{input offset voltage}$
-            \end{pindent}
-        }
     \end{CheatsheetEntryFrame}
 
     \begin{CheatsheetEntryFrame}
+
         \CheatsheetEntryTitle{Opamp Large Signal Characteristics}
 
         \begin{enumerate}
@@ -204,5 +225,214 @@
 
     \Todo{Add notes on frequency response?}
 
+    \MulticolsBreak
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Common Opamp Configurations}
+        \smallskip
+
+        \myul{Unity-Gain Buffer}
+
+        \begin{center}
+        \begin{circuitikz}
+            \tikzset{/tikz/circuitikz/bipoles/length=1.3cm}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -- ++(-0.3,0)
+                        node[ocirc, label=left:$v_i$]{}
+                        coordinate(GND)
+                (OA.-)
+                    -- ++(-0.3,0)
+                        coordinate(TMP_A)
+                (OA.out)
+                    -- ++(0.2,0)
+                        coordinate(TMP_B)
+                    -- ++(0.6,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Feedback
+                (TMP_B)
+                    -- ++(0,1.5)
+                    -| (TMP_A)
+
+                % Equation
+                (OA.out)
+                    ++(-4.2,0.7)
+                        node[]{$\displaystyle \boxed{v_o = v_i}$}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        \bigskip
+        \SoftHLine
+        \smallskip
+
+        \myul{Inverting Amplifier}
+        \vspace*{-3mm}
+        \begin{center}
+        %\scalebox{0.8}{
+        \begin{circuitikz}
+            \tikzset{/tikz/circuitikz/bipoles/length=1.3cm}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -- ++(-0.3,0)
+                    \MyGround{}
+                (OA.-)
+                    -- ++(-0.3,0)
+                        coordinate(TMP_A)
+                    to[R, l_=$R_1$, red, color=red] ++(-2.2,0)
+                        node[ocirc, label=left:$v_i$]{}
+                (OA.out)
+                    -- ++(0.2,0)
+                        coordinate(TMP_B)
+                    -- ++(0.6,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Feedback
+                (TMP_B)
+                    -- ++(0,1.6)
+                        coordinate (TMP_C)
+                    to[R, l=$R_2$, blue, color=blue] (TMP_C -| TMP_A)
+                    -- (TMP_A)
+
+                % Equation
+                (OA.+)
+                    ++(-2.6,0.2)
+                        node[below]{$
+                            \displaystyle
+                            \boxed{\frac{v_o}{v_i} = \frac{- \color{blue} R_2}{ \color{red} R_1}}
+                        $}
+            ;
+        \end{circuitikz}
+        %}
+        \end{center}
+
+        \bigskip
+        \SoftHLine
+        \smallskip
+
+        \myul{Non-Inverting Amplifier}
+        \vspace*{-3mm}
+        \begin{center}
+        \begin{circuitikz}
+            \tikzset{/tikz/circuitikz/bipoles/length=1.3cm}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -- ++(-0.3,0)
+                        node[ocirc, label=left:$v_i$]{}
+                (OA.-)
+                    -- ++(-0.3,0)
+                        coordinate(TMP_A)
+                    to[R, l_=$R_1$, red, color=red] ++(-2.2,0)
+                    \MyGround{}
+                (OA.out)
+                    -- ++(0.2,0)
+                        coordinate(TMP_B)
+                    -- ++(0.6,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                % Feedback
+                (TMP_B)
+                    -- ++(0,1.6)
+                        coordinate (TMP_C)
+                    to[R, blue, color=blue, l=$R_2$] (TMP_C -| TMP_A)
+                    -- (TMP_A)
+
+                % Equation
+                (OA.+)
+                    ++(-2.6,-0.2)
+                        node[below]{$
+                            \displaystyle
+                            \boxed{\frac{v_o}{v_i} = 1 + \frac{\color{blue} R_2}{\color{red} R_1}}
+                        $}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        \bigskip
+        \SoftHLine
+        \smallskip
+
+        \myul{Difference Amplifier}
+        \vspace*{-4mm}
+        \begin{center}
+        \begin{circuitikz}
+            \tikzset{/tikz/circuitikz/bipoles/length=1.3cm}
+            \draw 
+                % Op-Amp
+                (0,0)
+                    node[op amp, noinv input down, anchor=out](OA){}
+                (OA.+)
+                    -- ++(-0.3,0)
+                        coordinate (TMP_D)
+                    to[R, l_=$R_1$, red, color=red] ++(-2.2,0)
+                        node[ocirc, label=left:$v_1$]{}
+                (OA.-)
+                    -- ++(-0.3,0)
+                        coordinate (TMP_A)
+                    to[R, l_=$R_1$, red, color=red] ++(-2.2,0)
+                        node[ocirc, label=left:$v_2$]{}
+                (OA.out)
+                    -- ++(0.2,0)
+                        coordinate(TMP_B)
+                    -- ++(0.6,0)
+                        node[ocirc, label=right:$v_o$]{}
+
+                (TMP_D)
+                    to[R, blue, color=blue, l_=$R_2$] ++(0,-1.6)
+                    -- ++(0,-0.2)
+                    \MyTLGround{}
+
+                % Feedback
+                (TMP_B)
+                    -- ++(0,1.6)
+                        coordinate (TMP_C)
+                    to[R, blue, color=blue, l=$R_2$] (TMP_C -| TMP_A)
+                    -- (TMP_A)
+
+                % Equation
+                (OA.out)
+                    ++(-5.1,-1.8)
+                        node[]{$
+                            \boxed{
+                                v_o
+                                = \frac{\color{blue} R_2}{\color{red} R_1}
+                                \parens{v_1 - v_2}
+                            }
+                        $}
+
+                % Note
+                (OA.out)
+                    ++(-2.0,-1.1)
+                        node[below right, align=left, font={\footnotesize\em}]{
+                            (In practice, this circuit \\
+                            has a fairly low input \\
+                            impedance, making it \\
+                            unsuitable for some \\
+                            practical applications.)
+                        }
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        \bigskip
+        \SoftHLine
+        \smallskip
+
+        \Todo{Write instrumentational and summing amplifiers?}
+
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsCleanEnd
 \end{multicols}
 

@@ -21,6 +21,12 @@
     -- ++(0,-0.1)
         node[ground, scale=2, #1]{}
 }
+\newcommand{\MyShorterTailedGround}[1]{% dreadful name...
+    node[ground, scale=2, #1]{}
+}
+\newcommand{\MyTLGround}[1]{%
+    node[tlground, scale=2, #1]{}
+}
 
 %% Not needed yet
 %% Borrowing the tground symbol for VCC and VEE

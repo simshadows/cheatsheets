@@ -15,15 +15,19 @@
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
 
-\input{./helpers/general}
-\input{./helpers/cheatsheet-helpers}
+\newcommand{\LoadHelper}[1]{\input{./helpers/#1}}
+\newcommand{\LoadCheatsheet}[1]{{\input{./sections-cheatsheets/#1}}}
+\newcommand{\LoadAppendix}[1]{{\input{./sections-appendices/#1}}}
 
-\input{./helpers/tikz}
+\LoadHelper{general}
+\LoadHelper{cheatsheet-helpers}
 
-\input{./helpers/circuitikz}
-\input{./helpers/math-and-cs}
-\input{./helpers/minipage}
-\input{./helpers/multicols}
+\LoadHelper{tikz}
+
+\LoadHelper{circuitikz}
+\LoadHelper{math-and-cs}
+\LoadHelper{minipage}
+\LoadHelper{multicols}
 
 \begin{document}
 
@@ -46,78 +50,76 @@
 \section{Mathematics}
 \label{sec:mathgeneral}
 
-    { \input{./sections/mathematics-general} }
+    \LoadCheatsheet{mathematics-general}
 
 \newpage
 \section{Probability and Statistics}
 \label{sec:probability-and-statistics}
 
-    { \input{./sections/probability-and-statistics} }
+    \LoadCheatsheet{probability-and-statistics}
 
 \newpage
 \section{Physics}
 \label{sec:physics}
 
-    { \input{./sections/physics} }
+    \LoadCheatsheet{physics}
 
 \newpage
 \section{Electrical Engineering: Circuit Analysis}
 \label{sec:ee-circuit-analysis}
 
-    { \input{./sections/electrical-engineering-circuit-analysis/1-dc-analysis} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/1-dc-analysis}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/2a-intro} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/2a-intro}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/2b-magnetically-coupled-circuits} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/2b-magnetically-coupled-circuits}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/2c-power} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/2c-power}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/2d-frequency-response} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/2d-frequency-response}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/3a-op-amps} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/3a-op-amps}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/3b-semiconductors} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/3b-semiconductors}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/3c-feedback} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/3c-feedback}
     \newpage
-    { \input{./sections/electrical-engineering-circuit-analysis/4a-non-linear-circuits} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/4a-non-linear-circuits}
     \newpage
-    % TODO: Should we collect circuit configurations here?
-    { \input{./sections/electrical-engineering-circuit-analysis/5a-common-configs-transistor-amplifiers} }
+    \LoadCheatsheet{electrical-engineering-circuit-analysis/5a-common-configs-transistor-amplifiers}
 
 \newpage
 \section{Electrical Engineering: Digital Systems}
 \label{sec:ee-digital}
 
-    { \input{./sections/electrical-engineering-digital-systems/1-basics} }
+    \LoadCheatsheet{electrical-engineering-digital-systems/1-basics}
     \newpage
-    { \input{./sections/electrical-engineering-digital-systems/2-digital-analogue-interfacing} }
+    \LoadCheatsheet{electrical-engineering-digital-systems/2-digital-analogue-interfacing}
 
 \newpage
 \section{Computer Science}
 \label{sec:compsci}
 
-    { \input{./sections/computer-science} }
+    \LoadCheatsheet{computer-science}
 
 \newpage
 \section{Symbols and Units}
 \label{sec:units}
 
-    { \input{./sections/symbols-and-units} }
+    \LoadCheatsheet{symbols-and-units}
 
 \newpage
-\InvisiblePart{Extras}
+\InvisiblePart{Appendices}
 
-\section{Extras: Mathematics}%
-\label{sec:extrasec-math}
+\section{Appendix: Mathematics}%
+\label{sec:appendix-math}
 
-    { \input{./sections/extrasec-mathematics} }
+    \LoadAppendix{mathematics}
 
 \newpage
-\section{Extras: Electrical Engineering}%
-\label{sec:extrasec-ee}
+\section{Appendix: Electrical Engineering}%
+\label{sec:appendix-ee}
 
-    { \input{./sections/extrasec-electrical-engineering} }
-
+    \LoadAppendix{electrical-engineering}
 
 \end{document}

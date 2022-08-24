@@ -236,6 +236,8 @@
             I_G = 0
             \\
             I_{DS} = \frac{1}{2} k_n \frac{W}{L} \parens{V_{GS} - V_t}^2
+            \\
+            \lambda = \frac{1}{V_A + V_{DS}}
         \end{gather*}
 
         Small signal parameters:
@@ -335,7 +337,7 @@
     \newcommand{\TmpFormatAltB}[1]{\textbf{\color{mypurple}#1}}
     \newcommand{\TmpFormatAltC}[1]{\textbf{\color{myorange}#1}}
 
-    For each type of analysis, redraw the circuit as follows:
+    For each type of analysis, \myul{first reinterpret/redraw the circuit as follows}:
     \begin{center}
     \begin{tabular}{|c|c|c|c|c|c|}
         \cline{2-6}
@@ -382,7 +384,6 @@
 
         \myul{DC Analysis}
         \begin{enumerate}
-            \item Redraw the circuit appropriately.
             \item Assume linear operation:
             \begin{itemize}
                 \item BJTs are \emph{forward active} $\to$ \Todo{}
@@ -406,7 +407,7 @@
 
         \myul{Mid-Frequency Analysis}
 
-        Redraw the circuit appropriately, then apply circuit analysis techniques to find:
+        Analyze the circuit to find:
         \begin{itemize}
             \item gain
             \item input/output resistance
@@ -419,7 +420,7 @@
 
         \myul{Low-Frequency Analysis}
 
-        Redraw the circuit appropriately, then apply the \linebreak \emph{short circuit time constant method} to find the \linebreak lower cut-off frequency $f_L$:
+        \emph{Short circuit time constant method} to find the \linebreak lower cut-off frequency $f_L$:
         \begin{gather*}
             f_L
             = \frac{1}{2 \pi}
@@ -437,7 +438,7 @@
 
         \myul{High-Frequency Analysis}
 
-        Redraw the circuit appropriately, then apply the \linebreak \emph{open circuit time constant method} to find the \linebreak upper cut-off frequency $f_H$:
+        \emph{Open circuit time constant method} to find the \linebreak upper cut-off frequency $f_H$:
         \begin{gather*}
             f_H
             = \frac{1}{

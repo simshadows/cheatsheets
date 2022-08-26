@@ -1,133 +1,11 @@
-\subsection{More Common Circuit Configurations}%
-\label{sub:more-common-circuit-configurations}
-
-\subsubsection{Transistor Amplifier Analysis}
-
-\begin{multicols}{2}
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Basic BJT Configurations}
-
-        Three basic configurations:
-        \begin{itemize}
-            \item \textbf{CE (Common Emitter)}
-            \begin{itemize}
-                \item Structure:
-                \begin{itemize}
-                    \item Base = Input
-                    \item Collector = Output
-                    \item \myul{Emitter = Common}
-                \end{itemize}
-                \item Typical Characteristics:
-                \begin{itemize}
-                    \item Low input impedance (but can be improved with an emitter resistor).
-                    \item Inverting amplifier.
-                \end{itemize}
-            \end{itemize}
-            \item \textbf{CB (Common Base)}
-            \begin{itemize}
-                \item Structure:
-                \begin{itemize}
-                    \item Emitter = Input
-                    \item Collector = Output
-                    \item \myul{Base = Common}
-                \end{itemize}
-                \item Typical Characteristics:
-                \begin{itemize}
-                    \item Low input impedance.
-                    \item Not suitable for voltage amplification, but very good at converting current to voltage.
-                    \item Non-inverting amplifier.
-                \end{itemize}
-            \end{itemize}
-            \item \textbf{CC (Common Collector)}
-            \begin{itemize}
-                \item Structure:
-                \begin{itemize}
-                    \item Base = Input
-                    \item Emitter = Output
-                    \item \myul{Collector = Common}
-                \end{itemize}
-                \item Typical Characteristics:
-                \begin{itemize}
-                    \item High input impedance.
-                    \item Low output impedance.
-                    \item Suitable for voltage transfer.
-                    \item Low voltage gain.
-                    %\item Non-inverting amplifier.
-                \end{itemize}
-            \end{itemize}
-        \end{itemize}
-
-        \Todo{Turn this into better notes?}
-
-    \end{CheatsheetEntryFrame}
-
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Basic MOSFET Configurations}
-
-        Three basic configurations:
-        \begin{itemize}
-            \item \textbf{CS (Common Source)}
-            \begin{itemize}
-                \item Structure:
-                \begin{itemize}
-                    \item Gate = Input
-                    \item Drain = Output
-                    \item \myul{Source = Common}
-                \end{itemize}
-                \item Typical Characteristics:
-                \begin{itemize}
-                    \item Infinite input impedance.
-                    \item Very low output impedance.
-                    \item Has Miller effect, limiting $f_H$.
-                \end{itemize}
-            \end{itemize}
-            \item \textbf{CG (Common Gate)}
-            \begin{itemize}
-                \item Structure:
-                \begin{itemize}
-                    \item Source = Input
-                    \item Drain = Output
-                    \item \myul{Gate = Common}
-                \end{itemize}
-                \item Typical Characteristics:
-                \begin{itemize}
-                    \item Low input impedance.
-                    \item No Miller effect.
-                \end{itemize}
-            \end{itemize}
-            \item \textbf{CD (Common Drain)}
-            \begin{itemize}
-                \item Structure:
-                \begin{itemize}
-                    \item Gate = Input
-                    \item Source = Output
-                    \item \myul{Drain = Common}
-                \end{itemize}
-                \item Typical Characteristics:
-                \begin{itemize}
-                    \item Low voltage gain.
-                    \item Infinite input impedance.
-                    \item Low output impedance.
-                    \item No Miller effect (because gain is very low).
-                \end{itemize}
-            \end{itemize}
-        \end{itemize}
-
-        \Todo{Turn this into better notes?}
-
-    \end{CheatsheetEntryFrame}
-
-\end{multicols}
-
-\newpage
+\subsection{Amplifier Analysis}%
+\label{sub:appendices-amplifier-analysis}
 
 \begin{multicols}{2}
 
     \begin{CheatsheetEntryFrame}
-        \CheatsheetEntryTitle{NPN Current Mirror}
-        \vspace*{-4mm}
+        \CheatsheetEntryTitle{Basic NPN Current Mirror} \CheatsheetEntrySubtitle{(Full Working)}
+
         \begin{center}
         \begin{circuitikz}
             \draw
@@ -189,46 +67,91 @@
                 %    to[R, l=$R_o$] (TMP_F |- TMP_E)
                 %    -- (TMP_E)
             ;
-            \draw
-                (5.2,1.2)
-                    node [below, align=center] {$\boxed{\displaystyle
-                        I_\text{REF}
-                        = \frac{V_{CC} - V_{EE} - V_{BE}}{R}
-                    }$}
-                ++(0,-0.2)
-                    node [above, align=center, font={\footnotesize}] {%
-                        If $R$ is used to determine $I_\text{REF}$:%
-                    }
-
-                (5.35,-4)
-                    node [below, align=center] {$\boxed{\displaystyle
-                        I_o
-                        = \frac{
-                            \beta I_\text{REF} \parens{V_A + V_{CE2}}
-                        }{
-                            \parens{\beta + 2} \parens{V_A + V_{BE}}
-                        }
-                    }$}
-                ++(0,-0.2)
-                    node [above, align=center, font={\footnotesize}] {%
-                        Mostly taking into account $V_A$:%
-                    }
-
-                (0.7,0.5)
-                    node [above, align=center, font={\footnotesize}] {%
-                        \myul{Assume matching}\\
-                        \myul{transistors and in}\\
-                        \myul{forward active mode.}%
-                    }
-            ;
         \end{circuitikz}
         \end{center}
+        We assumine that all BJTs are in \emph{forward active}.
+
+        %Resistor equations:
+        %\begin{gather*}
+        %    I_\text{REF}
+        %    = I_{C1} + 2 I_B
+        %    = \frac{V_{CC} - V_{EE} - V_{BE}}{R}
+        %\end{gather*}
+
+        Transistor \emph{early effect} equations:
+        \begin{align*}
+            I_{C1}
+            &= I_{S1} e^{\brackets{{V_{BE}} \mathbin{/} {V_{T1}}}}
+            \parens*{1 + \frac{V_{BE}}{V_{A1}}}
+            \\
+            I_o
+            &= I_{S2} e^{\brackets{{V_{BE}} \mathbin{/} {V_{T2}}}}
+            \parens*{1 + \frac{V_{CE2}}{V_{A2}}}
+        \end{align*}
+
+        Assuming the BJTs are well-matched:
+        \begin{gather*}
+            I_{S1} e^{\brackets{{V_{BE}} \mathbin{/} {V_{T1}}}}
+            = I_{S2} e^{\brackets{{V_{BE}} \mathbin{/} {V_{T2}}}}
+            \\
+            V_A \defeq V_{A1} = V_{A2}
+            \qquad
+            \beta \defeq \beta_1 = \beta_2
+            \\
+            \Longrightarrow\qquad
+            \frac{I_{C1}}{I_o}
+            = \frac{V_A + V_{BE}}{V_A + V_{CE2}}
+        \end{gather*}
+
+        $I_{C1}$ and $I_B$, ignoring \emph{early effect}:
+        \begin{gather*}
+            I_{C1}
+            = \beta I_B
+            = I_\text{REF} - 2 I_B
+            \\
+            \Longrightarrow\qquad
+            I_B = \frac{I_\text{REF}}{\beta + 2}
+            \qquad
+            I_{C1} = \frac{\beta I_\text{REF}}{\beta + 2}
+        \end{gather*}
+
+        Thus, $I_o$ while mostly taking into account \emph{early effect}:
+        \begin{gather*}
+            I_o
+            = \frac{
+                \beta I_\text{REF} \parens*{V_A + V_{CE2}}
+            }{
+                \parens*{\beta + 2} \parens*{V_A + V_{BE}}
+            }
+        \end{gather*}
+        %
+        If resistor $R$ creates the reference current:
+        \begin{gather*}
+            I_\text{REF} = \frac{V_{CC} - V_{EE} - V_{BE}}{R}
+        \end{gather*}
+        %
+        If \emph{early effect} is totally neglected (i.e. $V_A \to \infty$):
+        \begin{gather*}
+            I_o
+            = \frac{
+                \beta I_\text{REF}
+            }{
+                \parens*{\beta + 2}
+            }
+        \end{gather*}
+        %
+        If transistor $\beta \to \infty$:
+        \begin{gather*}
+            I_o = I_\text{REF}
+        \end{gather*}
+
+        %\Todo{Improve this analysis? Does it really make sense to use $I_{C1} = \beta_1 I_B$?}
 
     \end{CheatsheetEntryFrame}
 
     \begin{CheatsheetEntryFrame}
-        \CheatsheetEntryTitle{NMOS Current Mirror}
-        \vspace*{-4mm}
+        \CheatsheetEntryTitle{Basic NMOS Current Mirror} \CheatsheetEntrySubtitle{(Full Working)}
+
         \begin{center}
         \begin{circuitikz}
             \draw
@@ -283,74 +206,56 @@
                 %    to[R, l=$R_o$] (TMP_F |- TMP_E)
                 %    -- (TMP_E)
             ;
-            \draw
-                (2.9,-0.7)
-                    node [above, align=center, font={\footnotesize}] {%
-                        \myul{Assume matching}\\
-                        \myul{transistors and in}\\
-                        \myul{saturation region.}%
-                    }
-            ;
         \end{circuitikz}
         \end{center}
-        \vspace*{-4mm}
-        \begin{center}
-            {\footnotesize Assuming $V_{DS1} \to 0$:}
-            \vspace*{-2.8mm}
-            \begin{gather*}
-                \boxed{
-                    I_o
-                    = \parens*{1 + \lambda V_{DS2}} I_\text{REF}
-                    = \parens*{1 + \lambda V_{DS2}} \frac{V_{DD} - V_{SS}}{R}
-                }
-            \end{gather*}
-        \end{center}
+        We assume that all MOSFETs are in \emph{saturation}.
+
+        Transistor equations including channel modulation:
+        \begin{align*}
+            I_\text{REF}
+            = \frac{1}{2} k_{n1} \frac{W_1}{L_1}
+            \parens*{V_{GS} - V_{t1}}^2 \parens*{1 + \lambda_1 V_{GS}}
+            \\
+            I_o
+            = \frac{1}{2} k_{n2} \frac{W_2}{L_2}
+            \parens*{V_{GS} - V_{t2}}^2 \parens*{1 + \lambda_2 V_{DS2}}
+        \end{align*}
+
+        Assuming the MOSFETs are well-matched:
+        \begin{gather*}
+            \begin{gathered}
+                k_{n1} \frac{W_1}{L_1} = k_{n2} \frac{W_2}{L_2}
+                \\
+                V_{t1} = V_{t2}
+                \\
+                \lambda \defeq \lambda_1 = \lambda_2
+            \end{gathered}
+            \quad\Longrightarrow\quad
+            \frac{I_\text{REF}}{I_o}
+            = \frac{1 + \lambda V_{DS1}}{1 + \lambda V_{DS2}}
+        \end{gather*}
+
+        Assuming $V_{DS1} \to 0$:
+        \begin{gather*}
+            I_o
+            = \parens*{1 + \lambda V_{DS2}} I_\text{REF}
+            = \parens*{1 + \lambda V_{DS2}} \frac{V_{DD} - V_{SS}}{R}
+        \end{gather*}
+
+        If we neglect channel modulation ($\lambda \to 0$):
+        \begin{gather*}
+            I_o = I_\text{REF} = \frac{V_{DD} - V_{SS}}{R}
+        \end{gather*}
+
+        \Todo{Improve this analysis? What if we don't neglect $V_{DS1}$?}
 
     \end{CheatsheetEntryFrame}
-    
-\end{multicols}
+
+\end{multicols} % TODO: We shouldn't need to have separate multicols environments.
 \begin{multicols}{2}
 
     \begin{CheatsheetEntryFrame}
-        \CheatsheetEntryTitle{General Transform \#1}
-        \begin{center}
-        \begin{circuitikz}[scale=0.9]
-            \draw 
-                (0,0)
-                        node [ocirc, label=left:X] {}
-                    -- ++(0.8,0)
-                        node [currarrow, label=above:$i_B$] {}
-                    -- ++(0.8,0)
-                        node (TMP_A) [circ, label=right:E] {}
-                    to[R, l=$R_E$] ++(0,-2)
-                    \MyTLGround{}
-                (TMP_A)
-                    to[american controlled current source, invert, l_={$
-                        \begin{gathered}
-                            \beta i_B
-                        \end{gathered}
-                    $}] ++(0,2)
-                    -- ++(1.6,0)
-                        node [ocirc, label=right:C] {}
-            ;
-            \draw
-                (4.5,0)
-                    node [simshadows/GenericGrayBlockArrow] {};
-            ;
-            \draw
-                (6.2,1)
-                        node [ocirc, label=left:X] {}
-                    -- ++(0.8,0)
-                        node [currarrow, label=above:$i_B$] {}
-                    -- ++(0.8,0)
-                        node (TMP_A) [circ, label=right:E] {}
-                    to[R, l_=$R_E \parens*{1 + \beta}$] ++(0,-2)
-                    \MyTLGround{}
-            ;
-        \end{circuitikz}%
-        \end{center}
-        \medskip
-        \SoftHLine
+        \CheatsheetEntryTitle{General Transform \#1} \CheatsheetEntrySubtitle{(Full Working)}
         \begin{center}
         \begin{circuitikz}[scale=0.9]
             \draw 
@@ -396,10 +301,41 @@
             ;
         \end{circuitikz}%
         \end{center}
-    \end{CheatsheetEntryFrame}
+        Across $r_\pi$ and across $R_E$:
+        \begin{gather*}
+            v_{BE} = i_B r_\pi
+            \\
+            v_B - v_{BE}
+            = \parens*{
+                \frac{v_{BE}}{r_\pi}
+                + g_m v_{BE}
+            } R_E
+        \end{gather*}
+        Cancelling $v_{BE}$:
+        \begin{gather*}
+            v_B - i_B r_\pi
+            = i_B r_\pi \parens*{
+                \frac{1}{r_\pi}
+                + g_m
+            } R_E
+            \\
+            v_B
+            = i_B \parens*{
+                1
+                + g_m r_\pi
+            } R_E + i_B r_\pi
+            \\
+            \frac{v_B}{i_B}
+            = \parens*{
+                1
+                + g_m r_\pi
+            } R_E + r_\pi
+        \end{gather*}
 
+    \end{CheatsheetEntryFrame}
+    
     \begin{CheatsheetEntryFrame}
-        \CheatsheetEntryTitle{General Transform \#2}
+        \CheatsheetEntryTitle{General Transform \#2} \CheatsheetEntrySubtitle{(Full Working)}
         \begin{center}
         \begin{circuitikz}[scale=0.9]
             \draw 
@@ -437,47 +373,25 @@
             ;
         \end{circuitikz}%
         \end{center}
+        Across $R_B$ and at summing currents at node E:
+        \begin{gather*}
+            v_E = - i_B R_B
+            \\
+            - i_o = \parens*{1 + \beta} i_B
+        \end{gather*}
+        %
+        Cancelling $i_B$:
+        \begin{gather*}
+            - i_o = \parens*{1 + \beta} \parens*{- \frac{v_E}{R_B}}
+            \\
+            \frac{v_E}{i_o}
+            = \frac{R_B}{1 + \beta}
+        \end{gather*}
+
     \end{CheatsheetEntryFrame}
 
     \begin{CheatsheetEntryFrame}
-        \CheatsheetEntryTitle{General Transform \#3}
-        \begin{center}
-        \begin{circuitikz}[scale=0.9]
-            \draw 
-                (0,0)
-                        node [ocirc, label=left:X] {}
-                    -- ++(0.8,0)
-                        node [currarrow, label=above:$i_B$] {}
-                    -- ++(0.8,0)
-                        node (TMP_A) [circ, label=below:E] {}
-                (TMP_A)
-                    to[american controlled current source, invert, l={$
-                        \begin{gathered}
-                            \beta i_B
-                        \end{gathered}
-                    $}] ++(0,2)
-                    -- ++(1.6,0)
-                        node [ocirc, label=right:C] {}
-                (TMP_A)
-                    -- ++(1,0)
-                    to[R, l_=$r_o$] ++(0,2)
-            ;
-            \draw
-                (4.2,1)
-                    node [simshadows/GenericGrayBlockArrow] {};
-            ;
-            \draw
-                (5.5,1)
-                        node [ocirc, label=below:X] {}
-                    -- ++(0.5,0)
-                        node [currarrow, label=below:$i_B$] {}
-                    to[R, l=$r_o \parens*{1 + \beta}$] ++(2,0)
-                        node [ocirc, label=below:C] {}
-            ;
-        \end{circuitikz}%
-        \end{center}
-        \medskip
-        \SoftHLine
+        \CheatsheetEntryTitle{General Transform \#3} \CheatsheetEntrySubtitle{(Full Working)}
         \begin{center}
         \begin{circuitikz}[scale=0.9]
             \draw 
@@ -526,7 +440,26 @@
             ;
         \end{circuitikz}%
         \end{center}
+        Across $r_\pi$, across $r_o$, and across E-C:
+        \begin{gather*}
+            v_{BE} = i_B r_\pi
+            \\
+            v_{BC} - v_{BE} = \parens*{\frac{v_{BE}}{r_\pi} + g_m v_{BE}} r_o
+        \end{gather*}
+        %
+        Cancelling $v_{BE}$:
+        \begin{gather*}
+            v_{BC} - i_B r_\pi = i_B r_\pi \parens*{\frac{1}{r_\pi} + g_m} r_o
+            \\
+            v_{BC} = i_B \parens*{1 + g_m r_\pi} r_o + i_B r_\pi
+            \\
+            \frac{v_{BC}}{i_B}
+            = \parens*{1 + g_m r_\pi} r_o + r_\pi
+        \end{gather*}
+
     \end{CheatsheetEntryFrame}
+
+    %\MulticolsBreak
 
 \end{multicols}
 

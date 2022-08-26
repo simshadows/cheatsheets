@@ -7,112 +7,123 @@
     \begin{MulticolsSoftSepRule}{2}
     
         \myul{NPN Type}
+        \vspace*{-4mm}
+        \begin{center}
+        \begin{tikzpicture}
+            \draw
+                (0,0)
+                    rectangle ++(1.5,1.0)
+                        node[pos=0.5, align=center, font={\small}]{Emitter \\ n-type}
+                    rectangle ++(1.5,-1.0)
+                        node[pos=0.5, align=center, font={\small}]{Base \\ p-type}
+                    rectangle ++(1.5,1.0)
+                        node[pos=0.5, align=center, font={\small}]{Collector \\ n-type}
+            ;
+            \path
+                (0,0) -- (-3.6,0)
+            ;
+        \end{tikzpicture}
+        \end{center}
 
-        \begin{minipage}[c]{0.3\columnwidth}
+        \begin{minipage}[c]{0.76\columnwidth}
             \MinipageInheritDocumentFormatting
-            \begin{center}
+            \emph{Forward active} DC characteristics:
+            \begin{gather*}
+                \begin{gathered}
+                    I_C = \beta I_B
+                    \\
+                    I_E = \parens{\beta + 1} I_B
+                \end{gathered}
+                \qquad\quad
+                \begin{gathered}
+                    \beta = \frac{\alpha}{1 - \alpha}
+                    \\
+                    I_C = \alpha I_E
+                \end{gathered}
+            \end{gather*}
+
+            Large signal \emph{base-width modulation}:
+            \vspace*{-2mm}
+            \begin{gather*}
+                I_C
+                = I_S e^{\brackets*{V_{BE} \mathbin{/} V_T}}
+                \parens*{1 + \frac{V_{CE}}{V_A}}
+            \end{gather*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.24\columnwidth}
+            \MinipageInheritDocumentFormatting
             \begin{circuitikz}
                 \draw
                     (0,0)
                         node[npn, anchor=center](Q1){}
                     (Q1.B)
-                        node[ocirc, label=left:B]{}
-                    (Q1.E)
-                        node[ocirc, label=below:E]{}
-                    (Q1.C)
-                        node[ocirc, label=above:C]{}
-                ;
-            \end{circuitikz}
-            \end{center}
-        \end{minipage}%
-        \begin{minipage}[c]{0.7\columnwidth}
-            \MinipageInheritDocumentFormatting
-            \phantom{\small .} % TODO: Why does this work?
-            \begin{center}
-            \begin{tikzpicture}
-                \draw
-                    (0,0)
-                        rectangle ++(1.5,1.2)
-                            node[pos=0.5, align=center, font={\small}]{Emitter \\ n-type}
-                        rectangle ++(1.5,-1.2)
-                            node[pos=0.5, align=center, font={\small}]{Base \\ p-type}
-                        rectangle ++(1.5,1.2)
-                            node[pos=0.5, align=center, font={\small}]{Collector \\ n-type}
-                ;
-            \end{tikzpicture}
-            \vspace*{3mm}
-
-            \end{center}
-        \end{minipage}%
-        \bigskip
-
-        \begin{center}
-            {\footnotesize\myul{\textbf{Hybrid-$\pi$ Small Signal Model}}}
-
-            \begin{circuitikz}
-                \draw
-                    (0,0)
+                        -- ++(-0.2,0)
+                            node[currarrow, label=above:$I_B$]{}
+                        -- ++(-0.4,0)
                             node[ocirc, label=left:B]{}
-                        -- ++(1,0)
-                            coordinate(B1)
-                        to[C, l_=$C_\pi$] ++(0,-2)
-                        -- ++(3.2,0)
-                            coordinate(E)
-                        -- ++(2.2,0)
-                        to[R, l_=$r_o$] ++(0,2)
-                            coordinate(C)
-                        -- ++(1,0)
-                            node[ocirc, label=right:C]{}
-                    (B1)
-                        -- ++(1.2,0)
-                            coordinate(B2)
-                        to[R, l_=$r_\pi$, v^>=$v_{BE}$] ++(0,-2)
-                    (B2)
-                        to[C, l=$C_\mu$] (E |- C)
-                        %to[american controlled current source, l=$g_m v_{BE}$] (E)
-                        to[american controlled current source, l=$
-                                \begin{gathered}
-                                    g_m v_{BE} \\
-                                    \textbf{\small (or)} \\
-                                    \beta i_B
-                                \end{gathered}
-                            $] (E)
-                    (E |- C)
-                        -- (C)
-                    (E)
-                        -- ++(0,-1)
-                            node[ocirc, label=right:E]{}
-
-                    (B1)
-                        ++(-0.5,0)
-                            node[currarrow, label=above:$i_B$]{}
-                    (C)
-                        ++(0.5,0)
-                            node[currarrow, label=above:$i_C$, rotate=180]{}
-                    (E)
-                        ++(0,-0.5)
-                            node[currarrow, label=left:$i_E$, rotate=-90]{}
+                    (Q1.E)
+                        -- ++(0,-0.2)
+                            node[currarrow, label=left:$I_E$, rotate=-90]{}
+                        -- ++(0,-0.6)
+                            node[ocirc, label=below:E]{}
+                    (Q1.C)
+                        -- ++(0,0.2)
+                            node[currarrow, label=left:$I_C$, rotate=-90]{}
+                        -- ++(0,0.6)
+                            node[ocirc, label=above:C]{}
                 ;
             \end{circuitikz}
+        \end{minipage}
+        \smallskip
+
+        {\footnotesize\myul{\textbf{Hybrid-$\pi$ Small Signal Model}}}
+        \begin{center}
+        \begin{circuitikz}
+            \draw
+                (0,0)
+                        node[ocirc, label=left:B]{}
+                    -- ++(1,0)
+                        coordinate(B1)
+                    to[C, l_=$C_\pi$] ++(0,-2)
+                    -- ++(3.2,0)
+                        coordinate(E)
+                    -- ++(2.2,0)
+                    to[R, l_=$r_o$] ++(0,2)
+                        coordinate(C)
+                    -- ++(1,0)
+                        node[ocirc, label=right:C]{}
+                (B1)
+                    -- ++(1.2,0)
+                        coordinate(B2)
+                    to[R, l_=$r_\pi$, v^>=$v_{BE}$] ++(0,-2)
+                (B2)
+                    to[C, l=$C_\mu$] (E |- C)
+                    %to[american controlled current source, l=$g_m v_{BE}$] (E)
+                    to[american controlled current source, l=$
+                            \begin{gathered}
+                                g_m v_{BE} \\
+                                \textbf{\small (or)} \\
+                                \beta i_B
+                            \end{gathered}
+                        $] (E)
+                (E |- C)
+                    -- (C)
+                (E)
+                    -- ++(0,-1)
+                        node[ocirc, label=right:E]{}
+
+                (B1)
+                    ++(-0.5,0)
+                        node[currarrow, label=above:$i_B$]{}
+                (C)
+                    ++(0.5,0)
+                        node[currarrow, label=above:$i_C$, rotate=180]{}
+                (E)
+                    ++(0,-0.5)
+                        node[currarrow, label=left:$i_E$, rotate=-90]{}
+            ;
+        \end{circuitikz}
         \end{center}
-
-        \emph{Forward active mode} characteristics:
-        \begin{gather*}
-            \begin{gathered}
-                I_C = \beta I_B
-                \\
-                I_E = \parens{\beta + 1} I_B
-            \end{gathered}
-            \qquad\quad
-            \beta = \frac{\alpha}{1 - \alpha}
-            \qquad\quad
-            I_C = \alpha I_E
-        \end{gather*}
-        \begin{gather*}
-            I_E = I_S \parens{e^{\brackets{V_{BE} \mathbin{/} V_T}} - 1}
-        \end{gather*}
-
-        Small signal parameters:
         \begin{gather*}
             g_m = \frac{\abs*{I_C}}{V_T}
             \qquad\quad
@@ -157,11 +168,9 @@
         \end{circuitikz}
         \end{center}
 
-        \Todo{I don't need to know PNP transistors yet, but I should make notes on it when I have time.}
+        \Todo{Write up on this soon!}
 
         \Todo{Also, we should maybe derive the hybrid-$\pi$ model and show the unsimplified version in the extras section?}
-
-        \Todo{Also, I'm not 100\% sure how to organize the equations...}
 
         \MulticolsCleanEnd
     \end{MulticolsSoftSepRule}
@@ -184,63 +193,81 @@
     \CheatsheetEntryTitle{MOSFET}
 
     \begin{MulticolsSoftSepRule}{2}
-        \myul{N-Channel Type}
+        \myul{N-Channel Type (NMOS)}
 
-        \begin{center}
-        \begin{circuitikz}
-            \draw
-                (0,0)
-                    node[nmos, anchor=center](Q1){}
-                (Q1.G)
-                    node[ocirc, label=left:G]{}
-                (Q1.S)
-                    node[ocirc, label=below:S]{}
-                (Q1.D)
-                    node[ocirc, label=above:D]{}
-            ;
-        \end{circuitikz}
-        \end{center}
-        \bigskip
+        \begin{minipage}[c]{0.76\columnwidth}
+            \MinipageInheritDocumentFormatting
+            Device parameters:
+            \begin{gather*}
+                k_n = \mu_n C_{ox}
+                \qquad
+                \lambda = \frac{1}{V_A + V_{DS}}
+            \end{gather*}
 
-        \begin{center}
-            {\footnotesize\myul{\textbf{Small Signal Model}}}
-
+            \emph{Saturation region} DC characteristics:
+            \begin{gather*}
+                I_G = 0
+                \\
+                \begin{aligned}
+                    I_{DS}
+                        &= \frac{1}{2} k_n \frac{W}{L}
+                        \parens{V_{GS} - V_t}^2
+                        \parens{1 + \lambda V_{DS}}
+                        \\
+                    &\approx \frac{1}{2} k_n \frac{W}{L}
+                        \parens{V_{GS} - V_t}^2
+                        \qquad \text{\footnotesize{}(if $\lambda \to 0$)}
+                \end{aligned}
+            \end{gather*}
+        \end{minipage}%
+        \begin{minipage}[c]{0.24\columnwidth}
+            \MinipageInheritDocumentFormatting
             \begin{circuitikz}
                 \draw
                     (0,0)
-                            node[ocirc, label=above:G]{}
-                        -- ++(1,0)
-                            coordinate(G)
-                        to[C, l_=$C_{GS}$, v^>=$V_{GS}$] ++(0,-2)
-                        -- ++(2.2,0)
-                            coordinate(S)
-                        -- ++(2.2,0)
-                        to[R, l_=$r_o$] ++(0,2)
-                            coordinate(D)
-                        -- ++(1,0)
-                            node[ocirc, label=above:D]{}
-                    (G)
-                        to[C, l=$C_{GD}$] (S |- D)
-                        to[american controlled current source, l=$g_m V_{GS}$] (S)
-                    (S |- D)
-                        -- (D)
-                    (S)
-                        -- ++(0,-1)
-                            node[ocirc, label=right:S]{}
+                        node[nmos, anchor=center](Q1){}
+                    (Q1.G)
+                        node[ocirc, label=left:G]{}
+                    (Q1.S)
+                        node[ocirc, label=below:S]{}
+                    (Q1.D)
+                        node[ocirc, label=above:D]{}
                 ;
             \end{circuitikz}
+        \end{minipage}
+        \smallskip
+
+        \emph{Overdrive voltage}: $V_{OV} = V_{GS} - V_t$
+        \smallskip
+
+        {\footnotesize\myul{\textbf{Small Signal Model}}}
+        \begin{center}
+        \begin{circuitikz}
+            %\tikzset{/tikz/circuitikz/bipoles/length=1.2cm}
+            \draw
+                (0,0)
+                        node[ocirc, label=above:G]{}
+                    -- ++(1,0)
+                        coordinate(G)
+                    to[C, l_=$C_{GS}$, v^>=$V_{GS}$] ++(0,-2)
+                    -- ++(2.2,0)
+                        coordinate(S)
+                    -- ++(2.2,0)
+                    to[R, l_=$r_o$] ++(0,2)
+                        coordinate(D)
+                    -- ++(1,0)
+                        node[ocirc, label=above:D]{}
+                (G)
+                    to[C, l=$C_{GD}$] (S |- D)
+                    to[american controlled current source, l=$g_m V_{GS}$] (S)
+                (S |- D)
+                    -- (D)
+                (S)
+                    -- ++(0,-1)
+                        node[ocirc, label=right:S]{}
+            ;
+        \end{circuitikz}
         \end{center}
-
-        \emph{Saturation region} characteristics:
-        \begin{gather*}
-            I_G = 0
-            \\
-            I_{DS} = \frac{1}{2} k_n \frac{W}{L} \parens{V_{GS} - V_t}^2
-            \\
-            \lambda = \frac{1}{V_A + V_{DS}}
-        \end{gather*}
-
-        Small signal parameters:
         \begin{gather*}
             g_m
             = k_n \frac{W}{L} \parens{V_{GS} - V_t}
@@ -253,7 +280,7 @@
 
         \MulticolsBreak
 
-        \myul{P-Channel Type}
+        \myul{P-Channel Type (PMOS)}
 
         \begin{center}
         \begin{circuitikz}
@@ -270,7 +297,7 @@
         \end{circuitikz}
         \end{center}
 
-        \Todo{I don't need to know PMOS transistors yet, but I should make notes on it when I have time.}
+        \Todo{Write up on this soon!}
 
         \Todo{Also add discussion on enhancement/depletion-type MOSFETs?}
 
@@ -386,19 +413,15 @@
         \begin{enumerate}
             \item Assume linear operation:
             \begin{itemize}
-                \item BJTs are \emph{forward active} $\to$ \Todo{}
-                \item MOSFETs are in \emph{saturation} $\to$ \Todo{}
-            \end{itemize}
-            \item Check that the linear operation assumptions are met:
-            \begin{itemize}
-                \item NPN BJTs require \Todo{this}
-                \item N-Channel MOSFETs require $V_{GS} > V_t$
+                \item BJTs are \emph{forward active}.
+                \item MOSFETs are in \emph{saturation}.
             \end{itemize}
             \item Apply circuit analysis to find:
             \begin{itemize}
                 \item $I_C$ and $V_{CE}$ {\footnotesize {}[for NPN BJTs]}
                 \item $I_D$ and $V_{DS}$ {\footnotesize {}[for N-Channel MOSFETs]}
             \end{itemize}
+            \item Check that the linear operation assumptions are met.
         \end{enumerate}
 
         \bigskip

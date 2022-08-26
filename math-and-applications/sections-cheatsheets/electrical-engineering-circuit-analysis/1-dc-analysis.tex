@@ -648,7 +648,8 @@
             \centering
             \begin{circuitikz}
                 \draw 
-                    (0,0) node (Origin) {}
+                    (0,0)
+                        coordinate (Origin)
                     -- ++(0,0.2) to[generic, v^=$v_1$] ++(0,1.8) -- ++(0,0.2)
                     -- ++(0.2,0) to[generic, v^=$v_2$] ++(1.8,0) -- ++(0.2,0)
                     -- ++(0.2,0) ++(0.5,0) node {$\cdots$} ++(0.5,0) -- ++(0.2,0)

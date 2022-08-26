@@ -28,15 +28,15 @@
     node[tlground, scale=2, #1]{}
 }
 
+% Borrowing the tground symbol for VCC and VEE
+\newcommand{\MyVCC}[1]{%
+    node[tground, #1]{}
+}
+\newcommand{\MyVEE}[1]{%
+    node[tground, #1]{}
+}
+
 %% Not needed yet
-%% Borrowing the tground symbol for VCC and VEE
-%\newcommand{\MyVCC}[1]{%
-%    node[tground, #1]{}
-%}
-%\newcommand{\MyVEE}[1]{%
-%    node[tground, #1]{}
-%}
-%
 %% (Shortcuts for op-amp VCC/VEE)
 %\newcommand{\MyOpAmpVCC}[1]{%
 %    -- ++(0,0.6)

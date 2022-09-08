@@ -1,0 +1,282 @@
+\subsection{Linear Algebra}%
+\label{sub:linear-algebra}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Dot Product} \CheatsheetEntrySubtitle{(or Scalar Product)}
+
+        In $\mathbb{R}^n$:
+        \begin{equation*}
+            \mathbf{a} \cdot \mathbf{b} = a_1 b_1 + \cdots + a_n b_n = \sum_{k=0}^n{a_k b_k}
+        \end{equation*}
+
+        In $\mathbb{R}^2$ or $\mathbb{R}^3$:
+        \begin{equation*}
+            \mathbf{a} \cdot \mathbf{b} = \abs*{\mathbf{a}} \abs*{\mathbf{b}} \cos{\theta}
+            ,\quad \theta \in [0, \pi]
+        \end{equation*}
+
+        Useful geometric properties:
+        \begin{itemize}
+            \item $\mathbf{a} \cdot \mathbf{a} = \abs*{a}^2$, and hence $\abs*{\mathbf{a}} = \sqrt{\mathbf{a} \cdot \mathbf{a}}$.
+            \item Vectors $\mathbf{a}, \mathbf{b} \in \mathbb{R}^n$ are orthogonal if $\mathbf{a} \cdot \mathbf{b} = 0$.
+        \end{itemize}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Cross Product} \CheatsheetEntrySubtitle{(or Vector Product)}
+
+        The \textit{cross product} is only defined in $\mathbb{R}^3$.
+        \begin{equation*}
+            \begin{pmatrix}
+                a_1 \\
+                a_2 \\
+                a_3
+            \end{pmatrix}
+            \times
+            \begin{pmatrix}
+                b_1 \\
+                b_2 \\
+                b_3
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                a_2 b_3 - a_3 b_2 \\
+                a_3 b_1 - a_1 b_3 \\
+                a_1 b_2 - a_2 b_1
+            \end{pmatrix}
+        \end{equation*}
+
+        Calculation using determinants:
+        \begin{gather*}
+                \begin{pmatrix}
+                    a_1 \\
+                    a_2 \\
+                    a_3
+                \end{pmatrix}
+                \times
+                \begin{pmatrix}
+                    b_1 \\
+                    b_2 \\
+                    b_3
+                \end{pmatrix}
+                =
+                \begin{vmatrix}
+                    \mathbf{e}_1 & \mathbf{e}_2 & \mathbf{e}_3 \\
+                    a_1          & a_2          & a_3          \\
+                    b_1          & b_2          & b_3
+                \end{vmatrix}
+            \\
+                =
+                \mathbf{e}_1
+                \begin{vmatrix}
+                    \memphR{a_2} & \memphB{a_3} \\
+                    \memphB{b_2} & \memphR{b_3}
+                \end{vmatrix}
+                -
+                \mathbf{e}_2
+                \begin{vmatrix}
+                    \memphR{a_1} & \memphB{a_3} \\
+                    \memphB{b_1} & \memphR{b_3}
+                \end{vmatrix}
+                +
+                \mathbf{e}_3
+                \begin{vmatrix}
+                    \memphR{a_1} & \memphB{a_2} \\
+                    \memphB{b_1} & \memphR{b_2}
+                \end{vmatrix}
+            \\
+                = \mathbf{e}_1 \parens*{\memphR{a_2 b_3} - \memphB{a_3 b_2}}
+                - \mathbf{e}_2 \parens*{\memphR{a_1 b_3} - \memphB{a_3 b_1}}
+                + \mathbf{e}_3 \parens*{\memphR{a_1 b_2} - \memphB{a_2 b_1}}
+        \end{gather*}
+
+        Useful geometric properties:
+        \begin{itemize}
+            \item Vector $\mathbf{a} \times \mathbf{b}$ is orthogonal to $\mathbf{a}$ and $\mathbf{b}$.
+            \item $\abs*{\mathbf{a} \times \mathbf{b}} = \abs*{\mathbf{a}} \abs*{\mathbf{b}} \sin{\theta} = \text{area of a parallelogram}$
+        \end{itemize}
+
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Cramer's Rule}
+
+        Consider the following linear system with $n \times n$ invertible matrix $A$:
+        \begin{equation*}
+            A \mathbf{x} = \mathbf{b}
+            ,\qquad A \in M_{nn},\ \mathbf{x} \in \mathbb{R}^n,\ \mathbf{b} \in \mathbb{R}^n
+        \end{equation*}
+
+        The system has a unique solution:
+        \begin{equation*}
+            x_k = \frac{\det{\parens*{B_k}}}{\det{\parens*{A}}}
+            ,\qquad \forall k = 1, \dots, n,
+        \end{equation*}
+        where $B_k$ is the matrix obtained from $A$ by replacing the $\Nth{k}{th}$ column with the vector $\mathbf{b}$.
+
+        \CheatsheetEntryExtraSeparation
+
+        \CheatsheetEntryTitle{Cramer's Rule ($2 \times 2$ Matrix)}
+        \begin{equation*}
+            \begin{dcases}
+                \xmemphB{a_{11}} x + \xmemphB{a_{12}} y = \xmemphR{b_1} \\
+                \xmemphB{a_{21}} x + \xmemphB{a_{22}} y = \xmemphR{b_2}
+            \end{dcases}
+            \quad \Rightarrow \quad
+                \xmemphB{
+                    \begin{bmatrix}
+                        a_{11} & a_{12} \\
+                        a_{21} & a_{22}
+                    \end{bmatrix}
+                }
+                \begin{bmatrix}
+                    x \\
+                    y
+                \end{bmatrix}
+                =
+                \xmemphR{
+                    \begin{bmatrix}
+                        b_1 \\
+                        b_2
+                    \end{bmatrix}
+                }
+        \end{equation*}
+        \begin{equation*}
+                x
+                    = \frac{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                \xmemphR{b_1} & a_{12} \\
+                                \xmemphR{b_2} & a_{22}
+                            \end{vmatrix}
+                        }
+                    }{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & a_{12} \\
+                                a_{21} & a_{22}
+                            \end{vmatrix}
+                        }
+                    }
+                    ,\qquad
+                y
+                    = \frac{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & \xmemphR{b_1} \\
+                                a_{21} & \xmemphR{b_2}
+                            \end{vmatrix}
+                        }
+                    }{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & a_{12} \\
+                                a_{21} & a_{22}
+                            \end{vmatrix}
+                        }
+                    }
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Cramer's Rule ($3 \times 3$ Matrix)}
+        \begin{equation*}
+            \begin{dcases}
+                \xmemphB{a_{11}} x + \xmemphB{a_{12}} y + \xmemphB{a_{13}} z = \xmemphR{b_1} \\
+                \xmemphB{a_{21}} x + \xmemphB{a_{22}} y + \xmemphB{a_{23}} z = \xmemphR{b_2} \\
+                \xmemphB{a_{31}} x + \xmemphB{a_{32}} y + \xmemphB{a_{33}} z = \xmemphR{b_3}
+            \end{dcases}
+        \end{equation*}
+        \begin{equation*}
+                \xmemphB{
+                    \begin{bmatrix}
+                        a_{11} & a_{12} & a_{13} \\
+                        a_{21} & a_{22} & a_{23} \\
+                        a_{31} & a_{32} & a_{33}
+                    \end{bmatrix}
+                }
+                \begin{bmatrix}
+                    x \\
+                    y \\
+                    z
+                \end{bmatrix}
+                =
+                \xmemphR{
+                    \begin{bmatrix}
+                        b_1 \\
+                        b_2 \\
+                        b_3
+                    \end{bmatrix}
+                }
+        \end{equation*}
+        \begin{equation*}
+                x
+                    = \frac{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                \xmemphR{b_1} & a_{12} & a_{13} \\
+                                \xmemphR{b_2} & a_{22} & a_{23} \\
+                                \xmemphR{b_3} & a_{32} & a_{33}
+                            \end{vmatrix}
+                        }
+                    }{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & a_{12} & a_{13} \\
+                                a_{21} & a_{22} & a_{23} \\
+                                a_{31} & a_{32} & a_{33}
+                            \end{vmatrix}
+                        }
+                    }
+                    ,\qquad
+                y
+                    = \frac{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & \xmemphR{b_1} & a_{13} \\
+                                a_{21} & \xmemphR{b_2} & a_{23} \\
+                                a_{31} & \xmemphR{b_3} & a_{33}
+                            \end{vmatrix}
+                        }
+                    }{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & a_{12} & a_{13} \\
+                                a_{21} & a_{22} & a_{23} \\
+                                a_{31} & a_{32} & a_{33}
+                            \end{vmatrix}
+                        }
+                    }
+                    ,
+        \end{equation*}
+        \begin{equation*}
+                z
+                    = \frac{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & a_{12} & \xmemphR{b_1} \\
+                                a_{21} & a_{22} & \xmemphR{b_2} \\
+                                a_{31} & a_{32} & \xmemphR{b_3}
+                            \end{vmatrix}
+                        }
+                    }{
+                        \xmemphB{
+                            \begin{vmatrix}
+                                a_{11} & a_{12} & a_{13} \\
+                                a_{21} & a_{22} & a_{23} \\
+                                a_{31} & a_{32} & a_{33}
+                            \end{vmatrix}
+                        }
+                    }
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+

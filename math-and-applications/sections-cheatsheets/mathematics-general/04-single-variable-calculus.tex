@@ -1,0 +1,76 @@
+\subsection{Single Variable Calculus}%
+\label{sub:calculus}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Derivative: First Principles}
+        \begin{equation*}
+            \frac{\diff{y}}{\diff{x}}
+                %= \lim_{\delta x \to 0}{\frac{\delta y}{\delta x}}
+                = \lim_{h \to 0}{\frac{f(x+h) - f(x)}{h}}
+                = \lim_{u \to x}{\frac{f(u) - f(x)}{u-x}}
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Derivative: Product Rule}
+        \begin{gather*}
+            \frac{\diff{}}{\diff{x}} \parens*{\memphR{u} \memphG{v}}
+                = \memphR{u} \memphG{\frac{\diff{v}}{\diff{x}}}
+                    + \memphG{v} \memphR{\frac{\diff{u}}{\diff{x}}}
+                \\
+                \frac{\diff{}}{\diff{x}} \parens*{\memphR{u} \memphG{v} \memphB{w}}
+                = \memphG{v} \memphB{w} \memphR{\frac{\diff{u}}{\diff{x}}}
+                    + \memphR{u} \memphB{w} \memphG{\frac{\diff{v}}{\diff{x}}}
+                    + \memphR{u} \memphG{v} \memphB{\frac{\diff{w}}{\diff{x}}}
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Derivative: Quotient Rule}
+        \begin{equation*}
+            \frac{\diff{}}{\diff{x}}{\parens*{\frac{\memphR{a}}{\memphG{u}}}}
+                =
+                    \frac{
+                        \memphG{u} \memphR{\frac{\diff{a}}{\diff{x}}} - \memphR{a} \memphG{\frac{\diff{u}}{\diff{x}}}
+                    }{
+                        \memphG{u}^2
+                    }
+                =
+                    \underbracket{
+                        \frac{
+                            \memphG{u} \memphR{a'} - \memphR{a} \memphG{u'}
+                        }{
+                            \memphG{u}^2
+                        }
+                    }_{\substack{\text{easier form} \\ \text{to remember}}}
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Derivative: Chain Rule}
+        \begin{equation*}
+            \frac{\memphR{\diff{y}}}{\memphG{\diff{x}}}
+                = \frac{\memphR{\diff{y}}}{\memphB{\diff{u}}} \times \frac{\memphB{\diff{u}}}{\memphG{\diff{x}}}
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Integration: Reverse Chain Rule}
+        \begin{equation*}
+            \int{\memphR{f'(x)} \, \memphB{g(}\memphR{f(x)}\memphB{)} \,\diff{x}}
+                = \memphB{g'(}\memphR{f(x)}\memphB{)} + C
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Integration: Integration By Parts}
+        \begin{equation*}
+            \int{\memphR{f(x)} \, \memphB{G(x)} \,\diff{x}}
+            = \memphR{F(x)} \, \memphB{G(x)} - \int{\memphR{F(x)} \, \memphB{g(x)} \,\diff{x}}
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}
+

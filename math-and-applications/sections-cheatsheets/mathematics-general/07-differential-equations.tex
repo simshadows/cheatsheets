@@ -1,0 +1,119 @@
+\subsection{Differential Equations}%
+\label{sub:diff-eq}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Separable ODEs}
+
+        Write the ODE in the form:
+        \begin{equation*}
+            h(y) \,\diff{y} = g(x) \,\diff{x}
+        \end{equation*}
+
+        To solve, integrate both sides:
+        \begin{equation*}
+            H(y) = G(x) + C
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{First-Order Linear ODEs}
+
+        Write the ODE in the form:
+        \begin{equation*}
+            \frac{\diff{y}}{\diff{x}} + f(x) \, y = g(x)
+        \end{equation*}
+
+        First, define the \textit{integrating factor} $h$:
+        \begin{equation*}
+            h(x) = e^{\int{f(x) \,\diff{x}}}
+            \Exn{
+                \qquad \Longrightarrow \qquad
+                h'(x) = f(x) \, h(x)
+            }
+        \end{equation*}
+
+        Multiply the ODE by $h$ and undo the product rule:
+        \begin{gather*}
+            h(x) \, \frac{\diff{y}}{\diff{x}} + h(x) \, f(x) \, y = g(x) \, h(x) \\
+            \frac{\diff{}}{\diff{x}} \parens*{h(x) \, y} = g(x) \, h(x)
+        \end{gather*}
+
+        To solve, integrate both sides:
+        \begin{equation*}
+            h(x) \, y = \int{g(x) \, h(x) \,\diff{x}}
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Exact ODEs}
+
+        Write the ODE in the form:
+        \begin{equation*}
+            F(x, y) + G(x, y) \frac{\diff{y}}{\diff{x}} = 0
+        \end{equation*}
+
+        First prove the ODE is \textit{exact} by showing:
+        \begin{equation*}
+            \frac{\partial{F}}{\partial{y}}
+            = \frac{\partial{G}}{\partial{x}}
+            \Exn{
+                {} = \underbrace{
+                    \frac{\partial^2{H}}{\partial{x} \, \partial{y}}
+                    = \frac{\partial^2{H}}{\partial{y} \, \partial{x}}
+                }_{\substack{\text{equality of}\\\text{mixed partials}}}
+            }
+        \end{equation*}
+        \NegateBelowDisplaySkip
+
+        Thus, our ODE can be rewritten:
+        \begin{equation*}
+            H_x(x, y) + H_y(x, y) \frac{\diff{y}}{\diff{x}} = 0
+        \end{equation*}
+
+        This is can be simplified by undoing the chain rule:
+        \begin{gather*}
+            \frac{\partial{H}}{\partial{x}} \frac{\diff{x}}{\diff{x}}
+            + \frac{\partial{H}}{\partial{y}} \frac{\diff{y}}{\diff{x}}
+            = 0 \\
+            \frac{\diff{}}{\diff{x}} \parens*{H \parens*{x, y(x)}} = 0
+        \end{gather*}
+
+        Therefore, the solution is:
+        \begin{equation*}
+            H(x, y) = C
+        \end{equation*}
+        \NegateBelowDisplaySkip
+
+        such that:
+        \begin{alignat*}{3}
+            H(x, y) &= \int{H_x(x, y) \,\partial{x}} &&= H_1(x, y) &&+ C_1(y) \\
+            H(x, y) &= \int{H_y(x, y) \,\partial{y}} &&= H_2(x, y) &&+ C_2(x)
+        \end{alignat*}
+
+    \end{CheatsheetEntryFrame}
+
+    \Todo{Consider adding a section on change of variable.}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Second-Order Linear ODEs}
+
+        \Todo{Do this!}
+
+    \end{CheatsheetEntryFrame}
+    
+\end{multicols}
+

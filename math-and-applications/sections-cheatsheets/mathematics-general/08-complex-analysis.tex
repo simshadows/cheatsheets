@@ -1,0 +1,90 @@
+\subsection{Complex Analysis}%
+\label{sub:complex-analysis}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Imaginary Unit}
+        \begin{equation*}
+            i^2 = -1
+        \end{equation*}
+        %\begin{tabularx}{\textwidth}{CC}
+        %    $i^2 = -1$ & $\underset{\substack{\text{(alternative notation for}\\\text{electrical engineering}\\\text{and some other fields)}}}{j^2 = -1}$ \\
+        %\end{tabularx}
+
+        Alternative notation for electrical engineering (and some other fields):
+        \begin{equation*}
+            j^2 = -1
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Complex Number Representation}
+
+        The same complex number $z$ can be written:
+        \begin{alignat*}{2}
+            z
+                &= a + ib &
+                    \qquad & \text{(Rectangular Form)} \\
+                &= r(\cos{\theta} + i \sin{\theta}) &
+                    \qquad & \text{(Polar Form)} \\
+                &= r e^{i \theta} &
+                    \qquad & \text{(Exponential Form)} \\
+                &= r \phase{\theta} &
+                    \qquad & \text{(Steinmetz Notation)} \\
+                &\Exn{= r \cis{\theta},} &
+                    \qquad & \Exn{\text{(cis Form) [rarely used]}}
+        \end{alignat*}%
+        where $a, b, r, \theta \in \mathbb{R}$.
+
+        %The same complex number $z$ can be written:\\[\abovedisplayskip]
+        %\begin{center}
+        %\begin{tabular}{lc}
+        %    Rectangular Form & $a + ib$ \\
+        %    Polar Form & $r(\cos{\theta} + i \sin{\theta})$ \\
+        %    Exponential Form & $r e^{i \theta}$ \\
+        %    Steinmetz Notation \phantom{x} & $r \phase{\theta}$ \\
+        %    \Exn{$\cis$ Form {\scriptsize (rarely used)}} & \Exn{$r \cis{\theta}$} \\
+        %\end{tabular}
+        %\end{center}
+
+        Components:
+        \begin{alignat*}{3}
+            & \text{Real Part:}            & \MyRe{(z)}  &= a      &&= r \cos{\theta} \phantom{\frac{}{a}} \\
+            & \text{Imaginary Part:} \quad & \MyIm{(z)}  &= b      &&= r \sin{\theta} \phantom{\frac{b}{a}} \\
+            & \text{Modulus:}              & \abs*{z}    &= r      &&= \sqrt{a^2 + b^2} \phantom{\frac{b}{a}} \\
+            & \text{Argument:}             & \arg{(z)}   &= \theta &&= \tan^{-1}{\parens*{\frac{b}{a}}}
+        \end{alignat*}
+
+        \CheatsheetEntryTitle{Euler's Formula}
+        \begin{equation*}
+            e^{i \theta} = \cos{\theta} + i \sin{\theta}, \qquad \forall \theta \in \mathbb{R}
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Complex Conjugate}
+        \begin{equation*}
+            \complexconjugate{a + ib} = a - ib
+        \end{equation*}
+
+        Alternative notation for physics and engineering:
+        \begin{equation*}
+            \parens*{a + ib}^* = a - ib
+        \end{equation*}
+
+        \CheatsheetEntryTitle{Complex Conjugate: $z \complexconjugate{z}$}
+        \begin{gather*}
+            z \complexconjugate{z} = \abs*{z}^2 \\
+            \parens*{a + ib} \complexconjugate{\parens*{a + ib}} = \parens*{a + ib} \parens*{a - ib} = a^2 + b^2
+        \end{gather*}
+        
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}
+

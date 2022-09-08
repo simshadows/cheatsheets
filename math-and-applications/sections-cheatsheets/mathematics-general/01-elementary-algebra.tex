@@ -1,0 +1,339 @@
+\subsection{Elementary Algebra}%
+\label{sub:algebra}
+
+\begin{multicols}{2}
+
+    %% These are the Exponentiation and Log Identities sections in the original separated form.
+    %
+    %\begin{CheatsheetEntryFrame}
+    %
+    %    \CheatsheetEntryTitle{Exponentiation Identities}
+    %    \begin{align*}
+    %        a^x a^y &= a^{x+y} \\
+    %        a^x b^x &= \parens*{ab}^x \\
+    %        \parens*{a^x}^y &= a^{xy} \\
+    %        a^0 &= 1
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        a^{-x} &= \frac{1}{a^x} \\
+    %        a^{x-y} &= \frac{a^x}{a^y} \\
+    %        \parens*{\frac{a}{b}}^x &= \frac{a^x}{b^x}
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        a^{\frac{1}{2}} &= \sqrt{a} \\
+    %        a^{\frac{1}{x}} &= \sqrt[x]{a} \\
+    %        a^{\frac{x}{y}} &= \parens*{\sqrt[y]{a}}^x
+    %    \end{align*}
+    %
+    %\end{CheatsheetEntryFrame}
+    %
+    %\begin{CheatsheetEntryFrame}
+    %
+    %    \CheatsheetEntryTitle{Log Identities}
+    %
+    %    \CheatsheetSmallEquationTitle{(Definition)}
+    %    \begin{equation*}
+    %        x = a^y \quad\iff\quad \log_a{x} = y
+    %    \end{equation*}
+    %
+    %    \CheatsheetSmallEquationTitle{(Inverses)}
+    %    \begin{equation*}
+    %        \log_a{a^x} = a^{\log_a{x}} = x
+    %    \end{equation*}
+    %
+    %    \CheatsheetSmallEquationTitle{(Change of Base Law)}
+    %    \begin{equation*}
+    %        \log_a{x} = \frac{\log_u{x}}{\log_u{a}}
+    %    \end{equation*}
+    %
+    %    \vspace*{-\abovedisplayskip}
+    %    \begin{align*}
+    %        \log_a{xy} &= \log_a{x} + \log_a{y} \\
+    %        \log_a{\parens*{\frac{x}{y}}} &= \log_a{x} - \log_a{y} \\
+    %        \log_a{x^n} &= n \log_a{x}
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        \log_a{1} &= 0 \\
+    %        \log_a{a} &= 1
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        \log_a{\parens*{\frac{1}{x}}} &= - \log_a{x}
+    %        %
+    %        \\[\abovedisplayskip]
+    %        %
+    %        \log_a{\parens*{\frac{1}{a}}} &= -1 \\
+    %        \log_a{\sqrt{a}} &= \frac{1}{2} \\
+    %        \log_a{\sqrt[b]{a}} &= \frac{1}{b}
+    %    \end{align*}
+    %
+    %\end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Exponentiation and Logarithm Identities}
+
+        % Hacks to ensure uniform height
+        \renewcommand{\W}{\displaystyle} % Simple
+        \newcommand{\X}{\displaystyle \vphantom{\parens*{\sqrt[\frac{I}{I}]{I}}}} % No fractions
+        \newcommand{\Y}{\displaystyle \vphantom{\frac{I}{I}}} % Simple fractions
+        \newcommand{\Z}{\displaystyle \vphantom{\parens*{\parens*{\frac{I}{I}}^I}}} % Complicated fractions
+
+
+        \begin{center}
+        \begin{tabularx}{\textwidth}{Ccc}
+
+            \hline
+            \multicolumn{3}{|l|}{{\scriptsize \textbf{Logarithm Definition}}}
+                \\
+            \multicolumn{1}{|c}{$\X x = a^y$}
+                & $\X \iff$
+                & \multicolumn{1}{c|}{$\X \log_a{x} = y$}
+                \\
+            \hline
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $a^{\log_a{x}} = x$
+                & $\X \iff$
+                & $\X \log_a{a^x} = x$
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            {} % BLANK
+                &
+                & $\W \overset{\text{\textbf{Change of Base Law}}}{\boxed{\Z \log_a{x} = \frac{\log_u{x}}{\log_u{a}}}}$
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \X a^0 &= 1 \\
+                            \X a^1 &= a \\
+                            \Y a^{-1} &= \frac{1}{a}
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \X \longrightarrow \\
+                            \X \longrightarrow \\
+                            \Y \longrightarrow
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{aligned}
+                            \X \log_a{1} &= 0 \\
+                            \X \log_a{a} &= 1 \\
+                            \Y \log_a{\frac{1}{a}} &= -1
+                        \end{aligned}
+                    $
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \X a^x a^y         &= a^{x+y} \\
+                            \X a^x b^x         &= \parens*{ab}^x \\
+                            \X \parens*{a^x}^y &= a^{xy} \\
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \X \longrightarrow \\
+                            \X \\
+                            \X \longrightarrow
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{aligned}
+                            \X \log_a{xy} &= \log_a{x} + \log_a{y} \\
+                            \X & \\
+                            \X \log_a{x^n} &= n \log_a{x}
+                        \end{aligned}
+                    $
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \Z \frac{1}{a^y}   &= a^{-y} \\
+                            \Z \frac{a^x}{a^y} &= a^{x-y} \\
+                            \Z \frac{a^x}{b^x} &= \parens*{\frac{a}{b}}^x
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \Z \\
+                            \Z \longrightarrow \\
+                            \Z
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{aligned}
+                            \Z \log_a{\frac{1}{y}} &= -\log_a{y} \\
+                            \Z \log_a{\frac{x}{y}} &= \log_a{x} - \log_a{y} \\
+                            \Z &
+                        \end{aligned}
+                    $
+                \\
+
+            && %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+                \\ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% GAP
+
+            $\W
+                        \begin{aligned}
+                            \Y a^{\frac{1}{2}} &= \sqrt{a} \\
+                            \Y a^{\frac{1}{y}} &= \sqrt[y]{a} \\
+                            \Y a^{\frac{x}{y}} &= \parens*{\sqrt[y]{a}}^x
+                        \end{aligned}
+            $
+                &
+                    $\W
+                        \begin{gathered}
+                            \Y \longrightarrow \\
+                            \Y \longrightarrow \\
+                            \Y \longrightarrow
+                        \end{gathered}
+                    $
+                &
+                    $\W
+                        \begin{alignedat}{2}
+                            \Y & \log_a{\sqrt{a}}                &&= \frac{1}{2} \\
+                            \Y & \log_a{\sqrt[y]{a}}             &&= \frac{1}{y} \\
+                            \Y & \log_a{\parens*{\sqrt[y]{a}}^x} &&= \frac{x}{y}
+                        \end{alignedat}
+                    $
+                \\
+
+        \end{tabularx}
+        \end{center}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Factorial}
+        \begin{gather*}
+            n! = \prod_{k = 1}^n{k} = 1 \times 2 \times 3 \times \dots \times (n-2) \times (n-1) \times n, \\
+            \forall n \in \mathbb{Z} : n > 0.
+        \end{gather*}
+
+        Factorial of zero:
+        \begin{equation*}
+            0! = 1
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    % \MulticolsBreak % I want a break here...
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Quadratic Formula}
+        %\begin{gather*}
+        %    x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \\
+        %    \intertext{Discriminant:}
+        %    \Delta = b^2 - 4ac
+        %\end{gather*}
+        \begin{gather*}
+            x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+            \qquad\quad
+            \MathOverLabel{\text{\ul{discriminant}}}{\Delta = b^2 - 4ac}
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Quadratic Factorization}
+        \begin{equation*}
+            x^2 + bx + c = \parens*{x+v} \parens*{x+u}
+            \qquad\quad
+            %\MathOverLabel{\text{\ul{sums and products}}}{ % Too much space. Not worth it.
+                \begin{array}{c}
+                    b = u+v \\
+                    c = uv
+                \end{array}
+            %}
+        \end{equation*}
+        \vspace{-2ex} % Not sure why there's so much whitespace
+
+        \CheatsheetEntryTitle{Completing The Square}
+        \begin{equation*}
+            x^2 + b x + c = \parens*{x + \xmemphR{\brackets*{\memphR{\frac{b}{2}}}}}^2 + c - \xmemphP{\brackets*{\memphP{\frac{b}{2}}}^2}
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Quadratic/Cubic Identities}
+        \begin{align*}
+            a^2 - b^2 &= (a + b) (a - b) \\
+            a^3 - b^3 &= (a - b) (a^2 + ab + b^2) \\
+            a^3 + b^3 &= (a + b) (a^2 - ab + b^2)
+        \end{align*}
+
+    \end{CheatsheetEntryFrame}
+
+\end{multicols}
+\newpage
+
+\begin{CheatsheetEntryFrame}
+
+    \CheatsheetEntryTitle{Partial Fraction Decomposition}
+
+    A \textit{proper rational function} can be rewritten as a sum of \textit{partial fractions}.
+
+    For each irreducible factor in the denominator, the partial fractions are as follows:
+    \renewcommand{\W}{\displaystyle}
+    \begin{equation*}
+        \begin{array}{ccccc}
+            \substack{\text{\ul{irreducible factor in denominator}}} &&&&
+                \substack{\text{\ul{partial fractions}}}
+                \\[1ex]
+            \W \memphR{(ax + b)}^k &
+                & \Longrightarrow & \quad &
+                %\W \sum_{n=1}^k{\frac{A_n}{\memphR{(ax + b)}^n}}
+                \W \frac{A_1}{ax + b} + \frac{A_2}{\parens*{ax + b}^2} + \dots + \frac{A_k}{\parens*{ax + b}^k}
+                \\[3ex]
+            \W \memphR{(ax^2 + bx + c)}^k &
+                & \Longrightarrow & \quad &
+                %\W \sum_{n=1}^k{\frac{A_n x + B_n}{\memphR{(ax^2 + bx + c)}^n}}
+                \W \frac{A_1 x + B_1}{ax^2 + bx + c} + \frac{A_2 x + B_2}{\parens*{ax^2 + bx + c}^2} + \dots + \frac{A_k x + B_k}{\parens*{ax^2 + bx + c}^k}
+                \\
+        \end{array}
+    \end{equation*}
+
+    For \textit{improper rational functions}, you must first convert it to a \textit{proper rational function}.
+
+\end{CheatsheetEntryFrame}
+
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{todo}
+
+    \end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
+
+    \MulticolsPhantomPlaceholder
+
+\end{multicols}
+

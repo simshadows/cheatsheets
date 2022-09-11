@@ -115,5 +115,323 @@
 
     \end{CheatsheetEntryFrame}
     
+    \begin{CheatsheetEntryFrameStart}
+
+        \CheatsheetEntryTitle{Laplace Transform}
+
+        For function $f$ and some complex variable $s = \sigma + i \omega$:
+        \begin{gather*}
+            \LaplaceTransform\brackets*{f\parens*{t}}
+            = F\parens*{s}
+            = \int_{0^-}^\infty f\parens*{t} e^{-s t} \,\diff{t}
+        \end{gather*}
+
+        \myul{Useful properties:}
+        \begin{center}
+            Linearity
+            \begin{gather*}
+                \LaplaceTransform\brackets*{a_1 f_1(t) + a_2 f_2(t)}
+                = a_1 F_1\parens*{s} + a_2 F_2\parens*{s}
+            \end{gather*}
+
+            Scaling
+            \begin{gather*}
+                \LaplaceTransform\brackets*{f\parens*{a t}}
+                = \frac{1}{a} F\parens*{\frac{s}{a}}
+            \end{gather*}
+
+            Time Shifting
+            \begin{gather*}
+                \LaplaceTransform\brackets*{f\parens*{t - a} u\parens*{t - a}}
+                = e^{-a s} F\parens*{s}
+            \end{gather*}
+
+            Frequency Shifting/Translation
+            \begin{gather*}
+                \LaplaceTransform\brackets*{e^{-a t} f\parens*{t} u\parens*{t}}
+                = F\parens*{s + a}
+            \end{gather*}
+
+            Time Differentiation
+            \begin{gather*}
+                \LaplaceTransform\brackets*{f'\parens*{t}}
+                = s F\parens*{s} - f\parens*{0^-}
+                \\
+                \LaplaceTransform\brackets*{f''\parens*{t}}
+                = s^2 F\parens*{s} - s f\parens*{0^-} - f'\parens*{0^-}
+            \end{gather*}
+            \begin{align*}
+                \LaplaceTransform\brackets*{f^{\parens*{n}}\parens*{t}}
+                &= s^n F\parens*{s}
+                - s^{n-1} f\parens*{0^-}
+                - s^{n-2} f'\parens*{0^-}
+                \\
+                &\phantom{=} - \cdots
+                - s^0 f^{\parens*{n-1}}\parens*{0^-}
+            \end{align*}
+
+            Time Integration
+            \begin{gather*}
+                \LaplaceTransform\brackets*{\int_0^t f\parens*{x} \,\diff{x}}
+                = \frac{1}{s} F\parens*{s}
+            \end{gather*}
+
+            Frequency Differentiation
+            \begin{gather*}
+                \LaplaceTransform\brackets*{t^n f\parens*{t}}
+                = \parens*{-1}^n F^{\parens*{n}}\parens*{s}
+            \end{gather*}
+        \end{center}
+
+    \end{CheatsheetEntryFrameStart}
+
+    \begin{CheatsheetEntryFrameEnd}
+
+        \begin{center}
+            Time Periodicity (\Todo{write better notes?})
+            \begin{gather*}
+                F\parens*{s}
+                = \frac{F_1\parens*{s}}{1 - e^{-T s}}
+            \end{gather*}
+
+            Initial/Final Values
+            \begin{gather*}
+                f\parens*{0}
+                = \lim_{s \to \infty} s F\parens*{s}
+                \qquad\quad
+                f\parens*{\infty}
+                = \lim_{s \to 0} s F\parens*{s}
+            \end{gather*}
+
+            Convolution (\Todo{better notes and properties of the convolution?})
+            \begin{gather*}
+                F_1\parens*{s} F_2\parens*{s}
+                = \LaplaceTransform\brackets*{f_1\parens*{t} * f_2\parens*{t}}
+            \end{gather*}
+        \end{center}
+
+        \myul{Useful properties of the convolution integral:}
+        \begin{gather*}
+            x\parens*{t} * h\parens*{t} = h\parens*{t} * x\parens*{t}
+            \\
+            f\parens*{t} * \brackets*{x\parens*{t} + y\parens*{t}}
+            = f\parens*{t} * x\parens*{t} + f\parens*{t} * y\parens*{t}
+            \\
+            f\parens*{t} * \brackets*{x\parens*{t} * y\parens*{t}}
+            = \brackets*{f\parens*{t} * x\parens*{t}} * y\parens*{t}
+        \end{gather*}
+        \begin{gather*}
+            f\parens*{t} * \delta\parens*{t}
+            = \int_{-\infty}^\infty {
+                f\parens*{\lambda} \delta\parens*{t - \lambda} \,\diff{\lambda}
+            }
+            = f\parens*{t}
+            \\
+            f\parens*{t} * \delta\parens*{t - t_0}
+            = f\parens*{t - t_0}
+            \\
+            f\parens*{t} * \delta'\parens*{t}
+            = \int_{-\infty}^\infty {
+                f\parens*{\lambda} \delta'\parens*{t - \lambda} \,\diff{\lambda}
+            }
+            = f'\parens*{t}
+            \\
+            f\parens*{t} * u\parens*{t}
+            = \int_{-\infty}^\infty {
+                f\parens*{\lambda} u\parens*{t - \lambda} \,\diff{\lambda}
+            }
+            = \int_{-\infty}^t f\parens*{\lambda} \,\diff{\lambda}
+        \end{gather*}
+
+    \end{CheatsheetEntryFrameEnd}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Heaviside Step Function}
+        \begin{gather*}
+            H\parens*{x}
+            \defeq
+                \begin{cases}
+                    1 &\quad \text{if } x > 0 \\
+                    0 &\quad \text{if } x \le 0
+                \end{cases}
+        \end{gather*}
+
+        \CheatsheetEntryTitle{Dirac Delta Function}
+        \begin{gather*}
+            \delta\parens*{x}
+            = \frac{\diff{}}{\diff{x}} H\parens*{x}
+        \end{gather*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Trigonometric Fourier Series}
+
+        For any \emph{periodic function} $f \parens*{t} = f \parens*{t + n T}$:
+        \begin{align*}
+            f \parens*{t}
+            &= a_o
+            + \sum_{n=1}^\infty \parens*{
+                a_n \cos n \omega_0 t + b_n \sin n \omega_0 t
+            }
+            \\
+            &= a_o
+            + \sum_{n=1}^\infty {
+                A_n \cos \parens*{n \omega_0 t + \phi_n}
+            }
+            \qquad\quad \text{\parbox{5em}{\footnotesize{}(Amplitude-Phase Form)}}
+        \end{align*}
+        \begin{gather*}
+            a_0
+            = \frac{1}{T} \int_0^T f\parens*{t} \,\diff{t} = \text{average value of $f$}
+            \\
+            a_n
+            = \frac{2}{T} \int_0^T f\parens*{t} \cos n \omega_0 t \,\diff{t}
+            \\
+            b_n
+            = \frac{2}{T} \int_0^T f\parens*{t} \sin n \omega_0 t \,\diff{t}
+            \\
+            A_n = \sqrt{a_n^2 + b_n^2}
+            \qquad\quad
+            \phi_n = - \tan^{-1} \frac{b_n}{a_n}
+        \end{gather*}
+
+        Fundamental angular frequency:
+        \begin{gather*}
+            \omega_0 = \frac{2 \pi}{T}
+        \end{gather*}
+        Each element of the sum is called a \emph{harmonic}.
+
+        Dirichlet conditions (to produce a convergent Fourier series):
+        \begin{itemize}
+            \item $f$ must be single-valued everywhere.
+            \item $f$ must have a finite number of finite discontinuities, maxima, and minima in any one period.
+            \item $\int_{t_0}^{t_0+T} \abs*{f\parens*{t}} \,\diff{t} < \infty$ for any $t_0$.
+        \end{itemize}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Fourier Transform}
+
+        For function $f$ \emph{(not necessarily periodic)} which we interpret as a periodic function with \emph{infinite period}:
+        \begin{gather*}
+            F\parens*{\omega}
+            = \FourierTransform\brackets*{f\parens*{t}}
+            = \int_{-\infty}^\infty f\parens*{t} e^{-i \omega t} \,\diff{t}
+            \\
+            f\parens*{t}
+            = \FourierTransform^{-1}\brackets*{F\parens*{\omega}}
+            = \frac{1}{2 \pi}
+            \int_{-\infty}^\infty F\parens*{\omega} e^{i \omega t} \,\diff{\omega}
+        \end{gather*}
+
+        The Fourier transform $F$ exists when the Fourier integral converges.
+
+        \myul{Useful properties:}
+        \begin{center}
+            Linearity
+            \begin{gather*}
+                \FourierTransform\brackets*{a_1 f_1(t) + a_2 f_2(t)}
+                = a_1 F_1\parens*{\omega} + a_2 F_2\parens*{\omega}
+            \end{gather*}
+
+            Time Scaling
+            \begin{gather*}
+                \FourierTransform\brackets*{f\parens*{a t}}
+                = \frac{1}{\abs*{a}} F\parens*{\frac{\omega}{a}}
+            \end{gather*}
+
+            Time Shifting
+            \begin{gather*}
+                \FourierTransform\brackets*{f\parens*{t - t_0}}
+                = e^{-i \omega t_0} F\parens*{\omega}
+            \end{gather*}
+
+            Frequency Shifting/Amplitude Modulation
+            \begin{gather*}
+                \FourierTransform\brackets*{f\parens*{t} e^{i \omega_0 t}}
+                = F\parens*{\omega - \omega_0}
+            \end{gather*}
+
+            Time Differentiation
+            \begin{gather*}
+                \FourierTransform\brackets*{f^{(n)}\parens*{t}}
+                = \parens*{i \omega}^n F\parens*{\omega}
+            \end{gather*}
+
+            Time Integration
+            \begin{gather*}
+                \FourierTransform\brackets*{\int_{-\infty}^t f\parens*{\tau} \,\diff{\tau}}
+                = \frac{F\parens*{\omega}}{i \omega}
+                + \pi F\parens*{0} \delta\parens*{\omega}
+            \end{gather*}
+
+            Reversal
+            \begin{gather*}
+                \FourierTransform\brackets*{f\parens*{-t}}
+                = F\parens*{-\omega}
+                = \underbrace{F^*\parens*{-\omega}}_\text{\clap{complex conjugate}}
+            \end{gather*}
+
+            Duality
+            \begin{gather*}
+                %\FourierTransform\brackets*{f\parens*{t}}
+                %= F\parens*{\omega}
+                %\qquad\Longrightarrow\qquad
+                \FourierTransform\brackets*{F\parens*{t}}
+                = 2 \pi f \parens*{-\omega}
+            \end{gather*}
+
+            Convolution (\Todo{write better notes?})
+            \begin{gather*}
+                Y\parens*{\omega}
+                = \FourierTransform\brackets*{h\parens*{t} * x\parens*{t}}
+                = H\parens*{\omega} X\parens*{\omega}
+                \\
+                y\parens*{t}
+                = h\parens*{t} * x\parens*{t}
+                = \int_{-\infty}^\infty{
+                    h\parens*{\lambda} x\parens*{t - \lambda} \,\diff{\lambda}
+                }
+            \end{gather*}
+        \end{center}
+
+    \end{CheatsheetEntryFrame}
+    
+\end{multicols}
+\newpage
+\begin{multicols}{2}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Discrete Fourier Transform (DFT)}
+
+        Instead of a continuous function over time, suppose we instead discretely sample it, denoted $x_n$. The DFT of $x_n$ is:
+        \begin{align*}
+            X_n
+            &= \sum_{k=0}^{N-1} x_k e^{-i \frac{2 \pi}{N} n k}
+            \\
+            &= \sum_{k=0}^{N-1} x_k \brackets*{
+                \cos\parens*{\frac{2 \pi}{N} k n}
+                - i \sin\parens*{\frac{2 \pi}{N} k n}
+            }
+        \end{align*}
+
+        {\footnotesize
+            Side-note: Fast Fourier Transform (FFT) is a family of algorithms used to calculate the DFT.
+        }
+
+        \Todo{What are some better definitions? Can values be complex?}
+
+    \end{CheatsheetEntryFrame}
+    
 \end{multicols}
 

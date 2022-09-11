@@ -5,14 +5,136 @@
     \ensuremath{\vphantom{\displaystyle \sum_{#1}^{#1}}}%
 }
 
-% := symbol
-\newcommand{\defeq}{\mathbin{\vcentcolon=}}
+%
+% Math Symbols
+%
 
+% My implementations of math mode Greek letters where no command is available due to similarity with Latin letters.
+% These commands are used where needed to intentionally keep typographically consistent.
+\DeclareMathSymbol{\myAlpha  }{\mathalpha}{operators}{"41}
+\DeclareMathSymbol{\myBeta   }{\mathalpha}{operators}{"42}
+\DeclareMathSymbol{\myEpsilon}{\mathalpha}{operators}{"45}
+\DeclareMathSymbol{\myZeta   }{\mathalpha}{operators}{"5A}
+\DeclareMathSymbol{\myEta    }{\mathalpha}{operators}{"48}
+\DeclareMathSymbol{\myIota   }{\mathalpha}{operators}{"49}
+\DeclareMathSymbol{\myKappa  }{\mathalpha}{operators}{"4B}
+\DeclareMathSymbol{\myMu     }{\mathalpha}{operators}{"4D}
+\DeclareMathSymbol{\myNu     }{\mathalpha}{operators}{"4E}
+\DeclareMathSymbol{\myOmicron}{\mathalpha}{operators}{"4F}
+\DeclareMathSymbol{\myRho    }{\mathalpha}{operators}{"50}
+\DeclareMathSymbol{\myTau    }{\mathalpha}{operators}{"54}
+\DeclareMathSymbol{\myChi    }{\mathalpha}{operators}{"58}
+\DeclareMathSymbol{\myomicron}{\mathord  }{letters}{"6F}
+\DeclareMathSymbol{\myDigamma}{\mathalpha}{operators}{"46} % TODO: Find a better version.
+%% My original commands
+%\newcommand{\myAlpha  }{\mathrm{A}}
+%\newcommand{\myBeta   }{\mathrm{B}}
+%\newcommand{\myEpsilon}{\mathrm{E}}
+%\newcommand{\myZeta   }{\mathrm{Z}}
+%\newcommand{\myEta    }{\mathrm{H}}
+%\newcommand{\myIota   }{\mathrm{I}}
+%\newcommand{\myKappa  }{\mathrm{K}}
+%\newcommand{\myMu     }{\mathrm{M}}
+%\newcommand{\myNu     }{\mathrm{N}}
+%\newcommand{\myOmicron}{\mathrm{O}}
+%\newcommand{\myomicron}{\mathnormal{o}} % I have no idea what this should be, but the other lower-case letters are italicized...
+%\newcommand{\myRho    }{\mathrm{P}}
+%\newcommand{\myTau    }{\mathrm{T}}
+%\newcommand{\myChi    }{\mathrm{X}}
+
+\newcommand\evalat[2]{{\left.#1\right\rvert{}}_{#2}}
+
+\newcommand{\defeq}{\mathbin{\vcentcolon=}} % := symbol
+
+\DeclarePairedDelimiter\ceil{\lceil{}}{\rceil{}}
+\DeclarePairedDelimiter\floor{\lfloor{}}{\rfloor{}}
+
+\newcommand{\complexconjugate}[1]{\overline{#1}}
+
+\DeclareMathOperator{\dom}{Dom} % Domain of a function
+
+% Custom versions of the Re() and Im() functions in complex analysis
+\DeclareMathOperator{\MyRe}{Re}
+\DeclareMathOperator{\MyIm}{Im}
+%\DeclareMathOperator{\MyRe}{\Re} % If these are ever used, they don't space well.
+%\DeclareMathOperator{\MyIm}{\Im} % Should figure out how to fix this...
+
+% Other common math functions that aren't in-built
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\csch}{csch}
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\FourierTransform}{\mathcal{F}}
+\DeclareMathOperator{\LaplaceTransform}{\mathcal{L}}
+
+% Relational algebra functions
+\DeclareMathOperator{\relselect}{\sigma}
+\DeclareMathOperator{\relproject}{\pi}
+\DeclareMathOperator{\relrename}{\rho}
+\DeclareMathOperator{\relgroup}{\gamma}
+
+\newcommand\rhs{\textit{RHS}}
+\newcommand\lhs{\textit{LHS}}
+
+\newcommand{\Nth}[2]{\ensuremath{{#1}^\textit{#2}}}
+\newcommand{\diff}{\ensuremath{\mathrm{d}}}
+\newcommand{\parallelsum}{\mathbin{\|}}
+
+\DeclarePairedDelimiter\parens{(}{)}
+\DeclarePairedDelimiter\brackets{[}{]}
+\DeclarePairedDelimiter\braces{\{}{\}}
+
+\DeclarePairedDelimiter\abs{\lvert{}}{\rvert{}}
+\DeclarePairedDelimiter\inte{[}{]}
+
+% Common math structures
+%\newcommand{\setdef}[2]{\left\{{#1} \,\middle|\, {#2}\right\}} % Bar version. TODO: If this is used, fix the spacing around bar.
+%\newcommand{\setdef}[2]{\left\{{#1} : {#2}\right\}}
+\newcommand{\setdef}[2]{\left\{{#1} \mid {#2}\right\}}
+\newcommand{\eqsystem}[1]{\left\{\:{#1}\right.}
+
+% The nothing-unit, for use when siunitx gives the "Found prefix part with no unit." error.
+% Use this sparingly!
+\DeclareSIUnit{\sinounit}{\relax}
+
+% \newcommand*\Let[2]{\State #1 $\gets$ #2}% THERE MUST BE A BETTER WAY!!!
+
+% Electrical Engineering Conventions
+\DeclareSIUnit\voltampere{VA} % Apparent Power
+\DeclareSIUnit\var{VAR} % Reactive Power
+
+% Adding small text over things at a more comfortable distance.
+% TODO: My implementation is actually a hack. I should find a better way of doing it...
+%       Though in the process, I may need to rework formatting where this command is being used.
+\newcommand{\MathOverLabel}[2]{\overset{\substack{#1\\\phantom{x}}}{#2}}
+
+% Crossing out and replacing a value
+\newcommand{\xcancelto}[2]{\underbracket{\xcancel{#2}}_{#1}}
+
+% Fraction in display mode
+\newcommand\DisplayFrac[2]{\displaystyle \frac{\displaystyle {#1}}{\displaystyle {#2}}}
+
+%
 % Macros for Computer Science: Databases
+%
 
 \newcommand{\MarkExtendedRelAlg}{{\color{myred}\scriptsize\textbf{(Extended RA)}}}
 
 %\colorlet{RelAlgSubsectionColor}{myblue!80!white}
 \definecolor{RelAlgSubsectionColor}{rgb}{0.65,0.65,0.65}
 \newenvironment{RelAlgSubsection}[1]{\CheatsheetSubsection{#1}{RelAlgSubsectionColor}{white}}{\endCheatsheetSubsection}
+
+% Relational algebra null symbol
+\newcommand{\relnullvalue}{\mathord{\bot}}
+% Preferred null value symbol is a matter of personal taste.
+% I prefer the upside-down "T" (\bot), as introduced to me in David Maier's The Theory of Relational Databases.
+% Omega is a common greek letter, while \emptyset (or \varnothing) should just denote an empty set (or empty relation).
+
+% Relational Algebra outer join symbols
+% (Packages that contain these symbols don't seem to work...)
+%     original source: https://tex.stackexchange.com/questions/20740/symbols-for-outer-joins/20749#20749
+%     answer original author: egreg (https://tex.stackexchange.com/users/4427/egreg)
+\newcommand\TmpOJoin{\setbox0=\hbox{$\bowtie$} \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\newcommand\relleftouterjoin{\mathbin{\TmpOJoin\mkern-5.8mu\bowtie}}
+\newcommand\relrightouterjoin{\mathbin{\bowtie\mkern-5.8mu\TmpOJoin}}
+\newcommand\relfullouterjoin{\mathbin{\TmpOJoin\mkern-5.8mu\bowtie\mkern-5.8mu\TmpOJoin}}
 

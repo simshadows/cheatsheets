@@ -13,7 +13,7 @@
                 = \lim_{u \to x}{\frac{f(u) - f(x)}{u-x}}
         \end{equation*}
 
-        \CheatsheetEntryTitle{Derivative: Product Rule}
+        \CheatsheetEntryTitle{Product Rule}
         \begin{gather*}
             \frac{\diff{}}{\diff{x}} \parens*{\memphR{u} \memphG{v}}
                 = \memphR{u} \memphG{\frac{\diff{v}}{\diff{x}}}
@@ -25,7 +25,7 @@
                     + \memphR{u} \memphG{v} \memphB{\frac{\diff{w}}{\diff{x}}}
         \end{gather*}
 
-        \CheatsheetEntryTitle{Derivative: Quotient Rule}
+        \CheatsheetEntryTitle{Quotient Rule}
         \begin{equation*}
             \frac{\diff{}}{\diff{x}}{\parens*{\frac{\memphR{a}}{\memphG{u}}}}
                 =
@@ -44,7 +44,7 @@
                     }_{\substack{\text{easier form} \\ \text{to remember}}}
         \end{equation*}
 
-        \CheatsheetEntryTitle{Derivative: Chain Rule}
+        \CheatsheetEntryTitle{Chain Rule}
         \begin{equation*}
             \frac{\memphR{\diff{y}}}{\memphG{\diff{x}}}
                 = \frac{\memphR{\diff{y}}}{\memphB{\diff{u}}} \times \frac{\memphB{\diff{u}}}{\memphG{\diff{x}}}
@@ -54,17 +54,47 @@
 
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Integration: Reverse Chain Rule}
+        \CheatsheetEntryTitle{Reverse Chain Rule}
         \begin{equation*}
             \int{\memphR{f'(x)} \, \memphB{g(}\memphR{f(x)}\memphB{)} \,\diff{x}}
                 = \memphB{g'(}\memphR{f(x)}\memphB{)} + C
         \end{equation*}
 
-        \CheatsheetEntryTitle{Integration: Integration By Parts}
+        \CheatsheetEntryTitle{Integration By Parts}
         \begin{equation*}
             \int{\memphR{f(x)} \, \memphB{G(x)} \,\diff{x}}
             = \memphR{F(x)} \, \memphB{G(x)} - \int{\memphR{F(x)} \, \memphB{g(x)} \,\diff{x}}
         \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Leibniz Integral Rule}%\\
+        %{\footnotesize (Differentiation Under The Integral)}
+        \begin{align*}
+            &\frac{\diff{}}{\diff{x}}
+            \int_{b\parens*{x}}^{a\parens*{x}} f\parens*{x,y} \,\diff{y}
+            = f \parens*{x, a\parens*{x}} \frac{\diff{}}{\diff{x}} a\parens*{x}
+            \\
+            &\qquad
+            - f \parens*{x, b\parens*{x}} \frac{\diff{}}{\diff{x}} b\parens*{x}
+            + \int_{b\parens*{x}}^{a\parens*{x}}{
+                \frac{\partial{}}{\partial{x}} f\parens*{x,y} \,\diff{y}
+            }
+        \end{align*}
+        %Some common special cases:
+        If the limits are constants:
+        \begin{gather*}
+            \frac{\diff{}}{\diff{x}}
+            \int_b^a f\parens*{x,y} \,\diff{y}
+            = \int_b^a \frac{\partial{}}{\partial{x}} f\parens*{x,y} \,\diff{y}
+            %\\
+            %\frac{\diff{}}{\diff{x}}
+            %\int_b^x f\parens*{x,y} \,\diff{y}
+            %= f\parens*{x, x}
+            %+ \int_b^x \frac{\partial{}}{\partial{x}} f\parens*{x,y} \,\diff{y}
+        \end{gather*}
 
     \end{CheatsheetEntryFrame}
 

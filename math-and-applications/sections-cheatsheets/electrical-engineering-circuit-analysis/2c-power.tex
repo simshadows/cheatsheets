@@ -509,7 +509,29 @@
 
     \end{CheatsheetEntryFrame}
 
-    \Todo{Power Factor Correction?}
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Parseval's Theorem}
+        \begin{equation*}
+            W_{\qty{1}{\ohm}}
+            = \int_{-\infty}^\infty f^2\parens*{t} \,\diff{t}
+            = \frac{1}{2 \pi} \int_{-\infty}^\infty{
+                \abs*{F\parens*{\omega}}^2 \,\diff{\omega}
+            }
+        \end{equation*}
+        where $F\parens*{\omega} = \FourierTransform\braces*{f\parens*{t}}$.
+
+        \Todo{What does this mean? What are the implications?}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Power Factor Correction}
+
+        \Todo{Write notes on this?}
+
+    \end{CheatsheetEntryFrame}
 
 \end{multicols}
 

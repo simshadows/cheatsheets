@@ -9,6 +9,9 @@
 % Math Symbols
 %
 
+% TODO: Redefine this using a proper
+\newcommand{\IntegerSet}{\mathbb{Z}}
+
 % My implementations of math mode Greek letters where no command is available due to similarity with Latin letters.
 % These commands are used where needed to intentionally keep typographically consistent.
 \DeclareMathSymbol{\myAlpha  }{\mathalpha}{operators}{"41}
@@ -51,6 +54,9 @@
 
 \newcommand{\complexconjugate}[1]{\overline{#1}}
 
+\newcommand{\MyPermutations}[2]{{}_{#1}P_{#2}}
+\newcommand{\MyCombinations}[2]{{}_{#1}C_{#2}}
+
 \DeclareMathOperator{\dom}{Dom} % Domain of a function
 
 % Custom versions of the Re() and Im() functions in complex analysis
@@ -63,6 +69,7 @@
 \DeclareMathOperator{\sech}{sech}
 \DeclareMathOperator{\csch}{csch}
 \DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\SignFunction}{sgn}
 \DeclareMathOperator{\FourierTransform}{\mathcal{F}}
 \DeclareMathOperator{\LaplaceTransform}{\mathcal{L}}
 

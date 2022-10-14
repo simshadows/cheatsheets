@@ -254,7 +254,7 @@
                     0 &\quad \text{if } x \le 0
                 \end{cases}
         \end{equation*}
-        Commonly also written as $u\parens*{t}$ or $\theta\parens*{t}$.
+        Commonly also written as $u\parens*{x}$ or $\theta\parens*{x}$.
 
         \CheatsheetEntryTitle{Dirac Delta Function}
         \begin{equation*}
@@ -326,58 +326,66 @@
 
     \end{CheatsheetEntryFrame}
 
+    \newcommand{\TmpFTArrow}{{\color{mycontrastblue}\xRightarrow{\FourierTransform}}}
+
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Fourier Transform: Properties}
         \begin{equation*}
-            \begin{array}{cl}
-                \FourierTransform\braces*{F\parens*{t}}
-                = 2 \pi f \parens*{-\omega}
+            \begin{array}{cccl}
+                F\parens*{t}
+                &\TmpFTArrow&
+                2 \pi f \parens*{-\omega}
                 & \text{\tiny\myul{Duality}}
-                \\[1.2em]
-                \FourierTransform\braces*{a \, f(t) + b \, g(t)}
-                = a \, F\parens*{\omega} + b \, G\parens*{\omega}
+                \\[0.6em]
+                a \, f(t) + b \, g(t)
+                &\TmpFTArrow&
+                a \, F\parens*{\omega} + b \, G\parens*{\omega}
                 & \text{\tiny Linearity}
-                \\[1.2em]
-                {\displaystyle
-                    \FourierTransform\braces*{f\parens*{a t}}
-                    = \frac{1}{\abs*{a}} F\parens*{\frac{\omega}{a}}
-                }
+                \\[0.6em]
+                {\displaystyle f\parens*{a t}}
+                &\TmpFTArrow&
+                {\displaystyle \frac{1}{\abs*{a}} F\parens*{\frac{\omega}{a}}}
                 & \text{\tiny\parbox{6em}{Time\\Scaling}}
-                \\[1.2em]
-                \FourierTransform\braces*{f\parens*{t - t_0}}
-                = e^{-i \omega t_0} F\parens*{\omega}
+                \\[0.6em]
+                f\parens*{t - t_0}
+                &\TmpFTArrow&
+                e^{-i \omega t_0} F\parens*{\omega}
                 & \text{\tiny\parbox{6em}{Time\\Shifting}}
-                \\[1.2em]
-                \FourierTransform\braces*{f\parens*{t} e^{i \omega_0 t}}
-                = F\parens*{\omega - \omega_0}
+                \\[0.6em]
+                f\parens*{t} e^{i \omega_0 t}
+                &\TmpFTArrow&
+                F\parens*{\omega - \omega_0}
                 & \text{\tiny\parbox{6em}{Amplitude\\Modulation\\(Frequency\\Shifting)}}
-                \\[1.2em]
-                \FourierTransform\braces*{f^{(n)}\parens*{t}}
-                = \parens*{i \omega}^n F\parens*{\omega}
+                \\[0.6em]
+                f^{(n)}\parens*{t}
+                &\TmpFTArrow&
+                \parens*{i \omega}^n F\parens*{\omega}
                 & \text{\tiny\parbox{6em}{Time\\Differentiation}}
-                \\[1.2em]
+                \\[0.6em]
+                {\displaystyle \int_{-\infty}^t f\parens*{\tau} \,\diff{\tau}}
+                &\TmpFTArrow&
                 {\displaystyle
-                    \FourierTransform\braces*{
-                        \int_{-\infty}^t f\parens*{\tau} \,\diff{\tau}
-                    }
-                    = \frac{F\parens*{\omega}}{i \omega}
+                    \frac{F\parens*{\omega}}{i \omega}
                     + \pi F\parens*{0} \, \delta\parens*{\omega}
                 }
                 & \text{\tiny\parbox{6em}{Time\\Integration}}
-                \\[1.2em]
-                \FourierTransform\braces*{f\parens*{-t}}
-                = F\parens*{-\omega}
+                \\[0.6em]
+                f\parens*{-t}
+                &\TmpFTArrow&
+                F\parens*{-\omega}
                 = F^*\parens*{-\omega}
                 & \text{\tiny Reversal}
-                \\[1.2em]
-                \FourierTransform\braces*{f\parens*{t} * g\parens*{t}}
-                = f\parens*{\omega} \, G\parens*{\omega}
+                \\[0.6em]
+                f\parens*{t} * g\parens*{t}
+                &\TmpFTArrow&
+                f\parens*{\omega} \, G\parens*{\omega}
                 & \text{\tiny\parbox{6em}{Convolution\\In $t$}}
-                \\[1.2em]
+                \\[0.6em]
+                {\displaystyle f\parens*{t} \, g\parens*{t}}
+                &\TmpFTArrow&
                 {\displaystyle
-                    \FourierTransform\braces*{f\parens*{t} \, g\parens*{t}}
-                    = \frac{1}{2 \pi} F\parens*{\omega} * G\parens*{\omega}
+                    \frac{1}{2 \pi} F\parens*{\omega} * G\parens*{\omega}
                 }
                 & \text{\tiny\parbox{6em}{Convolution\\In $\omega$}}
             \end{array}
@@ -388,56 +396,83 @@
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Fourier Transform: Common Pairs}
-        \begin{gather*}
-            \FourierTransform\braces*{\delta\parens*{t}}
-            = 1
-            \qquad\quad
-            \FourierTransform\braces*{1}
-            = 2 \pi \, \delta\parens*{\omega}
-            \\[0.4em]
-            \FourierTransform\braces*{u\parens*{t}}
-            = \pi \, \delta\parens*{\omega} + \frac{1}{j \omega}
-            \\[0.4em]
-            \FourierTransform\braces*{u\parens*{t + \tau} - u\parens*{t - \tau}}
-            = 2 \frac{\sin{\omega \tau}}{\omega}
-            \\[0.4em]
-            \FourierTransform\braces*{\abs*{t}}
-            = \frac{- 2}{\omega^2}
-            \\[0.4em]
-            \FourierTransform\braces*{\SignFunction\parens*{t}}
-            = \frac{2}{i \omega}
-            \\[0.4em]
-            \FourierTransform\braces*{e^{-a t} \, u\parens*{t}}
-            = \frac{1}{a + i \omega}
-            \qquad\quad
-            \FourierTransform\braces*{e^{a t} \, u\parens*{-t}}
-            = \frac{1}{a - i \omega}
-            \\[0.4em]
-            \FourierTransform\braces*{t^n e^{-a t} \, u\parens*{t}}
-            = \frac{n!}{\parens*{a + i \omega}^{n + 1}}
-            \\[0.4em]
-            \FourierTransform\braces*{e^{-a \abs*{t}}}
-            = \frac{2 a}{a^2 + \omega^2}
-            \\[0.4em]
-            \FourierTransform\braces*{e^{i \omega_0 t}}
-            = 2 \pi \, \delta\parens*{\omega - \omega_0}
-            \\[0.4em]
-            \FourierTransform\braces*{\sin{\omega_0 t}}
-            = i \pi \brackets*{
-                \delta\parens*{\omega + \omega_0} - \delta\parens*{\omega - \omega_0}
-            }
-            \\[0.4em]
-            \FourierTransform\braces*{\cos{\omega_0 t}}
-            = \pi \brackets*{
-                \delta\parens*{\omega + \omega_0} + \delta\parens*{\omega - \omega_0}
-            }
-            \\[0.4em]
-            \FourierTransform\braces*{e^{-a t} \sin\parens*{\omega_0 t} \, u\parens*{t}}
-            = \frac{\omega_0}{\parens*{a + i \omega}^2 + \omega_0^2}
-            \\[0.4em]
-            \FourierTransform\braces*{e^{-a t} \cos\parens*{\omega_0 t} \, u\parens*{t}}
-            = \frac{a + i \omega}{\parens*{a + i \omega}^2 + \omega_0^2}
-        \end{gather*}
+        \begin{equation*}
+            \begin{array}{ccc}
+                \delta\parens*{t}
+                &\TmpFTArrow&
+                1
+                \qquad\TmpFTArrow\qquad
+                2 \pi \, \delta\parens*{\omega}
+                \\[1em]
+                u\parens*{t}
+                &\TmpFTArrow&
+                \displaystyle
+                \pi \, \delta\parens*{\omega} + \frac{1}{j \omega}
+                \\[1em]
+                u\parens*{t + \tau} - u\parens*{t - \tau}
+                &\TmpFTArrow&
+                \displaystyle
+                2 \frac{\sin{\omega \tau}}{\omega}
+                \\[1em]
+                \abs*{t}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{- 2}{\omega^2}
+                \\[1em]
+                \SignFunction\parens*{t}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{2}{i \omega}
+                \\[1em]
+                e^{-a t} \, u\parens*{t}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{1}{a + i \omega}
+                \\[1em]
+                e^{a t} \, u\parens*{-t}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{1}{a - i \omega}
+                \\[1em]
+                t^n e^{-a t} \, u\parens*{t}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{n!}{\parens*{a + i \omega}^{n + 1}}
+                \\[1em]
+                e^{-a \abs*{t}}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{2 a}{a^2 + \omega^2}
+                \\[1em]
+                e^{i \omega_0 t}
+                &\TmpFTArrow&
+                2 \pi \, \delta\parens*{\omega - \omega_0}
+                \\[1em]
+                \sin{\omega_0 t}
+                &\TmpFTArrow&
+                i \pi \brackets*{
+                    \delta\parens*{\omega + \omega_0}
+                    - \delta\parens*{\omega - \omega_0}
+                }
+                \\[1em]
+                \cos{\omega_0 t}
+                &\TmpFTArrow&
+                \pi \brackets*{
+                    \delta\parens*{\omega + \omega_0}
+                    + \delta\parens*{\omega - \omega_0}
+                }
+                \\[1em]
+                e^{-a t} \sin\parens*{\omega_0 t} \, u\parens*{t}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{\omega_0}{\parens*{a + i \omega}^2 + \omega_0^2}
+                \\[1em]
+                e^{-a t} \cos\parens*{\omega_0 t} \, u\parens*{t}
+                &\TmpFTArrow&
+                \displaystyle
+                \frac{a + i \omega}{\parens*{a + i \omega}^2 + \omega_0^2}
+            \end{array}
+        \end{equation*}
 
     \end{CheatsheetEntryFrame}
     

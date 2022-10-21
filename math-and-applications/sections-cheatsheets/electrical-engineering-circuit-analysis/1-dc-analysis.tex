@@ -1328,29 +1328,21 @@
         }
         \TwoColumnsTextSeparated{}{
             \begin{equation*}
-                \memphR{R_1} = \frac{R_b R_c}{R_a + R_b + R_c}
+                \memphR{R_1}
+                = \frac{R_b R_c}{R_a + R_b + R_c}
             \end{equation*}
         }{
             \begin{equation*}
                 \memphB{R_a}
-                    = \frac{R_1 R_2 + R_2 R_3 + R_3 R_1}{R_1}
+                = \frac{R_1 R_2 + R_2 R_3 + R_3 R_1}{R_1}
             \end{equation*}
         }
+        \medskip
 
         For $\mathrm{Y}$ and $\Delta$ loads to be balanced:
-        \TwoColumnsTextSeparated{\phantom{$\Longleftrightarrow$}}{%
-            \begin{equation*}
-                R_Y = R_1 = R_2 = R_3
-            \end{equation*}
-        }{%
-            \begin{equation*}
-                R_\Delta = R_a = R_b = R_c
-            \end{equation*}
-        }
-
-        So when our $\mathrm{Y}$ or $\Delta$ circuit is balanced:
         \begin{equation*}
-            R_\Delta = 3 R_Y
+            \memphR{R_1} = \memphR{R_2} = \memphR{R_3}
+            = \memphB{R_a} = \memphB{R_b} = \memphB{R_c}
         \end{equation*}
 
     \end{CheatsheetEntryFrame}
@@ -1364,6 +1356,8 @@
         \textsc{do not disable dependent sources!}
 
         \textsc{also, this only works for linear responses, so superposition does not work with power.}
+
+        \Todo{Do we even need this section?}
 
     \end{CheatsheetEntryFrame}
 

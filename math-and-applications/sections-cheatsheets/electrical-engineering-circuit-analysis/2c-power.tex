@@ -4,7 +4,7 @@
 
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Power in the Time Domain}
+        \CheatsheetEntryTitle{AC Power in the Time Domain}
         
         If we consider an arbitrary load (potentially both resistive and reactive) where:
         \begin{alignat*}{2}
@@ -27,63 +27,9 @@
 
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{RMS Value}
+        \CheatsheetEntryTitle{AC Power}
 
-        The \textit{RMS} (or effective) value of \myul{any periodic voltage/current} is the equivalent value in DC to deliver the same average power to a load.
-        \begin{equation*}
-            F_\text{rms} =\sqrt{\frac{1}{T} \int_0^T{\parens*{f(t)}^2 \,\diff{t}}} 
-        \end{equation*}
-
-        For sinusoidal waveforms:
-
-        \begin{minipage}{0.5\columnwidth}%
-            \begin{equation*}
-                V_\text{rms} = \frac{V_m}{\sqrt{2}} \approx 0.707 \, V_m
-            \end{equation*}
-        \end{minipage}%
-        \begin{minipage}{0.5\columnwidth}%
-            \begin{equation*}
-                I_\text{rms} = \frac{I_m}{\sqrt{2}} \approx 0.707 \, I_m
-            \end{equation*}
-        \end{minipage}%
-
-        %% I'm not 100% sure on this one. Will need to learn more!
-        %% TODO: Look into this section!
-        %\vspace{\parskip}%
-        %For a waveform produced from a sum of waveforms:
-        %\begin{gather*}
-        %    f(t) = f_1(t) + f_2(t) + \dots + f_n(t) \\
-        %    F_\text{rms}^2 = F_{\text{rms}1}^2 + F_{\text{rms}2}^2 + \dots + F_{\text{rms}n}^2 
-        %\end{gather*}
-
-        \CheatsheetEntryExtraSeparation
-
-    \end{CheatsheetEntryFrame}
-
-\end{multicols}%
-%\vspace{-5ex}% Looks better to remove this excess whitespace, but idk...
-\begin{multicols}{2}
-
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Power Factor (PF) and Power Angle ($\theta$)}
-
-        \vspace{\parskip}
-        \begin{tabularx}{\textwidth}{CC}
-            $\text{PF} = \cos{\theta}$ &
-            $\theta = \theta_v - \theta_i$ \\
-        \end{tabularx}%
-        \vspace{\parskip}
-
-        $\theta$ can be taken as the current lag (relative to voltage).%\\[0mm]
-        %{\scriptsize (relative to the voltage)}
-
-        %\vspace{1.5ex}%
-        %\begin{tabularx}{\textwidth}{CC}
-        %    $\text{PF} = \cos{\theta}$ & $\theta = \theta_v - \theta_i$ \\
-        %\end{tabularx}
-
-        %\vspace{-0.5ex}
+        \emph{Power angle} ($\theta$) is the current lag (relative to voltage).
         \begin{center}
         \begin{tikzpicture}[x=2.0cm, y=2.0cm, transform shape]
             \path (0,0) coordinate (Origin);
@@ -134,6 +80,16 @@
                     \textbf{$\quad \implies$ \ul{inductive} load}
                 }
             ;
+            \draw
+                (0.9,0.4)
+                    node[label=above left:$
+                        %\begin{gathered}
+                        %    \boxed{\text{pf} = \cos \theta}
+                        %    \\
+                            \boxed{\theta = \theta_v - \theta_i}
+                        %\end{gathered}
+                    $]{}
+            ;
         \end{tikzpicture}
         \end{center}
         \vspace{-1ex}
@@ -157,57 +113,95 @@
         %    \text{PF} = \cos{\theta}
         %\end{equation*}
 
-        \CheatsheetEntryTitle{Average Power}
-        \begin{equation*}
-            %P = \frac{V_m I_m}{2} \cos{\theta} = V_{\text{rms}} I_{\text{rms}} \cos{\theta}
-            P = \frac{1}{2} V_m I_m \cos{\theta} = V_{\text{rms}} I_{\text{rms}} \cos{\theta}
-        \end{equation*}
+        \begin{alignat*}{2}
+            &\text{\parbox{3.5em}{\centering\footnotesize{}Power\\Factor}}
+            &\qquad\quad \text{pf}
+            &= \cos\theta
+            = \frac{P}{S}
+            \qquad \text{\parbox{7.5em}{\raggedright\footnotesize{}(must express as \emph{leading} or \emph{lagging})}}
+            \\[0.7em]
+            &\text{\parbox{3.5em}{\centering\footnotesize{}Average\\Power}}
+            &\qquad\quad P
+            &= \frac{1}{2} V_m I_m \cos{\theta}
+            = V_{\text{rms}} I_{\text{rms}} \cos{\theta}
+            \\[0.7em]
+            &\text{\parbox{3.5em}{\centering\footnotesize{}Reactive\\Power}}
+            &\qquad\quad Q
+            &= \frac{1}{2} V_m I_m \sin{\theta}
+            = V_{\text{rms}} I_{\text{rms}} \sin{\theta}
+            \\[0.7em]
+            &\text{\parbox{3.5em}{\centering\footnotesize{}Apparent\\Power}}
+            &\qquad\quad S
+            &= \frac{1}{2} V_m I_m
+            = V_{\text{rms}} I_{\text{rms}}
+            \\[0.7em]
+            &\text{\parbox{3.5em}{\centering\footnotesize{}Complex\\Power}}
+            &\qquad\quad \mathbf{S}
+            &= \frac{1}{2} \mathbf{V} \mathbf{I}^*
+            = P + j Q
+            = \frac{1}{2} V_m I_m \phase{\theta}
+            \\
+            &&
+            &= \frac{1}{2} V_m I_m \brackets*{\cos{\theta} + j \sin{\theta}}
+            %= \mathbf{V}_{\text{rms}}^{\phantom{*}} \mathbf{I}_{\text{rms}}^* % meh, not important
+            %= V_{\text{rms}} I_{\text{rms}} \phase{\theta} % Probably not necessary
+        \end{alignat*}
 
-        \CheatsheetEntryTitle{Reactive Power}
-        \begin{equation*}
-            %Q = \frac{V_m I_m}{2} \sin{\theta} = V_{\text{rms}} I_{\text{rms}} \sin{\theta}
-            Q = \frac{1}{2} V_m I_m \sin{\theta} = V_{\text{rms}} I_{\text{rms}} \sin{\theta}
-        \end{equation*}
-        {\scriptsize%
-        \begin{tabular}{lcccc}
-            Inductive Loads
-                & $\implies$
-                %& $\phantom{x} \implies \phantom{x}$ % Ghetto Alignment
-                & $+$ve $\theta$
-                & $\implies$
-                %& $\phantom{x} \implies \phantom{x}$ % Ghetto Alignment
-                & $+$ve $Q$
-                \\
-            Capacitive Loads
-                & $\implies$
-                & $-$ve $\theta$
-                & $\implies$
-                & $-$ve $Q$
-                \\
-        \end{tabular}
-        }
-
-        \CheatsheetEntryExtraSeparation
-
-        \CheatsheetEntryTitle{Apparent Power}
-        \begin{align*}
-            S = \frac{1}{2} V_m I_m = V_{\text{rms}} I_{\text{rms}}
-        \end{align*}
+        %{\scriptsize%
+        %\begin{tabular}{lcccc}
+        %    Inductive Loads
+        %        & $\implies$
+        %        %& $\phantom{x} \implies \phantom{x}$ % Ghetto Alignment
+        %        & $+$ve $\theta$
+        %        & $\implies$
+        %        %& $\phantom{x} \implies \phantom{x}$ % Ghetto Alignment
+        %        & $+$ve $Q$
+        %        \\
+        %    Capacitive Loads
+        %        & $\implies$
+        %        & $-$ve $\theta$
+        %        & $\implies$
+        %        & $-$ve $Q$
+        %        \\
+        %\end{tabular}
+        %}
 
     \end{CheatsheetEntryFrame}
 
+    \MulticolsBreak
+
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Complex Power}
-        \begin{align*}
-            \mathbf{S}
-                &= \frac{1}{2} \mathbf{V} \mathbf{I}^* \\
-                %= \mathbf{V}_{\text{rms}}^{\phantom{*}} \mathbf{I}_{\text{rms}}^* % meh, not important
-                &= \frac{1}{2} V_m I_m \phase{\theta}
-                %= V_{\text{rms}} I_{\text{rms}} \phase{\theta} % Probably not necessary
-                = \frac{1}{2} V_m I_m \brackets*{\cos{\theta} + j \sin{\theta}} \\
-                &= P + j Q
-        \end{align*}
+        \CheatsheetEntryTitle{RMS Value}
+
+        The \textit{RMS} (or effective) value of \myul{any periodic voltage/current} is the equivalent value in DC to deliver the same average power to a load.
+        \begin{equation*}
+            F_\text{rms} =\sqrt{\frac{1}{T} \int_0^T{\parens*{f(t)}^2 \,\diff{t}}} 
+        \end{equation*}
+
+        For sinusoidal waveforms:
+
+        \begin{minipage}{0.5\columnwidth}%
+            \begin{equation*}
+                V_\text{rms} = \frac{V_m}{\sqrt{2}} \approx 0.707 \, V_m
+            \end{equation*}
+        \end{minipage}%
+        \begin{minipage}{0.5\columnwidth}%
+            \begin{equation*}
+                I_\text{rms} = \frac{I_m}{\sqrt{2}} \approx 0.707 \, I_m
+            \end{equation*}
+        \end{minipage}%
+
+        %% I'm not 100% sure on this one. Will need to learn more!
+        %% TODO: Look into this section!
+        %\vspace{\parskip}%
+        %For a waveform produced from a sum of waveforms:
+        %\begin{gather*}
+        %    f(t) = f_1(t) + f_2(t) + \dots + f_n(t) \\
+        %    F_\text{rms}^2 = F_{\text{rms}1}^2 + F_{\text{rms}2}^2 + \dots + F_{\text{rms}n}^2 
+        %\end{gather*}
+
+        \CheatsheetEntryExtraSeparation
 
     \end{CheatsheetEntryFrame}
 
@@ -291,9 +285,6 @@
 
     \end{CheatsheetEntryFrame}
 
-\end{multicols}
-\begin{multicols}{2}
-
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Maximum Average Power Transfer}
@@ -338,7 +329,6 @@
             \phantom{x}
         \end{minipage}
 
-
     \end{CheatsheetEntryFrame}
 
     \begin{CheatsheetEntryFrame}
@@ -346,17 +336,21 @@
         \CheatsheetEntryTitle{Conservation of AC Power}
 
         Complex/average/reactive power supplied by sources equals the sum delivered to each individual load:
-        \begin{align*}
-            \sum{\mathbf{S}_k} &= 0 \\
-            \sum{P_k} &= 0 \\
-            \sum{Q_k} &= 0
-        \end{align*}
+        \begin{gather*}
+            \sum{\mathbf{S}_k} = 0
+            \qquad\quad
+            \sum{P_k} = 0
+            \qquad\quad
+            \sum{Q_k} = 0
+        \end{gather*}
 
         However, this does NOT hold for apparent power.
 
     \end{CheatsheetEntryFrame}
 
-    \MulticolsBreak
+    \MulticolsCleanEnd
+\end{multicols}%
+\begin{multicols}{2}
 
     \begin{CheatsheetEntryFrame}
 
@@ -519,7 +513,7 @@
                 \abs*{F\parens*{\omega}}^2 \,\diff{\omega}
             }
         \end{equation*}
-        where $F\parens*{\omega} = \FourierTransform\braces*{f\parens*{t}}$.
+        where $F\parens*{\omega} = \FourierTransform\braces*{f\parens*{t}}$ (a Fourier transform).
 
         \Todo{What does this mean? What are the implications?}
 

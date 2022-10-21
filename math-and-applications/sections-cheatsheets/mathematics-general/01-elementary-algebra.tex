@@ -385,20 +385,27 @@
             \substack{\text{\ul{irreducible factor in denominator}}} &&&&
                 \substack{\text{\ul{partial fractions}}}
                 \\[1ex]
-            \W \memphR{(ax + b)}^k &
+            \W {(\memphR{ax + b})}^k &
                 & \Longrightarrow & \quad &
                 %\W \sum_{n=1}^k{\frac{A_n}{\memphR{(ax + b)}^n}}
-                \W \frac{A_1}{ax + b} + \frac{A_2}{\parens*{ax + b}^2} + \dots + \frac{A_k}{\parens*{ax + b}^k}
+                \W \frac{A_1}{\memphR{ax + b}}
+                + \frac{A_2}{\parens*{\memphR{ax + b}}^2}
+                + \dots
+                + \frac{A_k}{\parens*{\memphR{ax + b}}^k}
                 \\[3ex]
-            \W \memphR{(ax^2 + bx + c)}^k &
+            \W {(\memphR{ax^2 + bx + c})}^k &
                 & \Longrightarrow & \quad &
                 %\W \sum_{n=1}^k{\frac{A_n x + B_n}{\memphR{(ax^2 + bx + c)}^n}}
-                \W \frac{A_1 x + B_1}{ax^2 + bx + c} + \frac{A_2 x + B_2}{\parens*{ax^2 + bx + c}^2} + \dots + \frac{A_k x + B_k}{\parens*{ax^2 + bx + c}^k}
-                \\
+                \W \frac{A_1 x + B_1}{\memphR{ax^2 + bx + c}}
+                + \frac{A_2 x + B_2}{\parens*{\memphR{ax^2 + bx + c}}^2}
+                + \dots
+                + \frac{A_k x + B_k}{\parens*{\memphR{ax^2 + bx + c}}^k}
         \end{array}
     \end{equation*}
 
-    For \textit{improper rational functions}, you must first convert it to a \textit{proper rational function}.
+    For \emph{improper rational functions}, you must first convert it to a \emph{proper rational function}.
+
+    \emph{Hint: You can use complex numbers to further reduce some factors. Example: $\parens*{1 + x^2} = \parens*{1 + i x} \parens*{1 - i x}$}
 
 \end{CheatsheetEntryFrame}
 

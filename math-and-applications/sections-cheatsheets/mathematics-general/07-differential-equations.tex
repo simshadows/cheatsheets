@@ -177,14 +177,15 @@
         \end{equation*}
         \begin{equation*}
             c_0 = a_0
-            \qquad\qquad
+            \qquad\quad
             c_n = \frac{1}{T} \int_0^T f\parens*{t} \, e^{-i n \omega_0 t} \,\diff{t}
+            , \quad \forall n \ne 0
         \end{equation*}
 
         Related by:
-        \begin{gather*}
-            A_n \phase{\phi_n} = a_n - i b_n = 2 c_n
-        \end{gather*}
+        \begin{equation*}
+            A_n \phase{\phi_n} = a_n - i b_n = 2 c_n, \quad \forall n \ne 0
+        \end{equation*}
 
     \end{CheatsheetEntryFrame}
 
@@ -287,42 +288,45 @@
         \begin{equation*}
             h\parens*{t} * x\parens*{t}
             = \int_{-\infty}^\infty{
-                h\parens*{\lambda} x\parens*{t - \lambda} \,\diff{\lambda}
+                x\parens*{\lambda} h\parens*{t - \lambda} \,\diff{\lambda}
             }
+            %% TODO: I found this simplification in a textbook, but
+            %%       I'm not sure if it's right.
+            %= \underbrace{
+            %    \vphantom{\frac{1}{\displaystyle \frac{1}{1}}}
+            %    \int_0^t{
+            %        x\parens*{\lambda} h\parens*{t - \lambda} \,\diff{\lambda}
+            %    }
+            %}_{\text{if $h\parens*{t} = 0$ for $t < 0$}}
         \end{equation*}
+        \vspace*{-2em}
 
         Useful properties:
         \begin{gather*}
-            x\parens*{t} * h\parens*{t} = h\parens*{t} * x\parens*{t}
+            x * h = h * x
             \\
-            f\parens*{t} * \brackets*{x\parens*{t} + y\parens*{t}}
-            = f\parens*{t} * x\parens*{t} + f\parens*{t} * y\parens*{t}
+            f * \brackets*{x + y}
+            = f * x + f * y
             \\
-            f\parens*{t} * \brackets*{x\parens*{t} * y\parens*{t}}
-            = \brackets*{f\parens*{t} * x\parens*{t}} * y\parens*{t}
+            f * \brackets*{x * y}
+            = \brackets*{f * x} * y
         \end{gather*}
-        \begin{align*}
-            f\parens*{t} * \delta\parens*{t}
-            &= \int_{-\infty}^\infty {
-                f\parens*{\lambda} \delta\parens*{t - \lambda} \,\diff{\lambda}
-            }
-            = f\parens*{t}
-            \\
+        \begin{gather*}
             f\parens*{t} * \delta\parens*{t - t_0}
-            &= f\parens*{t - t_0}
+            = f\parens*{t - t_0}
             \\
             f\parens*{t} * \delta'\parens*{t}
-            &= \int_{-\infty}^\infty {
+            = \int_{-\infty}^\infty {
                 f\parens*{\lambda} \delta'\parens*{t - \lambda} \,\diff{\lambda}
             }
             = f'\parens*{t}
             \\
             f\parens*{t} * u\parens*{t}
-            &= \int_{-\infty}^\infty {
+            = \int_{-\infty}^\infty {
                 f\parens*{\lambda} u\parens*{t - \lambda} \,\diff{\lambda}
             }
             = \int_{-\infty}^t f\parens*{\lambda} \,\diff{\lambda}
-        \end{align*}
+        \end{gather*}
 
     \end{CheatsheetEntryFrame}
 
@@ -379,7 +383,7 @@
                 \\[0.6em]
                 f\parens*{t} * g\parens*{t}
                 &\TmpFTArrow&
-                f\parens*{\omega} \, G\parens*{\omega}
+                F\parens*{\omega} \, G\parens*{\omega}
                 & \text{\tiny\parbox{6em}{Convolution\\In $t$}}
                 \\[0.6em]
                 {\displaystyle f\parens*{t} \, g\parens*{t}}

@@ -1,18 +1,12 @@
 \subsubsection{Magnetically Coupled Circuits}
 
 \begin{multicols}{2}
-
+    
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Coupled Inductors}
 
-        For $M$ mutual inductance, consider two cases:
-
-        \bigskip
-
-        \textbf{Case 1:} Currents flowing into \ul{same} side dot sides.
-
-        \phantom{\textbf{Case 1:}} Induced EMF \ul{adds} to self-induction.
+        For $M$ mutual inductance:
 
         \medskip
 
@@ -112,12 +106,17 @@
         \TwoColumnsMinipages{%
             \MyReusableFormattingB{}{invert}
         }{%
-            \begin{equation*}
+            \begin{gather*}
+                \text{\parbox{10em}{\raggedright{}\textbf{Case 1:}\\Currents flowing into \myul{same} dot sides.}}
+                \\[0.7em]
                 \boxed{
-                \begin{aligned}
-                    \mathbf{V}_1 &= j \omega L_1 \mathbf{I}_1 + j \omega M \mathbf{I}_2 \\
-                    \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 + j \omega M \mathbf{I}_1
-                \end{aligned}
+                    \begin{aligned}
+                        \mathbf{V}_1
+                        &= j \omega L_1 \mathbf{I}_1 + j \omega M \mathbf{I}_2
+                        \\
+                        \mathbf{V}_2
+                        &= j \omega L_2 \mathbf{I}_2 + j \omega M \mathbf{I}_1
+                    \end{aligned}
                 }
                 %\\
                 %\Exn{\boxed{
@@ -126,18 +125,11 @@
                 %    v_2 &= L_2 \frac{\diff{i_2}}{\diff{t}} + M \frac{\diff{i_1}}{\diff{t}}
                 %\end{aligned}
                 %}}
-            \end{equation*}
+            \end{gather*}
             \vspace{3.0ex}
         }
 
         \bigskip
-        \smallskip % A bit of additional space to make the section look nice.
-
-        \textbf{Case 2:} Currents flowing into \ul{different} side dot sides.
-
-        \phantom{\textbf{Case 2:}} Induced EMF \ul{opposes} self-induction.
-
-        \medskip
 
         \TwoColumnsMinipages{
             \MyReusableFormatting{rotate=-90}{1.5}{
@@ -153,12 +145,17 @@
         \TwoColumnsMinipages{%
             \MyReusableFormattingB{invert}{}
         }{%
-            \begin{equation*}
+            \begin{gather*}
+                \text{\parbox{10em}{\raggedright{}\textbf{Case 2:}\\Currents flowing into \myul{different} dot sides.}}
+                \\[0.7em]
                 \boxed{
-                \begin{aligned}
-                    \mathbf{V}_1 &= j \omega L_1 \mathbf{I}_1 - j \omega M \mathbf{I}_2 \\
-                    \mathbf{V}_2 &= j \omega L_2 \mathbf{I}_2 - j \omega M \mathbf{I}_1
-                \end{aligned}
+                    \begin{aligned}
+                        \mathbf{V}_1
+                        &= j \omega L_1 \mathbf{I}_1 - j \omega M \mathbf{I}_2
+                        \\
+                        \mathbf{V}_2
+                        &= j \omega L_2 \mathbf{I}_2 - j \omega M \mathbf{I}_1
+                    \end{aligned}
                 }
                 %\\
                 %\Exn{\boxed{
@@ -167,7 +164,7 @@
                 %    v_2 &= L_2 \frac{\diff{i_2}}{\diff{t}} - M \frac{\diff{i_1}}{\diff{t}}
                 %\end{aligned}
                 %}}
-            \end{equation*}
+            \end{gather*}
             \vspace{3.0ex}
         }
 
@@ -175,8 +172,25 @@
 
     \begin{CheatsheetEntryFrame}
 
-        \newcommand{\MyReusableFormatting}[2]{
-            \begin{center}
+        \CheatsheetEntryTitle{Coefficient of Coupling}
+
+        $k$ represents the fraction in which the flux from each coil links with the other coil.
+        \begin{equation*}
+            k = \frac{M}{\sqrt{L_1 L_2}}, \qquad 0 \le k \le 1.
+            \qquad
+            \begin{aligned}
+                k &= \frac{\phi_{12}}{\phi_{11} + \phi_{12}}
+                \\
+                k &= \frac{\phi_{21}}{\phi_{22} + \phi_{21}}
+            \end{aligned}
+        \end{equation*}
+
+    \end{CheatsheetEntryFrame}
+
+    \begin{CheatsheetEntryFrame}
+
+        \newcommand{\CoupledInductorsInSeriesCirc}[4]{
+            %\begin{center}
             \begin{circuitikz}
                 \begin{scope}[shift={(0,0)}, rotate=0]
                     \draw
@@ -197,17 +211,31 @@
                         #1
                     ;
                 \end{scope}
-                \begin{scope}[shift={(1.25,0)}, rotate=0]
+                \begin{scope}[shift={(1.80,0)}, rotate=0]
                     \draw
                         (0,0)
                         to[short, o-] ++(0,-0.2)
                         %to[short, i=$i$] ++(0,-0.1)
-                        to[L, l_=$L_1$, name=L1, /tikz/circuitikz/bipoles/length=1.0cm] ++(0,-1.25) coordinate (Mid)
-                        to[L, l_=$L_2$, name=L2, /tikz/circuitikz/bipoles/length=1.0cm] ++(0,-1.25)
+                        to[
+                            L,
+                            l_=$L_1$,
+                            name=L1,
+                            /tikz/circuitikz/bipoles/length=1.0cm
+                        ] ++(0,-1.25) coordinate (Mid)
+                        to[
+                            L,
+                            l_=$L_2$,
+                            name=L2,
+                            /tikz/circuitikz/bipoles/length=1.0cm
+                        ] ++(0,-1.25)
                         to[short, -o] ++(0,-0.2)
                     ;
                     \draw[simshadows/style/ee/magneticcouplingarrow]
-                        (L2.above) ++(0.1,0) -- ++(0.2,0) arc (-90:90:0.30 and 0.65) -- ++(-0.2,0)
+                        (L2.above)
+                            ++(0.1,0)
+                            -- ++(0.2,0)
+                            arc (-90:90:0.30 and 0.65)
+                            -- ++(-0.2,0)
                     ;
                     %\draw
                     %    (Mid -| L2.above) ++(0.55,0) node[right] {$M$}
@@ -216,70 +244,42 @@
                         #2
                     ;
                 \end{scope}
+                \draw
+                    (0.90,0) % Center
+                        ++(0,0.3) % Offset
+                        node[label=above:{\parbox{10em}{\centering{}Series-\myul{#3}\\Connection}}]{}
+                ;
+                \draw
+                    (0.90,-2.90) % Center
+                        ++(0,-0.3) % Offset
+                        node[label=below:{$#4$}]{}
+                ;
             \end{circuitikz}
-            \end{center}
+            %\end{center}
         }
 
         \CheatsheetEntryTitle{Coupled Inductors in Series}
 
-        \TwoColumnsMinipages[0.24]{
-            \raggedright
-            \textbf{Case 1:} \\[0mm]
-            \textbf{Series-Aiding Connection}
-            
-            Equivalent total inductance:
-            \begin{equation*}
-                L = L_1 + L_2 + 2M
-            \end{equation*}
-        }{
-            \MyReusableFormatting{
+        \begin{center}
+            \CoupledInductorsInSeriesCirc{
                 (L1.west) ++( 0.30, 0.00) node[circ] {}
                 (L2.west) ++( 0.30, 0.00) node[circ] {}
             }{
                 (L1.east) ++( 0.30, 0.00) node[circ] {}
                 (L2.east) ++( 0.30, 0.00) node[circ] {}
-            }
-        }
-
-        \medskip
-
-        \TwoColumnsMinipages[0.24]{
-            \raggedright
-            \textbf{Case 2:} \\[0mm]
-            \textbf{Series-Opposing Connection}
-            
-            Equivalent total inductance:
-            \begin{equation*}
-                L = L_1 + L_2 - 2M
-            \end{equation*}
-        }{
-            \MyReusableFormatting{
+            }{Aiding}{L = L_1 + L_2 + 2M}
+            \quad
+            \CoupledInductorsInSeriesCirc{
                 (L1.west) ++( 0.30, 0.00) node[circ] {}
                 (L2.east) ++( 0.30, 0.00) node[circ] {}
             }{
                 (L1.east) ++( 0.30, 0.00) node[circ] {}
                 (L2.west) ++( 0.30, 0.00) node[circ] {}
-            }
-        }
+            }{Opposing}{L = L_1 + L_2 - 2M}
+        \end{center}
 
     \end{CheatsheetEntryFrame}
 
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Coefficient of Coupling}
-        \begin{equation*}
-            k = \frac{M}{\sqrt{L_1 L_2}}, \qquad 0 \le k \le 1
-        \end{equation*}
-
-        This value represents the fraction in which the flux from each coil links with the other coil:
-        \begin{equation*}
-            k = \frac{\phi_{12}}{\phi_{11} + \phi_{12}}
-            \qquad
-            k = \frac{\phi_{21}}{\phi_{22} + \phi_{21}}
-        \end{equation*}
-
-    \end{CheatsheetEntryFrame}
-    
 \end{multicols}
 \newpage
 \begin{multicols}{2}
@@ -347,8 +347,8 @@
 
         \textbf{Reference Case:} \\[0mm]
         Voltages are \ul{same} dot-side. \\[0mm]
-        Currents enter \ul{different} voltage terminals. \\[0mm]
-        {\scriptsize (This is the most useful to remember.)}
+        Currents enter \ul{different} voltage terminals.%\\[0mm]
+        %{\scriptsize (This is the most useful to remember.)}
 
         \smallskip
         \TwoColumnsMinipages{
@@ -357,6 +357,9 @@
                 (L2Top) ++( 0.20,-0.35) node[circ] {}
             }
         }{
+            %\centering
+            %{\footnotesize{}Voltages are \ul{same} dot-side.}\\[0mm]
+            %{\footnotesize{}Currents enter \ul{different} voltage terminals.}
             \begin{equation*}
                 n = \frac{N_2}{N_1} = \frac{\mathbf{V}_2}{\mathbf{V}_1} = \frac{\mathbf{I}_1}{\mathbf{I}_2}
             \end{equation*}

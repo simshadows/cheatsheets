@@ -215,12 +215,8 @@
                 \draw (0,0) to[L, o-o] ++(2,0);
             \end{circuitikz}
         }%
-        \vspace{-2.0ex} % Too much whitespace for some reason. Need to cut it down.
-        \newcommand{\MyTikzGhettoAlignmentB}{\path (0,-1.2) -- (0,1.2) (-0.40,0) -- (1.40,0);} % Ghetto alignment
-        %\newcommand{\MyTikzGhettoAlignmentB}{\path (-0.40,0) -- (1.40,0);} % Ghetto alignment
         \MinipagesThreeColumns{%
             \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
-                \MyTikzGhettoAlignmentB
                 \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.30) coordinate (VEnd);
                 \draw[-stealth, white,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.05);
                 \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(0:1.00) coordinate (IEnd);
@@ -229,7 +225,6 @@
             \end{tikzpicture}
         }{%
             \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
-                \MyTikzGhettoAlignmentB
                 \draw[line width=1.2pt] (0.2,0) -- (0.2,-0.2) -- (0,-0.2);
                 \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(  0:1) coordinate (IEnd);
                 \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(-90:1) coordinate (VEnd);
@@ -238,7 +233,6 @@
             \end{tikzpicture}
         }{%
             \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
-                \MyTikzGhettoAlignmentB
                 \draw[line width=1.2pt] (0.2,0) -- (0.2,0.2) -- (0,0.2);
                 \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++( 0:1) coordinate (IEnd);
                 \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(90:1) coordinate (VEnd);
@@ -281,8 +275,7 @@
                 ;
             \end{circuitikz}%
         }
-
-        %\CheatsheetEntryExtraSeparation
+        \vspace*{-0.5em}
 
         \CheatsheetEntryTitle{Rectangular Form}
         \begin{alignat*}{3}
@@ -334,58 +327,71 @@
 
     \begin{CheatsheetEntryFrame}
 
-        % TODO: This is basically a reuse of the DC Analysis section's version. See if we can just make a macro for it?
-        \CheatsheetEntryTitle{Series and Parallel Equivalent} \MarkSimilarToDC
+        \CheatsheetEntryTitle{Series and Parallel Equivalent}  \MarkSimilarToDC
 
         \vspace{1.5ex}
-        \begin{minipage}[c]{0.5\columnwidth}
+        \begin{minipage}[c]{0.40\columnwidth}
             \centering
-            \scalebox{0.8}{
+            \scalebox{0.75}{
             \begin{circuitikz}
                 \draw
                     (0,0)
-                    to[generic, o-] ++(2,0)
-                    to[generic, -o] ++(2,0)
+                    to[short, o-] ++(0.2,0)
+                    to[generic] ++(1.6,0)
+                    to[generic] ++(1.6,0)
+                    to[short, -o] ++(0.2,0)
                 ;
             \end{circuitikz}%
             }
         \end{minipage}%
-        \begin{minipage}[c]{0.5\columnwidth}
+        \begin{minipage}[c]{0.30\columnwidth}
+            \centering%
+            $
+                \displaystyle
+                \mathbf{Z} = \sum{\mathbf{Z}_i}
+            $
+        \end{minipage}%
+        \begin{minipage}[c]{0.30\columnwidth}
+            \centering%
+            $
+                \displaystyle
+                \frac{1}{\mathbf{Y}} = \sum{\frac{1}{\mathbf{Y}_i}}
+            $
+        \end{minipage}
+        \vspace{1.5ex}\SoftHLine\vspace{1.5ex}
+        \begin{minipage}[c]{0.40\columnwidth}
             \centering
-            \scalebox{0.8}{
+            \scalebox{0.75}{
             \begin{circuitikz}
                 \draw
-                    (0.5,0) to[short, o-]
-                    (1,0) -- (1, 0.4) to[generic] (3, 0.4) -- (3,0)
-                    to[short, -o] (3.5,0)
-                    (1,0) -- (1,-0.4) to[generic] (3,-0.4) -- (3,0)
+                    (0,0)
+                        to[short, o-] ++(0.8,0)
+                            coordinate(TMP_A)
+                        -- ++(0,0.4)
+                        to[generic] ++(2,0)
+                        -- ++(0,-0.4)
+                        to[short, -o] ++(0.8,0)
+                    (TMP_A)
+                        -- ++(0,-0.4)
+                        to[generic] ++(2,0)
+                        -- ++(0,0.4)
                 ;
             \end{circuitikz}%
             }
-        \end{minipage}
-
-        \vspace*{1.5ex}
-
-        \begin{minipage}[c]{0.5\columnwidth}
-            \begin{equation*}
-                \mathbf{Z}_S = \sum{\mathbf{Z}_i}
-            \end{equation*}
         \end{minipage}%
-        \begin{minipage}[c]{0.5\columnwidth}
-            \begin{equation*}
-                \frac{1}{\mathbf{Z}_P} = \sum{\frac{1}{\mathbf{Z}_i}}
-            \end{equation*}
-        \end{minipage}
-
-        \begin{minipage}[c]{0.5\columnwidth}
-            \begin{equation*}
-                \frac{1}{\mathbf{Y}_S} = \sum{\frac{1}{\mathbf{Y}_i}}
-            \end{equation*}
+        \begin{minipage}[c]{0.30\columnwidth}
+            \centering%
+            $
+                \displaystyle
+                \frac{1}{\mathbf{Z}} = \sum{\frac{1}{\mathbf{Z}_i}}
+            $
         \end{minipage}%
-        \begin{minipage}[c]{0.5\columnwidth}
-            \begin{equation*}
-                \mathbf{Y}_P = \sum{\mathbf{Y}_i}
-            \end{equation*}
+        \begin{minipage}[c]{0.30\columnwidth}
+            \centering%
+            $
+                \displaystyle
+                \mathbf{Y} = \sum{\mathbf{Y}_i}
+            $
         \end{minipage}
 
     \end{CheatsheetEntryFrame}
@@ -487,17 +493,23 @@
                 ;
             \end{circuitikz}
         }
-        \TwoColumnsTextSeparated{}{
-            \begin{equation*}
-                \memphR{\mathbf{Z}_1} = \frac{\mathbf{Z}_b \mathbf{Z}_c}{\mathbf{Z}_a + \mathbf{Z}_b + \mathbf{Z}_c}
-            \end{equation*}
-        }{
-            \begin{equation*}
-                \memphB{\mathbf{Z}_a}
-                    = \frac{\mathbf{Z}_1 \mathbf{Z}_2 + \mathbf{Z}_2 \mathbf{Z}_3 + \mathbf{Z}_3 \mathbf{Z}_1}{\mathbf{Z}_1}
-            \end{equation*}
-        }
-        \medskip
+        \begin{equation*}
+            \memphR{\mathbf{Z}_1}
+            = \frac{
+                \mathbf{Z}_b \mathbf{Z}_c
+            }{
+                \mathbf{Z}_a + \mathbf{Z}_b + \mathbf{Z}_c
+            }
+            \qquad
+            \memphB{\mathbf{Z}_a}
+            = \frac{
+                \mathbf{Z}_1 \mathbf{Z}_2
+                + \mathbf{Z}_2 \mathbf{Z}_3
+                + \mathbf{Z}_3 \mathbf{Z}_1
+            }{
+                \mathbf{Z}_1
+            }
+        \end{equation*}
 
         For $\mathrm{Y}$ and $\Delta$ loads to be balanced:
         \begin{equation*}
@@ -522,11 +534,60 @@
 
     \end{CheatsheetEntryFrame}
 
+    \begin{CheatsheetEntryFrame}
+
+        \CheatsheetEntryTitle{Frequency Response Transfer Function}
+
+        \begin{center}
+        \begin{circuitikz}
+            \path
+                (0,0)     coordinate (BoxLref)
+                ++(2.0,0) coordinate (BoxRref)
+
+                (BoxLref) ++(0, -0.7) coordinate (BoxBL)
+                (BoxRref) ++(0,  0.7) coordinate (BoxTR)
+            ;
+            \draw
+                (BoxLref)
+                to[short, i<_=$\mathbf{X}_i(\omega)$] ++(-1.2,0)
+                %% Alternative version
+                %to[short, i<_=$\mathbf{V}_i(\omega)$, l=$\mathbf{I}_i(\omega)$] ++(-1.2,0)
+
+                (BoxRref)
+                to[short, i=$\mathbf{X}_o(\omega)$] ++(1.2,0)
+                %% Alternative version
+                %to[short, i=$\mathbf{V}_o(\omega)$, l_=$\mathbf{I}_o(\omega)$] ++(1.2,0)
+            ;
+            \draw
+                (BoxBL) rectangle (BoxTR)
+            ;
+            \draw
+                ($(BoxTR)!0.5!(BoxBL)$) coordinate (BoxMid)
+                (BoxMid) node[align=center] {linear\\network}
+                ++(0, 1.0) node[align=center] {$\mathbf{H}(\omega)$}
+            ;
+            \draw
+                (BoxRref) ++(3.2,0) node[align=center] {$
+                    \displaystyle
+                    \boxed{ \mathbf{H}(\omega) = \frac{\mathbf{X}_o(\omega)}{\mathbf{X}_i(\omega)} }
+                $}
+            ;
+        \end{circuitikz}
+        \end{center}
+
+        In this context, a \textit{transfer function} is a frequency-dependent ratio of a phasor output to a phasor input.
+        \begin{align*}
+            \text{Voltage Gain:}        \qquad & \mathbf{H}(\omega) = \frac{\mathbf{V}_o(\omega)}{\mathbf{V}_i(\omega)} \\
+            \text{Current Gain:}        \qquad & \mathbf{H}(\omega) = \frac{\mathbf{I}_o(\omega)}{\mathbf{I}_i(\omega)} \\
+            \text{Transfer Impedance:}  \qquad & \mathbf{H}(\omega) = \frac{\mathbf{V}_o(\omega)}{\mathbf{I}_i(\omega)} \\
+            \text{Transfer Admittance:} \qquad & \mathbf{H}(\omega) = \frac{\mathbf{I}_o(\omega)}{\mathbf{V}_i(\omega)}
+        \end{align*}
+
+        (Note: Sometimes, $\mathbf{H}(j\omega)$ is used instead.)
+
+    \end{CheatsheetEntryFrame}
+
     \Todo{Topic on phasor diagram trigonometry? E.g. adding two voltage phasors with cosine rule?}
-
-    \MulticolsBreak
-
-    \MulticolsPhantomPlaceholder
 
 \end{multicols}
 

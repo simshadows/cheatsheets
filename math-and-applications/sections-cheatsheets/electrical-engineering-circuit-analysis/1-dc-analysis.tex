@@ -5,20 +5,31 @@
     
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Current and Voltage} \\[0mm]
-        \begin{multicols}{2}
-            \begin{equation*}
-                i \triangleq \frac{\diff{q}}{\diff{t}}
-            \end{equation*}
+        \CheatsheetEntryTitle{Current and Voltage}
+        \begin{equation*}
+            i \triangleq \frac{\diff{q}}{\diff{t}}
+            \qquad\quad
+            v \triangleq \frac{\diff{w}}{\diff{q}}
+            \qquad\quad
+            \text{\parbox{9.5em}{%
+                \raggedright\footnotesize%
+                By \textit{conventional current},\\current is the flow of\\$+$ve charge.%
+            }}
+        \end{equation*}
 
-            \begin{equation*}
-                v \triangleq \frac{\diff{w}}{\diff{q}}
-            \end{equation*}
-        \end{multicols}
+        %\begin{multicols}{2}
+        %    \begin{equation*}
+        %        i \triangleq \frac{\diff{q}}{\diff{t}}
+        %    \end{equation*}
 
-        By \textit{conventional current}, current is the flow of $+$ve charge.
-
-        \CheatsheetEntryExtraSeparation
+        %    \begin{equation*}
+        %        v \triangleq \frac{\diff{w}}{\diff{q}}
+        %    \end{equation*}
+        %\end{multicols}
+        %
+        %By \textit{conventional current}, current is the flow of $+$ve charge.
+        %
+        %\CheatsheetEntryExtraSeparation
 
         \CheatsheetEntryTitle{Power}
         \begin{equation*}
@@ -48,8 +59,8 @@
             \node at (Arrow.center) {$p$};
             \draw
                 (Arrow.north) node[right=2ex, align=left] {
-                    By \textit{passive sign convention}, \\
-                    power flowing \textit{in} is $+$ve.
+                    \footnotesize{}By \textit{passive sign convention}, \\
+                    \footnotesize{}power flowing \textit{in} is $+$ve.
                 }
                 %(Arrow.north |- X.center)
                 %++(0,-1) node[right=2ex, align=left] {
@@ -145,16 +156,8 @@
         \vspace*{1ex}
         \begin{center}
         \begin{circuitikz}
-            \path 
-                (0,0) node (C) {}
-                %++(0,1.6) node (C) {}
-                % Everything below is used to align with the Ideal Independent Sources section
-                (C) ++(2,0) ++(1.7,0) node (Arrow1) {} ++(1.7,0) node (ArrowEdge1) {}
-                (ArrowEdge1) ++(0,-0) node (DisD1) {}
-                    (DisD1) -- ++(0.8,0) -- ++(0.6,0) -- ++(0.8,0)
-            ;
             \draw
-                (C) to[cV, invert, o-o] ++(2,0)
+                (0,0) to[cV, invert, o-o] ++(2,0)
                 ++(0.8,0) to[cI, o-o] ++(2,0)
             ;
         \end{circuitikz}%
@@ -165,46 +168,132 @@
     \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Maximum Power Transfer}
+        %\vspace*{-0.2em}
+        %\begin{center}
+        %\begin{circuitikz}
+        %    \draw
+        %        (0,0)
+        %            to[V, l_=$v_{th}$, invert] (0,1.6)
+        %            to[R, l=$R_{th}$, -o] ++(2.2,0)
+        %            to[short]     ++( 0.4,0)
+        %            to[R, l=$R_L$] ++(0,-1.6)
+        %            to[short]     ++(-0.4,0)
+        %            to[short, o-]     (0,0)
+        %    ;
+        %    \draw
+        %        (-1.0,0.8)
+        %            ++(0,0.2) % Slight offset
+        %            node[label=left:{\parbox{9em}{%
+        %                \centering%
+        %                Maximum power is transferred to $R_L$ if:\\[0.6em]
+        %                $\displaystyle{}R_L = R_{th}$%
+        %            }}]{}
+        %    ;
+        %\end{circuitikz}
+        %\end{center}
 
         \begin{minipage}[c]{0.6\columnwidth}
-            \begin{center}
+            \centering%
             \begin{circuitikz}
-                \path
-                    (0,0) coordinate (InsideBL)
-                    ++(1.8,0  ) coordinate (InsideBR)
-                    ++(0  ,1.5) coordinate (InsideTR)
-                ;
-                \draw[simshadows/style/softgray]
-                    (InsideTR) ++( 0  , 0.8) coordinate (BoxTR)
-                    (InsideBL) ++(-1.2,-0.8) coordinate (BoxBL)
-                    (BoxBL) rectangle (BoxTR)
-                ;
                 \draw
-                    (InsideBL)
-                    to[V, l=$v_{th}$, invert] (InsideBL |- InsideTR)
-                    to[R, l=$R_{th}$] (InsideTR)
-                    to[short, -o] ++( 0.4,0)
-                    to[short]     ++( 0.4,0)
-                    to[R, l=$R_L$] ++(0,-1.5)
-                    to[short]     ++(-0.4,0)
-                    to[short, o-] ++(-0.4,0)
-                    to[short]     (InsideBL)
+                    (0,0)
+                        to[V, l=$v_{th}$, invert] (0,1.6)
+                        to[R, l=$R_{th}$, -o] ++(2.2,0)
+                        to[short]     ++( 0.4,0)
+                        to[R, l=$R_L$] ++(0,-1.6)
+                        to[short]     ++(-0.4,0)
+                        to[short, o-]     (0,0)
                 ;
             \end{circuitikz}
-            \end{center}
         \end{minipage}%
         \begin{minipage}[c]{0.4\columnwidth}
-            \centering
+            \centering%
             Maximum power is transferred to $R_L$ if:
             \begin{equation*}
                 R_L = R_{th}
             \end{equation*}
-            \phantom{Maximum power is transferred to $R_L$ if:} % For alignment
         \end{minipage}
 
     \end{CheatsheetEntryFrame}
 
-    % Should naturally break here
+    %% Currently a WIP.
+    %\begin{CheatsheetEntryFrame}
+
+    %    \CheatsheetEntryTitle{Series and Parallel Equivalent}
+
+    %    \vspace{1.5ex}
+    %    \begin{minipage}[c]{0.30\columnwidth}
+    %        \centering
+    %        \scalebox{0.6}{
+    %        \begin{circuitikz}
+    %            \draw
+    %                (0,0)
+    %                to[short, o-] ++(0.2,0)
+    %                to[generic] ++(1.6,0)
+    %                to[generic] ++(1.6,0)
+    %                to[short, -o] ++(0.2,0)
+    %            ;
+    %        \end{circuitikz}%
+    %        }
+    %    \end{minipage}%
+    %    \begin{minipage}[c]{0.70\columnwidth}
+    %        \centering%
+    %        $
+    %            R = \sum R_i
+    %            \quad
+    %            \frac{1}{C} = \sum \frac{1}{C_i}
+    %            \quad
+    %            L = \sum L_i
+    %        $
+    %        %\begin{equation*}
+    %        %    R = \sum R_i
+    %        %    \quad
+    %        %    \frac{1}{C} = \sum \frac{1}{C_i}
+    %        %    \quad
+    %        %    L = \sum L_i
+    %        %\end{equation*}
+    %    \end{minipage}
+
+    %    \vspace{1.5ex}
+    %    \begin{minipage}[c]{0.30\columnwidth}
+    %        \centering
+    %        \scalebox{0.6}{
+    %        \begin{circuitikz}
+    %            \draw
+    %                (0,0)
+    %                    to[short, o-] ++(0.8,0)
+    %                        coordinate(TMP_A)
+    %                    -- ++(0,0.4)
+    %                    to[generic] ++(2,0)
+    %                    -- ++(0,-0.4)
+    %                    to[short, -o] ++(0.8,0)
+    %                (TMP_A)
+    %                    -- ++(0,-0.4)
+    %                    to[generic] ++(2,0)
+    %                    -- ++(0,0.4)
+    %            ;
+    %        \end{circuitikz}%
+    %        }
+    %    \end{minipage}
+
+    %\end{CheatsheetEntryFrame}
+
+    %\begin{CheatsheetEntryFrame}
+
+    %    \CheatsheetEntryTitle{PLACEHOLDER}
+    %    \smallskip
+
+    %    x
+
+    %    x
+
+    %    x
+
+    %    x
+
+    %\end{CheatsheetEntryFrame}
+
+    \MulticolsBreak
 
     \begin{CheatsheetEntryFrame}
 
@@ -350,34 +439,34 @@
 
         \begin{minipage}[c]{0.5\columnwidth}
             \begin{equation*}
-                R_S = \sum{R_i}
+                R = \sum{R_i}
             \end{equation*}
         \end{minipage}%
         \begin{minipage}[c]{0.5\columnwidth}
             \begin{equation*}
-                \frac{1}{R_P} = \sum{\frac{1}{R_i}}
+                \frac{1}{R} = \sum{\frac{1}{R_i}}
             \end{equation*}
         \end{minipage}
 
         \begin{minipage}[c]{0.5\columnwidth}
             \begin{equation*}
-                \frac{1}{C_S} = \sum{\frac{1}{C_i}}
+                \frac{1}{C} = \sum{\frac{1}{C_i}}
             \end{equation*}
         \end{minipage}%
         \begin{minipage}[c]{0.5\columnwidth}
             \begin{equation*}
-                C_P = \sum{C_i}
+                C = \sum{C_i}
             \end{equation*}
         \end{minipage}
 
         \begin{minipage}[c]{0.5\columnwidth}
             \begin{equation*}
-                L_S = \sum{L_i}
+                L = \sum{L_i}
             \end{equation*}
         \end{minipage}%
         \begin{minipage}[c]{0.5\columnwidth}
             \begin{equation*}
-                \frac{1}{L_P} = \sum{\frac{1}{L_i}}
+                \frac{1}{L} = \sum{\frac{1}{L_i}}
             \end{equation*}
         \end{minipage}
 
@@ -528,7 +617,7 @@
         %
         %\CheatsheetEntryExtraSeparation
 
-        \CheatsheetEntryTitle{Supernode (for Nodal Analysis)}
+        \CheatsheetEntryTitle{Supernode}
 
         A \textit{supernode} is formed from two non-reference nodes connected by a voltage source (dependent or independent).
 
@@ -684,7 +773,7 @@
 
         \CheatsheetEntryExtraSeparation
 
-        \CheatsheetEntryTitle{Supermesh (for Mesh Analysis)}
+        \CheatsheetEntryTitle{Supermesh}
 
         A \textit{supermesh} is formed from two adjacent meshes with a common current source (dependent or independent).
 
@@ -1075,10 +1164,24 @@
 \end{multicols}
 \begin{multicols}{2}
 
-    \begin{CheatsheetEntryFrameStart}
+    \newcommand{\TwoPortNetworkParams}[2]{%
+        \begin{MulticolsSoftSepRule}{2}%
+            \centering%
+            \vphantom{\footnotesize{}x}\\% Ghetto alignment
+            #1
+            \MulticolsBreak%
+            \vphantom{\footnotesize{}x}\\% Ghetto alignment
+            #2
+            \vspace*{-3em}
+            \MulticolsCleanEnd
+        \end{MulticolsSoftSepRule}%
+    }
+    
+    \begin{CheatsheetEntryFrame}
 
         \CheatsheetEntryTitle{Two-Port Network}
 
+        \vspace*{0.5em}
         \begin{center}
         \begin{circuitikz}
             \path
@@ -1116,172 +1219,176 @@
             ;
         \end{circuitikz}
         \end{center}
+        \vspace*{-0.7em}
+        \TwoPortNetworkParams{
+            {\footnotesize\textsc{Impedance Parameters}}
+            \begin{gather*}
+                \begin{bmatrix}
+                    \memphR{V_1} \\
+                    \memphB{V_2}
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                    z_{11} & z_{12} \\
+                    z_{21} & z_{22}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    \memphR{I_1} \\
+                    \memphB{I_2}
+                \end{bmatrix}
+                \\[1em]
+                \begin{aligned}
+                    z_{11}
+                    &= \evalat{\frac{\memphR{V_1}}{\memphR{I_1}}}{\memphB{I_2 = 0}}
+                    \\
+                    z_{12}
+                    &= \evalat{\frac{\memphR{V_1}}{\memphB{I_2}}}{\memphR{I_1 = 0}}
+                    \\
+                    z_{21}
+                    &= \evalat{\frac{\memphB{V_2}}{\memphR{I_1}}}{\memphB{I_2 = 0}}
+                    \\
+                    z_{22}
+                    &= \evalat{\frac{\memphB{V_2}}{\memphB{I_2}}}{\memphR{I_1 = 0}}
+                \end{aligned}
+            \end{gather*}
+        }{
+            {\footnotesize\textsc{Admittance Parameters}}
+            \begin{gather*}
+                \begin{bmatrix}
+                    \memphR{I_1} \\
+                    \memphB{I_2}
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                    y_{11} & y_{12} \\
+                    y_{21} & y_{22}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    \memphR{V_1} \\
+                    \memphB{V_2}
+                \end{bmatrix}
+                \\[1em]
+                \begin{aligned}
+                    y_{11}
+                    &= \evalat{\frac{\memphR{I_1}}{\memphR{V_1}}}{\memphB{V_2 = 0}}
+                    \\
+                    y_{12}
+                    &= \evalat{\frac{\memphR{I_1}}{\memphB{V_2}}}{\memphR{V_1 = 0}}
+                    \\
+                    y_{21}
+                    &= \evalat{\frac{\memphB{I_2}}{\memphR{V_1}}}{\memphB{V_2 = 0}}
+                    \\
+                    y_{22}
+                    &= \evalat{\frac{\memphB{I_2}}{\memphB{V_2}}}{\memphR{V_1 = 0}}
+                \end{aligned}
+            \end{gather*}
+        }
+        \vspace*{-0.5em}\SoftHLine\vspace*{-0.5em}
+        \TwoPortNetworkParams{
+            {\footnotesize\textsc{Hybrid Parameters}}
+            \begin{gather*}
+                \begin{bmatrix}
+                    \memphR{V_1} \\
+                    \memphB{I_2}
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                    h_{11} & h_{12} \\
+                    h_{21} & h_{22}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    \memphR{I_1} \\
+                    \memphB{V_2}
+                \end{bmatrix}
+                \\[1em]
+                \begin{aligned}
+                    h_{11}
+                    &= \evalat{\frac{\memphR{V_1}}{\memphR{I_1}}}{\memphB{V_2 = 0}}
+                    \\
+                    h_{12}
+                    &= \evalat{\frac{\memphR{V_1}}{\memphB{V_2}}}{\memphR{I_1 = 0}}
+                    \\
+                    h_{21}
+                    &= \evalat{\frac{\memphB{I_2}}{\memphR{I_1}}}{\memphB{V_2 = 0}}
+                    \\
+                    h_{22}
+                    &= \evalat{\frac{\memphB{I_2}}{\memphB{V_2}}}{\memphR{I_1 = 0}}
+                \end{aligned}
+            \end{gather*}
+        }{
+            {\footnotesize\textsc{Inverse Hybrid P.}}
+            \begin{gather*}
+                \begin{bmatrix}
+                    \memphR{I_1} \\
+                    \memphB{V_2}
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                    g_{11} & g_{12} \\
+                    g_{21} & g_{22}
+                \end{bmatrix}
+                \begin{bmatrix}
+                    \memphR{V_1} \\
+                    \memphB{I_2}
+                \end{bmatrix}
+                \\[1em]
+                \begin{aligned}
+                    g_{11}
+                    &= \evalat{\frac{\memphR{I_1}}{\memphR{V_1}}}{\memphB{I_2 = 0}}
+                    \\
+                    g_{12}
+                    &= \evalat{\frac{\memphR{I_1}}{\memphB{I_2}}}{\memphR{V_1 = 0}}
+                    \\
+                    g_{21}
+                    &= \evalat{\frac{\memphB{V_2}}{\memphR{V_1}}}{\memphB{I_2 = 0}}
+                    \\
+                    g_{22}
+                    &= \evalat{\frac{\memphB{V_2}}{\memphB{I_2}}}{\memphR{V_1 = 0}}
+                \end{aligned}
+            \end{gather*}
+        }
+        \vspace*{-0.5em}\SoftHLine\vspace*{-0.5em}
+        \TwoPortNetworkParams{
+            {\footnotesize\textsc{Transmission Parameters}}
+            \begin{equation*}
+                \begin{bmatrix}
+                    \memphR{V_1} \\
+                   \memphR{I_1} 
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                    A & B \\
+                    C & D
+                \end{bmatrix}
+                \begin{bmatrix}
+                    \memphB{V_2} \\
+                    -\memphB{I_2}
+                \end{bmatrix}
+            \end{equation*}
+        }{
+            {\footnotesize\textsc{Inverse Transmission P.}}
+            \begin{equation*}
+                \begin{bmatrix}
+                    \memphB{V_2} \\
+                    \memphB{I_2}
+                \end{bmatrix}
+                =
+                \begin{bmatrix}
+                    A' & B' \\
+                    C' & D'
+                \end{bmatrix}
+                \begin{bmatrix}
+                    \memphR{V_1} \\
+                    -\memphR{I_1}
+                \end{bmatrix}
+            \end{equation*}
+        }
 
-        Impedance Parameters:
-        \begin{equation*}
-            \begin{bmatrix}
-                \memphR{V_1} \\
-                \memphB{V_2}
-            \end{bmatrix}
-            =
-            \begin{bmatrix}
-                z_{11} & z_{12} \\
-                z_{21} & z_{22}
-            \end{bmatrix}
-            \begin{bmatrix}
-                \memphR{I_1} \\
-                \memphB{I_2}
-            \end{bmatrix}
-        \end{equation*}
-        \begin{align*}
-            z_{11} &= \evalat{\frac{\memphR{V_1}}{\memphR{I_1}}}{\memphB{I_2 = 0}} \quad &
-            z_{12} &= \evalat{\frac{\memphR{V_1}}{\memphB{I_2}}}{\memphR{I_1 = 0}} \\
-            z_{21} &= \evalat{\frac{\memphB{V_2}}{\memphR{I_1}}}{\memphB{I_2 = 0}} \quad &
-            z_{22} &= \evalat{\frac{\memphB{V_2}}{\memphB{I_2}}}{\memphR{I_1 = 0}}
-        \end{align*}
-        %\begin{align*}
-        %    z_{11} &= \evalat{\frac{V_1}{I_1}}{I_2 = 0} \\
-        %    z_{12} &= \evalat{\frac{V_1}{I_2}}{I_1 = 0} \\
-        %    z_{21} &= \evalat{\frac{V_2}{I_1}}{I_2 = 0} \\
-        %    z_{22} &= \evalat{\frac{V_2}{I_2}}{I_1 = 0}
-        %\end{align*}
-        %\begin{align*}
-        %    z_{11} &= \text{open-circuit impedance } a_1 \text{-} b_1 \\
-        %    z_{12} &= \text{open-circuit impedance } a_2 \text{-} b_1 \\
-        %    z_{21} &= \text{open-circuit impedance } a_1 \text{-} b_2 \\
-        %    z_{22} &= \text{open-circuit impedance } a_2 \text{-} b_2
-        %\end{align*}
+    \end{CheatsheetEntryFrame}
 
-        Admittance Parameters:
-        \begin{equation*}
-            \begin{bmatrix}
-                \memphR{I_1} \\
-                \memphB{I_2}
-            \end{bmatrix}
-            =
-            \begin{bmatrix}
-                y_{11} & y_{12} \\
-                y_{21} & y_{22}
-            \end{bmatrix}
-            \begin{bmatrix}
-                \memphR{V_1} \\
-                \memphB{V_2}
-            \end{bmatrix}
-        \end{equation*}
-        \begin{align*}
-            y_{11} &= \evalat{\frac{\memphR{I_1}}{\memphR{V_1}}}{\memphB{V_2 = 0}} \quad &
-            y_{12} &= \evalat{\frac{\memphR{I_1}}{\memphB{V_2}}}{\memphR{V_1 = 0}} \\
-            y_{21} &= \evalat{\frac{\memphB{I_2}}{\memphR{V_1}}}{\memphB{V_2 = 0}} \quad &
-            y_{22} &= \evalat{\frac{\memphB{I_2}}{\memphB{V_2}}}{\memphR{V_1 = 0}}
-        \end{align*}
-        %\begin{equation*}
-        %    \begin{bmatrix}
-        %        z_{11} & z_{12} \\
-        %        z_{21} & z_{22}
-        %    \end{bmatrix}
-        %    =
-        %    \begin{bmatrix}
-        %        y_{11} & y_{12} \\
-        %        y_{21} & y_{22}
-        %    \end{bmatrix}
-        %    ^{-1}
-        %    % TODO: Consider adding this full equation, along with:
-        %    %       \Delta\mathbf{Y} = \mathrm{det}(Y) = Y_{11} Y_{22} - Y_{12} Y_{21}
-        %    %=
-        %    %\begin{bmatrix}
-        %    %    \dfrac{ y_{22}}{\Delta \mathbf{Y}} & \dfrac{-y_{12}}{\Delta \mathbf{Y}} \\
-        %    %    \dfrac{-y_{21}}{\Delta \mathbf{Y}} & \dfrac{ y_{11}}{\Delta \mathbf{Y}}
-        %    %\end{bmatrix}
-        %\end{equation*}
-
-        Hybrid Parameters:
-        \begin{equation*}
-            \begin{bmatrix}
-                \memphR{V_1} \\
-                \memphB{I_2}
-            \end{bmatrix}
-            =
-            \begin{bmatrix}
-                h_{11} & h_{12} \\
-                h_{21} & h_{22}
-            \end{bmatrix}
-            \begin{bmatrix}
-                \memphR{I_1} \\
-                \memphB{V_2}
-            \end{bmatrix}
-        \end{equation*}
-        \begin{align*}
-            h_{11} &= \evalat{\frac{\memphR{V_1}}{\memphR{I_1}}}{\memphB{V_2 = 0}} \quad &
-            h_{12} &= \evalat{\frac{\memphR{V_1}}{\memphB{V_2}}}{\memphR{I_1 = 0}} \\
-            h_{21} &= \evalat{\frac{\memphB{I_2}}{\memphR{I_1}}}{\memphB{V_2 = 0}} \quad &
-            h_{22} &= \evalat{\frac{\memphB{I_2}}{\memphB{V_2}}}{\memphR{I_1 = 0}}
-        \end{align*}
-
-        Inverse Hybrid Parameters:
-        \begin{equation*}
-            \begin{bmatrix}
-                \memphR{I_1} \\
-                \memphB{V_2}
-            \end{bmatrix}
-            =
-            \begin{bmatrix}
-                g_{11} & g_{12} \\
-                g_{21} & g_{22}
-            \end{bmatrix}
-            \begin{bmatrix}
-                \memphR{V_1} \\
-                \memphB{I_2}
-            \end{bmatrix}
-        \end{equation*}
-        \begin{align*}
-            g_{11} &= \evalat{\frac{\memphR{I_1}}{\memphR{V_1}}}{\memphB{I_2 = 0}} \quad &
-            g_{12} &= \evalat{\frac{\memphR{I_1}}{\memphB{I_2}}}{\memphR{V_1 = 0}} \\
-            g_{21} &= \evalat{\frac{\memphB{V_2}}{\memphR{V_1}}}{\memphB{I_2 = 0}} \quad &
-            g_{22} &= \evalat{\frac{\memphB{V_2}}{\memphB{I_2}}}{\memphR{V_1 = 0}}
-        \end{align*}
-        \vspace*{-6mm} % TODO: Why does this work?
-
-    \end{CheatsheetEntryFrameStart}
+    \Todo{Fix the poor alignment in the two-port network section.}
 
     \MulticolsBreak
-
-    \begin{CheatsheetEntryFrameEnd}
-
-        Transmission Parameters:
-        \begin{equation*}
-            \begin{bmatrix}
-                \memphR{V_1} \\
-               \memphR{I_1} 
-            \end{bmatrix}
-            =
-            \begin{bmatrix}
-                A & B \\
-                C & D
-            \end{bmatrix}
-            \begin{bmatrix}
-                \memphB{V_2} \\
-                -\memphB{I_2}
-            \end{bmatrix}
-        \end{equation*}
-
-        Inverse Transmission Parameters:
-        \begin{equation*}
-            \begin{bmatrix}
-                \memphB{V_2} \\
-                \memphB{I_2}
-            \end{bmatrix}
-            =
-            \begin{bmatrix}
-                A' & B' \\
-                C' & D'
-            \end{bmatrix}
-            \begin{bmatrix}
-                \memphR{V_1} \\
-                -\memphR{I_1}
-            \end{bmatrix}
-        \end{equation*}
-
-    \end{CheatsheetEntryFrameEnd}
 
     \begin{CheatsheetEntryFrame}
 
@@ -1326,18 +1433,13 @@
                 ;
             \end{circuitikz}
         }
-        \TwoColumnsTextSeparated{}{
-            \begin{equation*}
-                \memphR{R_1}
-                = \frac{R_b R_c}{R_a + R_b + R_c}
-            \end{equation*}
-        }{
-            \begin{equation*}
-                \memphB{R_a}
-                = \frac{R_1 R_2 + R_2 R_3 + R_3 R_1}{R_1}
-            \end{equation*}
-        }
-        \medskip
+        \begin{equation*}
+            \memphR{R_1}
+            = \frac{R_b R_c}{R_a + R_b + R_c}
+            \qquad
+            \memphB{R_a}
+            = \frac{R_1 R_2 + R_2 R_3 + R_3 R_1}{R_1}
+        \end{equation*}
 
         For $\mathrm{Y}$ and $\Delta$ loads to be balanced:
         \begin{equation*}

@@ -49,22 +49,29 @@
             \begin{scope}[shift={(0,-1.8)}, rotate=-90]
                 \path
                     (0,0) coordinate (WaveOrigin)
-                    (3,0) coordinate (WaveReferenceIntercept) % Manually calculated.
-                    (2.33333333,0) coordinate (WaveActualIntercept) % Manually calculated.
+                    % Manually calculated wave intercepts
                     % TODO: Maybe automatically calculate these intercepts next time?
+                    %(3,0) coordinate (WaveReferenceIntercept) % OLD
+                    (2.5,0) coordinate (WaveReferenceIntercept)
+                    %(2.33333333,0) coordinate (WaveActualIntercept) % OLD
+                    (1.94444444,0) coordinate (WaveActualIntercept)
                 ;
                 %\draw[help lines, lightgray]
                 %    (0,-1) grid (4,1)
                 %;
                 \draw[-latex, line width=1.5pt]
-                    (0,0) -- (4.4,0) coordinate (LabelX1)
+                    (0,0)
+                        -- (3.7,0)
+                        coordinate (LabelX1)
                 ;
-                \draw[myred, dashed, line width=1.2pt, domain=0:4, samples=100, line cap=round]
-                    plot (\x, {cos(0.5*pi*\x r)}) node[right] {\color{myred} $\bm{V_m \cos{(\omega t)}}$}
+                \draw[myred, dashed, line width=1.2pt, domain=0:3.3333333, samples=80, line cap=round]
+                    plot (\x, {cos(0.6*pi*\x r)})
+                        node[right] {\color{myred} $\bm{V_m \cos{(\omega t)}}$}
                 ;
-                \draw[myred, line width=2pt, domain=0:4, samples=100, line cap=round]
-                    plot (\x, {cos(0.5*pi*\x r + \W)}) node[right] {$\bm{V_m \cos{(\omega t + \phi)}}$}
-                    coordinate (WaveEnd)
+                \draw[myred, line width=2pt, domain=0:3.3333333, samples=80, line cap=round]
+                    plot (\x, {cos(0.6*pi*\x r + \W)})
+                        node[right] {$\bm{V_m \cos{(\omega t + \phi)}}$}
+                        coordinate (WaveEnd)
                 ;
                 \draw[latex-latex, line width=1.5pt] % Draw vertical line over the curve cuz it looks nicer
                     (0,-1.4) -- (0,1.4) coordinate (LabelY1)
@@ -98,7 +105,9 @@
                     (LabelY2) ++( 0.05,-0.1 ) node[right] {$\MyIm$}
                 ;
                 \draw[mypurple] (30:0.25) node {$\bm{\phi}$};
-                \draw[-latex, mypurple, line width=1.2pt, line cap=round] (0:0.40) arc (0:\W:0.40);
+                \draw[-latex, mypurple, line width=1.2pt, line cap=round]
+                    (0:0.40) arc (0:\W:0.40)
+                ;
                 \draw[myred] (PhasorEnd) ++(\W:0.15) node {$\mathbf{V}$};
                 % Directions
                 \draw[angle 60 reversed-angle 60, mygreen,  line width=1.7pt, line cap=round] ( 10:1.8) arc ( 10: 40:1.8);
@@ -121,10 +130,20 @@
                     %(PhasorOrigin) -- (PhasorOrigin |- WaveOrigin) % Looks ugly
                 ;
                 \draw[help lines, {mypurple!30!white}, line width=1.5pt]
-                    (WaveActualIntercept)    ++(-1.4,0) -- ++(2.8,0) -- ++(0.5,0) ++(-0.2,-0.00) coordinate (WavePhaseDiffEnd)
+                    (WaveActualIntercept)
+                        ++(-1.4,0)
+                        -- ++(2.8,0)
+                        -- ++(0.8,0)
+                        ++(-0.2,-0.00)
+                            coordinate (WavePhaseDiffEnd)
                 ;
                 \draw[help lines, {mypurple!30!white}, dashed, line width=1.5pt]
-                    (WaveReferenceIntercept) ++(-1.4,0) -- ++(2.8,0) -- ++(0.5,0) ++(-0.2, 0.00) coordinate (WavePhaseDiffStart)
+                    (WaveReferenceIntercept)
+                        ++(-1.4,0)
+                        -- ++(2.8,0)
+                        -- ++(0.8,0)
+                        ++(-0.2, 0.00)
+                            coordinate (WavePhaseDiffStart)
                 ;
             \end{scope}
             \begin{scope}[rotate=-90]
@@ -132,18 +151,49 @@
                     (WavePhaseDiffStart) -- (WavePhaseDiffEnd)
                 ;
                 \draw[mypurple]
-                    ($(WavePhaseDiffStart)!0.5!(WavePhaseDiffEnd)$) coordinate (WavePhaseDiffMid)
-                    (WavePhaseDiffMid) ++(0,0.05) node[above] {$\bm{\phi}$}
-                    %(WavePhaseDiffStart) ++(0.05,0) node[right, align=left] {\textbf{phase}} % Ugly
-                    %(WavePhaseDiffEnd) ++(-0.05,0) node[left, align=right] {\textbf{phase}} % Also ugly
-                    (WavePhaseDiffMid) ++(0,0.35) node[above, align=center] {\textbf{phase}}
+                    ($(WavePhaseDiffStart)!0.5!(WavePhaseDiffEnd)$)
+                        coordinate (WavePhaseDiffMid)
+                    (WavePhaseDiffMid)
+                        ++(0,0.05)
+                            node[above] {$\bm{\phi}$}
+                    %(WavePhaseDiffStart)
+                    %    ++(0.05,0)
+                    %        node[right, align=left] {\textbf{phase}} % Ugly
+                    %(WavePhaseDiffEnd)
+                    %    ++(-0.05,0)
+                    %        node[left, align=right] {\textbf{phase}} % Also ugly
+                    (WavePhaseDiffMid)
+                        ++(0,0.35)
+                            node[above, align=center] {\textbf{phase}}
                 ;
-                \draw[angle 60 reversed-angle 60, mygreen, line width=1.7pt, line cap=round]
-                    (WavePhaseDiffEnd)   ++(-0.6,0) -- ++(-1,0);
-                \draw[angle 60 reversed-angle 60, myblue,  line width=1.7pt, line cap=round]
+                \draw[
+                    angle 60 reversed-angle 60,
+                    mygreen,
+                    line width=1.7pt,
+                    line cap=round
+                ]
+                    (WavePhaseDiffEnd) ++(-0.6,0) -- ++(-1,0);
+                \draw[
+                    angle 60 reversed-angle 60,
+                    myblue,
+                    line width=1.7pt,
+                    line cap=round
+                ]
                     (WavePhaseDiffStart) ++( 0.6,0) -- ++( 1,0);
-                \draw[myblue]  (WavePhaseDiffStart) ++( 1.1,0.35) node[above, align=center] {\textbf{lagging}\\\textbf{direction}};
-                \draw[mygreen] (WavePhaseDiffEnd)   ++(-1.1,0.35) node[above, align=center] {\textbf{leading}\\\textbf{direction}};
+                \draw[myblue]
+                    (WavePhaseDiffStart)
+                        ++( 1.1,0.35)
+                            node[above, align=center] {%
+                                \textbf{lagging}\\\textbf{direction}%
+                            }
+                ;
+                \draw[mygreen]
+                    (WavePhaseDiffEnd)
+                        ++(-1.1,0.35)
+                            node[above, align=center] {%
+                                \textbf{leading}\\\textbf{direction}%
+                            }
+                ;
             \end{scope}
         \end{tikzpicture}
         \end{center}
@@ -217,27 +267,52 @@
         }%
         \MinipagesThreeColumns{%
             \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
-                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.30) coordinate (VEnd);
-                \draw[-stealth, white,    line width=2.0pt, line cap=round] (0,0) -- ++(0:1.05);
-                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(0:1.00) coordinate (IEnd);
-                \draw[myred]    (VEnd) ++( 0  ,-0.05) node[below] {$\mathbf{V}$};
-                \draw[mypurple] (IEnd) ++(-0.1,-0.05) node[below] {$\mathbf{I}$};
+                \draw[-stealth, myred, line width=2.0pt, line cap=round]
+                    (0,0) -- ++(0:1.30) coordinate (VEnd);
+                \draw[-stealth, white, line width=2.0pt, line cap=round]
+                    (0,0) -- ++(0:1.05);
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round]
+                    (0,0) -- ++(0:1.00) coordinate (IEnd);
+                \draw[myred]
+                    (VEnd) ++(0,-0.05) node[below] {$\mathbf{V}$};
+                \draw[mypurple]
+                    (IEnd) ++(-0.1,-0.05) node[below] {$\mathbf{I}$};
             \end{tikzpicture}
         }{%
             \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
-                \draw[line width=1.2pt] (0.2,0) -- (0.2,-0.2) -- (0,-0.2);
-                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++(  0:1) coordinate (IEnd);
-                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(-90:1) coordinate (VEnd);
-                \draw[myred]    (VEnd) ++(0.0, 0   ) node[right] {$\mathbf{V}$};
-                \draw[mypurple] (IEnd) ++(0  ,-0.05) node[below] {$\mathbf{I}$};
+                \draw[line width=1.2pt]
+                    (0.2,0) -- (0.2,-0.2) -- (0,-0.2)
+                ;
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round]
+                    (0,0) -- ++(0:1) coordinate (IEnd)
+                ;
+                \draw[-stealth, myred, line width=2.0pt, line cap=round]
+                    (0,0) -- ++(-90:1) coordinate (VEnd)
+                ;
+                \draw[myred]
+                    (VEnd) ++(0.0,0) node[right] {$\mathbf{V}$}
+                ;
+                \draw[mypurple]
+                    (IEnd) ++(0,-0.05) node[below] {$\mathbf{I}$}
+                ;
             \end{tikzpicture}
         }{%
             \begin{tikzpicture}[x=1.0cm, y=1.0cm, transform shape]
-                \draw[line width=1.2pt] (0.2,0) -- (0.2,0.2) -- (0,0.2);
-                \draw[-stealth, mypurple, line width=2.0pt, line cap=round] (0,0) -- ++( 0:1) coordinate (IEnd);
-                \draw[-stealth, myred,    line width=2.0pt, line cap=round] (0,0) -- ++(90:1) coordinate (VEnd);
-                \draw[myred]    (VEnd) ++(0.0, 0   ) node[right] {$\mathbf{V}$};
-                \draw[mypurple] (IEnd) ++(0  ,-0.05) node[below] {$\mathbf{I}$};
+                \draw[line width=1.2pt]
+                    (0.2,0) -- (0.2,0.2) -- (0,0.2)
+                ;
+                \draw[-stealth, mypurple, line width=2.0pt, line cap=round]
+                    (0,0) -- ++( 0:1) coordinate (IEnd)
+                ;
+                \draw[-stealth, myred, line width=2.0pt, line cap=round]
+                    (0,0) -- ++(90:1) coordinate (VEnd)
+                ;
+                \draw[myred]
+                    (VEnd) ++(0.0,0) node[right] {$\mathbf{V}$}
+                ;
+                \draw[mypurple]
+                    (IEnd) ++(0,-0.05) node[below] {$\mathbf{I}$}
+                ;
             \end{tikzpicture}
         }%
         \vspace{-1.0ex} % Move closer to the next section

@@ -1,0 +1,74 @@
+\documentclass{article}
+
+%\usepackage[margin=2.5cm, bottom=3.0cm]{geometry}
+\usepackage[margin=1.5cm, bottom=2.0cm]{geometry}
+\usepackage{makecell} % cell formatting for tabular environments
+%\usepackage{multirow} % multi-row formatting for tabular environments
+%\usepackage{booktabs}
+%\usepackage{wrapfig} % Very buggy.
+\usepackage[table]{xcolor}
+
+\usepackage{../_latex_includes/sharedpkg}
+\usepackage[capitalise, nameinlink]{cleveref}
+%\usepackage{svg} % Doesn't work so nicely
+
+\usetikzlibrary{arrows,shapes.arrows}
+
+\def\TITLE{Data Structures and Algorithms}
+
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+\newcommand{\LoadHelper}[1]{\input{./helpers/#1}}
+\newcommand{\LoadSection}[1]{{\input{./sections/#1}}}
+
+\LoadHelper{general}
+\LoadHelper{cheatsheet-helpers}
+
+\LoadHelper{tikz}
+
+\LoadHelper{circuitikz}
+\LoadHelper{math-and-cs}
+\LoadHelper{minipage}
+\LoadHelper{multicols}
+
+\newcommand{\SkipAfterTable}{\bigskip}
+\newcommand{\ExampleRef}[1]{\nameref{#1} \ref{#1}}
+
+\begin{document}
+
+\thispagestyle{plain}
+\MakeCustomTitle
+\bigskip
+
+%\medskip
+%text goes here?
+%\medskip
+
+{
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+}
+
+\newpage
+%\part{Learn}
+
+\section{Divide-and-Conquer Algorithms}
+\label{sec:dynamic-programming}
+
+    \LoadSection{divide-and-conquer/karatsuba-multiplication}
+    \LoadSection{divide-and-conquer/fast-fourier-transform}
+
+\newpage
+\section{Dynamic Programming}
+\label{sec:dynamic-programming}
+
+    \LoadSection{dynamic-programming/fibonacci-sequence}
+    \LoadSection{dynamic-programming/01-knapsack-problem}
+
+%\newpage
+%\part{Revise}
+%
+%\Todo{Maybe write a more concise version of everything?}
+
+\end{document}

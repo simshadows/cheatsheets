@@ -1,0 +1,94 @@
+%
+% Generic soft gray style
+% Example:
+%     \draw[simshadows/style/softgray]
+%         (0,0) rectangle (1,1)
+%     ;
+%
+
+\tikzset{
+    simshadows/style/softgray/.style={
+        lightgray,
+        line width=3.0pt,
+        fill=verylightgray,
+    }
+}
+
+%
+% Block Diagram helpers
+%
+
+\tikzstyle{MyBlockDiagramArrow} = [
+    ultra thick,
+    ->,
+    >=stealth
+]
+
+\tikzstyle{MyBlockDiagramRectangle} = [
+    rectangle,
+    minimum width=2.2cm,
+    minimum height=1.2cm,
+    text centered,
+    draw=black,
+    fill=black!10
+]
+
+\usetikzlibrary{shapes}
+\tikzstyle{MyBlockDiagramEllipse} = [
+    ellipse,
+    minimum width=2.2cm,
+    minimum height=1.2cm,
+    text centered,
+    draw=black,
+    fill=black!10
+]
+
+%
+% Flowchart Helpers
+%
+
+\tikzstyle{MyFlowchartArrow} = [
+    ultra thick,
+    ->,
+    >=stealth
+]
+
+%\tikzstyle{MyFlowchartStartStop} = [
+%    rectangle,
+%    rounded corners,
+%    minimum width=3cm,
+%    minimum height=1cm,
+%    text centered,
+%    draw=black,
+%    fill=black!10
+%]
+
+%\tikzstyle{MyFlowchartIO} = [
+%    trapezium,
+%    trapezium left angle=70,
+%    trapezium right angle=110,
+%    minimum width=3cm,
+%    minimum height=1cm,
+%    text centered,
+%    draw=black,
+%    fill=black!10
+%]
+
+\tikzstyle{MyFlowchartProcess} = [
+    rectangle,
+    minimum width=3cm,
+    minimum height=1cm,
+    text centered,
+    draw=black,
+    fill=black!10
+]
+
+%\tikzstyle{MyFlowchartDecision} = [
+%    diamond,
+%    minimum width=3cm,
+%    minimum height=1cm,
+%    text centered,
+%    draw=black,
+%    fill=black!10
+%]
+

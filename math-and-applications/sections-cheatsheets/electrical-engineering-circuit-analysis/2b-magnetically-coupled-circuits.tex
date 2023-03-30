@@ -1,10 +1,151 @@
 \subsubsection{Magnetically Coupled Circuits}
 
 \begin{multicols}{2}
+
+    %% Work in progress
+    %\newcommand{\CoupledInductorsCirc}[1]{
+    %    \begin{scope}[shift={(0,0)}]
+    %        \draw % Left Side
+    %            (0,0)
+    %                to[short, i=$\mathbf{I}_1$, o-]
+    %                    ++(1,0)
+    %                        coordinate (L1Top)
+    %                to[L, l_=$L_1$, name=L1]
+    %                    ++(0,-2)
+    %                to[short, -o]
+    %                    ++(-1,0)
+    %                        coordinate (LeftVBottom)
+    %                %to[open, v^<=$v_1$] (0,0)
+    %                to[open] (0,0)
+    %                    coordinate (LeftVTop)
+    %        ;
+    %        \draw % Right Side
+    %            (L1Top) ++(1,0) coordinate (L2Top)
+    %                to[short, i<=$\mathbf{I}_2$, -o] ++(1,0) coordinate (RightVTop)
+    %                %to[open, v^>=$v_2$] ++(0,-2)
+    %                to[open] ++(0,-2) coordinate (RightVBottom)
+    %                to[short, o-] ++(-1,0)
+    %                to[L, l_=$L_2$, name=L2] (L2Top)
+    %        ;
+    %        \path
+    %            (LeftVTop)
+    %                -- (LeftVBottom)
+    %                    node[pos=0.2]{$+$}
+    %                    node[pos=0.5]{$\mathbf{V}_1$}
+    %                    node[pos=0.8]{$-$}
+    %            (RightVTop)
+    %                -- (RightVBottom)
+    %                    node[pos=0.2]{$+$}
+    %                    node[pos=0.5]{$\mathbf{V}_2$}
+    %                    node[pos=0.8]{$-$}
+    %        ;
+    %        \path
+    %            (L1Top)-- coordinate[midway] (TmpPoint) (L2Top)
+    %            (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+    %        ;
+    %        \draw[simshadows/style/ee/magneticcouplingarrow]
+    %            (MArcCenter) ++(0:0.5) arc (0:180:0.5)
+    %        ;
+    %        \draw
+    %            (MArcCenter) ++(90:0.5) node[above] {$M$}
+    %        ;
+    %        \draw
+    %            #1
+    %        ;
+    %    \end{scope}
+    %    \begin{scope}[shift={(1.5,-2.70)}]
+    %        \node[simshadows/GenericGrayBlockArrow, rotate=-90] {};
+    %        \path
+    %            (0,0) -- (0,-0.65) % Ghetto alignment
+    %        ;
+    %    \end{scope}
+    %}
+
+    %\newcommand{\CoupledInductorsEquivCirc}[2]{
+    %    \begin{scope}[shift={(0,-3.8)}]
+    %        \draw % Left Side
+    %            (0,0)
+    %            to[short, i=$\mathbf{I}_1$, o-] ++(1,0) coordinate (L1Top)
+    %            -- ++(0,-0.2)
+    %            to[L, l_=$L_1$, name=L1] ++(0,-1.5)
+    %            %to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
+    %                coordinate (TMP_L1_LABELREF)
+    %            to[
+    %                cV,
+    %                %l_=$\displaystyle j \omega M \textbf{I}_2$,
+    %                /tikz/circuitikz/bipoles/length=1.2cm,
+    %                #1
+    %            ] ++(0,-1.5)
+    %            to[short, -o] ++(-1,0) coordinate (LeftVBottom)
+    %            %to[open, v^<=$v_1$] (0,0)
+    %            to[open] (0,0) coordinate (LeftVTop)
+    %            (TMP_L1_LABELREF)
+    %                ++(-0.05,-0.2) % a bit different to the other side
+    %                    node[label=left:{$j \omega M \mathbf{I}_2$}]{}
+    %        ;
+    %        \draw % Right Side
+    %            (L1Top) ++(1,0) coordinate (L2Top)
+    %            to[short, i<=$\mathbf{I}_2$, -o, name=I2] ++(1,0) coordinate (RightVTop)
+    %            %to[open, v^>=$v_2$] ++(0,-2)
+    %            to[open] ++(0,-0.2)
+    %            to[open] ++(0,-1.5)
+    %            to[open] ++(0,-1.5) coordinate (RightVBottom)
+    %            to[short, o-] ++(-1,0)
+    %            to[
+    %                cV,
+    %                %l_=$\displaystyle j \omega M \textbf{I}_1$,
+    %                /tikz/circuitikz/bipoles/length=1.2cm,
+    %                #2
+    %            ] ++(0,1.5)
+    %                coordinate (TMP_L2_LABELREF)
+    %            to[L, l_=$L_2$, name=L2] ++(0,1.5)
+    %            -- (L2Top)
+    %            (TMP_L2_LABELREF)
+    %                ++(0.1,-0.2)
+    %                    node[label=right:{$j \omega M \mathbf{I}_1$}]{}
+    %        ;
+    %        \path
+    %            (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
+    %            (TmpPoint) ++(0,0.1) coordinate (MArcCenter)
+    %        ;
+    %    \end{scope}
+    %}
+
+    %\begin{CheatsheetEntryFrame}
+
+    %    \CheatsheetEntryTitle{Coupled Inductors / Dot Convention}
+
+    %    By the \emph{dot convention}, if a reference current flows \myul{into a dot terminal}, it induces a voltage in the other coil where the \myul{dot indicates the positive side}.
+
+    %    \begin{MulticolsSoftSepRule}{2}%
+    %        \centering%
+    %        \begin{circuitikz}
+    %            \CoupledInductorsCirc{
+    %                (L1Top) ++(-0.20,-0.35) node[circ] {}
+    %                (L2Top) ++( 0.20,-0.35) node[circ] {}
+    %            }
+    %            \CoupledInductorsEquivCirc{}{invert}
+    %        \end{circuitikz}
+    %        \MulticolsBreak%
+    %        \begin{circuitikz}
+    %            \CoupledInductorsCirc{
+    %                (L1Top) ++(-0.20,-0.35) node[circ] {}
+    %                (L2Top) ++(0,-2) ++( 0.20, 0.35) node[circ] {}
+    %            }
+    %            \CoupledInductorsEquivCirc{invert}{}
+    %        \end{circuitikz}
+    %        \MulticolsCleanEnd
+    %    \end{MulticolsSoftSepRule}%
+
+    %    $M$ is the mutual inductance between the coils.
+
+    %\end{CheatsheetEntryFrame}
     
     \begin{CheatsheetEntryFrame}
 
-        \CheatsheetEntryTitle{Coupled Inductors}
+        \CheatsheetEntryTitle{Coupled Inductors / Dot Convention}
+
+        By the \emph{dot convention}, if a reference current flows \myul{into a dot terminal}, it induces a voltage in the other coil where the \myul{dot indicates the positive side}.
 
         For $M$ mutual inductance:
 
@@ -62,26 +203,53 @@
                 \begin{scope}[shift={(0,-3.5)}]
                     \draw % Left Side
                         (0,0)
-                        to[short, i=$\mathbf{I}_1$, o-] ++(1,0) coordinate (L1Top)
-                        -- ++(0,-0.2)
-                        to[L, l_=$L_1$, name=L1] ++(0,-1.5)
-                        %to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
-                        to[cV, l_=$\displaystyle j \omega M \textbf{I}_2$, /tikz/circuitikz/bipoles/length=1.2cm, #1] ++(0,-1.5)
-                        to[short, -o] ++(-1,0) coordinate (LeftVBottom)
-                        %to[open, v^<=$v_1$] (0,0)
-                        to[open] (0,0) coordinate (LeftVTop)
+                            to[short, i=$\mathbf{I}_1$, o-]
+                                ++(1,0)
+                                    coordinate (L1Top)
+                            -- ++(0,-0.2)
+                            to[L, l_=$L_1$, name=L1] ++(0,-1.5)
+                            %to[cV, l_=$\displaystyle M \frac{\diff{i_2}}{\diff{t}}$] ++(0,-1.5)
+                            coordinate(TMP_L1_LABELREF)
+                            to[
+                                cV,
+                                %l_=$\displaystyle j \omega M \textbf{I}_2$,
+                                /tikz/circuitikz/bipoles/length=1.2cm,
+                                #1
+                            ] ++(0,-1.5)
+                            to[short, -o] ++(-1,0)
+                                coordinate (LeftVBottom)
+                            %to[open, v^<=$v_1$] (0,0)
+                            to[open] (0,0)
+                                coordinate (LeftVTop)
                     ;
                     \draw % Right Side
-                        (L1Top) ++(1,0) coordinate (L2Top)
-                        to[short, i<=$\mathbf{I}_2$, -o, name=I2] ++(1,0) coordinate (RightVTop)
+                        (L1Top) ++(1,0)
+                            coordinate (L2Top)
+                        to[short, i<=$\mathbf{I}_2$, -o, name=I2] ++(1,0)
+                            coordinate (RightVTop)
                         %to[open, v^>=$v_2$] ++(0,-2)
                         to[open] ++(0,-0.2)
                         to[open] ++(0,-1.5)
-                        to[open] ++(0,-1.5) coordinate (RightVBottom)
+                        to[open] ++(0,-1.5)
+                            coordinate (RightVBottom)
                         to[short, o-] ++(-1,0)
-                        to[cV, l_=$\displaystyle j \omega M \textbf{I}_1$, /tikz/circuitikz/bipoles/length=1.2cm, #2] ++(0,1.5)
+                        to[
+                            cV,
+                            %l_=$\displaystyle j \omega M \textbf{I}_1$,
+                            /tikz/circuitikz/bipoles/length=1.2cm,
+                            #2
+                        ] ++(0,1.5)
+                            coordinate(TMP_L2_LABELREF)
                         to[L, l_=$L_2$, name=L2] ++(0,1.5)
                         -- (L2Top)
+                    ;
+                    \draw
+                        (TMP_L1_LABELREF)
+                            ++(-0.05,-0.2) % a bit different to the other side
+                                node[label=left:{$j \omega M \mathbf{I}_2$}]{}
+                        (TMP_L2_LABELREF)
+                            ++(0.1,-0.2)
+                                node[label=right:{$j \omega M \mathbf{I}_1$}]{}
                     ;
                     \path
                         (L1Top) -- coordinate[midway] (TmpPoint) (L2Top)
@@ -107,7 +275,7 @@
             \MyReusableFormattingB{}{invert}
         }{%
             \begin{gather*}
-                \text{\parbox{10em}{\raggedright{}\textbf{Case 1:}\\Currents flowing into \myul{same} dot sides.}}
+                \text{\parbox{10em}{\raggedright{}\textbf{Base Case:}\\Currents flowing into \myul{same} dot sides.}}
                 \\[0.7em]
                 \boxed{
                     \begin{aligned}
@@ -146,7 +314,7 @@
             \MyReusableFormattingB{invert}{}
         }{%
             \begin{gather*}
-                \text{\parbox{10em}{\raggedright{}\textbf{Case 2:}\\Currents flowing into \myul{different} dot sides.}}
+                \text{\parbox{10em}{\raggedright{}\textbf{Alternative Case:}\\Currents flowing into \myul{different} dot sides.}}
                 \\[0.7em]
                 \boxed{
                     \begin{aligned}

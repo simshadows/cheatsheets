@@ -7,20 +7,52 @@
 %\usepackage{booktabs}
 %\usepackage{wrapfig} % Very buggy.
 \usepackage[table]{xcolor}
+\usepackage{subfigure}
+\usepackage[thicklines]{cancel}
 
 \usepackage{../_latex_includes/sharedpkg}
 \usepackage[capitalise, nameinlink]{cleveref}
 %\usepackage{svg} % Doesn't work so nicely
 
-\usetikzlibrary{arrows,shapes.arrows}
+\usetikzlibrary{arrows, shapes.arrows, matrix}
 
 \def\TITLE{Data Structures and Algorithms}
 
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{3}
 
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\renewcommand{\CancelColor}{\color{red}}
+
+% Operations Helpers
+\newcommand{\OpSig}[4][]{%
+    \def\TempA{#1}%
+    \def\TempB{internal}%
+    \ifx\TempA\TempB% # TODO: Is there a better way to test for keys?
+        {\footnotesize\textsc{(Internal)}} %
+    \fi%
+    \def\TempA{}%
+    \def\TempB{#4}%
+    \ifx\TempA\TempB% TODO: Is there a better way to test for empty?
+        % #2 is empty
+        #2(\textit{#3})
+    \else
+        % #2 is non-empty
+        #2(\textit{#3}) $\to$ \textit{#4}%
+    \fi%
+}
+% Operations Section Helpers
+\newcommand{\OpSigSep}{\qquad\qquad\qquad}
+\newenvironment{OpSectionSummary}{%
+    \begin{center}%
+}{%
+    \end{center}%
+    \medskip%
+}
+
 \newcommand{\LoadHelper}[1]{\input{./helpers/#1}}
 \newcommand{\LoadSection}[1]{{\input{./sections/#1}}}
+\newcommand{\LoadAppendix}[1]{{\input{./sections-appendices/#1}}}
 
 \LoadHelper{general}
 \LoadHelper{cheatsheet-helpers}
@@ -53,18 +85,67 @@
 \newpage
 %\part{Learn}
 
+\section{Fundamentals}
+\label{sec:fundamentals}
+
+    \LoadSection{fundamentals/performance-and-big-o}
+    \LoadSection{fundamentals/dynamic-arrays}
+    \LoadSection{fundamentals/array-search-algorithms}
+    \LoadSection{fundamentals/sorting-algorithms}
+    \LoadSection{fundamentals/linked-lists}
+    \LoadSection{fundamentals/bsts}
+    \newpage
+    \LoadSection{fundamentals/binary-heaps/intro}
+    \newpage
+    \LoadSection{fundamentals/binary-heaps/array-indexing}
+    \newpage
+    \LoadSection{fundamentals/binary-heaps/push}
+    \newpage
+    \LoadSection{fundamentals/binary-heaps/pop}
+    \newpage
+    \LoadSection{fundamentals/binary-heaps/pushpop}
+    \newpage
+    \LoadSection{fundamentals/binary-heaps/heapify}
+    \newpage
+    \LoadSection{fundamentals/binary-heaps/further-reading}
+    \LoadSection{fundamentals/binary-heaps/references}
+    \newpage
+    \LoadSection{fundamentals/tries}
+    \LoadSection{fundamentals/hash-tables}
+    \LoadSection{fundamentals/graphs}
+
+\newpage
 \section{Divide-and-Conquer Algorithms}
-\label{sec:dynamic-programming}
+\label{sec:doc}
 
     \LoadSection{divide-and-conquer/karatsuba-multiplication}
-    \LoadSection{divide-and-conquer/fast-fourier-transform}
+    \LoadSection{divide-and-conquer/fft}
 
 \newpage
 \section{Dynamic Programming}
-\label{sec:dynamic-programming}
+\label{sec:dp}
 
+    \LoadSection{dynamic-programming/intro}
     \LoadSection{dynamic-programming/fibonacci-sequence}
     \LoadSection{dynamic-programming/01-knapsack-problem}
+
+\newpage
+\section{Standard Implementations}
+\label{sec:standard-implementations}
+
+    \LoadSection{standard-implementations/javascript/intro}
+    \newpage
+    \LoadSection{standard-implementations/javascript/max-heap-implementation}
+    \newpage
+    \LoadSection{standard-implementations/python}
+
+\newpage
+\InvisiblePart{Appendix}
+
+\section{Appendix: Introduction to Fourier Analysis, for Computer Science Students}
+\label{sec:appendix--fourier}
+
+    \LoadAppendix{intro-to-fourier-analysis/background}
 
 %\newpage
 %\part{Revise}

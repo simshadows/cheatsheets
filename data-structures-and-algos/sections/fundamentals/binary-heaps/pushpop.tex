@@ -1,0 +1,88 @@
+\subsubsection{Push-Pop and Pop-Push}
+
+\begin{OpSectionSummary}
+    \OpSig{Push-Pop}{item}{item}
+    \OpSigSep{}
+    \OpSig{Pop-Push}{item}{item}
+\end{OpSectionSummary}
+
+The \emph{push-pop} operation is equivalent to a \emph{push} and then a \emph{pop}, in that order. The algorithm:
+\begin{enumerate}
+    \item If our new item is greater than or equal to the current root (for a max-heap) or less than or equal to the current root (for a min-heap), then we are done. No need to do any further operations on the heap. The new item is also the popped item.
+    \item Store the current root. This will be returned later.
+    \item Replace the root node with the new item.
+    \item Perform \emph{sift-down} starting from the root node.
+\end{enumerate}
+
+The \emph{pop-push} operation is the other way around (a \emph{pop} followed by a \emph{push}). The algorithm: % is a bit simpler than \emph{push-pop} since we no longer have to check the order between the new item and the old root:
+\begin{enumerate}
+    \item Store the current root. This will be returned later.
+    \item Replace the root node with the new item.
+    \item Perform \emph{sift-down} starting from the root node.
+\end{enumerate}
+
+\emph{Push-pop} and \emph{pop-push} are typically more efficient than using the individual \emph{push} and \emph{pop} operations together. Both operations have $O \parens*{\log{n}}$ runtime.
+
+Sample implementation:
+\vbox{%
+\begin{multicols}{2}
+    \begin{lstlisting}[language={Python}, caption={
+        Sample Python implementation for \emph{push-pop} and \emph{pop-push} on a max-heap, implemented using a list. For \ttd{sift_down}, refer to \cref{lst:fundamentals--binary-heaps--pop}.
+    }, label={lst:fundamentals--binary-heaps--pushpop}]
+    # PRECONDITION: len(heap) > 0
+    def hpushpop(heap, item):
+        if item < heap[0]:
+            (item, heap[0]) = (heap[0], item)
+            sift_down(heap, 0)
+        return item
+
+    # PRECONDITION: len(heap) > 0
+    def hpoppush(heap, item):
+        (item, heap[0]) = (heap[0], item)
+        sift_down(heap, 0)
+        return item
+
+    # sift_down is defined elsewhere.
+    \end{lstlisting}
+    \columnbreak
+    \begin{lstlisting}[language={Python}, caption={
+        Sample driver code for \cref{lst:fundamentals--binary-heaps--pushpop}.
+        \linebreak
+        \linebreak
+    }]
+    # A valid heap
+    template = [94, 87, 81, 57, 68, 74, \
+                5, 35, 36, 29, 41, 18]
+
+    heap = template.copy()
+    # We push-pop with a new item 37
+    result = hpushpop(heap, 37)
+    print(result) # 94
+    print(heap) # [87, 68, 81, 57, 41, 74,
+                #  5, 35, 36, 29, 37, 18]
+
+    heap = template.copy()
+    # We push-pop with a new item 95
+    result = hpushpop(heap, 95)
+    print(result) # 95
+    print(heap) # [94, 87, 81, 57, 68, 74, \
+                #  5, 35, 36, 29, 41, 18]
+
+    heap = template.copy()
+    # We pop-push with a new item 37
+    result = hpoppush(heap, 37)
+    print(result) # 94
+    print(heap) # Same as for hpushpop(heap, 37)
+
+    heap = template.copy()
+    # We pop-push with a new item 95
+    result = hpoppush(heap, 95)
+    print(result) # 94
+    print(heap) # [95, 87, 81, 57, 68, 74,
+                #  5, 35, 36, 29, 41, 18]
+    \end{lstlisting}
+\end{multicols}%
+}
+
+\Todo{Provide a visual explainer of what's happening?}
+

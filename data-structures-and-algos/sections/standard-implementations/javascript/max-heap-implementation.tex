@@ -1,0 +1,87 @@
+\subsubsection{Max-Heap Implementation}%
+\label{sub:standard-implementations--javascript--max-heap-impl}
+
+\Todo{Explain this implementation? Why is it only useful for leetcode/hackerrank? What limitations does it have?}
+
+\Todo{Better formatting?}
+
+\begin{multicols}{2}
+
+    \begin{lstlisting}[language={Javascript}, caption={
+        A simple Javascript \emph{max-heap} implementation.
+    }]
+        function heapify(heap) {
+            for (let i = (heap.length >> 1) - 1; i >= 0; --i) _downHeapify(heap, i);
+        }
+
+        function hpush(heap, item) {
+            let curr = heap.length;
+            heap.push(item);
+            _upHeapify(heap, curr);
+        }
+
+        // Assumes heap.length > 0
+        function hpop(heap) {
+            if (heap.length === 1) return heap.pop();
+            const toReturn = heap[0];
+            heap[0] = heap.pop();
+            _downHeapify(heap, 0);
+            return toReturn;
+        }
+
+        // Assumes heap.length > 0
+        function hpushpop(heap, item) {
+            if (item[0] < heap[0][0]) {
+                [item, heap[0]] = [heap[0], item];
+                _downHeapify(heap, 0);
+            }
+            return item;
+        }
+
+        function hpopManyWithoutKey(heap, n) {
+            const toReturn = new Array(n);
+            for (let i = 1; i < n; ++i) {
+                toReturn[i] = heap[0][1];
+                heap[0] = heap.pop();
+                _downHeapify(heap, 0);
+            }
+            toReturn[0] = heap[0][1];
+            return toReturn;
+        }
+    \end{lstlisting}
+
+    \columnbreak
+
+    \begin{lstlisting}[language={Javascript}]
+        function hpopManyWithoutReturn(heap, n) {
+            if (heap.length === n) {
+                heap.splice(0, heap.length);
+            } else {
+                for (let i = 1; i < n; ++i) {
+                    heap[0] = heap.pop();
+                    _downHeapify(heap, 0);
+                }
+                heap[0] = heap.pop();
+            }
+        }   
+
+        function _downHeapify(heap, i) {
+            const left = (i << 1) + 1;
+            if (heap[left] === undefined) return;
+            const right = left + 1;
+            const next = (heap[right] === undefined || heap[left][0] > heap[right][0]) ? left : right;
+            if (heap[next][0] <= heap[i][0]) return;
+            [heap[next], heap[i]] = [heap[i], heap[next]];
+            _downHeapify(heap, next);
+        }
+        function _upHeapify(heap, i) {
+            if (i === 0) return; 
+            const parent = (i - 1) >> 1;
+            if (heap[parent][0] > heap[i][0]) return;
+            [heap[parent], heap[i]] = [heap[i], heap[parent]];
+            _upHeapify(heap, parent);
+        }
+    \end{lstlisting}
+    
+\end{multicols}
+

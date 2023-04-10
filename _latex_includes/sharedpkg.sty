@@ -62,7 +62,6 @@
 %\usepackage{nccmath} % Too buggy, breaks minipages, please don't use.
 \usepackage{xfrac}
 \usepackage{siunitx}
-\usepackage{cancel}
 \usepackage{bm} % Bold math symbols
 \usepackage{steinmetz} % Steinmetz notation for phasors. Only provides one command: \phase{}
 
@@ -128,6 +127,7 @@
 \colorlet{mylightpurple}{mypurple!50!white}
 
 \definecolor{extranotecolor}{rgb}{0.65,0.65,0.65}
+\definecolor{tableheader}{rgb}{0.8,0.8,0.8}
 \colorlet{suppnotecolor}{orange}
 \colorlet{questionassumptionscolor}{red}
 
@@ -198,7 +198,7 @@
     per-mode = reciprocal,
 }
 
-\renewcommand{\lstlistingname}{Snippet}
+\renewcommand{\lstlistingname}{Listing}
 
 \lstset{
     frame             = tblr,
@@ -497,9 +497,12 @@
 
 \newcommand{\SectionBreak}{\newpage}
 
-% Table Column Types
+% Table column types
 \newcolumntype{C}{>{\centering\arraybackslash}X} % Centered version of tabularx's X column type
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X} % Right-aligned version of tabularx's X column type
+
+% More table helpers
+\newcommand{\TableHeaderStyle}[1]{\textbf{#1}}
 
 \newcommand{\CommonFigureFormat}[1]{%
     \centering

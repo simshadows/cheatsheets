@@ -1,4 +1,4 @@
-\subsubsection{Push-Pop and Pop-Push}
+\subsection{Push-Pop and Pop-Push}
 
 \begin{OpSectionSummary}
     \OpSig{Push-Pop}{item}{item}
@@ -27,7 +27,7 @@ Sample implementation:
 \vbox{%
 \begin{multicols}{2}
     \begin{lstlisting}[language={Python}, caption={
-        Sample Python implementation for \emph{push-pop} and \emph{pop-push} on a max-heap, implemented using a list. For \ttd{sift_down}, refer to \cref{lst:fundamentals--binary-heaps--pop}.
+        Sample Python implementation and driver code for \emph{pop-push} on a max-heap, implemented using a list. For \ttd{sift_down}, refer to \cref{lst:fundamentals--binary-heaps--pop}.
     }, label={lst:fundamentals--binary-heaps--pushpop}]
     # PRECONDITION: len(heap) > 0
     def hpushpop(heap, item):
@@ -36,46 +36,50 @@ Sample implementation:
             sift_down(heap, 0)
         return item
 
-    # PRECONDITION: len(heap) > 0
-    def hpoppush(heap, item):
-        (item, heap[0]) = (heap[0], item)
-        sift_down(heap, 0)
-        return item
-
     # sift_down is defined elsewhere.
-    \end{lstlisting}
-    \columnbreak
-    \begin{lstlisting}[language={Python}, caption={
-        Sample driver code for \cref{lst:fundamentals--binary-heaps--pushpop}.
-        \linebreak
-        \linebreak
-    }]
+
     # A valid heap
     template = [94, 87, 81, 57, 68, 74, \
                 5, 35, 36, 29, 41, 18]
 
     heap = template.copy()
-    # We push-pop with a new item 37
     result = hpushpop(heap, 37)
     print(result) # 94
     print(heap) # [87, 68, 81, 57, 41, 74,
                 #  5, 35, 36, 29, 37, 18]
 
     heap = template.copy()
-    # We push-pop with a new item 95
     result = hpushpop(heap, 95)
     print(result) # 95
     print(heap) # [94, 87, 81, 57, 68, 74, \
                 #  5, 35, 36, 29, 41, 18]
+    \end{lstlisting}
+    \columnbreak
+    \begin{lstlisting}[language={Python}, caption={
+        Similar to \cref{lst:fundamentals--binary-heaps--pushpop}, but for \emph{pop-push}.
+        \linebreak
+        \linebreak
+    }]
+    # PRECONDITION: len(heap) > 0
+    def hpoppush(heap, item):
+        (item, heap[0]) = (heap[0], item)
+        sift_down(heap, 0)
+        return item
+
+
+    # sift_down is defined elsewhere.
+
+    # The same valid heap
+    template = [94, 87, 81, 57, 68, 74, \
+                5, 35, 36, 29, 41, 18]
 
     heap = template.copy()
-    # We pop-push with a new item 37
     result = hpoppush(heap, 37)
     print(result) # 94
     print(heap) # Same as for hpushpop(heap, 37)
 
+
     heap = template.copy()
-    # We pop-push with a new item 95
     result = hpoppush(heap, 95)
     print(result) # 94
     print(heap) # [95, 87, 81, 57, 68, 74,

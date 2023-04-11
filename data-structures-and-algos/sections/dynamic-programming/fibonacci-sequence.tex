@@ -1,8 +1,8 @@
-\subsection{Fibonacci Sequence}%
-\label{sub:fibonacci-sequence}
+\section{Fibonacci Sequence}%
+\label{sec:fibonacci-sequence}
 
 
-\subsubsection{Introduction}%
+\subsection{Introduction}%
 
 The \emph{Fibonacci sequence} is a sequence in which each number is the sum of the two preceding ones. The sequence commonly begins with $0$ and $1$, so the sequence is written as:
 \begin{equation*}
@@ -22,7 +22,7 @@ Mathematically, the Fibonacci sequence is commonly defined by the following recu
 For our purposes, we are interested in computing a single term of the sequence.
 
 
-\subsubsection{Naive Recursive Algorithm}
+\subsection{Naive Recursive Algorithm}
 
 A very simple algorithm is to simply implement our definition as a recursive function, though the runtime performance is a nasty $O \parens*{2^n}$. Calculating $F_{42}$ took $45$ seconds with a AMD Ryzen 7 5800HS CPU:
 \begin{lstlisting}[language={python}, caption={Python code for a naive recursion algorithm. Time: $O \parens*{2^n}$.}]
@@ -37,7 +37,7 @@ timeit(lambda : fib(42), number=1) # approx. 45 seconds
 \end{lstlisting}
 
 
-\subsubsection{Top-Down Memoization Algorithm}
+\subsection{Top-Down Memoization Algorithm}
 
 One way to speed it up is the recognition that once we've computed a term of the sequence, we can store it for future use. This algorithm runs in $O(n)$ time since we calculate each term only once:
 \begin{lstlisting}[language={python}, caption={Python code for a memoized recursion algorithm.}]
@@ -59,7 +59,7 @@ timeit(lambda : fib(995), number=1) # Python 3.10.9 'maximum recursion depth exc
 \emph{Interestingly, if we calculate for $n = 995$ or higher, Python throws a \texttt{maximum recursion depth exceeded} error.}
 
 
-\subsubsection{Bottom-Up Algorithm}
+\subsection{Bottom-Up Algorithm}
 
 You may have already spotted that rather than start from $F_n$ and recursively figuring out what we need to solve it, we could instead start from $F_2$ (and hardcode the base cases $F_0$ and $F_1$) and work our way upwards. This algorithm also runs in $O(n)$:
 \begin{lstlisting}[language={python}, caption={Python code for a bottom-up algorithm.}]
@@ -81,7 +81,7 @@ timeit(lambda : fib(1000000), number=1) # approx. 5.6 seconds
 Usefully, we also 
 
 
-\subsubsection{References}
+\subsection{References}
 \begin{itemize}
     \item \href{https://en.wikipedia.org/wiki/Fibonacci_sequence}{\textbu{Wikipedia}}: The mathematical notation was taken from here. Also, I stole a bit of the wording from it for the introduction.
 \end{itemize}

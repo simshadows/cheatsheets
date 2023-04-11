@@ -1,5 +1,5 @@
-\subsection{0-1 Knapsack Problem}%
-\label{sub:0-1-knapsack-problem}
+\section{0-1 Knapsack Problem}%
+\label{sec:0-1-knapsack-problem}
 
 
 \subsubsection{Problem Statement}
@@ -9,8 +9,8 @@ You have a bag with a maximum weight carrying limit, and a set of items. Each it
 There is only one copy of each item available for you to take. Each item is either taken in its entirety, or not taken at all. You cannot ``partially take" an item.
 
 
-\subsubsection{Example}
-\label{ssub:0-1-knapsack-problem--example}
+\subsection{Example}
+\label{sub:0-1-knapsack-problem--example}
 
 Suppose your bag can only carry up to $\qty{15}{\kilo\gram}$ in total. The possible items we can choose from are shown in \cref{tab:0-1-knapsack-problem--example-items}.
 
@@ -33,7 +33,7 @@ The optimal solution is to take all items except Item 1. The total value of thes
 If we took Item 1, we will only have $\qty{3}{\kilo\gram}$ remaining. We wouldn't be able to take Item 2, which is a significantly valuable item in the list. The best we can do is to take Item 3 and Item 5, giving us a total of $\SI{4}[\$]{} + \SI{2}[\$]{} + \SI{1}[\$]{} = \SI{7}[\$]{}$.
 
 
-\subsubsection{Naive Brute Force Solution}
+\subsection{Naive Brute Force Solution}
 
 We can try enumerating every possible subset of items:
 \begin{center}
@@ -329,14 +329,14 @@ We can try enumerating every possible subset of items:
 By rejecting all subsets above the weight limit ($\qty{15}{\kilo\gram}$) and getting the highest-value subset, we can clearly see that this will lead to an optimal solution. However, the runtime complexity is $O\parens*{2^n}$.
 
 
-%\subsubsection{Identifying Optimal Substructure}
+%\subsection{Identifying Optimal Substructure}
 %
 %Starting with an empty selection of items, we build an array of decisions for 
 %
 %In the base case, a bag with zero carrying capacity will optimally carry an empty set of items totaling $\SI{0}[\$]{}$.
 
 
-\subsubsection{Bottom-Up Tabulation Algorithm}
+\subsection{Bottom-Up Tabulation Algorithm}
 
 Let:
 \begin{itemize}
@@ -816,17 +816,17 @@ Therefore, our optimal set is $\braces*{S_5, S_4, S_3, S_2}$, which has a total 
 This tabulation algorithm runs in $O\parens*{NW}$ time and space. Further minor improvements to the algorithm are possible and is left as an exercise for the reader.
 
 
-\subsubsection{Naive Top-Down Recursion Algorithm}
+\subsection{Naive Top-Down Recursion Algorithm}
 
 \Todo{this?}
 
 
-\subsubsection{Top-Down Memoization Algorithm}
+\subsection{Top-Down Memoization Algorithm}
 
 \Todo{this?}
 
 
-\subsubsection{References}
+\subsection{References}
 \begin{itemize}
     \item \href{https://en.wikipedia.org/wiki/Knapsack_problem}{\textbu{Wikipedia}}: The example and the mathematical notation was taken from here.
     \item \href{https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1}{\textbu{GeeksforGeeks}}: Online practice problem.%, used for verifying my solution.

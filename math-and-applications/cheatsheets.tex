@@ -6,6 +6,12 @@
 %\usepackage{multirow} % multi-row formatting for tabular environments
 %\usepackage{booktabs}
 \usepackage{cancel}
+\usepackage[
+    type={CC},
+    modifier={by-sa},
+    version={4.0},
+    hyphenation={RaggedRight},
+]{doclicense}
 
 \usepackage{../_latex_includes/sharedpkg}
 
@@ -39,6 +45,10 @@
 %\medskip
 %text goes here?
 %\medskip
+
+\begin{center}%
+    \parbox{0.7\textwidth}{\doclicenseThis}%
+\end{center}
 
 {
     \hypersetup{linkcolor=black}

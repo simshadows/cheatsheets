@@ -9,12 +9,12 @@
 \usepackage[table]{xcolor}
 \usepackage{subfigure}
 \usepackage[thicklines]{cancel}
-%\usepackage[
-%    type={CC},
-%    modifier={by-sa},
-%    version={4.0},
-%    hyphenation={RaggedRight},
-%]{doclicense}
+\usepackage[
+    type={CC},
+    modifier={by-sa},
+    version={4.0},
+    hyphenation={RaggedRight},
+]{doclicense}
 
 \usepackage{../_latex_includes/sharedpkg}
 \usepackage[capitalise, nameinlink]{cleveref}
@@ -85,7 +85,9 @@
 %text goes here?
 %\medskip
 
-%\doclicenseThis%%
+\begin{center}%
+    \parbox{0.7\textwidth}{\doclicenseThis}%
+\end{center}
 
 {
     \hypersetup{linkcolor=black}

@@ -1,0 +1,420 @@
+\section{Basic Definitions}%
+\label{sec:graphs--basic-definitions}
+
+A graph $G$ consists of two finite sets: a nonempty set $V \parens*{G}$ of \emph{vertices}, and a set $E \parens*{G}$ of \emph{edges}, where each edge is associated with a set consisting of either one or two vertices called its \emph{endpoints}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        line width=1.6pt,
+        draw=black,
+        -%{Stealth[length=2.4mm, width=2.8mm]}
+    ]
+        %\tikzstyle{every node}=[
+        %    font={\large\bfseries}
+        %]
+
+        \node[GraphNodeRed, draw=black]
+            (NODE0) at (0,0) {$v_2$};
+        \node[GraphNodeRed, draw=black]
+            (NODE1) at (-1,2.5) {$v_3$};
+        \node[GraphNodeBlue, draw=black]
+            (NODE2) at (-4,0.8) {$v_0$};
+        \node[GraphNodePurple, draw=black]
+            (NODE3) at (-2.2,-1) {$v_1$};
+        \node[GraphNodeYellow, draw=black]
+            (NODE4) at (-4.5, -1.3) {$v_4$};
+
+        \draw
+            (NODE0)
+            edge[
+                line width=2.2pt,
+                draw=myred
+            ]
+            node[midway, right, xshift=1mm, yshift=1mm] {$e_4$}
+            (NODE1)
+        ;
+        \draw
+            (NODE2)
+            edge[
+                loop left,
+                min distance=14mm,
+                line width=2.2pt,
+                draw=myblue
+            ]
+            node[midway, above, xshift=4mm, yshift=2mm] {$e_5$}
+            (NODE2)
+        ;
+        \draw
+            (NODE1)
+            edge[
+                bend right,
+                line width=2.2pt,
+                draw=mygreen
+            ]
+            node[midway, left, yshift=2mm] {$e_0$}
+            (NODE2)
+        ;
+        \draw
+            (NODE1)
+            edge[
+                bend left,
+                line width=2.2pt,
+                draw=mygreen
+            ]
+            node[midway, left, yshift=2mm] {$e_1$}
+            (NODE2)
+        ;
+
+        \draw
+            (NODE2)
+            edge[
+                line width=2.2pt,
+                draw=mypurple
+            ]
+            node[midway, right, xshift=1mm, yshift=1mm] {$e_2$}
+            (NODE3)
+        ;
+        \draw
+            (NODE3)
+            edge[
+                line width=2.2pt,
+                draw=mypurple
+            ]
+            node[midway, above, xshift=-0.5mm, yshift=0.5mm] {$e_3$}
+            (NODE0)
+        ;
+
+        \node[right] at (1.5,0.7) {\parbox{10cm}{
+            $\braces*{v_0, v_1, v_2, v_3, v_4}$ are \myul{\emph{vertices}}.
+            \\[1mm]
+            $\braces*{e_0, e_1, e_2, e_3, e_4, e_5}$ are \myul{\emph{edges}}.
+            \\[1mm]
+            \textbf{\color{myred} Edge $\boldsymbol{e_4}$ is \myul{\emph{incident}} on each \myul{\emph{endpoint}} $\boldsymbol{v_2}$ and $\boldsymbol{v_3}$.}
+            \\[1mm]
+            \textbf{\color{myred} Vertices $\boldsymbol{v_2}$ and $\boldsymbol{v_3}$ are \myul{\emph{adjacent}} (connected by an edge).}
+            \\[1mm]
+            Edges \myul{\emph{connect}} their endpoints.
+            \\[1mm]
+            \textbf{\color{mypurple} Edges $\boldsymbol{e_2}$ and $\boldsymbol{e_3}$ are \myul{\emph{adjacent}} (shared endpoint).}
+            \\[1mm]
+            \textbf{\color{mygreen!85!black} Edges $\boldsymbol{e_0}$ and $\boldsymbol{e_1}$ are \myul{\emph{parallel}} (same pair of endpoints).}
+            \\[1mm]
+            \textbf{\color{myblue!85!black} Edge $\boldsymbol{e_5}$ is a \myul{\emph{loop}} (only one endpoint).}
+            \\[1mm]
+            \textbf{\color{myblue!85!black} Vertex $\boldsymbol{v_0}$ is a \myul{\emph{adjacent} \emph{to} \emph{itself}} (endpoint of a loop).}
+            \\[1mm]
+            \textbf{\color{myyellow!75!black} Vertex $\boldsymbol{v_4}$ is \myul{\emph{isolated}} (no incident edges).}
+        }};
+    \end{tikzpicture}
+    %% Old version
+    %\begin{tikzpicture}[
+    %    line width=1.6pt,
+    %    draw=black,
+    %    -%{Stealth[length=2.4mm, width=2.8mm]}
+    %]
+    %    \tikzstyle{every node}=[
+    %        font={\large\bfseries}
+    %    ]
+
+    %    \node[GraphNodeGreen, mygreen, draw=black, minimum size=6mm]
+    %        (NODE0) at (0,0) {};
+    %    \node[GraphNodeGreen, mygreen, draw=black, minimum size=6mm]
+    %        (NODE1) at (-1,2.5) {};
+    %    \node[GraphNodeGreen, mygreen, draw=black, minimum size=6mm]
+    %        (NODE2) at (-4,0.5) {};
+    %    \node[GraphNodePurple, mypurple, draw=black, minimum size=6mm]
+    %        (NODE4) at (-2,-0.7) {};
+
+    %    \draw
+    %        (NODE0)
+    %        edge[
+    %            line width=2.2pt,
+    %            myyellow!75!black
+    %        ]
+    %        coordinate[at end] (edgeend)
+    %        coordinate[at start] (edgestart)
+    %        node[midway, right, xshift=1mm, yshift=1mm] {Edge}
+    %        (NODE1)
+    %    ;
+    %    \draw
+    %        (NODE0)
+    %        edge[
+    %            loop below,
+    %            min distance=14mm,
+    %            line width=2.2pt,
+    %            myred
+    %        ]
+    %        node[midway, right, xshift=1mm, xshift=1mm] {Loop}
+    %        (NODE0)
+    %    ;
+    %    \draw
+    %        (NODE1)
+    %        edge[
+    %            bend right,
+    %            line width=2.2pt,
+    %            myblue
+    %        ]
+    %        node[midway, left, yshift=2mm] {Parallel Edges}
+    %        (NODE2)
+    %    ;
+    %    \draw
+    %        (NODE1)
+    %        edge[
+    %            bend left,
+    %            line width=2.2pt,
+    %            myblue
+    %        ]
+    %        (NODE2)
+    %    ;
+    %    %\draw (NODE2) edge (NODE3);
+    %    %\draw (NODE3) edge (NODE0);
+
+    %    \node[right, mygreen] at (NODE0.east) {Vertex};
+    %    \node[left, mypurple] at (NODE4.west) {Isolated Vertex};
+
+    %    \draw
+    %        (edgestart)
+    %        --
+    %        ++(2,1.5)
+    %        node[right]{Incidence}
+    %        --
+    %        (edgeend)
+    %    ;
+    %\end{tikzpicture}
+    \caption{Basic parts of a \emph{graph}.}
+    \label{fig:graphs--basic-definitions--1}
+\end{figure}
+
+Instead of $E \parens*{G}$, a \emph{directed graph} (or \emph{digraph}) has a set $D \parens*{G}$ of \emph{directed edges}. A \emph{mixed graph} can contain both directed and undirected edges.
+
+A \emph{weighted graph} has valued edges. A \emph{multigraph} may have parallel edges. A \emph{simple graph} has no loops or parallel edges.
+
+\begin{figure}[H]
+    \centering
+    \subfigure[%
+        Directed graph.
+    ]{%
+        \begin{tikzpicture}[
+            line width=1.6pt,
+            draw=black,
+            >=Stealth
+        ]
+            \node[GraphNodeSmall]
+                (NODE0) at (0,0) {};
+            \node[GraphNodeSmall]
+                (NODE1) at (-0.4,1.8) {};
+            \node[GraphNodeSmall]
+                (NODE2) at (-3.5,1.5) {};
+            \node[GraphNodeSmall]
+                (NODE3) at (-2.5,-1) {};
+
+            \draw (NODE0) edge[line width=2.2pt, ->] (NODE1);
+            \draw (NODE0) edge[line width=2.2pt, ->] (NODE2);
+            \draw (NODE0) edge[line width=2.2pt, <-] (NODE3);
+            \draw (NODE2.275) edge[line width=2.2pt, -{>[right]}] (NODE3.135);
+            \draw (NODE2.315) edge[line width=2.2pt, {<[right]}-] (NODE3.095);
+            \draw
+                (NODE2)
+                edge[
+                    line width=2.2pt,
+                    ->,
+                    loop left,
+                    min distance=14mm
+                ]
+                (NODE2)
+            ;
+        \end{tikzpicture}
+        \label{fig:graphs--basic-definitions--directed-graph}
+    }
+    \subfigure[%
+        Undirected multigraph.
+    ]{%
+        \begin{tikzpicture}[
+            line width=1.6pt,
+            draw=black,
+            >=Stealth
+        ]
+            \node[GraphNodeSmall]
+                (NODE0) at (0,0) {};
+            \node[GraphNodeSmall]
+                (NODE1) at (-0.4,1.8) {};
+            \node[GraphNodeSmall]
+                (NODE2) at (-3.5,1.5) {};
+            \node[GraphNodeSmall]
+                (NODE3) at (-2.5,-1) {};
+
+            \draw (NODE0) edge[line width=2.2pt] (NODE1);
+            \draw (NODE0) edge[line width=2.2pt] (NODE2);
+            \draw (NODE0) edge[line width=2.2pt, bend right=22] (NODE2);
+            \draw (NODE0) edge[line width=2.2pt, bend left=22] (NODE2);
+            \draw (NODE0) edge[line width=2.2pt] (NODE3);
+            \draw (NODE2) edge[line width=2.2pt] (NODE3);
+            \draw (NODE2) edge[line width=2.2pt, bend right=22] (NODE3);
+            \draw
+                (NODE2)
+                edge[
+                    line width=2.2pt,
+                    loop left,
+                    min distance=14mm
+                ]
+                (NODE2)
+            ;
+        \end{tikzpicture}
+        \label{fig:graphs--basic-definitions--undirected-graph}
+    }
+    \subfigure[%
+        Weighted undirected graph.
+    ]{%
+        \begin{tikzpicture}[
+            line width=1.6pt,
+            draw=black,
+            >=Stealth
+        ]
+            \node[GraphNodeSmall]
+                (NODE0) at (0,0) {};
+            \node[GraphNodeSmall]
+                (NODE1) at (-0.4,1.8) {};
+            \node[GraphNodeSmall]
+                (NODE2) at (-3.5,1.5) {};
+            \node[GraphNodeSmall]
+                (NODE3) at (-2.5,-1) {};
+
+            \draw
+                (NODE0)
+                edge[line width=2.2pt]
+                node[midway, right, xshift=1mm, yshift=1mm] {$4$}
+                (NODE1)
+            ;
+            \draw
+                (NODE0)
+                edge[line width=2.2pt]
+                node[midway, right, xshift=-1.5mm, yshift=3mm] {$12$}
+                (NODE2)
+            ;
+            \draw
+                (NODE0)
+                edge[line width=2.2pt]
+                node[midway, right, xshift=-4mm, yshift=2.5mm] {$8$}
+                (NODE3)
+            ;
+            \draw
+                (NODE2)
+                edge[line width=2.2pt]
+                node[midway, left, xshift=-0.5mm, yshift=-1.5mm] {$-4$}
+                (NODE3)
+            ;
+            \draw
+                (NODE2)
+                edge[line width=2.2pt, loop left, min distance=14mm]
+                node[very near end, above, xshift=-1.5mm, yshift=0mm] {$25$}
+                (NODE2)
+            ;
+        \end{tikzpicture}
+        \label{fig:graphs--basic-definitions--weighted-graph}
+    }
+    \caption{}%
+    \label{fig:graphs--basic-definitions--digraph-multigraph-compare}
+\end{figure}
+
+A \emph{list} is a graph with only one \emph{path}. A \emph{tree} is a graph with exactly one path between each pair of vertices.
+
+\begin{figure}[H]
+    \centering
+    \subfigure[%
+        A tree.
+    ]{%
+        \begin{tikzpicture}[
+            line width=1.6pt,
+            draw=black,
+            >=Stealth
+        ]
+            \node[GraphNodeSmall] (NODE0) at (0,0) {};
+            \node[GraphNodeSmall] (NODE1) at (1,1) {};
+            \node[GraphNodeSmall] (NODE11) at (0.4,2) {};
+            \node[GraphNodeSmall] (NODE12) at (2.2,1.4) {};
+            \node[GraphNodeSmall] (NODE111) at (-0.8,1.4) {};
+            \node[GraphNodeSmall] (NODE121) at (1.8,2.3) {};
+            \node[GraphNodeSmall] (NODE122) at (1.8,0.3) {};
+            \node[GraphNodeSmall] (NODE2) at (-2,0.8) {};
+            \node[GraphNodeSmall] (NODE21) at (-1.5,2.5) {};
+            \node[GraphNodeSmall] (NODE22) at (-3,1.8) {};
+            \node[GraphNodeSmall] (NODE23) at (-3.5,0.2) {};
+            \node[GraphNodeSmall] (NODE24) at (-2,-0.4) {};
+
+            \draw
+                (NODE0) edge[line width=2.6pt] (NODE1)
+                (NODE0) edge[line width=2.6pt] (NODE2)
+                (NODE1) edge[line width=2.6pt] (NODE11)
+                    (NODE11) edge[line width=2.6pt] (NODE111)
+                (NODE1) edge[line width=2.6pt] (NODE12)
+                    (NODE12) edge[line width=2.6pt] (NODE121)
+                    (NODE12) edge[line width=2.6pt] (NODE122)
+                (NODE2) edge[line width=2.6pt] (NODE21)
+                (NODE2) edge[line width=2.6pt] (NODE22)
+                (NODE2) edge[line width=2.6pt] (NODE23)
+                (NODE2) edge[line width=2.6pt] (NODE24)
+            ;
+        \end{tikzpicture}
+        \label{fig:graphs--basic-definitions--tree}
+    }
+    \qquad\qquad
+    \subfigure[%
+        A list.
+    ]{%
+        \begin{tikzpicture}[
+            line width=1.6pt,
+            draw=black,
+            >=Stealth
+        ]
+            \node[GraphNodeSmall] (NODE0) at (0,0) {};
+            \node[GraphNodeSmall] (NODE1) at (0.4,1.2) {};
+            \node[GraphNodeSmall] (NODE2) at (-1.4,-0.2) {};
+            \node[GraphNodeSmall] (NODE3) at (-1.4,1.0) {};
+            \node[GraphNodeSmall] (NODE4) at (-0.7,2.0) {};
+            \node[GraphNodeSmall] (NODE5) at (0.4,2.4) {};
+            \node[GraphNodeSmall] (NODE6) at (1.4,2.0) {};
+            \node[GraphNodeSmall] (NODE7) at (1.2,0.3) {};
+            \node[GraphNodeSmall] (NODE8) at (2.4,1.4) {};
+            \node[GraphNodeSmall] (NODE9) at (2.2,2.7) {};
+
+            \draw
+                (NODE0) edge[line width=2.6pt] (NODE1)
+                (NODE1) edge[line width=2.6pt] (NODE2)
+                (NODE2) edge[line width=2.6pt] (NODE3)
+                (NODE3) edge[line width=2.6pt] (NODE4)
+                (NODE4) edge[line width=2.6pt] (NODE5)
+                (NODE5) edge[line width=2.6pt] (NODE6)
+                (NODE6) edge[line width=2.6pt] (NODE7)
+                (NODE7) edge[line width=2.6pt] (NODE8)
+                (NODE8) edge[line width=2.6pt] (NODE9)
+            ;
+        \end{tikzpicture}
+        \label{fig:graphs--basic-definitions--list}
+    }
+    \caption{}%
+    \label{fig:graphs--basic-definitions--tree-list-compare}
+\end{figure}
+
+\textit{(Many more graph variations exist, but an exhaustive list is beyond the scope of a quick reviewer.)}
+
+A \emph{walk} is an alternating sequence of \myul{adjacent} vertices and edges. A walk with only one vertex (and no edges) is a \emph{trivial walk}. A \emph{closed} walk starts and ends on the same vertex.
+
+A \emph{trail} is a walk with no repeated edges. A \emph{circuit} is a closed trail with at least one edge.
+
+A \emph{path} is a walk with no repeated edges or vertices. A \emph{simple circuit} is a closed path except it starts and ends on the same vertex, and has at least one edge.
+
+\Todo{Diagram for path? Also, we should rework these walk/trail/path and related definitions.}
+
+\Todo{Define \emph{complete graphs} $K_n$. Make diagrams for them. (Epp, Page 633)}
+
+\Todo{Define \emph{complete bipartite graphs} $K_{m,n}$. Make diagrams for them. (Epp, Page 633)}
+
+\Todo{Define \emph{subgraph}. (Epp, Page 634)}
+
+Two vertices are \emph{connected} iff there is walk between them. A graph is \emph{connected} iff there is a walk between every pair of its vertices.
+
+A graph $H$ is a \emph{connected component} of its supergraph $G$ iff $H$ is connected, and no connected subgraph of $G$ is a supergraph of $H$ that also contains vertices and edges not in $H$. \Todo{Can we simplify this definition? Also, we should draw diagrams for this.}
+
+The \emph{degree} of a vertex (denoted $\mathrm{deg}\parens*{v}$ for the degree of vertex $v$) is the number of edges incident on it, with loops counted twice. The \emph{total degree} of a graph is the sum of the degrees of all vertices in the graph.
+

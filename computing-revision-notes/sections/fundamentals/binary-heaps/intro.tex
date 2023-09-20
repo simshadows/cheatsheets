@@ -25,24 +25,15 @@ Binary heaps are commonly efficiently implemented using an array (see \cref{fig:
         The conceptual tree structure of the heap.
     ]{%
         \begin{tikzpicture}[
-            every node/.style={
-                circle, fill=myyellow!40, draw=myyellow, very thick,
-                inner sep=1pt, minimum size=8mm
-            },
+            every node/.style={GraphNodeYellow},
             level 1/.style = {
-                sibling distance=48mm,level distance=11mm, nodes={
-                    fill=myblue!30, draw=myblue
-                }
+                sibling distance=48mm,level distance=11mm, nodes={GraphNodeBlue}
             },
             level 2/.style = {
-                sibling distance=24mm, level distance=12mm, nodes={
-                    fill=myred!30, draw=myred
-                }
+                sibling distance=24mm, level distance=12mm, nodes={GraphNodeRed}
             },
             level 3/.style = {
-                sibling distance=12mm, level distance=14mm, nodes={
-                    fill=mygreen!30, draw=mygreen
-                }
+                sibling distance=12mm, level distance=14mm, nodes={GraphNodeGreen}
             },
             line width=1.6pt,
             -%{Stealth[length=2.4mm, width=2.8mm]}
@@ -96,20 +87,20 @@ Binary heaps are commonly efficiently implemented using an array (see \cref{fig:
         \begin{tikzpicture}[
             array/.style={
                 matrix of nodes,
-                nodes={draw, minimum size=7mm, fill=mygreen!30},
+                nodes={draw, minimum size=7mm, fill=DiagramGreenFill},
                 column sep=-\pgflinewidth,
                 row sep=0.5mm,
                 nodes in empty cells,
                 row 1/.style={
                     nodes={draw=none, fill=none, minimum size=5mm}
                 },
-                row 2 column 1/.style={nodes={fill=myyellow!40}},
-                row 2 column 2/.style={nodes={fill=myblue!30}},
-                row 2 column 3/.style={nodes={fill=myblue!30}},
-                row 2 column 4/.style={nodes={fill=myred!30}},
-                row 2 column 5/.style={nodes={fill=myred!30}},
-                row 2 column 6/.style={nodes={fill=myred!30}},
-                row 2 column 7/.style={nodes={fill=myred!30}}
+                row 2 column 1/.style={nodes={fill=DiagramYellowFill}},
+                row 2 column 2/.style={nodes={fill=DiagramBlueFill}},
+                row 2 column 3/.style={nodes={fill=DiagramBlueFill}},
+                row 2 column 4/.style={nodes={fill=DiagramRedFill}},
+                row 2 column 5/.style={nodes={fill=DiagramRedFill}},
+                row 2 column 6/.style={nodes={fill=DiagramRedFill}},
+                row 2 column 7/.style={nodes={fill=DiagramRedFill}}
             }
         ]
             % Ugh, I keep getting errors if I use '&', so I'm forced to use

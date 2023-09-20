@@ -58,6 +58,44 @@
     \medskip%
 }
 
+% TikZ styles
+\colorlet{DiagramGrayFill}{black!10}      \colorlet{DiagramGrayBorder}{black!60}
+\colorlet{DiagramYellowFill}{myyellow!40} \colorlet{DiagramYellowBorder}{myyellow}
+\colorlet{DiagramBlueFill}{myblue!30}     \colorlet{DiagramBlueBorder}{myblue}
+\colorlet{DiagramRedFill}{myred!30}       \colorlet{DiagramRedBorder}{myred}
+\colorlet{DiagramGreenFill}{mygreen!30}   \colorlet{DiagramGreenBorder}{mygreen}
+\colorlet{DiagramPurpleFill}{mypurple!35} \colorlet{DiagramPurpleBorder}{mypurple}
+\colorlet{DiagramOrangeFill}{myorange!40} \colorlet{DiagramOrangeBorder}{myorange}
+\tikzstyle{GraphNode} = [
+    circle,
+    minimum size=8mm,
+    text centered,
+    draw=DiagramGrayBorder,
+    line width=1.6pt,
+    fill=DiagramGrayFill
+]
+\tikzstyle{GraphNodeSmall} = [
+    GraphNode, draw=DiagramRedBorder, fill=DiagramRedFill, minimum size=6mm
+]
+\tikzstyle{GraphNodeYellow} = [
+    GraphNode, draw=DiagramYellowBorder, fill=DiagramYellowFill
+]
+\tikzstyle{GraphNodeBlue} = [
+    GraphNode, draw=DiagramBlueBorder, fill=DiagramBlueFill
+]
+\tikzstyle{GraphNodeRed} = [
+    GraphNode, draw=DiagramRedBorder, fill=DiagramRedFill
+]
+\tikzstyle{GraphNodeGreen} = [
+    GraphNode, draw=DiagramGreenBorder, fill=DiagramGreenFill
+]
+\tikzstyle{GraphNodePurple} = [
+    GraphNode, draw=DiagramPurpleBorder, fill=DiagramPurpleFill
+]
+\tikzstyle{GraphNodeOrange} = [
+    GraphNode, draw=DiagramOrangeBorder, fill=DiagramOrangeFill
+]
+
 \newcommand{\LoadHelper}[1]{\input{./helpers/#1}}
 \newcommand{\LoadSection}[1]{{\input{./sections/#1}}}
 \newcommand{\LoadAppendix}[1]{{\input{./sections-appendices/#1}}}
@@ -100,7 +138,8 @@
 \chapter{Fundamentals}%
 \label{cha:fundamentals}
 
-    \LoadSection{fundamentals/performance-and-big-o}
+    \LoadSection{fundamentals/complexity-big-o}
+    \LoadSection{fundamentals/binary-and-arithmetic/intro}
     \LoadSection{fundamentals/dynamic-arrays}
     \LoadSection{fundamentals/array-search-algorithms}
     \LoadSection{fundamentals/sorting-algorithms}
@@ -108,7 +147,6 @@
     \LoadSection{fundamentals/bsts}
     \newpage
     \LoadSection{fundamentals/binary-heaps/intro}
-    \newpage
     \LoadSection{fundamentals/binary-heaps/array-indexing}
     \newpage
     \LoadSection{fundamentals/binary-heaps/push}
@@ -124,7 +162,18 @@
     \newpage
     \LoadSection{fundamentals/tries}
     \LoadSection{fundamentals/hash-tables}
-    \LoadSection{fundamentals/graphs}
+
+\newpage
+\chapter{Graphs}%
+\label{cha:graphs}
+
+    \LoadSection{graphs/basic-definitions}
+    \newpage
+    \LoadSection{graphs/graph-representation}
+    \newpage
+    \LoadSection{graphs/more-theoretical-results}
+    \LoadSection{graphs/more-definitions}
+    \LoadSection{graphs/references}
 
 \newpage
 \chapter{Divide-and-Conquer Algorithms}%
@@ -141,6 +190,18 @@
     \LoadSection{dynamic-programming/intro}
     \LoadSection{dynamic-programming/fibonacci-sequence}
     \LoadSection{dynamic-programming/01-knapsack-problem}
+
+\newpage
+\chapter{Randomized Algorithms}
+\label{cha:randomized-algorithms}
+
+    \LoadSection{randomized-algorithms/intro}
+
+\newpage
+\chapter{Mathematical Computing}
+\label{cha:mathematical-computing}
+
+    \LoadSection{mathematical-computing/intro}
 
 \newpage
 \chapter{Standard Implementations}

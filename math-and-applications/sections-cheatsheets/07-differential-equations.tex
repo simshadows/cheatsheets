@@ -79,7 +79,7 @@
             H_x(x, y) + H_y(x, y) \frac{\diff{y}}{\diff{x}} = 0
         \end{equation*}
 
-        This is can be simplified by undoing the chain rule:
+        This can be simplified by undoing the chain rule:
         \begin{gather*}
             \frac{\partial{H}}{\partial{x}} \frac{\diff{x}}{\diff{x}}
             + \frac{\partial{H}}{\partial{y}} \frac{\diff{y}}{\diff{x}}
@@ -477,33 +477,6 @@
                 \frac{a + i \omega}{\parens*{a + i \omega}^2 + \omega_0^2}
             \end{array}
         \end{equation*}
-
-    \end{CheatsheetEntryFrame}
-    
-\end{multicols}
-\newpage
-\begin{multicols}{2}
-
-    \begin{CheatsheetEntryFrame}
-
-        \CheatsheetEntryTitle{Discrete Fourier Transform (DFT)}
-
-        Instead of a continuous function over time, suppose we instead discretely sample it, denoted $x_n$. The DFT of $x_n$ is:
-        \begin{align*}
-            X_n
-            &= \sum_{k=0}^{N-1} x_k e^{-i \frac{2 \pi}{N} n k}
-            \\
-            &= \sum_{k=0}^{N-1} x_k \brackets*{
-                \cos\parens*{\frac{2 \pi}{N} k n}
-                - i \sin\parens*{\frac{2 \pi}{N} k n}
-            }
-        \end{align*}
-
-        {\footnotesize
-            Side-note: Fast Fourier Transform (FFT) is a family of algorithms used to calculate the DFT.
-        }
-
-        \Todo{What are some better definitions? Can values be complex?}
 
     \end{CheatsheetEntryFrame}
     
